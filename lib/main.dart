@@ -84,18 +84,18 @@ class _MyHomePageState extends State<MyHomePage> {
     var areas = getAreas(_board);
     areas.sort((a, b) => (a.crowns * a.fields).compareTo(b.crowns * b.fields));
 
-    String text = crown;
+    String calculationDetails = '';
     for (var area in areas) {
-      text +=
-          '• ${area.fields} * ${area.crowns} = ${area.fields * area.crowns}\n';
+      calculationDetails +=
+          '• ${area.fields} x ${area.crowns} ${crown} = ${area.fields * area.crowns}\n';
     }
 
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          backgroundColor: Colors.blueGrey,
-          content: Text(text, style: TextStyle(fontSize: 25.0)),
+          backgroundColor: Colors.white70,
+          content: Text(calculationDetails, style: TextStyle(fontSize: 25.0)),
           actions: <Widget>[
             FlatButton(
               child: Icon(
@@ -312,7 +312,7 @@ class _MyHomePageState extends State<MyHomePage> {
   FlatButton crownButton() => FlatButton(
       onPressed: () => _onSelectCrown(),
       padding: EdgeInsets.all(0.0),
-      child: Text(crown));
+      child: Text(crown, style: TextStyle(fontSize: 25.0)));
 
   IconButton castleButton() => IconButton(
         icon: Icon(Icons.star),

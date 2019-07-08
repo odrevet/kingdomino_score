@@ -196,7 +196,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     var actions = <Widget>[
       IconButton(
-          icon: Icon(Icons.filter_5),
+          icon: Icon(_board.size == 5 ? Icons.filter_5 :  Icons.filter_7),
           onPressed: () {
             setState(() {
               if (_board.size == 5)

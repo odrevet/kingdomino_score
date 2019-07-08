@@ -64,6 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: Colors.white70,
           title: Text('Kingdomino Score Count'),
           content: const Text('Olivier Drevet - GPL v.3'),
           actions: <Widget>[

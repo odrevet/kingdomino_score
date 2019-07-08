@@ -63,6 +63,9 @@ class _MyHomePageState extends State<MyHomePage> {
         color = Colors.yellow;
         break;
       case FieldType.grass:
+        color = Colors.lightGreen;
+        break;
+      case FieldType.forest:
         color = Colors.green;
         break;
       case FieldType.water:
@@ -179,6 +182,7 @@ class _MyHomePageState extends State<MyHomePage> {
       children: [
         fieldButton(FieldType.wheat),
         fieldButton(FieldType.grass),
+        fieldButton(FieldType.forest),
         fieldButton(FieldType.water),
         fieldButton(FieldType.swamp),
         fieldButton(FieldType.mine),

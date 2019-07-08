@@ -27,7 +27,7 @@ class Board {
   }
 }
 
-enum FieldType { none, wheat, grass, water, swamp, mine, castle }
+enum FieldType { none, wheat, grass, forest, water, swamp, mine, castle }
 
 class Field {
   FieldType type = FieldType.none;

@@ -61,7 +61,9 @@ class _MyHomePageState extends State<MyHomePage> {
           content: const Text('Olivier Drevet - GPL v.3'),
           actions: <Widget>[
             FlatButton(
-              child: Text('OK'),
+              child: Icon(
+                Icons.done,
+              ),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -78,7 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     for (var area in areas) {
       text +=
-          '${area.fields} * ${area.crowns} = ${area.fields * area.crowns}\n';
+          '• ${area.fields} * ${area.crowns} = ${area.fields * area.crowns}\n';
     }
 
     return showDialog<void>(
@@ -89,7 +91,9 @@ class _MyHomePageState extends State<MyHomePage> {
           content: Text(text),
           actions: <Widget>[
             FlatButton(
-              child: Text('OK'),
+              child: Icon(
+                Icons.done,
+              ),
               onPressed: () {
                 Navigator.of(context).pop();
               },

@@ -7,6 +7,8 @@ void main() {
   runApp(new MyApp());
 }
 
+String crown = '\u{1F451}';
+
 enum SelectionMode { field, crown, castle }
 
 class MyApp extends StatelessWidget {
@@ -82,8 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
     var areas = getAreas(_board);
     areas.sort((a, b) => (a.crowns * a.fields).compareTo(b.crowns * b.fields));
 
-    String text = '';
-
+    String text = crown;
     for (var area in areas) {
       text +=
           '• ${area.fields} * ${area.crowns} = ${area.fields * area.crowns}\n';
@@ -198,10 +199,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget _buildField(int x, int y) {
     Color color = getColorForFieldType(_board.fields[x][y].type);
-
-    var crowns = List<Widget>.generate(_board.fields[x][y].crowns,
-        (_) => Image.asset('assets/crown.png', width: 20.0, height: 20.0));
-    return Container(color: color, child: Wrap(children: crowns));
+    return Container(color: color, child: Wrap(children: [Text(crown * _board.fields[x][y].crowns)]));
   }
 
   Widget _buildBoard() {
@@ -314,7 +312,7 @@ class _MyHomePageState extends State<MyHomePage> {
   FlatButton crownButton() => FlatButton(
       onPressed: () => _onSelectCrown(),
       padding: EdgeInsets.all(0.0),
-      child: Image.asset('assets/crown.png', width: 20.0, height: 20.0));
+      child: Text(crown));
 
   IconButton castleButton() => IconButton(
         icon: Icon(Icons.star),

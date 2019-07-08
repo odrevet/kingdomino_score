@@ -36,6 +36,9 @@ class Field {
   Field(this.type);
 }
 
+////////////////////////////////////////////////
+// Score calculation related class and functions
+
 class Area {
   FieldType type;
   int crowns = 0;

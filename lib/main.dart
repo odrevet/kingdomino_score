@@ -274,7 +274,7 @@ class _MyHomePageState extends State<MyHomePage> {
         body: Column(children: <Widget>[
           _buildBoard(),
           InkWell(
-            child: Text(_score.toString(), style: TextStyle(height: 5.0)),
+            child: Text(_score.toString(), style: TextStyle(fontSize: 50.0)),
             onTap: () => _scoreDetailsDialog(context),
           )
         ]));

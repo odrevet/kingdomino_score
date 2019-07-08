@@ -32,7 +32,7 @@ enum FieldType { none, wheat, grass, forest, water, swamp, mine, castle }
 class Field {
   FieldType type = FieldType.none;
   int crowns = 0;
-  bool isMarked = false; //use to create areas
+  bool isMarked = false; //to create areas
   Field(this.type);
 }
 

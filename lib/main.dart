@@ -221,10 +221,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _updateScore() {
     var areas = getAreas(_board);
-    for (var area in areas) {
-      print(
-          '${area.fields.toString()} fields and ${area.crowns.toString()} crowns');
-    }
     setState(() {
       _score = getScore(areas);
     });

@@ -8,7 +8,7 @@ void main() {
 }
 
 const String crown = '\u{1F451}';
-const  String castle = '\u{1F3F0}';
+const String castle = '\u{1F3F0}';
 
 enum SelectionMode { field, crown, castle }
 
@@ -117,24 +117,24 @@ class _MyHomePageState extends State<MyHomePage> {
     Color color;
     switch (type) {
       case FieldType.none:
-        color = Colors.black;
+        color = Colors.blueGrey.shade800;
         break;
       case FieldType.wheat:
-        color = Colors.yellow;
+        color = Colors.yellow.shade600;
         break;
       case FieldType.grass:
         color = Colors.lightGreen;
         break;
       case FieldType.forest:
-        color = Colors.green;
+        color = Colors.green.shade800;
         break;
       case FieldType.water:
         color = Colors.blue;
         break;
-      case FieldType.swamp:
-        color = Colors.brown;
-        break;
       case FieldType.mine:
+        color = Colors.brown.shade800;
+        break;
+      case FieldType.swamp:
         color = Colors.grey;
         break;
       case FieldType.castle:
@@ -200,10 +200,22 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget _buildField(int x, int y) {
-    Color color = getColorForFieldType(_board.fields[x][y].type);
+    Field field= _board.fields[x][y];
+    Color color = getColorForFieldType(field.type);
+    if(field.type == FieldType.castle)
+      return Container(
+          color: color,
+          child: Wrap(children: [
+            Text(castle,
+                style: TextStyle(fontSize: 25.0))
+          ]));
+    else
     return Container(
         color: color,
-        child: Wrap(children: [Text(crown * _board.fields[x][y].crowns)]));
+        child: Wrap(children: [
+          Text(crown * field.crowns,
+              style: TextStyle(fontSize: 20.0))
+        ]));
   }
 
   Widget _buildBoard() {

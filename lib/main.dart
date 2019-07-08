@@ -9,10 +9,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: '',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      title: 'Kingdomino Score',
+      theme:
+          ThemeData(primarySwatch: Colors.brown, canvasColor: Colors.blueGrey),
       home: MyHomePage(title: ''),
     );
   }
@@ -51,6 +50,46 @@ class _MyHomePageState extends State<MyHomePage> {
       _selectedType = FieldType.castle;
       _selectionMode = SelectionMode.castle;
     });
+  }
+
+  _aboutDialog(BuildContext context) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Kingdomino Score Count'),
+          content: const Text('Olivier Drevet - GPL v.3'),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  _scoreDetailsDialog(BuildContext context) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(''),
+          content: const Text('...'),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   Color getColorForFieldType(FieldType type) {
@@ -196,7 +235,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     var actions = <Widget>[
       IconButton(
-          icon: Icon(_board.size == 5 ? Icons.filter_5 :  Icons.filter_7),
+          icon: Icon(_board.size == 5 ? Icons.filter_5 : Icons.filter_7),
           onPressed: () {
             setState(() {
               if (_board.size == 5)
@@ -211,18 +250,22 @@ class _MyHomePageState extends State<MyHomePage> {
             setState(() {
               _board.erase();
             });
-          })
+          }),
+      IconButton(icon: Icon(Icons.help), onPressed: () => _aboutDialog(context))
     ];
 
     return Scaffold(
         appBar: AppBar(
           title: ButtonBar(children: actions),
         ),
-        bottomNavigationBar:
-            BottomAppBar(child: fieldSelection, color: Colors.blue),
+        bottomNavigationBar: BottomAppBar(
+            child: fieldSelection, color: Theme.of(context).primaryColor),
         body: Column(children: <Widget>[
           _buildBoard(),
-          Text(_score.toString(), style: TextStyle(height: 5.0))
+          InkWell(
+            child: Text(_score.toString(), style: TextStyle(height: 5.0)),
+            onTap: () => _scoreDetailsDialog(context),
+          )
         ]));
   }
 

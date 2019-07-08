@@ -80,6 +80,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   _scoreDetailsDialog(BuildContext context) {
     var areas = getAreas(_board);
+    areas.sort((a, b) => (a.crowns * a.fields).compareTo(b.crowns * b.fields));
+
     String text = '';
 
     for (var area in areas) {

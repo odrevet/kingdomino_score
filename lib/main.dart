@@ -249,6 +249,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 _board.reSize(7);
               else
                 _board.reSize(5);
+
+              _score = 0;
             });
           }),
       IconButton(

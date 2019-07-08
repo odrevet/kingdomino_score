@@ -8,6 +8,7 @@ void main() {
 }
 
 String crown = '\u{1F451}';
+String castle = '\u{1F3F0}';
 
 enum SelectionMode { field, crown, castle }
 
@@ -314,8 +315,8 @@ class _MyHomePageState extends State<MyHomePage> {
       padding: EdgeInsets.all(0.0),
       child: Text(crown, style: TextStyle(fontSize: 25.0)));
 
-  IconButton castleButton() => IconButton(
-        icon: Icon(Icons.star),
-        onPressed: () => _onSelectCastle(),
-      );
+  FlatButton castleButton() => FlatButton(
+      onPressed: () => _onSelectCrown(),
+      padding: EdgeInsets.all(0.0),
+      child: Text(castle, style: TextStyle(fontSize: 25.0)));
 }

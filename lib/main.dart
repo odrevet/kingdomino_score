@@ -156,16 +156,17 @@ class _MyHomePageState extends State<MyHomePage> {
           break;
         case SelectionMode.castle:
           //remove previous castle if any
-          for (var x = 0; x < _board.size; x++) {
-            for (var y = 0; y < _board.size; y++) {
-              if (field.type == FieldType.castle) {
-                field.type = FieldType.none;
-                field.crowns = 0;
+          for (var cx = 0; cx < _board.size; cx++) {
+            for (var cy = 0; cy < _board.size; cy++) {
+              if ( _board.fields[cx][cy].type == FieldType.castle) {
+                _board.fields[cx][cy].type = FieldType.none;
+                _board.fields[cx][cy].crowns = 0;
               }
             }
           }
 
           field.type = _selectedType; //should be castle
+          field.crowns = 0;
           break;
       }
     });

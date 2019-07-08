@@ -140,8 +140,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget _buildField(int x, int y) {
     Color color = getColorForFieldType(_board.fields[x][y].type);
-    String crowns = '*' * _board.fields[x][y].crowns;
-    return Container(color: color, child: Text(crowns));
+
+    var crowns = List<Widget>.generate(_board.fields[x][y].crowns,
+        (_) => Image.asset('assets/crown.png', width: 20.0, height: 20.0));
+    return Container(color: color, child: Wrap(children: crowns));
   }
 
   Widget _buildBoard() {
@@ -225,18 +227,18 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget fieldButton(FieldType type) => GestureDetector(
-    onTap: () => _onSelectFieldType(type),
-    child: Container(
-      margin: EdgeInsets.all(5.0),
-      height: 50.0,
-      width: 50.0,
-      decoration: BoxDecoration(
-          border: Border.all(color: Colors.black, width: 0.5)),
-      child:Container(color: getColorForFieldType(type), child: Text(''),
-      ),
-    ));
-
-
+      onTap: () => _onSelectFieldType(type),
+      child: Container(
+        margin: EdgeInsets.all(5.0),
+        height: 50.0,
+        width: 50.0,
+        decoration:
+            BoxDecoration(border: Border.all(color: Colors.black, width: 0.5)),
+        child: Container(
+          color: getColorForFieldType(type),
+          child: Text(''),
+        ),
+      ));
 
   FlatButton crownButton() => FlatButton(
       onPressed: () => _onSelectCrown(),

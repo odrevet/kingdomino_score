@@ -200,22 +200,19 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget _buildField(int x, int y) {
-    Field field= _board.fields[x][y];
+    Field field = _board.fields[x][y];
     Color color = getColorForFieldType(field.type);
-    if(field.type == FieldType.castle)
+    if (field.type == FieldType.castle)
+      return Container(
+          color: color,
+          child:
+              Wrap(children: [Text(castle, style: TextStyle(fontSize: 25.0))]));
+    else
       return Container(
           color: color,
           child: Wrap(children: [
-            Text(castle,
-                style: TextStyle(fontSize: 25.0))
+            Text(crown * field.crowns, style: TextStyle(fontSize: 20.0))
           ]));
-    else
-    return Container(
-        color: color,
-        child: Wrap(children: [
-          Text(crown * field.crowns,
-              style: TextStyle(fontSize: 20.0))
-        ]));
   }
 
   Widget _buildBoard() {
@@ -295,7 +292,8 @@ class _MyHomePageState extends State<MyHomePage> {
         body: Column(children: <Widget>[
           _buildBoard(),
           InkWell(
-            child: Text(_score.toString(), style: TextStyle(fontSize: 50.0)),
+            child: Text(_score.toString(),
+                style: TextStyle(fontSize: 50.0, color: Colors.white)),
             onTap: () => _scoreDetailsDialog(context),
           )
         ]));

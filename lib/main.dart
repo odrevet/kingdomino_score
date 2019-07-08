@@ -76,8 +76,9 @@ class _MyHomePageState extends State<MyHomePage> {
     var areas = getAreas(_board);
     String text = '';
 
-    for(var area in areas){
-      text += '${area.fields} * ${area.crowns} = ${area.fields * area.crowns}\n';
+    for (var area in areas) {
+      text +=
+          '${area.fields} * ${area.crowns} = ${area.fields * area.crowns}\n';
     }
 
     return showDialog<void>(
@@ -279,19 +280,29 @@ class _MyHomePageState extends State<MyHomePage> {
         ]));
   }
 
-  Widget fieldButton(FieldType type) => GestureDetector(
-      onTap: () => _onSelectFieldType(type),
-      child: Container(
-        margin: EdgeInsets.all(5.0),
-        height: 50.0,
-        width: 50.0,
-        decoration:
-            BoxDecoration(border: Border.all(color: Colors.black, width: 0.5)),
+  Widget fieldButton(FieldType type) {
+    var selected = Icon(
+      Icons.crop_free,
+      color: Colors.white,
+    );
+
+    return GestureDetector(
+        onTap: () => _onSelectFieldType(type),
         child: Container(
-          color: getColorForFieldType(type),
-          child: Text(''),
-        ),
-      ));
+          margin: EdgeInsets.all(5.0),
+          height: 50.0,
+          width: 50.0,
+          decoration: BoxDecoration(
+              border: Border.all(color: Colors.black, width: 0.5)),
+          child: Container(
+            color: getColorForFieldType(type),
+            child:
+                _selectionMode == SelectionMode.field && _selectedType == type
+                    ? selected
+                    : Text(''),
+          ),
+        ));
+  }
 
   FlatButton crownButton() => FlatButton(
       onPressed: () => _onSelectCrown(),

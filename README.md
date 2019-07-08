@@ -1,16 +1,13 @@
-# kingdomino_score_count
+# kingdomino Score Count
 
 Calculate kingdomino score from a given grid
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+TODO
 
-A few resources to get you started if this is your first Flutter project:
+## Credits and thanks
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+Kingdomino by Blue Orange Games
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+Crown icon by MD BADSHA MEAH, Creative Commons (Attribution 3.0 Unported)

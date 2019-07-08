@@ -256,6 +256,7 @@ class _MyHomePageState extends State<MyHomePage> {
           onPressed: () {
             setState(() {
               _board.erase();
+              _score = 0;
             });
           }),
       IconButton(icon: Icon(Icons.help), onPressed: () => _aboutDialog(context))

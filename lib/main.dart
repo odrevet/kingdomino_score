@@ -73,12 +73,19 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   _scoreDetailsDialog(BuildContext context) {
+    var areas = getAreas(_board);
+    String text = '';
+
+    for(var area in areas){
+      text += '${area.fields} * ${area.crowns} = ${area.fields * area.crowns}\n';
+    }
+
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(''),
-          content: const Text('...'),
+          content: Text(text),
           actions: <Widget>[
             FlatButton(
               child: Text('OK'),

@@ -218,23 +218,33 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         bottomNavigationBar:
             BottomAppBar(child: fieldSelection, color: Colors.blue),
-        body:
-            Column(children: <Widget>[_buildBoard(), Text(_score.toString())]));
+        body: Column(children: <Widget>[
+          _buildBoard(),
+          Text(_score.toString(), style: TextStyle(height: 5.0))
+        ]));
   }
 
-  IconButton fieldButton(FieldType type) => IconButton(
-      icon: Icon(Icons.stop),
-      color: getColorForFieldType(type),
-      onPressed: () => _onSelectFieldType(type));
+  Widget fieldButton(FieldType type) => GestureDetector(
+    onTap: () => _onSelectFieldType(type),
+    child: Container(
+      margin: EdgeInsets.all(5.0),
+      height: 50.0,
+      width: 50.0,
+      decoration: BoxDecoration(
+          border: Border.all(color: Colors.black, width: 0.5)),
+      child:Container(color: getColorForFieldType(type), child: Text(''),
+      ),
+    ));
 
-  IconButton crownButton() => IconButton(
-        icon: Icon(Icons.add_box),
-        onPressed: () => _onSelectCrown(),
-      );
+
+
+  FlatButton crownButton() => FlatButton(
+      onPressed: () => _onSelectCrown(),
+      padding: EdgeInsets.all(0.0),
+      child: Image.asset('assets/crown.png', width: 20.0, height: 20.0));
 
   IconButton castleButton() => IconButton(
         icon: Icon(Icons.star),
         onPressed: () => _onSelectCastle(),
       );
 }
-

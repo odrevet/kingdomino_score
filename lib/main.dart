@@ -93,8 +93,8 @@ class _MyHomePageState extends State<MyHomePage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(''),
-          content: Text(text),
+          backgroundColor: Colors.blueGrey,
+          content: Text(text, style: TextStyle(fontSize: 25.0)),
           actions: <Widget>[
             FlatButton(
               child: Icon(

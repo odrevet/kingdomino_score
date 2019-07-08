@@ -317,7 +317,7 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Text(crown, style: TextStyle(fontSize: 25.0)));
 
   FlatButton castleButton() => FlatButton(
-      onPressed: () => _onSelectCrown(),
+      onPressed: () => _onSelectCastle(),
       padding: EdgeInsets.all(0.0),
       child: Text(castle, style: TextStyle(fontSize: 25.0)));
 }

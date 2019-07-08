@@ -7,8 +7,8 @@ void main() {
   runApp(new MyApp());
 }
 
-String crown = '\u{1F451}';
-String castle = '\u{1F3F0}';
+const String crown = '\u{1F451}';
+const  String castle = '\u{1F3F0}';
 
 enum SelectionMode { field, crown, castle }
 
@@ -167,7 +167,7 @@ class _MyHomePageState extends State<MyHomePage> {
           //remove previous castle if any
           for (var cx = 0; cx < _board.size; cx++) {
             for (var cy = 0; cy < _board.size; cy++) {
-              if ( _board.fields[cx][cy].type == FieldType.castle) {
+              if (_board.fields[cx][cy].type == FieldType.castle) {
                 _board.fields[cx][cy].type = FieldType.none;
                 _board.fields[cx][cy].crowns = 0;
               }
@@ -201,7 +201,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget _buildField(int x, int y) {
     Color color = getColorForFieldType(_board.fields[x][y].type);
-    return Container(color: color, child: Wrap(children: [Text(crown * _board.fields[x][y].crowns)]));
+    return Container(
+        color: color,
+        child: Wrap(children: [Text(crown * _board.fields[x][y].crowns)]));
   }
 
   Widget _buildBoard() {
@@ -300,7 +302,10 @@ class _MyHomePageState extends State<MyHomePage> {
           height: 50.0,
           width: 50.0,
           decoration: BoxDecoration(
-              border: Border.all(color: Colors.black, width: 0.5)),
+              border: Border(
+            right: BorderSide(width: 3.5, color: Colors.blueGrey.shade600),
+            bottom: BorderSide(width: 3.5, color: Colors.blueGrey.shade900),
+          )),
           child: Container(
             color: getColorForFieldType(type),
             child:
@@ -311,13 +316,19 @@ class _MyHomePageState extends State<MyHomePage> {
         ));
   }
 
-  FlatButton crownButton() => FlatButton(
-      onPressed: () => _onSelectCrown(),
-      padding: EdgeInsets.all(0.0),
-      child: Text(crown, style: TextStyle(fontSize: 25.0)));
+  Container crownButton() => Container(
+      margin: EdgeInsets.all(5.0),
+      child: OutlineButton(
+          onPressed: () => _onSelectCrown(),
+          shape: new RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0)),
+          child: Text(crown, style: TextStyle(fontSize: 30.0))));
 
-  FlatButton castleButton() => FlatButton(
-      onPressed: () => _onSelectCastle(),
-      padding: EdgeInsets.all(0.0),
-      child: Text(castle, style: TextStyle(fontSize: 25.0)));
+  Container castleButton() => Container(
+      margin: EdgeInsets.all(5.0),
+      child: OutlineButton(
+          onPressed: () => _onSelectCastle(),
+          shape: new RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0)),
+          child: Text(castle, style: TextStyle(fontSize: 30.0))));
 }

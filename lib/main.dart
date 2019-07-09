@@ -273,6 +273,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 _board.reSize(5);
 
               _score = 0;
+              _onSelectCastle();
             });
           }),
       IconButton(
@@ -281,6 +282,7 @@ class _MyHomePageState extends State<MyHomePage> {
             setState(() {
               _board.erase();
               _score = 0;
+              _onSelectCastle();
             });
           }),
       IconButton(icon: Icon(Icons.help), onPressed: () => _aboutDialog(context))

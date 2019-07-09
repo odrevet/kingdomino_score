@@ -206,7 +206,7 @@ class _MyHomePageState extends State<MyHomePage> {
       return Container(
           color: color,
           child:
-          FittedBox(fit:BoxFit.fitWidth, child: Text(castle));
+          FittedBox(fit:BoxFit.fitWidth, child: Text(castle)));
     else
       return Container(
           color: color,
@@ -223,7 +223,10 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Container(
           margin: const EdgeInsets.all(8.0),
           decoration: BoxDecoration(
-              border: Border.all(color: Colors.black, width: 2.0)),
+              border:  Border(
+                right: BorderSide(width: 3.5, color: Colors.blueGrey.shade600),
+                bottom: BorderSide(width: 3.5, color: Colors.blueGrey.shade900),
+              )),
           child: GridView.builder(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: gridStateLength,

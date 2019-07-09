@@ -65,7 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: Colors.white70,
-          title: Text('Kingdomino Score Count'),
+          title: Text('Kingdomino Score'),
           content: const Text('Olivier Drevet - GPL v.3'),
           actions: <Widget>[
             FlatButton(
@@ -86,18 +86,30 @@ class _MyHomePageState extends State<MyHomePage> {
     var areas = getAreas(_board);
     areas.sort((a, b) => (a.crowns * a.fields).compareTo(b.crowns * b.fields));
 
-    String calculationDetails = '';
+    var areaDetail = <TextSpan>[];
     for (var area in areas) {
-      calculationDetails +=
-          '• ${area.fields} x ${area.crowns} ${crown} = ${area.fields * area.crowns}\n';
+      areaDetail.add(TextSpan(text: '• '));
+      areaDetail.add(TextSpan(text: '${area.fields}', style: TextStyle(color: getColorForFieldType(area.type))));
+      areaDetail.add(TextSpan(text: ' x ${area.crowns} ${crown} = ${area.fields * area.crowns}\n'));
     }
+
+    var text = RichText(
+      text: TextSpan(
+        style: TextStyle(
+          fontSize: 25.0,
+          color: Colors.black,
+        ),
+        children: areaDetail,
+      ),
+    );
 
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: Colors.white70,
-          content: Text(calculationDetails, style: TextStyle(fontSize: 25.0)),
+          content:
+              text, //Text(calculationDetails, style: TextStyle(fontSize: 25.0)),
           actions: <Widget>[
             FlatButton(
               child: Icon(
@@ -205,8 +217,7 @@ class _MyHomePageState extends State<MyHomePage> {
     if (field.type == FieldType.castle)
       return Container(
           color: color,
-          child:
-          FittedBox(fit:BoxFit.fitWidth, child: Text(castle)));
+          child: FittedBox(fit: BoxFit.fitWidth, child: Text(castle)));
     else
       return Container(
           color: color,
@@ -223,10 +234,10 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Container(
           margin: const EdgeInsets.all(8.0),
           decoration: BoxDecoration(
-              border:  Border(
-                right: BorderSide(width: 3.5, color: Colors.blueGrey.shade600),
-                bottom: BorderSide(width: 3.5, color: Colors.blueGrey.shade900),
-              )),
+              border: Border(
+            right: BorderSide(width: 3.5, color: Colors.blueGrey.shade600),
+            bottom: BorderSide(width: 3.5, color: Colors.blueGrey.shade900),
+          )),
           child: GridView.builder(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: gridStateLength,
@@ -343,7 +354,8 @@ class _MyHomePageState extends State<MyHomePage> {
   Container crownButton() => Container(
       margin: EdgeInsets.all(margin),
       child: OutlineButton(
-          borderSide: _selectionMode == SelectionMode.crown ? selectedBorder : null,
+          borderSide:
+              _selectionMode == SelectionMode.crown ? selectedBorder : null,
           onPressed: () => _onSelectCrown(),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
@@ -353,7 +365,8 @@ class _MyHomePageState extends State<MyHomePage> {
     return Container(
         margin: EdgeInsets.all(margin),
         child: OutlineButton(
-          borderSide: _selectionMode == SelectionMode.castle ? selectedBorder : null,
+            borderSide:
+                _selectionMode == SelectionMode.castle ? selectedBorder : null,
             onPressed: () => _onSelectCastle(),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0)),

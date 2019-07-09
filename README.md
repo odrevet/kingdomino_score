@@ -1,3 +1,3 @@
-# kingdomino Score Count
+# kingdomino Score
 
-Calculate kingdomino score from a given grid
+Calculate kingdomino score by entering the board ! 

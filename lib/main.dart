@@ -4,7 +4,7 @@ import 'board.dart';
 
 void main() {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  runApp(new MyApp());
+  runApp(MyApp());
 }
 
 const String crown = '\u{1F451}';
@@ -206,7 +206,7 @@ class _MyHomePageState extends State<MyHomePage> {
       return Container(
           color: color,
           child:
-              Wrap(children: [Text(castle, style: TextStyle(fontSize: 25.0))]));
+          FittedBox(fit:BoxFit.fitWidth, child: Text(castle));
     else
       return Container(
           color: color,
@@ -285,7 +285,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
         appBar: AppBar(
-          title: Row(mainAxisAlignment: MainAxisAlignment.end, children: actions),
+          title:
+              Row(mainAxisAlignment: MainAxisAlignment.end, children: actions),
         ),
         bottomNavigationBar: BottomAppBar(
             child: fieldSelection, color: Theme.of(context).primaryColor),
@@ -326,19 +327,31 @@ class _MyHomePageState extends State<MyHomePage> {
         ));
   }
 
+  final double margin = 5.0;
+
+  var selectedBorder = BorderSide(
+    color: Colors.blueGrey,
+    style: BorderStyle.solid,
+    width: 0.8,
+  );
+
   Container crownButton() => Container(
-      margin: EdgeInsets.all(5.0),
+      margin: EdgeInsets.all(margin),
       child: OutlineButton(
+          borderSide: _selectionMode == SelectionMode.crown ? selectedBorder : null,
           onPressed: () => _onSelectCrown(),
-          shape: new RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
           child: Text(crown, style: TextStyle(fontSize: 30.0))));
 
-  Container castleButton() => Container(
-      margin: EdgeInsets.all(5.0),
-      child: OutlineButton(
-          onPressed: () => _onSelectCastle(),
-          shape: new RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0)),
-          child: Text(castle, style: TextStyle(fontSize: 30.0))));
+  Container castleButton() {
+    return Container(
+        margin: EdgeInsets.all(margin),
+        child: OutlineButton(
+          borderSide: _selectionMode == SelectionMode.castle ? selectedBorder : null,
+            onPressed: () => _onSelectCastle(),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0)),
+            child: Text(castle, style: TextStyle(fontSize: 30.0))));
+  }
 }

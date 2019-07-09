@@ -1,1 +1,1 @@
-We don't store your data
+We don't collect or store your data

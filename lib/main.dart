@@ -89,11 +89,14 @@ class _MyHomePageState extends State<MyHomePage> {
     var areaDetail = <TextSpan>[];
     for (var area in areas) {
       areaDetail.add(TextSpan(text: '• '));
-      areaDetail.add(TextSpan(text: '${area.fields}', style: TextStyle(color: getColorForFieldType(area.type))));
-      areaDetail.add(TextSpan(text: ' x ${area.crowns} ${crown} = ${area.fields * area.crowns}\n'));
+      areaDetail.add(TextSpan(
+          text: '${area.fields}',
+          style: TextStyle(color: getColorForFieldType(area.type))));
+      areaDetail.add(TextSpan(
+          text: ' x ${area.crowns} $crown = ${area.fields * area.crowns}\n'));
     }
 
-    var text = RichText(
+    var calculationDetails = RichText(
       text: TextSpan(
         style: TextStyle(
           fontSize: 25.0,
@@ -108,8 +111,7 @@ class _MyHomePageState extends State<MyHomePage> {
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: Colors.white70,
-          content:
-              text, //Text(calculationDetails, style: TextStyle(fontSize: 25.0)),
+          content: calculationDetails,
           actions: <Widget>[
             FlatButton(
               child: Icon(

@@ -285,7 +285,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
         appBar: AppBar(
-          title: ButtonBar(children: actions),
+          title: Row(mainAxisAlignment: MainAxisAlignment.end, children: actions),
         ),
         bottomNavigationBar: BottomAppBar(
             child: fieldSelection, color: Theme.of(context).primaryColor),

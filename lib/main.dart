@@ -86,32 +86,59 @@ class _MyHomePageState extends State<MyHomePage> {
     var areas = getAreas(_board);
     areas.sort((a, b) => (a.crowns * a.fields).compareTo(b.crowns * b.fields));
 
-    var areaDetail = <TextSpan>[];
+    const double fontSize = 25.0;
+    var tableRows = <TableRow>[];
     for (var area in areas) {
-      areaDetail.add(TextSpan(text: '• '));
-      areaDetail.add(TextSpan(
-          text: '${area.fields}',
-          style: TextStyle(color: getColorForFieldType(area.type))));
-      areaDetail.add(TextSpan(
-          text: ' x ${area.crowns} $crown = ${area.fields * area.crowns}\n'));
-    }
+      var tableCells = <TableCell>[];
 
-    var calculationDetails = RichText(
-      text: TextSpan(
-        style: TextStyle(
-          fontSize: 25.0,
-          color: Colors.black,
-        ),
-        children: areaDetail,
-      ),
-    );
+      tableCells.add(TableCell(
+          child: Align(
+        alignment: Alignment.centerRight,
+        child: Text('${area.fields}',
+            style: TextStyle(fontSize: fontSize)),
+      )));
+      tableCells.add(TableCell(
+          child: Align(
+            alignment: Alignment.centerRight,
+            child: IconTheme(
+              data: new IconThemeData(
+                  color: getColorForFieldType(area.type)),
+              child: new Icon(Icons.stop),
+            ),
+          )));
+      tableCells.add(TableCell(
+          child: Align(
+              alignment: Alignment.centerRight,
+              child: Text('×', style: TextStyle(fontSize: fontSize)))));
+      tableCells.add(TableCell(
+          child: Align(
+              alignment: Alignment.centerRight,
+              child: Text(area.crowns.toString(),
+                  style: TextStyle(fontSize: fontSize)))));
+      tableCells.add(TableCell(
+          child: Align(
+              alignment: Alignment.centerRight,
+              child: Text(crown, style: TextStyle(fontSize: fontSize)))));
+      tableCells.add(TableCell(
+          child: Align(
+              alignment: Alignment.centerRight,
+              child: Text('=', style: TextStyle(fontSize: fontSize)))));
+      tableCells.add(TableCell(
+          child: Align(
+              alignment: Alignment.centerRight,
+              child: Text('${area.fields * area.crowns}',
+                  style: TextStyle(fontSize: fontSize)))));
+
+      var tableRow = TableRow(children: tableCells);
+      tableRows.add(tableRow);
+    }
 
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: Colors.white70,
-          content: calculationDetails,
+          content: SingleChildScrollView(child:Table(children: tableRows)),
           actions: <Widget>[
             FlatButton(
               child: Icon(

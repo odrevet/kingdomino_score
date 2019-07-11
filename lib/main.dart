@@ -92,38 +92,41 @@ class _MyHomePageState extends State<MyHomePage> {
       var tableCells = <TableCell>[];
 
       tableCells.add(TableCell(
+        verticalAlignment: TableCellVerticalAlignment.middle,
           child: Align(
         alignment: Alignment.centerRight,
         child: Text('${area.fields}',
             style: TextStyle(fontSize: fontSize)),
       )));
       tableCells.add(TableCell(
+          verticalAlignment: TableCellVerticalAlignment.middle,
           child: Align(
             alignment: Alignment.centerRight,
-            child: IconTheme(
-              data: new IconThemeData(
-                  color: getColorForFieldType(area.type)),
-              child: new Icon(Icons.stop),
-            ),
+            child: Text('\u{25A0}', style: TextStyle(fontSize: 20, color: getColorForFieldType(area.type))),
           )));
       tableCells.add(TableCell(
+          verticalAlignment: TableCellVerticalAlignment.middle,
           child: Align(
               alignment: Alignment.centerRight,
               child: Text('×', style: TextStyle(fontSize: fontSize)))));
       tableCells.add(TableCell(
+          verticalAlignment: TableCellVerticalAlignment.middle,
           child: Align(
               alignment: Alignment.centerRight,
               child: Text(area.crowns.toString(),
                   style: TextStyle(fontSize: fontSize)))));
       tableCells.add(TableCell(
+          verticalAlignment: TableCellVerticalAlignment.middle,
           child: Align(
               alignment: Alignment.centerRight,
               child: Text(crown, style: TextStyle(fontSize: fontSize)))));
       tableCells.add(TableCell(
+          verticalAlignment: TableCellVerticalAlignment.middle,
           child: Align(
               alignment: Alignment.centerRight,
               child: Text('=', style: TextStyle(fontSize: fontSize)))));
       tableCells.add(TableCell(
+          verticalAlignment: TableCellVerticalAlignment.middle,
           child: Align(
               alignment: Alignment.centerRight,
               child: Text('${area.fields * area.crowns}',

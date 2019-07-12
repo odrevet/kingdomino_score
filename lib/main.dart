@@ -329,12 +329,18 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         bottomNavigationBar: BottomAppBar(
             child: fieldSelection, color: Theme.of(context).primaryColor),
-        body: Column(children: <Widget>[
+        body:
+
+
+        Column(children: <Widget>[
           _buildBoard(),
-          InkWell(
-            child: Text(_score.toString(),
-                style: TextStyle(fontSize: 150.0, color: Colors.white)),
-            onTap: () => _scoreDetailsDialog(context),
+          Expanded(
+            child: FittedBox(fit: BoxFit.fitHeight, child: InkWell(
+              child: Text(_score.toString(),
+                  style: TextStyle(fontSize: 150.0, color: Colors.white)),
+              onTap: () => _scoreDetailsDialog(context),
+            )),
+
           )
         ]));
   }

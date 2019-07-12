@@ -92,41 +92,34 @@ class _MyHomePageState extends State<MyHomePage> {
       var tableCells = <TableCell>[];
 
       tableCells.add(TableCell(
-        verticalAlignment: TableCellVerticalAlignment.middle,
           child: Align(
         alignment: Alignment.centerRight,
         child: Text('${area.fields}',
             style: TextStyle(fontSize: fontSize)),
       )));
       tableCells.add(TableCell(
-          verticalAlignment: TableCellVerticalAlignment.middle,
           child: Align(
             alignment: Alignment.centerRight,
             child: Text('\u{25A0}', style: TextStyle(fontSize: 20, color: getColorForFieldType(area.type))),
           )));
       tableCells.add(TableCell(
-          verticalAlignment: TableCellVerticalAlignment.middle,
           child: Align(
               alignment: Alignment.centerRight,
               child: Text('×', style: TextStyle(fontSize: fontSize)))));
       tableCells.add(TableCell(
-          verticalAlignment: TableCellVerticalAlignment.middle,
           child: Align(
               alignment: Alignment.centerRight,
               child: Text(area.crowns.toString(),
                   style: TextStyle(fontSize: fontSize)))));
       tableCells.add(TableCell(
-          verticalAlignment: TableCellVerticalAlignment.middle,
           child: Align(
               alignment: Alignment.centerRight,
               child: Text(crown, style: TextStyle(fontSize: fontSize)))));
       tableCells.add(TableCell(
-          verticalAlignment: TableCellVerticalAlignment.middle,
           child: Align(
               alignment: Alignment.centerRight,
               child: Text('=', style: TextStyle(fontSize: fontSize)))));
       tableCells.add(TableCell(
-          verticalAlignment: TableCellVerticalAlignment.middle,
           child: Align(
               alignment: Alignment.centerRight,
               child: Text('${area.fields * area.crowns}',
@@ -260,26 +253,24 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget _buildBoard() {
     int gridStateLength = _board.fields.length;
-    return Column(children: <Widget>[
-      AspectRatio(
-        aspectRatio: 1.0,
-        child: Container(
-          margin: const EdgeInsets.all(8.0),
-          decoration: BoxDecoration(
-              border: Border(
-            right: BorderSide(width: 3.5, color: Colors.blueGrey.shade600),
-            bottom: BorderSide(width: 3.5, color: Colors.blueGrey.shade900),
-          )),
-          child: GridView.builder(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: gridStateLength,
-            ),
-            itemBuilder: _buildFields,
-            itemCount: gridStateLength * gridStateLength,
+    return AspectRatio(
+      aspectRatio: 1.0,
+      child: Container(
+        margin: const EdgeInsets.all(8.0),
+        decoration: BoxDecoration(
+            border: Border(
+              right: BorderSide(width: 3.5, color: Colors.blueGrey.shade600),
+              bottom: BorderSide(width: 3.5, color: Colors.blueGrey.shade900),
+            )),
+        child: GridView.builder(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: gridStateLength,
           ),
+          itemBuilder: _buildFields,
+          itemCount: gridStateLength * gridStateLength,
         ),
       ),
-    ]);
+    );
   }
 
   void _updateScore() {
@@ -342,7 +333,7 @@ class _MyHomePageState extends State<MyHomePage> {
           _buildBoard(),
           InkWell(
             child: Text(_score.toString(),
-                style: TextStyle(fontSize: 50.0, color: Colors.white)),
+                style: TextStyle(fontSize: 150.0, color: Colors.white)),
             onTap: () => _scoreDetailsDialog(context),
           )
         ]));

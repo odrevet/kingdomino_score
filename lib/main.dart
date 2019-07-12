@@ -83,6 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   _scoreDetailsDialog(BuildContext context) {
+    final String square = '\u{25A0}';
     var areas = getAreas(_board);
     areas.sort((a, b) => (a.crowns * a.fields).compareTo(b.crowns * b.fields));
 
@@ -94,14 +95,15 @@ class _MyHomePageState extends State<MyHomePage> {
       tableCells.add(TableCell(
           child: Align(
         alignment: Alignment.centerRight,
-        child: Text('${area.fields}',
-            style: TextStyle(fontSize: fontSize)),
+        child: Text('${area.fields}', style: TextStyle(fontSize: fontSize)),
       )));
       tableCells.add(TableCell(
           child: Align(
-            alignment: Alignment.centerRight,
-            child: Text('\u{25A0}', style: TextStyle(fontSize: 20, color: getColorForFieldType(area.type))),
-          )));
+        alignment: Alignment.centerRight,
+        child: Text(square,
+            style: TextStyle(
+                fontSize: 20, color: getColorForFieldType(area.type, context))),
+      )));
       tableCells.add(TableCell(
           child: Align(
               alignment: Alignment.centerRight,
@@ -134,7 +136,7 @@ class _MyHomePageState extends State<MyHomePage> {
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: Colors.white70,
-          content: SingleChildScrollView(child:Table(children: tableRows)),
+          content: SingleChildScrollView(child: Table(children: tableRows)),
           actions: <Widget>[
             FlatButton(
               child: Icon(
@@ -150,11 +152,11 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Color getColorForFieldType(FieldType type) {
+  Color getColorForFieldType(FieldType type, BuildContext context) {
     Color color;
     switch (type) {
       case FieldType.none:
-        color = Colors.blueGrey.shade800;
+        color = Theme.of(context).canvasColor;
         break;
       case FieldType.wheat:
         color = Colors.yellow.shade600;
@@ -178,7 +180,7 @@ class _MyHomePageState extends State<MyHomePage> {
         color = Colors.white;
         break;
       default:
-        color = Colors.black;
+        color = Theme.of(context).canvasColor;
     }
 
     return color;
@@ -238,7 +240,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget _buildField(int x, int y) {
     Field field = _board.fields[x][y];
-    Color color = getColorForFieldType(field.type);
+    Color color = getColorForFieldType(field.type, context);
     if (field.type == FieldType.castle)
       return Container(
           color: color,
@@ -259,9 +261,9 @@ class _MyHomePageState extends State<MyHomePage> {
         margin: const EdgeInsets.all(8.0),
         decoration: BoxDecoration(
             border: Border(
-              right: BorderSide(width: 3.5, color: Colors.blueGrey.shade600),
-              bottom: BorderSide(width: 3.5, color: Colors.blueGrey.shade900),
-            )),
+          right: BorderSide(width: 3.5, color: Colors.blueGrey.shade600),
+          bottom: BorderSide(width: 3.5, color: Colors.blueGrey.shade900),
+        )),
         child: GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: gridStateLength,
@@ -329,18 +331,16 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         bottomNavigationBar: BottomAppBar(
             child: fieldSelection, color: Theme.of(context).primaryColor),
-        body:
-
-
-        Column(children: <Widget>[
+        body: Column(children: <Widget>[
           _buildBoard(),
           Expanded(
-            child: FittedBox(fit: BoxFit.fitHeight, child: InkWell(
-              child: Text(_score.toString(),
-                  style: TextStyle(fontSize: 150.0, color: Colors.white)),
-              onTap: () => _scoreDetailsDialog(context),
-            )),
-
+            child: FittedBox(
+                fit: BoxFit.fitHeight,
+                child: InkWell(
+                  child: Text(_score.toString(),
+                      style: TextStyle(fontSize: 150.0, color: Colors.white)),
+                  onTap: () => _scoreDetailsDialog(context),
+                )),
           )
         ]));
   }
@@ -363,7 +363,7 @@ class _MyHomePageState extends State<MyHomePage> {
             bottom: BorderSide(width: 3.5, color: Colors.blueGrey.shade900),
           )),
           child: Container(
-            color: getColorForFieldType(type),
+            color: getColorForFieldType(type, context),
             child:
                 _selectionMode == SelectionMode.field && _selectedType == type
                     ? selected

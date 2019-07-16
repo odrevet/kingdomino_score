@@ -1,7 +1,7 @@
 name: kingdomino_score_count
 description: Calculate kingdomino score from a given grid
 
-version: 1.0.2+3
+version: 1.0.3+4
 
 environment:
   sdk: ">=2.1.0 <3.0.0"

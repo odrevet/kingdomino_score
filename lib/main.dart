@@ -254,12 +254,6 @@ class _MyHomePageState extends State<MyHomePage> {
               style: TextStyle(fontSize: constraints.maxWidth / 3));
         }),
       );
-
-    return Container(
-        color: color,
-        child: Wrap(children: [
-          Text(crown * field.crowns, style: TextStyle(fontSize: 20.0))
-        ]));
   }
 
   Widget _buildBoard() {

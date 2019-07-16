@@ -341,7 +341,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 fit: BoxFit.fitHeight,
                 child: InkWell(
                   child: Text(_score.toString(),
-                      style: TextStyle(fontSize: 150.0, color: Colors.white)),
+                      style: TextStyle(color: Colors.white)),
                   onTap: () => _scoreDetailsDialog(context),
                 )),
           )

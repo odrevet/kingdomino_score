@@ -1,3 +1,5 @@
+enum FieldType { none, wheat, grass, forest, water, swamp, mine, castle }
+
 class Board {
   int size = 5;
   List<List<Field>> fields;
@@ -26,8 +28,6 @@ class Board {
     }
   }
 }
-
-enum FieldType { none, wheat, grass, forest, water, swamp, mine, castle }
 
 class Field {
   FieldType type = FieldType.none;

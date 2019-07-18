@@ -2,15 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'board.dart';
 
-void main() {
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  runApp(KingdominoScore());
-}
-
 const String crown = '\u{1F451}';
 const String castle = '\u{1F3F0}';
 
 enum SelectionMode { field, crown, castle }
+
+const gameSet = {
+  FieldType.wheat : {'count' : 21 + 5, 'maxCrown' : 1},
+  FieldType.grass : {'count' : 10 +2 +2, 'maxCrown' : 2},
+  FieldType.forest : {'count' : 16 + 6, 'maxCrown' : 1},
+  FieldType.water : {'count' : 12 + 6, 'maxCrown' : 1},
+  FieldType.swamp : {'count' : 6 + 2 + 2, 'maxCrown' : 2},
+  FieldType.mine : {'count' : 1 + 1 + 3 +1, 'maxCrown' : 3}
+};
+
+void main() {
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  runApp(KingdominoScore());
+}
 
 class KingdominoScore extends StatelessWidget {
   @override
@@ -198,7 +207,7 @@ class _HomePageState extends State<HomePage> {
           if (field.type == FieldType.castle || field.type == FieldType.none)
             break;
           field.crowns++;
-          if (field.crowns > 3) field.crowns = 0;
+          if (field.crowns > gameSet[field.type]['maxCrown']) field.crowns = 0;
           break;
         case SelectionMode.castle:
           //remove previous castle if any

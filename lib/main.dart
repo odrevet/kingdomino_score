@@ -4,7 +4,7 @@ import 'board.dart';
 
 void main() {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  runApp(MyApp());
+  runApp(KingdominoScore());
 }
 
 const String crown = '\u{1F451}';
@@ -12,28 +12,26 @@ const String castle = '\u{1F3F0}';
 
 enum SelectionMode { field, crown, castle }
 
-class MyApp extends StatelessWidget {
+class KingdominoScore extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Kingdomino Score',
       theme:
           ThemeData(primarySwatch: Colors.brown, canvasColor: Colors.blueGrey),
-      home: MyHomePage(title: ''),
+      home: HomePage(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
+class HomePage extends StatefulWidget {
+  HomePage({Key key}) : super(key: key);
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _HomePageState extends State<HomePage> {
   FieldType _selectedType = FieldType.none;
   SelectionMode _selectionMode = SelectionMode.field;
   var _board = Board(5);

@@ -8,14 +8,31 @@ final String square = '\u{25A0}';
 
 enum SelectionMode { field, crown, castle }
 
-const gameSet = {
-  FieldType.castle: {'count': 1, 'maxCrown': 0},  //per player
-  FieldType.wheat: {'count': 21 + 5, 'maxCrown': 1},
-  FieldType.grass: {'count': 10 + 2 + 2, 'maxCrown': 2},
-  FieldType.forest: {'count': 16 + 6, 'maxCrown': 1},
-  FieldType.water: {'count': 12 + 6, 'maxCrown': 1},
-  FieldType.swamp: {'count': 6 + 2 + 2, 'maxCrown': 2},
-  FieldType.mine: {'count': 1 + 1 + 3 + 1, 'maxCrown': 3}
+const Map<FieldType, Map<String, dynamic>> gameSet = {
+  FieldType.wheat: {
+    'count': 21 + 5,
+    'crowns': {'max': 1, 1: 5}
+  },
+  FieldType.grass: {
+    'count': 10 + 2 + 2,
+    'crowns': {'max': 2, 1: 5, 2: 2}
+  },
+  FieldType.forest: {
+    'count': 16 + 6,
+    'crowns': {'max': 1, 1: 6}
+  },
+  FieldType.water: {
+    'count': 12 + 6,
+    'crowns': {'max': 1, 1: 6}
+  },
+  FieldType.swamp: {
+    'count': 6 + 2 + 2,
+    'crowns': {'max': 2, 1: 2, 2: 2}
+  },
+  FieldType.mine: {
+    'count': 1 + 1 + 3 + 1,
+    'crowns': {'max': 3, 1: 1, 2 : 3, 3 : 1}
+  }
 };
 
 void main() {
@@ -76,7 +93,7 @@ class _HomePageState extends State<HomePage> {
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: Colors.white70,
-          content:  SingleChildScrollView(child:Column(children:_warnings)),
+          content: SingleChildScrollView(child: Column(children: _warnings)),
           actions: <Widget>[
             FlatButton(
               child: Icon(
@@ -246,7 +263,8 @@ class _HomePageState extends State<HomePage> {
           if (field.type == FieldType.castle || field.type == FieldType.none)
             break;
           field.crowns++;
-          if (field.crowns > gameSet[field.type]['maxCrown']) field.crowns = 0;
+          if (field.crowns > gameSet[field.type]['crowns']['max'])
+            field.crowns = 0;
           break;
         case SelectionMode.castle:
           //remove previous castle if any
@@ -327,7 +345,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void _clearWarnings(){
+  void _clearWarnings() {
     setState(() {
       _warnings.clear();
     });
@@ -336,27 +354,62 @@ class _HomePageState extends State<HomePage> {
   //check if the board is conform, if not set warnings
   void _checkBoard() {
     //check if more tile in the board than in the gameSet
-    //todo, check for too many crowns
     for (var fieldType in FieldType.values) {
-      if(fieldType == FieldType.none)continue;
+      if (fieldType == FieldType.none) continue;
 
       var count = _board.fields
           .expand((i) => i)
           .toList()
-          .where((field) => field.type == fieldType).length;
-      if(count > gameSet[fieldType]['count']){
+          .where((field) => field.type == fieldType)
+          .length;
+      if (count > gameSet[fieldType]['count']) {
         setState(() {
-          _warnings.add(
-              RichText(text: TextSpan(text: '$count ', style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 20),
-              children: [TextSpan(text: square, style: TextStyle(
-                  fontSize: 20,
-                  color: getColorForFieldType(fieldType, context))),
-                TextSpan(text: ' > ${gameSet[fieldType]['count']}', style: TextStyle(
-                  color: Colors.black,
-                    fontSize: 20))])));
+          _warnings.add(RichText(
+              text: TextSpan(
+                  text: '$count ',
+                  style: TextStyle(color: Colors.black, fontSize: 20),
+                  children: [
+                TextSpan(
+                    text: square,
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: getColorForFieldType(fieldType, context))),
+                TextSpan(
+                    text: ' > ${gameSet[fieldType]['count']}',
+                    style: TextStyle(color: Colors.black, fontSize: 20))
+              ])));
         });
+      }
+
+      //check for too many tile with given crowns
+      for (var crownsCounter = 1;
+          crownsCounter <= gameSet[fieldType]['crowns']['max'];
+          crownsCounter++) {
+        var count = _board.fields.expand((i) => i).toList().where((field) =>
+            field.type == fieldType && field.crowns == crownsCounter).length;
+
+        if (count > gameSet[fieldType]['crowns'][crownsCounter]) {
+          setState(() {
+            _warnings.add(RichText(
+                text: TextSpan(
+                    text: '$count ',
+                    style: TextStyle(color: Colors.black, fontSize: 20),
+                    children: [
+                  TextSpan(
+                      text: square,
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: getColorForFieldType(fieldType, context))),
+                      TextSpan(
+                          text: crown * crownsCounter,
+                          style: TextStyle(
+                              fontSize: 20)),
+                  TextSpan(
+                      text: ' > ${gameSet[fieldType]['crowns']['max']}',
+                      style: TextStyle(color: Colors.black, fontSize: 20))
+                ])));
+          });
+        }
       }
     }
   }
@@ -412,41 +465,40 @@ class _HomePageState extends State<HomePage> {
       IconButton(icon: Icon(Icons.help), onPressed: () => _aboutDialog(context))
     ];
 
-    if (_warnings.isNotEmpty){
+    if (_warnings.isNotEmpty) {
       actions.insert(
           0,
-          Stack(children: <Widget>[
-          IconButton(
-          icon: Icon(Icons.warning),
-          onPressed: () => _warningsDialog(context)),
-            Positioned(
-              right: 5,
-              top: 10,
-              child: new Container(
-                padding: EdgeInsets.all(1),
-                decoration: new BoxDecoration(
-                  color: Colors.red,
-                  borderRadius: BorderRadius.circular(6),
-                ),
-                constraints: BoxConstraints(
-                  minWidth: 12,
-                  minHeight: 12,
-                ),
-                child: new Text(
-                  '${_warnings.length}',
-                  style: new TextStyle(
-                    color: Colors.white,
-                    fontSize: 10,
+          Stack(
+            children: <Widget>[
+              IconButton(
+                  icon: Icon(Icons.warning),
+                  onPressed: () => _warningsDialog(context)),
+              Positioned(
+                right: 5,
+                top: 10,
+                child: new Container(
+                  padding: EdgeInsets.all(1),
+                  decoration: new BoxDecoration(
+                    color: Colors.red,
+                    borderRadius: BorderRadius.circular(6),
                   ),
-                  textAlign: TextAlign.center,
+                  constraints: BoxConstraints(
+                    minWidth: 12,
+                    minHeight: 12,
+                  ),
+                  child: new Text(
+                    '${_warnings.length}',
+                    style: new TextStyle(
+                      color: Colors.white,
+                      fontSize: 10,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
                 ),
-              ),
-            )
-
-          ],)
-          );
+              )
+            ],
+          ));
     }
-
 
     return Scaffold(
         appBar: AppBar(

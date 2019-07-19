@@ -19,7 +19,7 @@ const Map<FieldType, Map<String, dynamic>> gameSet = {
   },
   FieldType.grass: {
     'count': 10 + 2 + 2,
-    'crowns': {'max': 2, 1: 5, 2: 2}
+    'crowns': {'max': 2, 1: 2, 2: 2}
   },
   FieldType.forest: {
     'count': 16 + 6,

@@ -76,7 +76,7 @@ class _HomePageState extends State<HomePage> {
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: Colors.white70,
-          content:  Column(children:_warnings),
+          content:  SingleChildScrollView(child:Column(children:_warnings)),
           actions: <Widget>[
             FlatButton(
               child: Icon(
@@ -412,12 +412,14 @@ class _HomePageState extends State<HomePage> {
       IconButton(icon: Icon(Icons.help), onPressed: () => _aboutDialog(context))
     ];
 
-    if (_warnings.isNotEmpty)
+    if (_warnings.isNotEmpty){
       actions.insert(
           0,
           IconButton(
               icon: Icon(Icons.warning),
               onPressed: () => _warningsDialog(context)));
+    }
+
 
     return Scaffold(
         appBar: AppBar(

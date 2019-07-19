@@ -415,9 +415,36 @@ class _HomePageState extends State<HomePage> {
     if (_warnings.isNotEmpty){
       actions.insert(
           0,
+          Stack(children: <Widget>[
           IconButton(
-              icon: Icon(Icons.warning),
-              onPressed: () => _warningsDialog(context)));
+          icon: Icon(Icons.warning),
+          onPressed: () => _warningsDialog(context)),
+            Positioned(
+              right: 5,
+              top: 10,
+              child: new Container(
+                padding: EdgeInsets.all(1),
+                decoration: new BoxDecoration(
+                  color: Colors.red,
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                constraints: BoxConstraints(
+                  minWidth: 12,
+                  minHeight: 12,
+                ),
+                child: new Text(
+                  '${_warnings.length}',
+                  style: new TextStyle(
+                    color: Colors.white,
+                    fontSize: 10,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            )
+
+          ],)
+          );
     }
 
 

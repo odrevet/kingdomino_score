@@ -4,10 +4,12 @@ import 'board.dart';
 
 const String crown = '\u{1F451}';
 const String castle = '\u{1F3F0}';
+final String square = '\u{25A0}';
 
 enum SelectionMode { field, crown, castle }
 
 const gameSet = {
+  FieldType.castle: {'count': 1, 'maxCrown': 0},  //per player
   FieldType.wheat: {'count': 21 + 5, 'maxCrown': 1},
   FieldType.grass: {'count': 10 + 2 + 2, 'maxCrown': 2},
   FieldType.forest: {'count': 16 + 6, 'maxCrown': 1},
@@ -46,6 +48,8 @@ class _HomePageState extends State<HomePage> {
   var _board = Board(5);
   int _score = 0;
 
+  List<RichText> _warnings = [];
+
   void _onSelectFieldType(FieldType selectedType) {
     setState(() {
       _selectedType = selectedType;
@@ -64,6 +68,28 @@ class _HomePageState extends State<HomePage> {
       _selectedType = FieldType.castle;
       _selectionMode = SelectionMode.castle;
     });
+  }
+
+  _warningsDialog(BuildContext context) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.white70,
+          content:  Column(children:_warnings),
+          actions: <Widget>[
+            FlatButton(
+              child: Icon(
+                Icons.done,
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   _aboutDialog(BuildContext context) {
@@ -101,7 +127,6 @@ class _HomePageState extends State<HomePage> {
       content = Text(shrug,
           textAlign: TextAlign.center, style: TextStyle(fontSize: 50.0));
     } else {
-      final String square = '\u{25A0}';
       areas
           .sort((a, b) => (a.crowns * a.fields).compareTo(b.crowns * b.fields));
 
@@ -239,6 +264,9 @@ class _HomePageState extends State<HomePage> {
           break;
       }
     });
+
+    _clearWarnings();
+    _checkBoard();
     _updateScore();
   }
 
@@ -299,6 +327,40 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  void _clearWarnings(){
+    setState(() {
+      _warnings.clear();
+    });
+  }
+
+  //check if the board is conform, if not set warnings
+  void _checkBoard() {
+    //check if more tile in the board than in the gameSet
+    //todo, check for too many crowns
+    for (var fieldType in FieldType.values) {
+      if(fieldType == FieldType.none)continue;
+
+      var count = _board.fields
+          .expand((i) => i)
+          .toList()
+          .where((field) => field.type == fieldType).length;
+      if(count > gameSet[fieldType]['count']){
+        setState(() {
+          _warnings.add(
+              RichText(text: TextSpan(text: '$count ', style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 20),
+              children: [TextSpan(text: square, style: TextStyle(
+                  fontSize: 20,
+                  color: getColorForFieldType(fieldType, context))),
+                TextSpan(text: ' > ${gameSet[fieldType]['count']}', style: TextStyle(
+                  color: Colors.black,
+                    fontSize: 20))])));
+        });
+      }
+    }
+  }
+
   void _updateScore() {
     var areas = getAreas(_board);
     setState(() {
@@ -333,6 +395,7 @@ class _HomePageState extends State<HomePage> {
                 _board.reSize(5);
 
               _score = 0;
+              _clearWarnings();
               _onSelectCastle();
             });
           }),
@@ -341,12 +404,20 @@ class _HomePageState extends State<HomePage> {
           onPressed: () {
             setState(() {
               _board.erase();
+              _clearWarnings();
               _score = 0;
               _onSelectCastle();
             });
           }),
       IconButton(icon: Icon(Icons.help), onPressed: () => _aboutDialog(context))
     ];
+
+    if (_warnings.isNotEmpty)
+      actions.insert(
+          0,
+          IconButton(
+              icon: Icon(Icons.warning),
+              onPressed: () => _warningsDialog(context)));
 
     return Scaffold(
         appBar: AppBar(

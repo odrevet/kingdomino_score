@@ -259,9 +259,7 @@ class _HomePageState extends State<HomePage> {
       switch (_selectionMode) {
         case SelectionMode.field:
           field.type = _selectedType;
-          if (field.type == FieldType.castle || field.type == FieldType.none) {
-            field.crowns = 0;
-          }
+          field.crowns = 0;
           break;
         case SelectionMode.crown:
           if (field.type == FieldType.castle || field.type == FieldType.none)

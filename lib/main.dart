@@ -9,6 +9,10 @@ final String square = '\u{25A0}';
 enum SelectionMode { field, crown, castle }
 
 const Map<FieldType, Map<String, dynamic>> gameSet = {
+  FieldType.castle: {
+    'count': 1,  //per player
+    'crowns': {'max': 0}
+  },
   FieldType.wheat: {
     'count': 21 + 5,
     'crowns': {'max': 1, 1: 5}

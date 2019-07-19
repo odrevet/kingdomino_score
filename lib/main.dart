@@ -407,7 +407,7 @@ class _HomePageState extends State<HomePage> {
                           style: TextStyle(
                               fontSize: 20)),
                   TextSpan(
-                      text: ' > ${gameSet[fieldType]['crowns']['max']}',
+                      text: ' > ${gameSet[fieldType]['crowns'][crownsCounter]}',
                       style: TextStyle(color: Colors.black, fontSize: 20))
                 ])));
           });

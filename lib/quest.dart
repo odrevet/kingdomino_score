@@ -20,7 +20,7 @@ class QuestPointWidget extends StatelessWidget {
           shield,
           style: TextStyle(fontSize: 40),
         ),
-        Text(points.toString())
+        Text(' ' + points.toString(),  style: TextStyle(fontSize: 25))
       ],
     );
   }
@@ -49,7 +49,7 @@ class Harmony extends Quest {
 }
 
 class HarmonyWidget extends StatelessWidget {
-  var quest = Harmony();
+  final quest = Harmony();
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +80,7 @@ class MiddleKingdom extends Quest {
 }
 
 class MiddleKingdomWidget extends StatelessWidget {
-  var quest = MiddleKingdom();
+  final quest = MiddleKingdom();
 
   @override
   Widget build(BuildContext context) {

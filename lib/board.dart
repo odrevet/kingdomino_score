@@ -1,99 +1,100 @@
-enum FieldType { none, wheat, grassland, forest, lake, swamp, mine, castle }
+enum LandType { none, wheat, grassland, forest, lake, swamp, mine, castle }
 
 class Board {
   int size = 5;
-  List<List<Field>> fields;
+  List<List<Land>> lands;
 
   Board(this.size) {
-    this.fields = [];
+    this.lands = [];
     for (var i = 0; i < size; i++) {
-      this.fields.add(List<Field>.generate(size, (_) => Field(FieldType.none)));
+      this.lands.add(List<Land>.generate(size, (_) => Land(LandType.none)));
     }
   }
 
   void reSize(int size) {
     this.size = size;
-    this.fields = [];
+    this.lands = [];
     for (var i = 0; i < size; i++) {
-      this.fields.add(List<Field>.generate(size, (_) => Field(FieldType.none)));
+      this.lands.add(List<Land>.generate(size, (_) => Land(LandType.none)));
     }
   }
 
   void erase() {
     for (var x = 0; x < this.size; x++) {
       for (var y = 0; y < this.size; y++) {
-        this.fields[x][y].type = FieldType.none;
-        this.fields[x][y].crowns = 0;
+        this.lands[x][y].landType = LandType.none;
+        this.lands[x][y].crowns = 0;
       }
     }
   }
 }
 
-class Field {
-  FieldType type = FieldType.none;
+class Land {
+  LandType landType = LandType.none;
   int crowns = 0;
-  bool isMarked = false; //to create areas
-  Field(this.type);
+  bool isMarked = false; //to create properties
+  Land(this.landType);
 }
 
 ////////////////////////////////////////////////
 // Score calculation related class and functions
 
-class Area {
-  FieldType type;
-  int crowns = 0;
-  int fields = 0;
+class Property {
+  LandType landType;
+  int crownCount = 0;
+  int landCount = 0;
 
-  Area(this.type);
+  Property(this.landType);
 }
 
 bool isInBound(int x, int y, int size) {
   return (x >= 0 && x < size && y >= 0 && y < size);
 }
 
-void addFieldToArea(int x, int y, Board board, Field field, Area area) {
+void addLandToProperty(
+    int x, int y, Board board, Land field, Property property) {
   if (isInBound(x, y, board.size)) {
-    Field checkField = board.fields[x][y];
-    if (checkField.type == field.type && checkField.isMarked == false) {
-      area.fields++;
-      area.crowns += checkField.crowns;
-      getAdjacentFields(x, y, board, area);
+    Land checkField = board.lands[x][y];
+    if (checkField.landType == field.landType && checkField.isMarked == false) {
+      property.landCount++;
+      property.crownCount += checkField.crowns;
+      getAdjacentFields(x, y, board, property);
     }
   }
 }
 
-Area getAdjacentFields(int x, int y, Board board, Area area) {
+Property getAdjacentFields(int x, int y, Board board, Property property) {
   if (!isInBound(x, y, board.size)) return null;
 
-  var field = board.fields[x][y];
-  if (field.type == FieldType.castle ||
-      field.type == FieldType.none ||
+  var field = board.lands[x][y];
+  if (field.landType == LandType.castle ||
+      field.landType == LandType.none ||
       field.isMarked == true) return null;
 
-  if (area == null) {
-    area = Area(field.type);
-    area.fields++;
-    area.crowns += field.crowns;
+  if (property == null) {
+    property = Property(field.landType);
+    property.landCount++;
+    property.crownCount += field.crowns;
   }
 
   field.isMarked = true;
 
-  addFieldToArea(x, y - 1, board, field, area);
-  addFieldToArea(x, y + 1, board, field, area);
-  addFieldToArea(x - 1, y, board, field, area);
-  addFieldToArea(x + 1, y, board, field, area);
+  addLandToProperty(x, y - 1, board, field, property);
+  addLandToProperty(x, y + 1, board, field, property);
+  addLandToProperty(x - 1, y, board, field, property);
+  addLandToProperty(x + 1, y, board, field, property);
 
-  return area;
+  return property;
 }
 
-List<Area> getAreas(Board board) {
-  var areas = <Area>[];
+List<Property> getProperties(Board board) {
+  var properties = <Property>[];
 
   for (var x = 0; x < board.size; x++) {
     for (var y = 0; y < board.size; y++) {
-      var area = getAdjacentFields(x, y, board, null);
-      if (area != null) {
-        areas.add(area);
+      var property = getAdjacentFields(x, y, board, null);
+      if (property != null) {
+        properties.add(property);
       }
     }
   }
@@ -101,17 +102,17 @@ List<Area> getAreas(Board board) {
   //reset marked status
   for (var x = 0; x < board.size; x++) {
     for (var y = 0; y < board.size; y++) {
-      board.fields[x][y].isMarked = false;
+      board.lands[x][y].isMarked = false;
     }
   }
 
-  return areas;
+  return properties;
 }
 
-int getScore(List<Area> areas) {
+int getScore(List<Property> properties) {
   int score = 0;
-  for (var area in areas) {
-    score += area.fields * area.crowns;
+  for (var property in properties) {
+    score += property.landCount * property.crownCount;
   }
   return score;
 }

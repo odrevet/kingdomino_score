@@ -1,7 +1,7 @@
 name: kingdomino_score_count
 description: Calculate kingdomino score from a given grid
 
-version: 1.0.4+5
+version: 1.0.5+6
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -19,5 +19,8 @@ dev_dependencies:
 
 
 flutter:
-
   uses-material-design: true
+  fonts:
+    - family: Augusta
+      fonts:
+        - asset: fonts/Augusta.ttf

@@ -1,43 +1,80 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import 'board.dart';
+import 'quest.dart';
+import 'age_of_giants.dart';
 
 const String crown = '\u{1F451}';
 const String castle = '\u{1F3F0}';
 final String square = '\u{25A0}';
 
-enum SelectionMode { field, crown, castle }
+enum SelectionMode { land, crown, castle }
 
-const Map<FieldType, Map<String, dynamic>> gameSet = {
-  FieldType.castle: {
-    'count': 1,  //per player
+const Map<LandType, Map<String, dynamic>> gameSet = {
+  LandType.castle: {
+    'count': 1, //per player
     'crowns': {'max': 0}
   },
-  FieldType.wheat: {
+  LandType.wheat: {
     'count': 21 + 5,
     'crowns': {'max': 1, 1: 5}
   },
-  FieldType.grassland: {
+  LandType.grassland: {
     'count': 10 + 2 + 2,
     'crowns': {'max': 2, 1: 2, 2: 2}
   },
-  FieldType.forest: {
+  LandType.forest: {
     'count': 16 + 6,
     'crowns': {'max': 1, 1: 6}
   },
-  FieldType.lake: {
+  LandType.lake: {
     'count': 12 + 6,
     'crowns': {'max': 1, 1: 6}
   },
-  FieldType.swamp: {
+  LandType.swamp: {
     'count': 6 + 2 + 2,
     'crowns': {'max': 2, 1: 2, 2: 2}
   },
-  FieldType.mine: {
+  LandType.mine: {
     'count': 1 + 1 + 3 + 1,
-    'crowns': {'max': 3, 1: 1, 2 : 3, 3 : 1}
+    'crowns': {'max': 3, 1: 1, 2: 3, 3: 1}
   }
 };
+
+Color getColorForLandType(LandType type, [BuildContext context]) {
+  Color color;
+  switch (type) {
+    case LandType.none:
+      color = context == null ? Colors.black : Theme.of(context).canvasColor;
+      break;
+    case LandType.wheat:
+      color = Colors.yellow.shade600;
+      break;
+    case LandType.grassland:
+      color = Colors.lightGreen;
+      break;
+    case LandType.forest:
+      color = Colors.green.shade800;
+      break;
+    case LandType.lake:
+      color = Colors.blue;
+      break;
+    case LandType.mine:
+      color = Colors.brown.shade800;
+      break;
+    case LandType.swamp:
+      color = Colors.grey;
+      break;
+    case LandType.castle:
+      color = Colors.white;
+      break;
+    default:
+      color = context == null ? Colors.black : Theme.of(context).canvasColor;
+  }
+
+  return color;
+}
 
 void main() {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
@@ -49,8 +86,10 @@ class KingdominoScore extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Kingdomino Score',
-      theme:
-          ThemeData(primarySwatch: Colors.brown, canvasColor: Colors.blueGrey),
+      theme: ThemeData(
+          primarySwatch: Colors.brown,
+          canvasColor: Colors.blueGrey,
+          fontFamily: 'Augusta'),
       home: HomePage(),
     );
   }
@@ -64,17 +103,32 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  FieldType _selectedType = FieldType.none;
-  SelectionMode _selectionMode = SelectionMode.field;
+  LandType _selectedType = LandType.none;
+  SelectionMode _selectionMode = SelectionMode.land;
   var _board = Board(5);
   int _score = 0;
-
+  bool aog = false; // Age of Giants extension
+  var _quests = <Quest>[]; //standard : 0, 1 or 2, aog : 2
   List<RichText> _warnings = [];
 
-  void _onSelectFieldType(FieldType selectedType) {
+  @override
+  initState() {
+    super.initState();
+    _onSelectCastle();
+  }
+
+  Map<LandType, Map<String, dynamic>> _getGameSet() {
+    if (aog == false) {
+      return gameSet;
+    } else {
+      //TODO merge gameSet of main and gameSet of age_of_giants
+    }
+  }
+
+  void _onSelectLandType(LandType selectedType) {
     setState(() {
       _selectedType = selectedType;
-      _selectionMode = SelectionMode.field;
+      _selectionMode = SelectionMode.land;
     });
   }
 
@@ -86,7 +140,7 @@ class _HomePageState extends State<HomePage> {
 
   void _onSelectCastle() {
     setState(() {
-      _selectedType = FieldType.castle;
+      _selectedType = LandType.castle;
       _selectionMode = SelectionMode.castle;
     });
   }
@@ -113,13 +167,78 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  _questsDialog(BuildContext context) {
+    /*var quests = aog == false
+        ? [Harmony().build(), MiddleKingdom().build()]
+        : [
+            Harmony().build(),
+            MiddleKingdom().build(),
+            LocalBusiness(LandType.wheat).build(),
+            LocalBusiness(LandType.lake).build(),
+            LocalBusiness(LandType.swamp).build(),
+            LocalBusiness(LandType.lake).build(),
+            LocalBusiness(LandType.grassland).build(),
+            LocalBusiness(LandType.mine).build(),
+            FourCorners(LandType.wheat).build(),
+            FourCorners(LandType.lake).build(),
+            FourCorners(LandType.swamp).build(),
+            FourCorners(LandType.lake).build(),
+            FourCorners(LandType.grassland).build(),
+            FourCorners(LandType.mine).build(),
+            LostCorner().build(),
+            FolieDesGrandeurs().build(),
+            BleakKing().build()
+          ];
+*/
+
+    Widget o1 = SimpleDialogOption(
+      child: Harmony().build(),
+      onPressed: () {
+        _quests.add(Harmony());
+        _updateScore();
+      },
+    );
+
+    Widget o2 = SimpleDialogOption(
+      child: MiddleKingdom().build(),
+      onPressed: () {
+        _quests.add(MiddleKingdom());
+        _updateScore();
+      },
+    );
+
+    SimpleDialog dialog = SimpleDialog(
+      children: <Widget>[
+        o1,
+        o2,
+      ],
+    );
+
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return dialog;
+      },
+    );
+  }
+
   _aboutDialog(BuildContext context) {
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: Colors.white70,
-          title: Text('Kingdomino Score'),
+          title: Text('Kingdomino Score',
+              style: TextStyle(
+                  color: Colors.orange,
+                  fontSize: 30.0,
+                  shadows: <Shadow>[
+                    Shadow(
+                      offset: Offset(1.0, 1.0),
+                      blurRadius: 3.0,
+                      color: Color.fromARGB(255, 255, 255, 255),
+                    )
+                  ])),
           content: const Text('Olivier Drevet - GPL v.3'),
           actions: <Widget>[
             FlatButton(
@@ -139,26 +258,28 @@ class _HomePageState extends State<HomePage> {
   _scoreDetailsDialog(BuildContext context) {
     const double fontSize = 25.0;
 
-    var areas = getAreas(_board);
+    var properties = getProperties(_board);
 
     Widget content;
 
-    if (areas.isEmpty) {
+    if (properties.isEmpty) {
       const String shrug = '\u{1F937}';
       content = Text(shrug,
           textAlign: TextAlign.center, style: TextStyle(fontSize: 50.0));
     } else {
-      areas
-          .sort((a, b) => (a.crowns * a.fields).compareTo(b.crowns * b.fields));
+      properties.sort((property, propertyToComp) =>
+          (property.crownCount * property.landCount)
+              .compareTo(propertyToComp.crownCount * propertyToComp.landCount));
 
       var tableRows = <TableRow>[];
-      for (var area in areas) {
+      for (var property in properties) {
         var tableCells = <TableCell>[];
 
         tableCells.add(TableCell(
             child: Align(
           alignment: Alignment.centerRight,
-          child: Text('${area.fields}', style: TextStyle(fontSize: fontSize)),
+          child: Text('${property.landCount}',
+              style: TextStyle(fontSize: fontSize)),
         )));
         tableCells.add(TableCell(
             child: Align(
@@ -166,16 +287,16 @@ class _HomePageState extends State<HomePage> {
           child: Text(square,
               style: TextStyle(
                   fontSize: 20,
-                  color: getColorForFieldType(area.type, context))),
+                  color: getColorForLandType(property.landType, context))),
         )));
         tableCells.add(TableCell(
             child: Align(
                 alignment: Alignment.centerRight,
-                child: Text('×', style: TextStyle(fontSize: fontSize)))));
+                child: Text('x', style: TextStyle(fontSize: fontSize)))));
         tableCells.add(TableCell(
             child: Align(
                 alignment: Alignment.centerRight,
-                child: Text(area.crowns.toString(),
+                child: Text(property.crownCount.toString(),
                     style: TextStyle(fontSize: fontSize)))));
         tableCells.add(TableCell(
             child: Align(
@@ -188,7 +309,7 @@ class _HomePageState extends State<HomePage> {
         tableCells.add(TableCell(
             child: Align(
                 alignment: Alignment.centerRight,
-                child: Text('${area.fields * area.crowns}',
+                child: Text('${property.landCount * property.crownCount}',
                     style: TextStyle(fontSize: fontSize)))));
 
         var tableRow = TableRow(children: tableCells);
@@ -219,67 +340,33 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Color getColorForFieldType(FieldType type, BuildContext context) {
-    Color color;
-    switch (type) {
-      case FieldType.none:
-        color = Theme.of(context).canvasColor;
-        break;
-      case FieldType.wheat:
-        color = Colors.yellow.shade600;
-        break;
-      case FieldType.grassland:
-        color = Colors.lightGreen;
-        break;
-      case FieldType.forest:
-        color = Colors.green.shade800;
-        break;
-      case FieldType.lake:
-        color = Colors.blue;
-        break;
-      case FieldType.mine:
-        color = Colors.brown.shade800;
-        break;
-      case FieldType.swamp:
-        color = Colors.grey;
-        break;
-      case FieldType.castle:
-        color = Colors.white;
-        break;
-      default:
-        color = Theme.of(context).canvasColor;
-    }
-
-    return color;
-  }
-
   void _onFieldTap(int x, int y) {
-    Field field = _board.fields[x][y];
+    Land field = _board.lands[x][y];
     setState(() {
       switch (_selectionMode) {
-        case SelectionMode.field:
-          field.type = _selectedType;
+        case SelectionMode.land:
+          field.landType = _selectedType;
           field.crowns = 0;
           break;
         case SelectionMode.crown:
-          if (field.type == FieldType.castle || field.type == FieldType.none)
-            break;
+          if (field.landType == LandType.castle ||
+              field.landType == LandType.none) break;
           field.crowns++;
-          if (field.crowns > gameSet[field.type]['crowns']['max'])
+          if (field.crowns > gameSet[field.landType]['crowns']['max'])
             field.crowns = 0;
           break;
         case SelectionMode.castle:
           //remove previous castle if any
           for (var cx = 0; cx < _board.size; cx++) {
             for (var cy = 0; cy < _board.size; cy++) {
-              if (_board.fields[cx][cy].type == FieldType.castle) {
-                _board.fields[cx][cy].type = FieldType.none;
-                _board.fields[cx][cy].crowns = 0;
+              if (_board.lands[cx][cy].landType == LandType.castle) {
+                _board.lands[cx][cy].landType = LandType.none;
+                _board.lands[cx][cy].crowns = 0;
               }
             }
           }
 
-          field.type = _selectedType; //should be castle
+          field.landType = _selectedType; //should be castle
           field.crowns = 0;
           break;
       }
@@ -291,7 +378,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildFields(BuildContext context, int index) {
-    int gridStateLength = _board.fields.length;
+    int gridStateLength = _board.lands.length;
     int x, y = 0;
     x = (index / gridStateLength).floor();
     y = (index % gridStateLength);
@@ -308,9 +395,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildField(int x, int y) {
-    Field field = _board.fields[x][y];
-    Color color = getColorForFieldType(field.type, context);
-    if (field.type == FieldType.castle)
+    Land field = _board.lands[x][y];
+    Color color = getColorForLandType(field.landType, context);
+    if (field.landType == LandType.castle)
       return Container(
           color: color,
           child: FittedBox(fit: BoxFit.fitWidth, child: Text(castle)));
@@ -326,7 +413,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildBoard() {
-    int gridStateLength = _board.fields.length;
+    int gridStateLength = _board.lands.length;
     return AspectRatio(
       aspectRatio: 1.0,
       child: Container(
@@ -356,13 +443,13 @@ class _HomePageState extends State<HomePage> {
   //check if the board is conform, if not set warnings
   void _checkBoard() {
     //check if more tile in the board than in the gameSet
-    for (var fieldType in FieldType.values) {
-      if (fieldType == FieldType.none) continue;
+    for (var fieldType in LandType.values) {
+      if (fieldType == LandType.none) continue;
 
-      var count = _board.fields
+      var count = _board.lands
           .expand((i) => i)
           .toList()
-          .where((field) => field.type == fieldType)
+          .where((field) => field.landType == fieldType)
           .length;
       if (count > gameSet[fieldType]['count']) {
         setState(() {
@@ -375,7 +462,7 @@ class _HomePageState extends State<HomePage> {
                     text: square,
                     style: TextStyle(
                         fontSize: 20,
-                        color: getColorForFieldType(fieldType, context))),
+                        color: getColorForLandType(fieldType, context))),
                 TextSpan(
                     text: ' > ${gameSet[fieldType]['count']}',
                     style: TextStyle(color: Colors.black, fontSize: 20))
@@ -387,8 +474,12 @@ class _HomePageState extends State<HomePage> {
       for (var crownsCounter = 1;
           crownsCounter <= gameSet[fieldType]['crowns']['max'];
           crownsCounter++) {
-        var count = _board.fields.expand((i) => i).toList().where((field) =>
-            field.type == fieldType && field.crowns == crownsCounter).length;
+        var count = _board.lands
+            .expand((i) => i)
+            .toList()
+            .where((field) =>
+                field.landType == fieldType && field.crowns == crownsCounter)
+            .length;
 
         if (count > gameSet[fieldType]['crowns'][crownsCounter]) {
           setState(() {
@@ -401,11 +492,10 @@ class _HomePageState extends State<HomePage> {
                       text: square,
                       style: TextStyle(
                           fontSize: 20,
-                          color: getColorForFieldType(fieldType, context))),
-                      TextSpan(
-                          text: crown * crownsCounter,
-                          style: TextStyle(
-                              fontSize: 20)),
+                          color: getColorForLandType(fieldType, context))),
+                  TextSpan(
+                      text: crown * crownsCounter,
+                      style: TextStyle(fontSize: 20)),
                   TextSpan(
                       text: ' > ${gameSet[fieldType]['crowns'][crownsCounter]}',
                       style: TextStyle(color: Colors.black, fontSize: 20))
@@ -417,9 +507,17 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _updateScore() {
-    var areas = getAreas(_board);
+    var properties = getProperties(_board);
+    var questsScore = 0;
+
+    for (var i = 0; i <= 1; i++) {
+      if (_quests[i] != null) {
+        questsScore += _quests[i].getPoints(_board);
+      }
+    }
+
     setState(() {
-      _score = getScore(areas);
+      _score = getScore(properties) + questsScore;
     });
   }
 
@@ -427,19 +525,33 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     var fieldSelection = Wrap(
       children: [
-        fieldButton(FieldType.wheat),
-        fieldButton(FieldType.grassland),
-        fieldButton(FieldType.forest),
-        fieldButton(FieldType.lake),
-        fieldButton(FieldType.swamp),
-        fieldButton(FieldType.mine),
-        fieldButton(FieldType.none),
+        fieldButton(LandType.wheat),
+        fieldButton(LandType.grassland),
+        fieldButton(LandType.forest),
+        fieldButton(LandType.lake),
+        fieldButton(LandType.swamp),
+        fieldButton(LandType.mine),
+        fieldButton(LandType.none),
         crownButton(),
         castleButton()
       ],
     );
 
     var actions = <Widget>[
+      /*FlatButton(
+          onPressed: () {
+            setState(() {
+              aog = !aog;
+            });
+          },
+          child: Container(
+              child: Text('AoG',
+                  style: TextStyle(
+                      fontSize: 30, color: aog ? Colors.red : Colors.white)))),*/
+      FlatButton(
+          onPressed: () => _questsDialog(context),
+          child:
+              Container(child: Text(shield, style: TextStyle(fontSize: 30)))),
       IconButton(
           icon: Icon(_board.size == 5 ? Icons.filter_5 : Icons.filter_7),
           onPressed: () {
@@ -523,14 +635,14 @@ class _HomePageState extends State<HomePage> {
         ]));
   }
 
-  Widget fieldButton(FieldType type) {
+  Widget fieldButton(LandType type) {
     var selected = Icon(
       Icons.crop_free,
       color: Colors.white,
     );
 
     return GestureDetector(
-        onTap: () => _onSelectFieldType(type),
+        onTap: () => _onSelectLandType(type),
         child: Container(
           margin: EdgeInsets.all(5.0),
           height: 50.0,
@@ -541,11 +653,10 @@ class _HomePageState extends State<HomePage> {
             bottom: BorderSide(width: 3.5, color: Colors.blueGrey.shade900),
           )),
           child: Container(
-            color: getColorForFieldType(type, context),
-            child:
-                _selectionMode == SelectionMode.field && _selectedType == type
-                    ? selected
-                    : Text(''),
+            color: getColorForLandType(type, context),
+            child: _selectionMode == SelectionMode.land && _selectedType == type
+                ? selected
+                : Text(''),
           ),
         ));
   }

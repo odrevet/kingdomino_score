@@ -17,7 +17,7 @@ const Map<FieldType, Map<String, dynamic>> gameSet = {
     'count': 21 + 5,
     'crowns': {'max': 1, 1: 5}
   },
-  FieldType.grass: {
+  FieldType.grassland: {
     'count': 10 + 2 + 2,
     'crowns': {'max': 2, 1: 2, 2: 2}
   },
@@ -25,7 +25,7 @@ const Map<FieldType, Map<String, dynamic>> gameSet = {
     'count': 16 + 6,
     'crowns': {'max': 1, 1: 6}
   },
-  FieldType.water: {
+  FieldType.lake: {
     'count': 12 + 6,
     'crowns': {'max': 1, 1: 6}
   },
@@ -228,13 +228,13 @@ class _HomePageState extends State<HomePage> {
       case FieldType.wheat:
         color = Colors.yellow.shade600;
         break;
-      case FieldType.grass:
+      case FieldType.grassland:
         color = Colors.lightGreen;
         break;
       case FieldType.forest:
         color = Colors.green.shade800;
         break;
-      case FieldType.water:
+      case FieldType.lake:
         color = Colors.blue;
         break;
       case FieldType.mine:
@@ -428,9 +428,9 @@ class _HomePageState extends State<HomePage> {
     var fieldSelection = Wrap(
       children: [
         fieldButton(FieldType.wheat),
-        fieldButton(FieldType.grass),
+        fieldButton(FieldType.grassland),
         fieldButton(FieldType.forest),
-        fieldButton(FieldType.water),
+        fieldButton(FieldType.lake),
         fieldButton(FieldType.swamp),
         fieldButton(FieldType.mine),
         fieldButton(FieldType.none),

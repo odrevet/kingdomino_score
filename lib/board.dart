@@ -1,4 +1,4 @@
-enum FieldType { none, wheat, grass, forest, water, swamp, mine, castle }
+enum FieldType { none, wheat, grassland, forest, lake, swamp, mine, castle }
 
 class Board {
   int size = 5;

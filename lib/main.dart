@@ -106,9 +106,12 @@ class _HomePageState extends State<HomePage> {
   LandType _selectedType = LandType.none;
   SelectionMode _selectionMode = SelectionMode.land;
   var _board = Board(5);
+  int _scoreProperty = 0;
+  int _scoreQuest = 0;
   int _score = 0;
+
   bool aog = false; // Age of Giants extension
-  var _quests = <Quest>[]; //standard : 0, 1 or 2, aog : 2
+  List<Quest> _quests = []; //standard : 0, 1 or 2, aog : 2
   List<RichText> _warnings = [];
 
   @override
@@ -167,52 +170,95 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  static var harmonyWidget = HarmonyWidget();
+  static var middleKingdomWidget = MiddleKingdomWidget();
+
   _questsDialog(BuildContext context) {
-    /*var quests = aog == false
-        ? [Harmony().build(), MiddleKingdom().build()]
-        : [
-            Harmony().build(),
-            MiddleKingdom().build(),
-            LocalBusiness(LandType.wheat).build(),
-            LocalBusiness(LandType.lake).build(),
-            LocalBusiness(LandType.swamp).build(),
-            LocalBusiness(LandType.lake).build(),
-            LocalBusiness(LandType.grassland).build(),
-            LocalBusiness(LandType.mine).build(),
-            FourCorners(LandType.wheat).build(),
-            FourCorners(LandType.lake).build(),
-            FourCorners(LandType.swamp).build(),
-            FourCorners(LandType.lake).build(),
-            FourCorners(LandType.grassland).build(),
-            FourCorners(LandType.mine).build(),
-            LostCorner().build(),
-            FolieDesGrandeurs().build(),
-            BleakKing().build()
-          ];
-*/
+    var options = <Widget>[];
 
-    Widget o1 = SimpleDialogOption(
-      child: Harmony().build(),
-      onPressed: () {
-        _quests.add(Harmony());
-        _updateScore();
-      },
+    options.add(
+      SimpleDialogOption(
+        child: harmonyWidget,
+        onPressed: () {
+          setState(() {
+            if (_quests.contains(harmonyWidget.quest))
+              _quests.remove(harmonyWidget.quest);
+            else
+              _quests.add(harmonyWidget.quest);
+          });
+
+          _updateScoreQuest();
+          _updateScore();
+        },
+      ),
     );
 
-    Widget o2 = SimpleDialogOption(
-      child: MiddleKingdom().build(),
+    options.add(SimpleDialogOption(
+      child: middleKingdomWidget,
       onPressed: () {
-        _quests.add(MiddleKingdom());
-        _updateScore();
+        setState(() {
+          if (_quests.contains(middleKingdomWidget.quest))
+            _quests.remove(middleKingdomWidget.quest);
+          else
+            _quests.add(middleKingdomWidget.quest);
+
+          _updateScoreQuest();
+          _updateScore();
+        });
       },
-    );
+    ));
 
     SimpleDialog dialog = SimpleDialog(
-      children: <Widget>[
-        o1,
-        o2,
-      ],
+      children: options,
     );
+
+    if (aog == true) {
+      /* options.add(LocalBusinessWidget(LandType.wheat))
+      ;
+
+      options.add(LocalBusinessWidget(LandType.lake))
+    ;
+
+      options.add( LocalBusinessWidget(LandType.swamp))
+   ;
+
+      options.add(LocalBusinessWidget(LandType.lake))
+    ;
+
+      options.add(LocalBusinessWidget(LandType.grassland))
+    ;
+
+      options.add( LocalBusinessWidget(LandType.mine))
+     ;
+
+      options.add(FourCornersWidget(LandType.wheat))
+    ;
+
+      options.add(FourCornersWidget(LandType.lake))
+    ;
+
+      options.add(FourCornersWidget(LandType.swamp))
+      ;
+
+      options.add(FourCornersWidget(LandType.lake))
+    ;
+
+      options.add(FourCornersWidget(LandType.grassland))
+    ;
+
+      options.addFourCornersWidget(LandType.mine)()
+    ;
+
+      options.add(LostCornerWidget())
+    ;
+
+
+      options.add(FolieDesGrandeursWidget())
+    ;
+
+      options.add(BleakKingWidget())
+    ;*/
+    }
 
     return showDialog(
       context: context,
@@ -374,7 +420,7 @@ class _HomePageState extends State<HomePage> {
 
     _clearWarnings();
     _checkBoard();
-    _updateScore();
+    _updateScores();
   }
 
   Widget _buildFields(BuildContext context, int index) {
@@ -506,18 +552,40 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  void _updateScore() {
-    var properties = getProperties(_board);
-    var questsScore = 0;
+  void _updateScoreQuest() {
+    var scoreQuest = 0;
 
-    for (var i = 0; i <= 1; i++) {
-      if (_quests[i] != null) {
-        questsScore += _quests[i].getPoints(_board);
-      }
+    for (var i = 0; i < _quests.length; i++) {
+      scoreQuest += _quests[i].getPoints(_board);
     }
 
     setState(() {
-      _score = getScore(properties) + questsScore;
+      _scoreQuest = scoreQuest;
+    });
+  }
+
+  void _updateScores() {
+    _updateScoreProperty();
+    _updateScoreQuest();
+    _updateScore();
+  }
+
+  void _updateScoreProperty() {
+    var properties = getProperties(_board);
+    setState(() {
+      _scoreProperty = calculateScoreFromProperties(properties);
+    });
+  }
+
+  void _updateScore() {
+    setState(() {
+      _score = _scoreProperty + _scoreQuest;
+    });
+  }
+
+  void _resetScores() {
+    setState(() {
+      _score = _scoreProperty = _scoreQuest = 0;
     });
   }
 
@@ -548,10 +616,38 @@ class _HomePageState extends State<HomePage> {
               child: Text('AoG',
                   style: TextStyle(
                       fontSize: 30, color: aog ? Colors.red : Colors.white)))),*/
-      FlatButton(
-          onPressed: () => _questsDialog(context),
-          child:
-              Container(child: Text(shield, style: TextStyle(fontSize: 30)))),
+      Stack(
+        children: <Widget>[
+          MaterialButton(
+            minWidth: 30,
+              onPressed: () => _questsDialog(context),
+              child: Container(
+                  child: Text(shield, style: TextStyle(fontSize: 30)))),
+          Positioned(
+            right: 5,
+            top: 10,
+            child: new Container(
+              padding: EdgeInsets.all(1),
+              decoration: new BoxDecoration(
+                color: Colors.red,
+                borderRadius: BorderRadius.circular(6),
+              ),
+              constraints: BoxConstraints(
+                minWidth: 12,
+                minHeight: 12,
+              ),
+              child: new Text(
+                '${_quests.length}',
+                style: new TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          )
+        ],
+      ),
       IconButton(
           icon: Icon(_board.size == 5 ? Icons.filter_5 : Icons.filter_7),
           onPressed: () {
@@ -561,7 +657,7 @@ class _HomePageState extends State<HomePage> {
               else
                 _board.reSize(5);
 
-              _score = 0;
+              _resetScores();
               _clearWarnings();
               _onSelectCastle();
             });
@@ -572,7 +668,7 @@ class _HomePageState extends State<HomePage> {
             setState(() {
               _board.erase();
               _clearWarnings();
-              _score = 0;
+              _resetScores();
               _onSelectCastle();
             });
           }),

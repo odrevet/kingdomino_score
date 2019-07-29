@@ -31,7 +31,7 @@ const Map<LandType, Map<String, dynamic>> gameSet = {
 
 // Quests
 class LocalBusiness extends Quest {
-  int _extraPoints = 5;
+  int extraPoints = 5;
 
   LandType fieldType;
 
@@ -40,7 +40,7 @@ class LocalBusiness extends Quest {
   Widget build() {
     Color color = getColorForLandType(fieldType);
     return Row(children: <Widget>[
-      QuestPoint(_extraPoints),
+      QuestPointWidget(extraPoints),
       Container(color: color, child: Text('Local Business'))
     ]);
   }
@@ -104,12 +104,12 @@ class LocalBusiness extends Quest {
     if (isInBound(x, y, board.size) && board.lands[x][y].landType == fieldType)
       count++;
 
-    return _extraPoints * count;
+    return extraPoints * count;
   }
 }
 
 class FourCorners extends Quest {
-  int _extraPoints = 5;
+  int extraPoints = 5;
 
   LandType fieldType;
 
@@ -118,7 +118,7 @@ class FourCorners extends Quest {
   Widget build() {
     Color color = getColorForLandType(fieldType);
     return Row(children: <Widget>[
-      QuestPoint(_extraPoints),
+      QuestPointWidget(extraPoints),
       Container(color: color, child: Text('Four Corners'))
     ]);
   }
@@ -131,18 +131,18 @@ class FourCorners extends Quest {
     if (board.lands[0][size].landType == LandType.castle) count++;
     if (board.lands[size][size].landType == LandType.castle) count++;
 
-    return _extraPoints * count;
+    return extraPoints * count;
   }
 }
 
 class LostCorner extends Quest {
-  int _extraPoints = 20;
+  int extraPoints = 20;
 
   LostCorner();
 
   Widget build() {
     return Row(
-        children: <Widget>[QuestPoint(_extraPoints), Text('Lost Corner')]);
+        children: <Widget>[QuestPointWidget(extraPoints), Text('Lost Corner')]);
   }
 
   int getPoints(Board board) {
@@ -151,19 +151,19 @@ class LostCorner extends Quest {
             board.lands[size][0].landType == LandType.castle ||
             board.lands[0][size].landType == LandType.castle ||
             board.lands[size][size].landType == LandType.castle
-        ? _extraPoints
+        ? extraPoints
         : 0;
   }
 }
 
 class FolieDesGrandeurs extends Quest {
-  int _extraPoints = 10;
+  int extraPoints = 10;
 
   FolieDesGrandeurs();
 
   Widget build() {
     return Row(children: <Widget>[
-      QuestPoint(_extraPoints),
+      QuestPointWidget(extraPoints),
       Text('Folie des Grandeurs')
     ]);
   }
@@ -200,18 +200,18 @@ class FolieDesGrandeurs extends Quest {
       }
     }
 
-    return _extraPoints * count;
+    return extraPoints * count;
   }
 }
 
 class BleakKing extends Quest {
-  int _extraPoints = 10;
+  int extraPoints = 10;
 
   BleakKing();
 
   Widget build() {
     return Row(
-        children: <Widget>[QuestPoint(_extraPoints), Text('Bleak King')]);
+        children: <Widget>[QuestPointWidget(extraPoints), Text('Bleak King')]);
   }
 
   int getPoints(Board board) {
@@ -226,6 +226,6 @@ class BleakKing extends Quest {
             property.landCount == 5)
         .length;
 
-    return _extraPoints * count;
+    return extraPoints * count;
   }
 }

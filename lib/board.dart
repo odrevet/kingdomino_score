@@ -109,7 +109,7 @@ List<Property> getProperties(Board board) {
   return properties;
 }
 
-int getScore(List<Property> properties) {
+int calculateScoreFromProperties(List<Property> properties) {
   int score = 0;
   for (var property in properties) {
     score += property.landCount * property.crownCount;

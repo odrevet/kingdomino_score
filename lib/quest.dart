@@ -5,10 +5,10 @@ import 'board.dart';
 const String shield = '\u{1F6E1}';
 
 //render a shield with point awarded in front
-class QuestPoint extends StatelessWidget {
+class QuestPointWidget extends StatelessWidget {
   int points;
 
-  QuestPoint(int points) {
+  QuestPointWidget(int points) {
     this.points = points;
   }
 
@@ -27,19 +27,15 @@ class QuestPoint extends StatelessWidget {
 }
 
 abstract class Quest {
-  int _extraPoints; //points awarded if quest is fulfilled
+  int extraPoints; //points awarded if quest is fulfilled
 
-  Widget build(); //visual representation of the quest
+  //Widget build(); //visual representation of the quest
 
   int getPoints(Board board); //return true is quest if fulfilled
 }
 
 class Harmony extends Quest {
-  int _extraPoints = 5;
-
-  Widget build() {
-    return Row(children: <Widget>[QuestPoint(_extraPoints), Text('Harmony')]);
-  }
+  int extraPoints = 5;
 
   int getPoints(Board board) {
     return board.lands
@@ -47,18 +43,25 @@ class Harmony extends Quest {
             .toList()
             .where((field) => field.landType == LandType.none)
             .isEmpty
-        ? _extraPoints
+        ? extraPoints
         : 0;
   }
 }
 
-class MiddleKingdom extends Quest {
-  int _extraPoints = 10;
+class HarmonyWidget extends StatelessWidget {
+  var quest = Harmony();
 
-  Widget build() {
-    return Row(
-        children: <Widget>[QuestPoint(_extraPoints), Text('MiddleKingdom')]);
+  @override
+  Widget build(BuildContext context) {
+    return Row(children: <Widget>[
+      QuestPointWidget(quest.extraPoints),
+      Text('Harmony')
+    ]);
   }
+}
+
+class MiddleKingdom extends Quest {
+  int extraPoints = 10;
 
   int getPoints(Board board) {
     int x, y;
@@ -70,8 +73,20 @@ class MiddleKingdom extends Quest {
     }
 
     if (board.lands[x][y].landType == LandType.castle)
-      return _extraPoints;
+      return extraPoints;
     else
       return 0;
+  }
+}
+
+class MiddleKingdomWidget extends StatelessWidget {
+  var quest = MiddleKingdom();
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(children: <Widget>[
+      QuestPointWidget(quest.extraPoints),
+      Text('Middle Kingdom')
+    ]);
   }
 }

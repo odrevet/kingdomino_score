@@ -124,7 +124,8 @@ class _HomePageState extends State<HomePage> {
     if (aog == false) {
       return gameSet;
     } else {
-      //TODO merge gameSet of main and gameSet of age_of_giants
+      return gameAogSet;
+
     }
   }
 
@@ -398,7 +399,7 @@ class _HomePageState extends State<HomePage> {
           if (field.landType == LandType.castle ||
               field.landType == LandType.none) break;
           field.crowns++;
-          if (field.crowns > gameSet[field.landType]['crowns']['max'])
+          if (field.crowns > _getGameSet()[field.landType]['crowns']['max'])
             field.crowns = 0;
           break;
         case SelectionMode.castle:
@@ -497,7 +498,7 @@ class _HomePageState extends State<HomePage> {
           .toList()
           .where((field) => field.landType == fieldType)
           .length;
-      if (count > gameSet[fieldType]['count']) {
+      if (count > _getGameSet()[fieldType]['count']) {
         setState(() {
           _warnings.add(RichText(
               text: TextSpan(
@@ -510,7 +511,7 @@ class _HomePageState extends State<HomePage> {
                         fontSize: 20,
                         color: getColorForLandType(fieldType, context))),
                 TextSpan(
-                    text: ' > ${gameSet[fieldType]['count']}',
+                    text: ' > ${_getGameSet()[fieldType]['count']}',
                     style: TextStyle(color: Colors.black, fontSize: 20))
               ])));
         });
@@ -518,7 +519,7 @@ class _HomePageState extends State<HomePage> {
 
       //check for too many tile with given crowns
       for (var crownsCounter = 1;
-          crownsCounter <= gameSet[fieldType]['crowns']['max'];
+          crownsCounter <= _getGameSet()[fieldType]['crowns']['max'];
           crownsCounter++) {
         var count = _board.lands
             .expand((i) => i)
@@ -527,7 +528,7 @@ class _HomePageState extends State<HomePage> {
                 field.landType == fieldType && field.crowns == crownsCounter)
             .length;
 
-        if (count > gameSet[fieldType]['crowns'][crownsCounter]) {
+        if (count > _getGameSet()[fieldType]['crowns'][crownsCounter]) {
           setState(() {
             _warnings.add(RichText(
                 text: TextSpan(
@@ -543,7 +544,7 @@ class _HomePageState extends State<HomePage> {
                       text: crown * crownsCounter,
                       style: TextStyle(fontSize: 20)),
                   TextSpan(
-                      text: ' > ${gameSet[fieldType]['crowns'][crownsCounter]}',
+                      text: ' > ${_getGameSet()[fieldType]['crowns'][crownsCounter]}',
                       style: TextStyle(color: Colors.black, fontSize: 20))
                 ])));
           });
@@ -606,16 +607,17 @@ class _HomePageState extends State<HomePage> {
     );
 
     var actions = <Widget>[
-      /*FlatButton(
+      MaterialButton(
+          minWidth: 30,
           onPressed: () {
             setState(() {
               aog = !aog;
             });
           },
           child: Container(
-              child: Text('AoG',
+              child: Text('AG',
                   style: TextStyle(
-                      fontSize: 30, color: aog ? Colors.red : Colors.white)))),*/
+                      fontSize: 30, color: aog ? Colors.red : Colors.white)))),
       Stack(
         children: <Widget>[
           MaterialButton(

@@ -28,9 +28,9 @@ class _QuestDialogOptionState extends State<_QuestDialogOption> {
 
   _QuestDialogOptionState(this.questWidget, this._mainWidgetState);
 
-  void _toggleActive() {
+  void _setActive(bool value) {
     setState(() {
-      _active = !_active;
+      _active = value;
     });
   }
 
@@ -44,12 +44,15 @@ class _QuestDialogOptionState extends State<_QuestDialogOption> {
               child: questWidget)
           : questWidget,
       onPressed: () {
-        _toggleActive();
         setState(() {
-          if (_mainWidgetState.quests.contains(questWidget.quest))
+          if (_mainWidgetState.quests.contains(questWidget.quest)){
+            _setActive(false);
             _mainWidgetState.quests.remove(questWidget.quest);
-          else if (_mainWidgetState.quests.length < 2)
+          }
+          else if (_mainWidgetState.quests.length < 2){
+            _setActive(true);
             _mainWidgetState.quests.add(questWidget.quest);
+          }
         });
 
         _mainWidgetState.updateScoreQuest();

@@ -253,14 +253,14 @@ class FolieDesGrandeurs extends Quest {
 
     for (var x = 0; x < size; x++) {
       for (var y = 0; y < size; y++) {
-        if (kingdom.lands[x][y].crowns == 0) continue;
+        if (kingdom.lands[x][y].getCrowns() == 0) continue;
 
         //check horizontally
         if ((kingdom.isInBound(x + 1, y) &&
-                kingdom.lands[x + 1][y].crowns > 0 &&
+                kingdom.lands[x + 1][y].getCrowns() > 0 &&
                 !kingdom.lands[x + 1][y].isMarked) &&
             (kingdom.isInBound(x + 2, y) &&
-                kingdom.lands[x + 2][y].crowns > 0 &&
+                kingdom.lands[x + 2][y].getCrowns() > 0 &&
                 !kingdom.lands[x + 2][y].isMarked)) {
           count++;
           kingdom.lands[x + 1][y].isMarked =
@@ -269,10 +269,10 @@ class FolieDesGrandeurs extends Quest {
 
         //check vertically
         if ((kingdom.isInBound(x, y + 1) &&
-                kingdom.lands[x][y + 1].crowns > 0 &&
+                kingdom.lands[x][y + 1].getCrowns() > 0 &&
                 !kingdom.lands[x][y + 1].isMarked) &&
             (kingdom.isInBound(x, y + 2) &&
-                kingdom.lands[x][y + 2].crowns > 0 &&
+                kingdom.lands[x][y + 2].getCrowns() > 0 &&
                 !kingdom.lands[x][y + 2].isMarked)) {
           count++;
           kingdom.lands[x][y + 1].isMarked =
@@ -281,15 +281,15 @@ class FolieDesGrandeurs extends Quest {
 /*
         //check diagonally (down right)
         if ((kingdom.isInBound(x + 1, y + 1) &&
-                kingdom.lands[x + 1][y + 1].crowns > 0) &&
+                kingdom.lands[x + 1][y + 1].getCrowns() > 0) &&
             (kingdom.isInBound(x + 2, y + 2) &&
-                kingdom.lands[x + 2][y + 2].crowns > 0)) count++;
+                kingdom.lands[x + 2][y + 2].getCrowns() > 0)) count++;
 
         //check diagonally (down left)
         if ((kingdom.isInBound(x - 1, y + 1) &&
-                kingdom.lands[x - 1][y + 1].crowns > 0) &&
+                kingdom.lands[x - 1][y + 1].getCrowns() > 0) &&
             (kingdom.isInBound(x - 2, y + 2) &&
-                kingdom.lands[x - 2][y + 2].crowns > 0)) count++;
+                kingdom.lands[x - 2][y + 2].getCrowns() > 0)) count++;
         */
       }
     }
@@ -318,7 +318,7 @@ class FolieDesGrandeursWidget extends QuestWidget {
   }
 }
 
-/// crown covered with giant count as no crown (todo)
+/// crown covered with giant count as no crown
 /// properties must be `at least` of 5 lands, as stated in the french booklet
 /// propery with 10 or 15, ..., lands should score multiple ?
 /// see https://boardgamegeek.com/thread/2032948/bleak-king-aka-poor-mans-bonus-quest-confusion

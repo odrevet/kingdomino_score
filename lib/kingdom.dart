@@ -19,13 +19,11 @@ class Kingdom {
     }
   }
 
-  void erase() {
-    for (var x = 0; x < this.size; x++) {
-      for (var y = 0; y < this.size; y++) {
-        this.lands[x][y].landType = LandType.none;
-        this.lands[x][y].crowns = 0;
-      }
-    }
+  void clear() {
+    lands.expand((i) => i).toList().forEach((land) {
+      land.landType = LandType.none;
+      land.crowns = 0;
+    });
   }
 
   List<Property> getProperties() {
@@ -46,7 +44,7 @@ class Kingdom {
     return properties;
   }
 
-  void addLandToProperty(int x, int y, Land field, Property property) {
+  void _addLandToProperty(int x, int y, Land field, Property property) {
     if (isInBound(x, y, size)) {
       Land checkField = lands[x][y];
       if (checkField.landType == field.landType &&
@@ -74,21 +72,20 @@ class Kingdom {
 
     field.isMarked = true;
 
-    addLandToProperty(x, y - 1, field, property);
-    addLandToProperty(x, y + 1, field, property);
-    addLandToProperty(x - 1, y, field, property);
-    addLandToProperty(x + 1, y, field, property);
+    _addLandToProperty(x, y - 1, field, property);
+    _addLandToProperty(x, y + 1, field, property);
+    _addLandToProperty(x - 1, y, field, property);
+    _addLandToProperty(x + 1, y, field, property);
 
     return property;
   }
 
   int calculateScoreFromProperties(List<Property> properties) {
     int score = 0;
-    properties
-        .forEach((property) => score += property.landCount * property.crownCount);
+    properties.forEach(
+        (property) => score += property.landCount * property.crownCount);
     return score;
   }
-
 }
 
 class Land {
@@ -109,4 +106,3 @@ class Property {
 bool isInBound(int x, int y, int size) {
   return (x >= 0 && x < size && y >= 0 && y < size);
 }
-

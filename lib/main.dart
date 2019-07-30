@@ -668,7 +668,7 @@ class _HomePageState extends State<HomePage> {
           icon: Icon(Icons.delete),
           onPressed: () {
             setState(() {
-              _kingdom.erase();
+              _kingdom.clear();
               _clearWarnings();
               _resetScores();
               _onSelectCastle();

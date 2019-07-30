@@ -5,6 +5,60 @@ import 'quest.dart';
 import 'ageOfGiants.dart';
 import 'main.dart';
 
+class _QuestDialogOption extends StatefulWidget {
+  MainWidgetState _mainWidgetState;
+  QuestWidget questWidget;
+
+  _QuestDialogOption(this.questWidget, this._mainWidgetState);
+
+  @override
+  _QuestDialogOptionState createState() =>
+      _QuestDialogOptionState(this.questWidget, this._mainWidgetState);
+}
+
+class _QuestDialogOptionState extends State<_QuestDialogOption> {
+  MainWidgetState _mainWidgetState;
+  final QuestWidget questWidget;
+
+  bool _active;
+
+  @override initState(){
+    _active = _mainWidgetState.quests.contains(questWidget.quest);
+  }
+
+  _QuestDialogOptionState(this.questWidget, this._mainWidgetState);
+
+  void _toggleActive() {
+    setState(() {
+      _active = !_active;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SimpleDialogOption(
+      child: _active
+          ? Container(
+              decoration: new BoxDecoration(
+                  border: new Border.all(color: Colors.blueAccent)),
+              child: questWidget)
+          : questWidget,
+      onPressed: () {
+        _toggleActive();
+        setState(() {
+          if (_mainWidgetState.quests.contains(questWidget.quest))
+            _mainWidgetState.quests.remove(questWidget.quest);
+          else if (_mainWidgetState.quests.length < 2)
+            _mainWidgetState.quests.add(questWidget.quest);
+        });
+
+        _mainWidgetState.updateScoreQuest();
+        _mainWidgetState.updateScore();
+      },
+    );
+  }
+}
+
 class QuestDialogWidget extends StatefulWidget {
   MainWidgetState _mainWidgetState;
 
@@ -53,55 +107,31 @@ class _QuestDialogWidgetState extends State<QuestDialogWidget> {
   static final folieDesGrandeursWidget = FolieDesGrandeursWidget();
   static final bleakKingWidget = BleakKingWidget();
 
-  _questDialogAddOption(List<Widget> options, QuestWidget questWidget) {
-    options.add(
-      SimpleDialogOption(
-        child: _mainWidgetState.quests.contains(questWidget.quest)
-            ? Container(
-                decoration: new BoxDecoration(
-                    border: new Border.all(color: Colors.blueAccent)),
-                child: questWidget)
-            : questWidget,
-        onPressed: () {
-          setState(() {
-            if (_mainWidgetState.quests.contains(questWidget.quest))
-              _mainWidgetState.quests.remove(questWidget.quest);
-            else if (_mainWidgetState.quests.length < 2)
-              _mainWidgetState.quests.add(questWidget.quest);
-          });
-
-          _mainWidgetState.updateScoreQuest();
-          _mainWidgetState.updateScore();
-        },
-      ),
-    );
-  }
-
   @override
   build(BuildContext context) {
     var options = <Widget>[];
 
-    _questDialogAddOption(options, harmonyWidget);
-    _questDialogAddOption(options, middleKingdomWidget);
+    options.add(_QuestDialogOption(harmonyWidget, _mainWidgetState));
+    options.add(_QuestDialogOption(middleKingdomWidget, _mainWidgetState));
 
     if (_mainWidgetState.aog == true) {
-      _questDialogAddOption(options, localBusinessWheatWidget);
-      _questDialogAddOption(options, localBusinessGrasslandWidget);
-      _questDialogAddOption(options, localBusinessForestWidget);
-      _questDialogAddOption(options, localBusinessLakeWidget);
-      _questDialogAddOption(options, localBusinessMineWidget);
-      _questDialogAddOption(options, localBusinessSwampWidget);
+      options.add(_QuestDialogOption(localBusinessWheatWidget, _mainWidgetState));
+      options.add(_QuestDialogOption(localBusinessGrasslandWidget, _mainWidgetState));
+      options.add(_QuestDialogOption(localBusinessForestWidget, _mainWidgetState));
+      options.add(_QuestDialogOption(localBusinessLakeWidget, _mainWidgetState));
+      options.add(_QuestDialogOption(localBusinessMineWidget, _mainWidgetState));
+      options.add(_QuestDialogOption(localBusinessSwampWidget, _mainWidgetState));
 
-      _questDialogAddOption(options, fourCornersWheatWidget);
-      _questDialogAddOption(options, fourCornersGrasslandWidget);
-      _questDialogAddOption(options, fourCornersForestWidget);
-      _questDialogAddOption(options, fourCornersLakeWidget);
-      _questDialogAddOption(options, fourCornersMineWidget);
-      _questDialogAddOption(options, fourCornersSwampWidget);
+      options.add(_QuestDialogOption(fourCornersWheatWidget, _mainWidgetState));
+      options.add(_QuestDialogOption(fourCornersGrasslandWidget, _mainWidgetState));
+      options.add(_QuestDialogOption(fourCornersForestWidget, _mainWidgetState));
+      options.add(_QuestDialogOption(fourCornersLakeWidget, _mainWidgetState));
+      options.add(_QuestDialogOption(fourCornersMineWidget, _mainWidgetState));
+      options.add(_QuestDialogOption(fourCornersSwampWidget, _mainWidgetState));
 
-      _questDialogAddOption(options, lostCornerWidget);
-      _questDialogAddOption(options, folieDesGrandeursWidget);
-      _questDialogAddOption(options, bleakKingWidget);
+      options.add(_QuestDialogOption(lostCornerWidget, _mainWidgetState));
+      options.add(_QuestDialogOption(folieDesGrandeursWidget,_mainWidgetState));
+      options.add(_QuestDialogOption(bleakKingWidget, _mainWidgetState));
     }
 
     SimpleDialog dialog = SimpleDialog(

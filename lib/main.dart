@@ -73,7 +73,7 @@ class MainWidget extends StatefulWidget {
 class MainWidgetState extends State<MainWidget> {
   LandType selectedLandType = LandType.none;
   SelectionMode selectionMode = SelectionMode.land;
-  var _kingdom = Kingdom(5);
+  var kingdom = Kingdom(5);
   int _scoreProperty = 0;
   int _scoreQuest = 0;
   int _score = 0;
@@ -174,7 +174,7 @@ class MainWidgetState extends State<MainWidget> {
   _scoreDetailsDialog(BuildContext context) {
     const double fontSize = 25.0;
 
-    var properties = _kingdom.getProperties();
+    var properties = kingdom.getProperties();
 
     Widget content;
 
@@ -268,7 +268,7 @@ class MainWidgetState extends State<MainWidget> {
     for (var landType in LandType.values) {
       if (landType == LandType.none) continue;
 
-      var count = _kingdom.lands
+      var count = kingdom.lands
           .expand((i) => i)
           .toList()
           .where((land) => land.landType == landType)
@@ -296,7 +296,7 @@ class MainWidgetState extends State<MainWidget> {
       for (var crownsCounter = 1;
           crownsCounter <= getGameSet()[landType]['crowns']['max'];
           crownsCounter++) {
-        var count = _kingdom.lands
+        var count = kingdom.lands
             .expand((i) => i)
             .toList()
             .where((land) =>
@@ -333,7 +333,7 @@ class MainWidgetState extends State<MainWidget> {
     var scoreQuest = 0;
 
     for (var i = 0; i < quests.length; i++) {
-      scoreQuest += quests[i].getPoints(_kingdom);
+      scoreQuest += quests[i].getPoints(kingdom);
     }
 
     setState(() {
@@ -348,9 +348,9 @@ class MainWidgetState extends State<MainWidget> {
   }
 
   void updateScoreProperty() {
-    var properties = _kingdom.getProperties();
+    var properties = kingdom.getProperties();
     setState(() {
-      _scoreProperty = _kingdom.calculateScoreFromProperties(properties);
+      _scoreProperty = kingdom.calculateScoreFromProperties(properties);
     });
   }
 
@@ -457,13 +457,13 @@ class MainWidgetState extends State<MainWidget> {
     QuestDialogWidget(this)
       ,
       IconButton(
-          icon: Icon(_kingdom.size == 5 ? Icons.filter_5 : Icons.filter_7),
+          icon: Icon(kingdom.size == 5 ? Icons.filter_5 : Icons.filter_7),
           onPressed: () {
             setState(() {
-              if (_kingdom.size == 5)
-                _kingdom.reSize(7);
+              if (kingdom.size == 5)
+                kingdom.reSize(7);
               else
-                _kingdom.reSize(5);
+                kingdom.reSize(5);
 
               resetScores();
               clearWarnings();
@@ -474,7 +474,7 @@ class MainWidgetState extends State<MainWidget> {
           icon: Icon(Icons.delete),
           onPressed: () {
             setState(() {
-              _kingdom.clear();
+              kingdom.clear();
               clearWarnings();
               resetScores();
               _onSelectCastle();
@@ -526,7 +526,7 @@ class MainWidgetState extends State<MainWidget> {
         bottomNavigationBar: BottomAppBar(
             child: landSelection, color: Theme.of(context).primaryColor),
         body: Column(children: <Widget>[
-            KingdomWidget(this, _kingdom),
+            KingdomWidget(this),
           Expanded(
             child: FittedBox(
                 fit: BoxFit.fitHeight,

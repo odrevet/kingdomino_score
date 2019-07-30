@@ -7,21 +7,20 @@ class KingdomWidget extends StatefulWidget {
   MainWidgetState _mainWidgetState;
   Kingdom _kingdom;
 
-  KingdomWidget(this._mainWidgetState, this._kingdom);
+  KingdomWidget(this._mainWidgetState);
 
   @override
   _KingdomWidgetState createState() =>
-      _KingdomWidgetState(this._mainWidgetState, this._kingdom);
+      _KingdomWidgetState(this._mainWidgetState);
 }
 
 class _KingdomWidgetState extends State<KingdomWidget> {
   MainWidgetState _mainWidgetState;
-  Kingdom _kingdom;
 
-  _KingdomWidgetState(this._mainWidgetState, this._kingdom);
+  _KingdomWidgetState(this._mainWidgetState);
 
   void _onLandTap(int x, int y) {
-    Land land = _kingdom.lands[x][y];
+    Land land = _mainWidgetState.kingdom.lands[x][y];
     setState(() {
       switch (_mainWidgetState.selectionMode) {
         case SelectionMode.land:
@@ -38,11 +37,11 @@ class _KingdomWidgetState extends State<KingdomWidget> {
           break;
         case SelectionMode.castle:
           //remove previous castle if any
-          for (var cx = 0; cx < _kingdom.size; cx++) {
-            for (var cy = 0; cy < _kingdom.size; cy++) {
-              if (_kingdom.lands[cx][cy].landType == LandType.castle) {
-                _kingdom.lands[cx][cy].landType = LandType.none;
-                _kingdom.lands[cx][cy].crowns = 0;
+          for (var cx = 0; cx < _mainWidgetState.kingdom.size; cx++) {
+            for (var cy = 0; cy < _mainWidgetState.kingdom.size; cy++) {
+              if (_mainWidgetState.kingdom.lands[cx][cy].landType == LandType.castle) {
+                _mainWidgetState.kingdom.lands[cx][cy].landType = LandType.none;
+                _mainWidgetState.kingdom.lands[cx][cy].crowns = 0;
               }
             }
           }
@@ -59,7 +58,7 @@ class _KingdomWidgetState extends State<KingdomWidget> {
   }
 
   Widget _buildLand(int x, int y) {
-    Land land = _kingdom.lands[x][y];
+    Land land = _mainWidgetState.kingdom.lands[x][y];
     Color color = getColorForLandType(land.landType, context);
     if (land.landType == LandType.castle)
       return Container(
@@ -77,7 +76,7 @@ class _KingdomWidgetState extends State<KingdomWidget> {
   }
 
   Widget _buildLands(BuildContext context, int index) {
-    int gridStateLength = _kingdom.lands.length;
+    int gridStateLength = _mainWidgetState.kingdom.lands.length;
     int x, y = 0;
     x = (index / gridStateLength).floor();
     y = (index % gridStateLength);
@@ -95,7 +94,7 @@ class _KingdomWidgetState extends State<KingdomWidget> {
 
   @override
   Widget build(BuildContext context) {
-    int gridStateLength = _kingdom.lands.length;
+    int gridStateLength = _mainWidgetState.kingdom.lands.length;
     return AspectRatio(
       aspectRatio: 1.0,
       child: Container(

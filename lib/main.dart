@@ -570,7 +570,7 @@ class _HomePageState extends State<HomePage> {
   void _updateScoreProperty() {
     var properties = _kingdom.getProperties();
     setState(() {
-      _scoreProperty = calculateScoreFromProperties(properties);
+      _scoreProperty = _kingdom.calculateScoreFromProperties(properties);
     });
   }
 

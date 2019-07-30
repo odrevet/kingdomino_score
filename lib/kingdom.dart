@@ -81,6 +81,14 @@ class Kingdom {
 
     return property;
   }
+
+  int calculateScoreFromProperties(List<Property> properties) {
+    int score = 0;
+    properties
+        .forEach((property) => score += property.landCount * property.crownCount);
+    return score;
+  }
+
 }
 
 class Land {
@@ -89,9 +97,6 @@ class Land {
   bool isMarked = false; //to create properties
   Land(this.landType);
 }
-
-////////////////////////////////////////////////
-// Score calculation related class and functions
 
 class Property {
   LandType landType;
@@ -105,9 +110,3 @@ bool isInBound(int x, int y, int size) {
   return (x >= 0 && x < size && y >= 0 && y < size);
 }
 
-int calculateScoreFromProperties(List<Property> properties) {
-  int score = 0;
-  properties
-      .forEach((property) => score += property.landCount * property.crownCount);
-  return score;
-}

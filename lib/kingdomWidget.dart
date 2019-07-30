@@ -26,7 +26,7 @@ class _KingdomWidgetState extends State<KingdomWidget> {
       switch (_mainWidgetState.selectionMode) {
         case SelectionMode.land:
           land.landType = _mainWidgetState.selectedLandType;
-          land.crowns = 0;
+          land.reset();
           break;
         case SelectionMode.crown:
           if (land.landType == LandType.castle ||
@@ -34,8 +34,7 @@ class _KingdomWidgetState extends State<KingdomWidget> {
           land.crowns++;
           if (land.crowns >
               _mainWidgetState.getGameSet()[land.landType]['crowns']['max']) {
-            land.crowns = 0;
-            land.hasGiant = false;
+            land.reset();
           }
           break;
         case SelectionMode.castle:
@@ -50,7 +49,7 @@ class _KingdomWidgetState extends State<KingdomWidget> {
           }
 
           land.landType = _mainWidgetState.selectedLandType; //should be castle
-          land.crowns = 0;
+          land.reset();
           break;
         case SelectionMode.giant:
           if(land.crowns > 0)land.hasGiant = !land.hasGiant;

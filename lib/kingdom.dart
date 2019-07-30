@@ -100,6 +100,12 @@ class Land {
   bool isMarked = false; //to create properties
   bool hasGiant = false; //AoG extension
 
+  ///set crowns to 0 and hasGiant to false
+  void reset(){
+    crowns = 0;
+    hasGiant = false;
+  }
+
   /// return 0 is hasGiant is true
   /// return crowns otherwise
   int getCrowns(){

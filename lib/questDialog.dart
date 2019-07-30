@@ -2,54 +2,52 @@ import 'package:flutter/material.dart';
 
 import 'kingdom.dart';
 import 'quest.dart';
-import 'age_of_giants.dart';
+import 'ageOfGiants.dart';
 import 'main.dart';
 
 class QuestDialogWidget extends StatefulWidget {
   MainWidgetState _mainWidgetState;
-  Kingdom _kingdom;
 
-  QuestDialogWidget(this._mainWidgetState, this._kingdom);
+  QuestDialogWidget(this._mainWidgetState);
 
   @override
   _QuestDialogWidgetState createState() =>
-      _QuestDialogWidgetState(this._mainWidgetState, this._kingdom);
+      _QuestDialogWidgetState(this._mainWidgetState);
 }
 
 class _QuestDialogWidgetState extends State<QuestDialogWidget> {
   MainWidgetState _mainWidgetState;
-  Kingdom _kingdom;
 
-  _QuestDialogWidgetState(this._mainWidgetState, this._kingdom);
+  _QuestDialogWidgetState(this._mainWidgetState);
 
   static final harmonyWidget = HarmonyWidget();
   static final middleKingdomWidget = MiddleKingdomWidget();
 
   static final localBusinessWheatWidget =
-  LocalBusinessWidget(LocalBusiness(LandType.wheat));
+      LocalBusinessWidget(LocalBusiness(LandType.wheat));
   static final localBusinessGrasslandWidget =
-  LocalBusinessWidget(LocalBusiness(LandType.grassland));
+      LocalBusinessWidget(LocalBusiness(LandType.grassland));
   static final localBusinessForestWidget =
-  LocalBusinessWidget(LocalBusiness(LandType.forest));
+      LocalBusinessWidget(LocalBusiness(LandType.forest));
   static final localBusinessLakeWidget =
-  LocalBusinessWidget(LocalBusiness(LandType.lake));
+      LocalBusinessWidget(LocalBusiness(LandType.lake));
   static final localBusinessMineWidget =
-  LocalBusinessWidget(LocalBusiness(LandType.mine));
+      LocalBusinessWidget(LocalBusiness(LandType.mine));
   static final localBusinessSwampWidget =
-  LocalBusinessWidget(LocalBusiness(LandType.swamp));
+      LocalBusinessWidget(LocalBusiness(LandType.swamp));
 
   static final fourCornersWheatWidget =
-  FourCornersWidget(FourCorners(LandType.wheat));
+      FourCornersWidget(FourCorners(LandType.wheat));
   static final fourCornersGrasslandWidget =
-  FourCornersWidget(FourCorners(LandType.grassland));
+      FourCornersWidget(FourCorners(LandType.grassland));
   static final fourCornersForestWidget =
-  FourCornersWidget(FourCorners(LandType.forest));
+      FourCornersWidget(FourCorners(LandType.forest));
   static final fourCornersLakeWidget =
-  FourCornersWidget(FourCorners(LandType.lake));
+      FourCornersWidget(FourCorners(LandType.lake));
   static final fourCornersMineWidget =
-  FourCornersWidget(FourCorners(LandType.mine));
+      FourCornersWidget(FourCorners(LandType.mine));
   static final fourCornersSwampWidget =
-  FourCornersWidget(FourCorners(LandType.swamp));
+      FourCornersWidget(FourCorners(LandType.swamp));
 
   static final lostCornerWidget = LostCornerWidget();
   static final folieDesGrandeursWidget = FolieDesGrandeursWidget();
@@ -60,15 +58,16 @@ class _QuestDialogWidgetState extends State<QuestDialogWidget> {
       SimpleDialogOption(
         child: _mainWidgetState.quests.contains(questWidget.quest)
             ? Container(
-            decoration: new BoxDecoration(
-                border: new Border.all(color: Colors.blueAccent)),
-            child: questWidget)
+                decoration: new BoxDecoration(
+                    border: new Border.all(color: Colors.blueAccent)),
+                child: questWidget)
             : questWidget,
         onPressed: () {
           setState(() {
             if (_mainWidgetState.quests.contains(questWidget.quest))
               _mainWidgetState.quests.remove(questWidget.quest);
-            else if (_mainWidgetState.quests.length < 2) _mainWidgetState.quests.add(questWidget.quest);
+            else if (_mainWidgetState.quests.length < 2)
+              _mainWidgetState.quests.add(questWidget.quest);
           });
 
           _mainWidgetState.updateScoreQuest();
@@ -109,46 +108,46 @@ class _QuestDialogWidgetState extends State<QuestDialogWidget> {
       children: options,
     );
 
-    return Stack(
-      children: <Widget>[
-        MaterialButton(
-            minWidth: 30,
-            onPressed: () => showDialog(
+    var button = MaterialButton(
+        minWidth: 30,
+        onPressed: () => showDialog(
               context: context,
               builder: (BuildContext context) {
                 return dialog;
               },
             ),
+        child: Container(child: Text(shield, style: TextStyle(fontSize: 30))));
+
+    if (_mainWidgetState.quests.isEmpty)
+      return button;
+    else
+      return Stack(
+        children: <Widget>[
+          button,
+          Positioned(
+            right: 5,
+            top: 10,
             child: Container(
-                child: Text(shield, style: TextStyle(fontSize: 30)))),
-        Positioned(
-          right: 5,
-          top: 10,
-          child: new Container(
-            padding: EdgeInsets.all(1),
-            decoration: new BoxDecoration(
-              color: Colors.red,
-              borderRadius: BorderRadius.circular(6),
-            ),
-            constraints: BoxConstraints(
-              minWidth: 12,
-              minHeight: 12,
-            ),
-            child: new Text(
-              '${_mainWidgetState.quests.length}',
-              style: new TextStyle(
-                color: Colors.white,
-                fontSize: 14,
+              padding: EdgeInsets.all(1),
+              decoration: BoxDecoration(
+                color: Colors.red,
+                borderRadius: BorderRadius.circular(6),
               ),
-              textAlign: TextAlign.center,
+              constraints: BoxConstraints(
+                minWidth: 12,
+                minHeight: 12,
+              ),
+              child: Text(
+                '${_mainWidgetState.quests.length}',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                ),
+                textAlign: TextAlign.center,
+              ),
             ),
-          ),
-        )
-      ],
-    )
-    ;
+          )
+        ],
+      );
   }
-
 }
-
-

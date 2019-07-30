@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'kingdom.dart';
 import 'kingdomWidget.dart';
 import 'quest.dart';
-import 'age_of_giants.dart';
+import 'ageOfGiants.dart';
 import 'questDialog.dart';
 
 const String crown = '\u{1F451}';
@@ -454,7 +454,7 @@ class MainWidgetState extends State<MainWidget> {
               child: Text('AG',
                   style: TextStyle(
                       fontSize: 30, color: aog ? Colors.red : Colors.white)))),
-    QuestDialogWidget(this, _kingdom)
+    QuestDialogWidget(this)
       ,
       IconButton(
           icon: Icon(_kingdom.size == 5 ? Icons.filter_5 : Icons.filter_7),

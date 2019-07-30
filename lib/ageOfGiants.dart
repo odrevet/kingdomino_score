@@ -320,7 +320,7 @@ class FolieDesGrandeursWidget extends QuestWidget {
 
 /// crown covered with giant count as no crown (todo)
 /// properties must be `at least` of 5 lands, as stated in the french booklet
-/// todo propery with 10 or 15, ..., lands should score multiple ? 
+/// todo propery with 10 or 15, ..., lands should score multiple ?
 /// see https://boardgamegeek.com/thread/2032948/bleak-king-aka-poor-mans-bonus-quest-confusion
 class BleakKing extends Quest {
   int extraPoints = 10;

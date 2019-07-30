@@ -81,10 +81,10 @@ bool isInBound(int x, int y, int size) {
   return (x >= 0 && x < size && y >= 0 && y < size);
 }
 
-Property getAdjacentLand(int x, int y, Kingdom board, Property property) {
-  if (!isInBound(x, y, board.size)) return null;
+Property getAdjacentLand(int x, int y, Kingdom kingdom, Property property) {
+  if (!isInBound(x, y, kingdom.size)) return null;
 
-  var field = board.lands[x][y];
+  var field = kingdom.lands[x][y];
   if (field.landType == LandType.castle ||
       field.landType == LandType.none ||
       field.isMarked == true) return null;
@@ -97,10 +97,10 @@ Property getAdjacentLand(int x, int y, Kingdom board, Property property) {
 
   field.isMarked = true;
 
-  board.addLandToProperty(x, y - 1, field, property);
-  board.addLandToProperty(x, y + 1, field, property);
-  board.addLandToProperty(x - 1, y, field, property);
-  board.addLandToProperty(x + 1, y, field, property);
+  kingdom.addLandToProperty(x, y - 1, field, property);
+  kingdom.addLandToProperty(x, y + 1, field, property);
+  kingdom.addLandToProperty(x - 1, y, field, property);
+  kingdom.addLandToProperty(x + 1, y, field, property);
 
   return property;
 }

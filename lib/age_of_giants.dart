@@ -78,12 +78,12 @@ class LocalBusiness extends Quest {
     ]);
   }
 
-  int getPoints(Kingdom board) {
+  int getPoints(Kingdom kingdom) {
     int castleX, castleY;
 
-    for (var x = 0; x < board.size; x++) {
-      for (var y = 0; y < board.size; y++) {
-        if (board.lands[x][y].landType == LandType.castle) {
+    for (var x = 0; x < kingdom.size; x++) {
+      for (var y = 0; y < kingdom.size; y++) {
+        if (kingdom.lands[x][y].landType == LandType.castle) {
           castleX = x;
           castleY = y;
           break;
@@ -99,42 +99,42 @@ class LocalBusiness extends Quest {
 
     x = castleX - 1;
     y = castleY - 1;
-    if (isInBound(x, y, board.size) && board.lands[x][y].landType == landType)
+    if (isInBound(x, y, kingdom.size) && kingdom.lands[x][y].landType == landType)
       count++;
 
     x = castleX;
     y = castleY - 1;
-    if (isInBound(x, y, board.size) && board.lands[x][y].landType == landType)
+    if (isInBound(x, y, kingdom.size) && kingdom.lands[x][y].landType == landType)
       count++;
 
     x = castleX + 1;
     y = castleY - 1;
-    if (isInBound(x, y, board.size) && board.lands[x][y].landType == landType)
+    if (isInBound(x, y, kingdom.size) && kingdom.lands[x][y].landType == landType)
       count++;
 
     x = castleX - 1;
     y = castleY;
-    if (isInBound(x, y, board.size) && board.lands[x][y].landType == landType)
+    if (isInBound(x, y, kingdom.size) && kingdom.lands[x][y].landType == landType)
       count++;
 
     x = castleX + 1;
     y = castleY;
-    if (isInBound(x, y, board.size) && board.lands[x][y].landType == landType)
+    if (isInBound(x, y, kingdom.size) && kingdom.lands[x][y].landType == landType)
       count++;
 
     x = castleX - 1;
     y = castleY + 1;
-    if (isInBound(x, y, board.size) && board.lands[x][y].landType == landType)
+    if (isInBound(x, y, kingdom.size) && kingdom.lands[x][y].landType == landType)
       count++;
 
     x = castleX;
     y = castleY + 1;
-    if (isInBound(x, y, board.size) && board.lands[x][y].landType == landType)
+    if (isInBound(x, y, kingdom.size) && kingdom.lands[x][y].landType == landType)
       count++;
 
     x = castleX + 1;
     y = castleY + 1;
-    if (isInBound(x, y, board.size) && board.lands[x][y].landType == landType)
+    if (isInBound(x, y, kingdom.size) && kingdom.lands[x][y].landType == landType)
       count++;
 
     return extraPoints * count;
@@ -170,13 +170,13 @@ class FourCorners extends Quest {
     ]);
   }
 
-  int getPoints(Kingdom board) {
+  int getPoints(Kingdom kingdom) {
     int count = 0;
-    int size = board.size - 1;
-    if (board.lands[0][0].landType == landType) count++;
-    if (board.lands[size][0].landType == landType) count++;
-    if (board.lands[0][size].landType == landType) count++;
-    if (board.lands[size][size].landType == landType) count++;
+    int size = kingdom.size - 1;
+    if (kingdom.lands[0][0].landType == landType) count++;
+    if (kingdom.lands[size][0].landType == landType) count++;
+    if (kingdom.lands[0][size].landType == landType) count++;
+    if (kingdom.lands[size][size].landType == landType) count++;
 
     return extraPoints * count;
   }
@@ -206,12 +206,12 @@ class LostCorner extends Quest {
         children: <Widget>[QuestPointWidget(extraPoints), Text('Lost Corner')]);
   }
 
-  int getPoints(Kingdom board) {
-    int size = board.size - 1;
-    return board.lands[0][0].landType == LandType.castle ||
-            board.lands[size][0].landType == LandType.castle ||
-            board.lands[0][size].landType == LandType.castle ||
-            board.lands[size][size].landType == LandType.castle
+  int getPoints(Kingdom kingdom) {
+    int size = kingdom.size - 1;
+    return kingdom.lands[0][0].landType == LandType.castle ||
+            kingdom.lands[size][0].landType == LandType.castle ||
+            kingdom.lands[0][size].landType == LandType.castle ||
+            kingdom.lands[size][size].landType == LandType.castle
         ? extraPoints
         : 0;
   }
@@ -243,35 +243,35 @@ class FolieDesGrandeurs extends Quest {
     ]);
   }
 
-  int getPoints(Kingdom board) {
+  int getPoints(Kingdom kingdom) {
     int count = 0;
-    int size = board.size;
+    int size = kingdom.size;
 
     for (var x = 0; x < size; x++) {
       for (var y = 0; y < size; y++) {
-        if (board.lands[x][y].crowns == 0) continue;
+        if (kingdom.lands[x][y].crowns == 0) continue;
 
         //check horizontally
-        if ((isInBound(x + 1, y, size) && board.lands[x + 1][y].crowns > 0) &&
-            (isInBound(x + 2, y, size) && board.lands[x + 2][y].crowns > 0))
+        if ((isInBound(x + 1, y, size) && kingdom.lands[x + 1][y].crowns > 0) &&
+            (isInBound(x + 2, y, size) && kingdom.lands[x + 2][y].crowns > 0))
           count++;
 
         //check vertically
-        if ((isInBound(x, y + 1, size) && board.lands[x][y + 1].crowns > 0) &&
-            (isInBound(x, y + 2, size) && board.lands[x][y + 2].crowns > 0))
+        if ((isInBound(x, y + 1, size) && kingdom.lands[x][y + 1].crowns > 0) &&
+            (isInBound(x, y + 2, size) && kingdom.lands[x][y + 2].crowns > 0))
           count++;
 
         //check diagonally (down right)
         if ((isInBound(x + 1, y + 1, size) &&
-                board.lands[x + 1][y + 1].crowns > 0) &&
+                kingdom.lands[x + 1][y + 1].crowns > 0) &&
             (isInBound(x + 2, y + 2, size) &&
-                board.lands[x + 2][y + 2].crowns > 0)) count++;
+                kingdom.lands[x + 2][y + 2].crowns > 0)) count++;
 
         //check diagonally (down left)
         if ((isInBound(x - 1, y + 1, size) &&
-                board.lands[x - 1][y + 1].crowns > 0) &&
+                kingdom.lands[x - 1][y + 1].crowns > 0) &&
             (isInBound(x - 2, y + 2, size) &&
-                board.lands[x - 2][y + 2].crowns > 0)) count++;
+                kingdom.lands[x - 2][y + 2].crowns > 0)) count++;
       }
     }
 
@@ -303,8 +303,8 @@ class BleakKing extends Quest {
         children: <Widget>[QuestPointWidget(extraPoints), Text('Bleak King')]);
   }
 
-  int getPoints(Kingdom board) {
-    var properties = board.getProperties();
+  int getPoints(Kingdom kingdom) {
+    var properties = kingdom.getProperties();
     int count = properties
         .where((property) =>
             (property.landType == LandType.wheat ||

@@ -29,7 +29,7 @@ class QuestPointWidget extends StatelessWidget {
 abstract class Quest {
   int extraPoints; //points awarded if quest is fulfilled
 
-  int getPoints(Kingdom board); //return true is quest if fulfilled
+  int getPoints(Kingdom kingdom); //return true is quest if fulfilled
 }
 
 abstract class QuestWidget extends StatelessWidget {
@@ -39,8 +39,8 @@ abstract class QuestWidget extends StatelessWidget {
 class Harmony extends Quest {
   int extraPoints = 5;
 
-  int getPoints(Kingdom board) {
-    return board.lands
+  int getPoints(Kingdom kingdom) {
+    return kingdom.lands
             .expand((i) => i)
             .toList()
             .where((field) => field.landType == LandType.none)
@@ -65,16 +65,16 @@ class HarmonyWidget extends QuestWidget {
 class MiddleKingdom extends Quest {
   int extraPoints = 10;
 
-  int getPoints(Kingdom board) {
+  int getPoints(Kingdom kingdom) {
     int x, y;
 
-    if (board.size == 5) {
+    if (kingdom.size == 5) {
       x = y = 2;
     } else {
       x = y = 3;
     }
 
-    if (board.lands[x][y].landType == LandType.castle)
+    if (kingdom.lands[x][y].landType == LandType.castle)
       return extraPoints;
     else
       return 0;

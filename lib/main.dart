@@ -105,7 +105,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   LandType _selectedType = LandType.none;
   SelectionMode _selectionMode = SelectionMode.land;
-  var _board = Kingdom(5);
+  var _kingdom = Kingdom(5);
   int _scoreProperty = 0;
   int _scoreQuest = 0;
   int _score = 0;
@@ -300,7 +300,7 @@ class _HomePageState extends State<HomePage> {
   _scoreDetailsDialog(BuildContext context) {
     const double fontSize = 25.0;
 
-    var properties = _board.getProperties();
+    var properties = _kingdom.getProperties();
 
     Widget content;
 
@@ -383,7 +383,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _onFieldTap(int x, int y) {
-    Land field = _board.lands[x][y];
+    Land field = _kingdom.lands[x][y];
     setState(() {
       switch (_selectionMode) {
         case SelectionMode.land:
@@ -399,11 +399,11 @@ class _HomePageState extends State<HomePage> {
           break;
         case SelectionMode.castle:
           //remove previous castle if any
-          for (var cx = 0; cx < _board.size; cx++) {
-            for (var cy = 0; cy < _board.size; cy++) {
-              if (_board.lands[cx][cy].landType == LandType.castle) {
-                _board.lands[cx][cy].landType = LandType.none;
-                _board.lands[cx][cy].crowns = 0;
+          for (var cx = 0; cx < _kingdom.size; cx++) {
+            for (var cy = 0; cy < _kingdom.size; cy++) {
+              if (_kingdom.lands[cx][cy].landType == LandType.castle) {
+                _kingdom.lands[cx][cy].landType = LandType.none;
+                _kingdom.lands[cx][cy].crowns = 0;
               }
             }
           }
@@ -415,12 +415,12 @@ class _HomePageState extends State<HomePage> {
     });
 
     _clearWarnings();
-    _checkBoard();
+    _checkkingdom();
     _updateScores();
   }
 
   Widget _buildLand(int x, int y) {
-    Land land = _board.lands[x][y];
+    Land land = _kingdom.lands[x][y];
     Color color = getColorForLandType(land.landType, context);
     if (land.landType == LandType.castle)
       return Container(
@@ -438,7 +438,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildLands(BuildContext context, int index) {
-    int gridStateLength = _board.lands.length;
+    int gridStateLength = _kingdom.lands.length;
     int x, y = 0;
     x = (index / gridStateLength).floor();
     y = (index % gridStateLength);
@@ -454,8 +454,8 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildBoard() {
-    int gridStateLength = _board.lands.length;
+  Widget _buildkingdom() {
+    int gridStateLength = _kingdom.lands.length;
     return AspectRatio(
       aspectRatio: 1.0,
       child: Container(
@@ -482,13 +482,13 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  //check if the board is conform, if not set warnings
-  void _checkBoard() {
-    //check if more tile in the board than in the gameSet
+  //check if the kingdom is conform, if not set warnings
+  void _checkkingdom() {
+    //check if more tile in the kingdom than in the gameSet
     for (var fieldType in LandType.values) {
       if (fieldType == LandType.none) continue;
 
-      var count = _board.lands
+      var count = _kingdom.lands
           .expand((i) => i)
           .toList()
           .where((field) => field.landType == fieldType)
@@ -516,7 +516,7 @@ class _HomePageState extends State<HomePage> {
       for (var crownsCounter = 1;
           crownsCounter <= _getGameSet()[fieldType]['crowns']['max'];
           crownsCounter++) {
-        var count = _board.lands
+        var count = _kingdom.lands
             .expand((i) => i)
             .toList()
             .where((field) =>
@@ -553,7 +553,7 @@ class _HomePageState extends State<HomePage> {
     var scoreQuest = 0;
 
     for (var i = 0; i < _quests.length; i++) {
-      scoreQuest += _quests[i].getPoints(_board);
+      scoreQuest += _quests[i].getPoints(_kingdom);
     }
 
     setState(() {
@@ -568,7 +568,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _updateScoreProperty() {
-    var properties = _board.getProperties();
+    var properties = _kingdom.getProperties();
     setState(() {
       _scoreProperty = calculateScoreFromProperties(properties);
     });
@@ -651,13 +651,13 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       IconButton(
-          icon: Icon(_board.size == 5 ? Icons.filter_5 : Icons.filter_7),
+          icon: Icon(_kingdom.size == 5 ? Icons.filter_5 : Icons.filter_7),
           onPressed: () {
             setState(() {
-              if (_board.size == 5)
-                _board.reSize(7);
+              if (_kingdom.size == 5)
+                _kingdom.reSize(7);
               else
-                _board.reSize(5);
+                _kingdom.reSize(5);
 
               _resetScores();
               _clearWarnings();
@@ -668,7 +668,7 @@ class _HomePageState extends State<HomePage> {
           icon: Icon(Icons.delete),
           onPressed: () {
             setState(() {
-              _board.erase();
+              _kingdom.erase();
               _clearWarnings();
               _resetScores();
               _onSelectCastle();
@@ -720,7 +720,7 @@ class _HomePageState extends State<HomePage> {
         bottomNavigationBar: BottomAppBar(
             child: fieldSelection, color: Theme.of(context).primaryColor),
         body: Column(children: <Widget>[
-          _buildBoard(),
+          _buildkingdom(),
           Expanded(
             child: FittedBox(
                 fit: BoxFit.fitHeight,

@@ -43,7 +43,7 @@ class Harmony extends Quest {
     return kingdom.lands
             .expand((i) => i)
             .toList()
-            .where((field) => field.landType == LandType.none)
+            .where((land) => land.landType == LandType.none)
             .isEmpty
         ? extraPoints
         : 0;

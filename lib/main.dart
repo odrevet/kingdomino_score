@@ -355,18 +355,18 @@ class MainWidgetState extends State<MainWidget> {
     });
   }
 
-  //check if the kingdom is conform, if not set warnings
+  ///check if the kingdom is conform, if not set warnings
   void checkKingdom() {
     //check if more tile in the kingdom than in the gameSet
-    for (var fieldType in LandType.values) {
-      if (fieldType == LandType.none) continue;
+    for (var landType in LandType.values) {
+      if (landType == LandType.none) continue;
 
       var count = _kingdom.lands
           .expand((i) => i)
           .toList()
-          .where((field) => field.landType == fieldType)
+          .where((land) => land.landType == landType)
           .length;
-      if (count > getGameSet()[fieldType]['count']) {
+      if (count > getGameSet()[landType]['count']) {
         setState(() {
           _warnings.add(RichText(
               text: TextSpan(
@@ -377,9 +377,9 @@ class MainWidgetState extends State<MainWidget> {
                     text: square,
                     style: TextStyle(
                         fontSize: 20,
-                        color: getColorForLandType(fieldType, context))),
+                        color: getColorForLandType(landType, context))),
                 TextSpan(
-                    text: ' > ${getGameSet()[fieldType]['count']}',
+                    text: ' > ${getGameSet()[landType]['count']}',
                     style: TextStyle(color: Colors.black, fontSize: 20))
               ])));
         });
@@ -387,16 +387,16 @@ class MainWidgetState extends State<MainWidget> {
 
       //check for too many tile with given crowns
       for (var crownsCounter = 1;
-          crownsCounter <= getGameSet()[fieldType]['crowns']['max'];
+          crownsCounter <= getGameSet()[landType]['crowns']['max'];
           crownsCounter++) {
         var count = _kingdom.lands
             .expand((i) => i)
             .toList()
-            .where((field) =>
-                field.landType == fieldType && field.crowns == crownsCounter)
+            .where((land) =>
+                land.landType == landType && land.crowns == crownsCounter)
             .length;
 
-        if (count > getGameSet()[fieldType]['crowns'][crownsCounter]) {
+        if (count > getGameSet()[landType]['crowns'][crownsCounter]) {
           setState(() {
             _warnings.add(RichText(
                 text: TextSpan(
@@ -407,13 +407,13 @@ class MainWidgetState extends State<MainWidget> {
                       text: square,
                       style: TextStyle(
                           fontSize: 20,
-                          color: getColorForLandType(fieldType, context))),
+                          color: getColorForLandType(landType, context))),
                   TextSpan(
                       text: crown * crownsCounter,
                       style: TextStyle(fontSize: 20)),
                   TextSpan(
                       text:
-                          ' > ${getGameSet()[fieldType]['crowns'][crownsCounter]}',
+                          ' > ${getGameSet()[landType]['crowns'][crownsCounter]}',
                       style: TextStyle(color: Colors.black, fontSize: 20))
                 ])));
           });
@@ -459,17 +459,73 @@ class MainWidgetState extends State<MainWidget> {
     });
   }
 
+  Widget landButton(LandType type) {
+    var selected = Icon(
+      Icons.crop_free,
+      color: Colors.white,
+    );
+
+    return GestureDetector(
+        onTap: () => _onSelectLandType(type),
+        child: Container(
+          margin: EdgeInsets.all(5.0),
+          height: 50.0,
+          width: 50.0,
+          decoration: BoxDecoration(
+              border: Border(
+                right: BorderSide(width: 3.5, color: Colors.blueGrey.shade600),
+                bottom: BorderSide(width: 3.5, color: Colors.blueGrey.shade900),
+              )),
+          child: Container(
+            color: getColorForLandType(type, context),
+            child: selectionMode == SelectionMode.land && selectedLandType == type
+                ? selected
+                : Text(''),
+          ),
+        ));
+  }
+
+  final double margin = 5.0;
+
+  var selectedBorder = BorderSide(
+    color: Colors.red,
+    style: BorderStyle.solid,
+    width: 1.0,
+  );
+
+  Container crownButton() => Container(
+      margin: EdgeInsets.all(margin),
+      child: OutlineButton(
+          borderSide:
+          selectionMode == SelectionMode.crown ? selectedBorder : null,
+          onPressed: () => _onSelectCrown(),
+          shape:
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+          child: Text(crown, style: TextStyle(fontSize: 30.0))));
+
+  Container castleButton() {
+    return Container(
+        margin: EdgeInsets.all(margin),
+        child: OutlineButton(
+            borderSide:
+            selectionMode == SelectionMode.castle ? selectedBorder : null,
+            onPressed: () => _onSelectCastle(),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0)),
+            child: Text(castle, style: TextStyle(fontSize: 30.0))));
+  }
+
   @override
   Widget build(BuildContext context) {
-    var fieldSelection = Wrap(
+    var landSelection = Wrap(
       children: [
-        fieldButton(LandType.wheat),
-        fieldButton(LandType.grassland),
-        fieldButton(LandType.forest),
-        fieldButton(LandType.lake),
-        fieldButton(LandType.swamp),
-        fieldButton(LandType.mine),
-        fieldButton(LandType.none),
+        landButton(LandType.wheat),
+        landButton(LandType.grassland),
+        landButton(LandType.forest),
+        landButton(LandType.lake),
+        landButton(LandType.swamp),
+        landButton(LandType.mine),
+        landButton(LandType.none),
         crownButton(),
         castleButton()
       ],
@@ -591,7 +647,7 @@ class MainWidgetState extends State<MainWidget> {
               Row(mainAxisAlignment: MainAxisAlignment.end, children: actions),
         ),
         bottomNavigationBar: BottomAppBar(
-            child: fieldSelection, color: Theme.of(context).primaryColor),
+            child: landSelection, color: Theme.of(context).primaryColor),
         body: Column(children: <Widget>[
             KingdomWidget(this, _kingdom),
           Expanded(
@@ -604,61 +660,5 @@ class MainWidgetState extends State<MainWidget> {
                 )),
           )
         ]));
-  }
-
-  Widget fieldButton(LandType type) {
-    var selected = Icon(
-      Icons.crop_free,
-      color: Colors.white,
-    );
-
-    return GestureDetector(
-        onTap: () => _onSelectLandType(type),
-        child: Container(
-          margin: EdgeInsets.all(5.0),
-          height: 50.0,
-          width: 50.0,
-          decoration: BoxDecoration(
-              border: Border(
-            right: BorderSide(width: 3.5, color: Colors.blueGrey.shade600),
-            bottom: BorderSide(width: 3.5, color: Colors.blueGrey.shade900),
-          )),
-          child: Container(
-            color: getColorForLandType(type, context),
-            child: selectionMode == SelectionMode.land && selectedLandType == type
-                ? selected
-                : Text(''),
-          ),
-        ));
-  }
-
-  final double margin = 5.0;
-
-  var selectedBorder = BorderSide(
-    color: Colors.red,
-    style: BorderStyle.solid,
-    width: 1.0,
-  );
-
-  Container crownButton() => Container(
-      margin: EdgeInsets.all(margin),
-      child: OutlineButton(
-          borderSide:
-              selectionMode == SelectionMode.crown ? selectedBorder : null,
-          onPressed: () => _onSelectCrown(),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-          child: Text(crown, style: TextStyle(fontSize: 30.0))));
-
-  Container castleButton() {
-    return Container(
-        margin: EdgeInsets.all(margin),
-        child: OutlineButton(
-            borderSide:
-                selectionMode == SelectionMode.castle ? selectedBorder : null,
-            onPressed: () => _onSelectCastle(),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0)),
-            child: Text(castle, style: TextStyle(fontSize: 30.0))));
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'board.dart';
+import 'kingdom.dart';
 
 const String shield = '\u{1F6E1}';
 
@@ -29,7 +29,7 @@ class QuestPointWidget extends StatelessWidget {
 abstract class Quest {
   int extraPoints; //points awarded if quest is fulfilled
 
-  int getPoints(Board board); //return true is quest if fulfilled
+  int getPoints(Kingdom board); //return true is quest if fulfilled
 }
 
 abstract class QuestWidget extends StatelessWidget {
@@ -39,7 +39,7 @@ abstract class QuestWidget extends StatelessWidget {
 class Harmony extends Quest {
   int extraPoints = 5;
 
-  int getPoints(Board board) {
+  int getPoints(Kingdom board) {
     return board.lands
             .expand((i) => i)
             .toList()
@@ -65,7 +65,7 @@ class HarmonyWidget extends QuestWidget {
 class MiddleKingdom extends Quest {
   int extraPoints = 10;
 
-  int getPoints(Board board) {
+  int getPoints(Kingdom board) {
     int x, y;
 
     if (board.size == 5) {

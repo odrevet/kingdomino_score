@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'main.dart';
-import 'board.dart';
+import 'kingdom.dart';
 import 'quest.dart';
 
 /*const Map<LandType, Map<String, dynamic>> aogSet = {
@@ -78,7 +78,7 @@ class LocalBusiness extends Quest {
     ]);
   }
 
-  int getPoints(Board board) {
+  int getPoints(Kingdom board) {
     int castleX, castleY;
 
     for (var x = 0; x < board.size; x++) {
@@ -170,7 +170,7 @@ class FourCorners extends Quest {
     ]);
   }
 
-  int getPoints(Board board) {
+  int getPoints(Kingdom board) {
     int count = 0;
     int size = board.size - 1;
     if (board.lands[0][0].landType == landType) count++;
@@ -206,7 +206,7 @@ class LostCorner extends Quest {
         children: <Widget>[QuestPointWidget(extraPoints), Text('Lost Corner')]);
   }
 
-  int getPoints(Board board) {
+  int getPoints(Kingdom board) {
     int size = board.size - 1;
     return board.lands[0][0].landType == LandType.castle ||
             board.lands[size][0].landType == LandType.castle ||
@@ -243,7 +243,7 @@ class FolieDesGrandeurs extends Quest {
     ]);
   }
 
-  int getPoints(Board board) {
+  int getPoints(Kingdom board) {
     int count = 0;
     int size = board.size;
 
@@ -303,7 +303,7 @@ class BleakKing extends Quest {
         children: <Widget>[QuestPointWidget(extraPoints), Text('Bleak King')]);
   }
 
-  int getPoints(Board board) {
+  int getPoints(Kingdom board) {
     var properties = board.getProperties();
     int count = properties
         .where((property) =>

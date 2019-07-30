@@ -1,10 +1,10 @@
 enum LandType { none, wheat, grassland, forest, lake, swamp, mine, castle }
 
-class Board {
+class Kingdom {
   int size = 5;
   List<List<Land>> lands;
 
-  Board(this.size) {
+  Kingdom(this.size) {
     this.lands = [];
     for (var i = 0; i < size; i++) {
       this.lands.add(List<Land>.generate(size, (_) => Land(LandType.none)));
@@ -81,7 +81,7 @@ bool isInBound(int x, int y, int size) {
   return (x >= 0 && x < size && y >= 0 && y < size);
 }
 
-Property getAdjacentLand(int x, int y, Board board, Property property) {
+Property getAdjacentLand(int x, int y, Kingdom board, Property property) {
   if (!isInBound(x, y, board.size)) return null;
 
   var field = board.lands[x][y];

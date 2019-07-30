@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'board.dart';
+import 'kingdom.dart';
 import 'quest.dart';
 import 'age_of_giants.dart';
 
@@ -105,7 +105,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   LandType _selectedType = LandType.none;
   SelectionMode _selectionMode = SelectionMode.land;
-  var _board = Board(5);
+  var _board = Kingdom(5);
   int _scoreProperty = 0;
   int _scoreQuest = 0;
   int _score = 0;
@@ -419,10 +419,10 @@ class _HomePageState extends State<HomePage> {
     _updateScores();
   }
 
-  Widget _buildField(int x, int y) {
-    Land field = _board.lands[x][y];
-    Color color = getColorForLandType(field.landType, context);
-    if (field.landType == LandType.castle)
+  Widget _buildLand(int x, int y) {
+    Land land = _board.lands[x][y];
+    Color color = getColorForLandType(land.landType, context);
+    if (land.landType == LandType.castle)
       return Container(
           color: color,
           child: FittedBox(fit: BoxFit.fitWidth, child: Text(castle)));
@@ -431,13 +431,13 @@ class _HomePageState extends State<HomePage> {
         color: color,
         child: new LayoutBuilder(
             builder: (BuildContext context, BoxConstraints constraints) {
-              return Text(crown * field.crowns,
+              return Text(crown * land.crowns,
                   style: TextStyle(fontSize: constraints.maxWidth / 3));
             }),
       );
   }
 
-  Widget _buildFields(BuildContext context, int index) {
+  Widget _buildLands(BuildContext context, int index) {
     int gridStateLength = _board.lands.length;
     int x, y = 0;
     x = (index / gridStateLength).floor();
@@ -448,7 +448,7 @@ class _HomePageState extends State<HomePage> {
         child: Container(
           decoration: BoxDecoration(
               border: Border.all(color: Colors.white, width: 0.5)),
-          child: _buildField(x, y),
+          child: _buildLand(x, y),
         ),
       ),
     );
@@ -469,7 +469,7 @@ class _HomePageState extends State<HomePage> {
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: gridStateLength,
           ),
-          itemBuilder: _buildFields,
+          itemBuilder: _buildLands,
           itemCount: gridStateLength * gridStateLength,
         ),
       ),

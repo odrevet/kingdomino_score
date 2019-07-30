@@ -415,7 +415,7 @@ class _HomePageState extends State<HomePage> {
     });
 
     _clearWarnings();
-    _checkkingdom();
+    _checkKingdom();
     _updateScores();
   }
 
@@ -483,7 +483,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   //check if the kingdom is conform, if not set warnings
-  void _checkkingdom() {
+  void _checkKingdom() {
     //check if more tile in the kingdom than in the gameSet
     for (var fieldType in LandType.values) {
       if (fieldType == LandType.none) continue;

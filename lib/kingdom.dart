@@ -33,7 +33,7 @@ class Kingdom {
 
     for (var x = 0; x < size; x++) {
       for (var y = 0; y < size; y++) {
-        var property = getAdjacentLand(x, y, this, null);
+        var property = _getAdjacentLand(x, y, null);
         if (property != null) {
           properties.add(property);
         }
@@ -53,9 +53,33 @@ class Kingdom {
           checkField.isMarked == false) {
         property.landCount++;
         property.crownCount += checkField.crowns;
-        getAdjacentLand(x, y, this, property);
+        _getAdjacentLand(x, y, property);
       }
     }
+  }
+
+  Property _getAdjacentLand(int x, int y, Property property) {
+    if (!isInBound(x, y, size)) return null;
+
+    var field = lands[x][y];
+    if (field.landType == LandType.castle ||
+        field.landType == LandType.none ||
+        field.isMarked == true) return null;
+
+    if (property == null) {
+      property = Property(field.landType);
+      property.landCount++;
+      property.crownCount += field.crowns;
+    }
+
+    field.isMarked = true;
+
+    addLandToProperty(x, y - 1, field, property);
+    addLandToProperty(x, y + 1, field, property);
+    addLandToProperty(x - 1, y, field, property);
+    addLandToProperty(x + 1, y, field, property);
+
+    return property;
   }
 }
 
@@ -79,30 +103,6 @@ class Property {
 
 bool isInBound(int x, int y, int size) {
   return (x >= 0 && x < size && y >= 0 && y < size);
-}
-
-Property getAdjacentLand(int x, int y, Kingdom kingdom, Property property) {
-  if (!isInBound(x, y, kingdom.size)) return null;
-
-  var field = kingdom.lands[x][y];
-  if (field.landType == LandType.castle ||
-      field.landType == LandType.none ||
-      field.isMarked == true) return null;
-
-  if (property == null) {
-    property = Property(field.landType);
-    property.landCount++;
-    property.crownCount += field.crowns;
-  }
-
-  field.isMarked = true;
-
-  kingdom.addLandToProperty(x, y - 1, field, property);
-  kingdom.addLandToProperty(x, y + 1, field, property);
-  kingdom.addLandToProperty(x - 1, y, field, property);
-  kingdom.addLandToProperty(x + 1, y, field, property);
-
-  return property;
 }
 
 int calculateScoreFromProperties(List<Property> properties) {

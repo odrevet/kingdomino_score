@@ -64,9 +64,9 @@ const Map<LandType, Map<String, dynamic>> gameAogSet = {
 
 // Quests
 class LocalBusiness extends Quest {
-  int extraPoints = 5;
+  final int extraPoints = 5;
 
-  LandType landType;
+  final LandType landType;
 
   LocalBusiness(this.landType);
 
@@ -156,7 +156,7 @@ class LocalBusiness extends Quest {
 }
 
 class FourCorners extends Quest {
-  int extraPoints = 5;
+  final int extraPoints = 5;
 
   LandType landType;
 
@@ -197,7 +197,7 @@ class FourCornersWidget extends QuestWidget {
 }
 
 class LostCorner extends Quest {
-  int extraPoints = 20;
+  final int extraPoints = 20;
 
   LostCorner();
 

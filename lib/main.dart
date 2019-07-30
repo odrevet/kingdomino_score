@@ -5,6 +5,7 @@ import 'kingdom.dart';
 import 'kingdomWidget.dart';
 import 'quest.dart';
 import 'age_of_giants.dart';
+import 'questDialog.dart';
 
 const String crown = '\u{1F451}';
 const String castle = '\u{1F3F0}';
@@ -78,7 +79,7 @@ class MainWidgetState extends State<MainWidget> {
   int _score = 0;
 
   bool aog = false; // Age of Giants extension
-  List<Quest> _quests = []; //standard : 0, 1 or 2, aog : 2
+  List<Quest> quests = []; //standard : 0, 1 or 2, aog : 2
   List<RichText> _warnings = [];
 
   @override
@@ -133,100 +134,6 @@ class MainWidgetState extends State<MainWidget> {
             ),
           ],
         );
-      },
-    );
-  }
-
-  static final harmonyWidget = HarmonyWidget();
-  static final middleKingdomWidget = MiddleKingdomWidget();
-
-  static final localBusinessWheatWidget =
-      LocalBusinessWidget(LocalBusiness(LandType.wheat));
-  static final localBusinessGrasslandWidget =
-      LocalBusinessWidget(LocalBusiness(LandType.grassland));
-  static final localBusinessForestWidget =
-      LocalBusinessWidget(LocalBusiness(LandType.forest));
-  static final localBusinessLakeWidget =
-      LocalBusinessWidget(LocalBusiness(LandType.lake));
-  static final localBusinessMineWidget =
-      LocalBusinessWidget(LocalBusiness(LandType.mine));
-  static final localBusinessSwampWidget =
-      LocalBusinessWidget(LocalBusiness(LandType.swamp));
-
-  static final fourCornersWheatWidget =
-      FourCornersWidget(FourCorners(LandType.wheat));
-  static final fourCornersGrasslandWidget =
-      FourCornersWidget(FourCorners(LandType.grassland));
-  static final fourCornersForestWidget =
-      FourCornersWidget(FourCorners(LandType.forest));
-  static final fourCornersLakeWidget =
-      FourCornersWidget(FourCorners(LandType.lake));
-  static final fourCornersMineWidget =
-      FourCornersWidget(FourCorners(LandType.mine));
-  static final fourCornersSwampWidget =
-      FourCornersWidget(FourCorners(LandType.swamp));
-
-  static final lostCornerWidget = LostCornerWidget();
-  static final folieDesGrandeursWidget = FolieDesGrandeursWidget();
-  static final bleakKingWidget = BleakKingWidget();
-
-  _questDialogAddOption(List<Widget> options, QuestWidget questWidget) {
-    options.add(
-      SimpleDialogOption(
-        child: _quests.contains(questWidget.quest)
-            ? Container(
-                decoration: new BoxDecoration(
-                    border: new Border.all(color: Colors.blueAccent)),
-                child: questWidget)
-            : questWidget,
-        onPressed: () {
-          setState(() {
-            if (_quests.contains(questWidget.quest))
-              _quests.remove(questWidget.quest);
-            else if (_quests.length < 2) _quests.add(questWidget.quest);
-          });
-
-          _updateScoreQuest();
-          _updateScore();
-        },
-      ),
-    );
-  }
-
-  _questsDialog(BuildContext context) {
-    var options = <Widget>[];
-
-    _questDialogAddOption(options, harmonyWidget);
-    _questDialogAddOption(options, middleKingdomWidget);
-
-    if (aog == true) {
-      _questDialogAddOption(options, localBusinessWheatWidget);
-      _questDialogAddOption(options, localBusinessGrasslandWidget);
-      _questDialogAddOption(options, localBusinessForestWidget);
-      _questDialogAddOption(options, localBusinessLakeWidget);
-      _questDialogAddOption(options, localBusinessMineWidget);
-      _questDialogAddOption(options, localBusinessSwampWidget);
-
-      _questDialogAddOption(options, fourCornersWheatWidget);
-      _questDialogAddOption(options, fourCornersGrasslandWidget);
-      _questDialogAddOption(options, fourCornersForestWidget);
-      _questDialogAddOption(options, fourCornersLakeWidget);
-      _questDialogAddOption(options, fourCornersMineWidget);
-      _questDialogAddOption(options, fourCornersSwampWidget);
-
-      _questDialogAddOption(options, lostCornerWidget);
-      _questDialogAddOption(options, folieDesGrandeursWidget);
-      _questDialogAddOption(options, bleakKingWidget);
-    }
-
-    SimpleDialog dialog = SimpleDialog(
-      children: options,
-    );
-
-    return showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return dialog;
       },
     );
   }
@@ -422,11 +329,11 @@ class MainWidgetState extends State<MainWidget> {
     }
   }
 
-  void _updateScoreQuest() {
+  void updateScoreQuest() {
     var scoreQuest = 0;
 
-    for (var i = 0; i < _quests.length; i++) {
-      scoreQuest += _quests[i].getPoints(_kingdom);
+    for (var i = 0; i < quests.length; i++) {
+      scoreQuest += quests[i].getPoints(_kingdom);
     }
 
     setState(() {
@@ -435,25 +342,25 @@ class MainWidgetState extends State<MainWidget> {
   }
 
   void updateScores() {
-    _updateScoreProperty();
-    _updateScoreQuest();
-    _updateScore();
+    updateScoreProperty();
+    updateScoreQuest();
+    updateScore();
   }
 
-  void _updateScoreProperty() {
+  void updateScoreProperty() {
     var properties = _kingdom.getProperties();
     setState(() {
       _scoreProperty = _kingdom.calculateScoreFromProperties(properties);
     });
   }
 
-  void _updateScore() {
+  void updateScore() {
     setState(() {
       _score = _scoreProperty + _scoreQuest;
     });
   }
 
-  void _resetScores() {
+  void resetScores() {
     setState(() {
       _score = _scoreProperty = _scoreQuest = 0;
     });
@@ -538,47 +445,17 @@ class MainWidgetState extends State<MainWidget> {
             setState(() {
               aog = !aog;
 
-              _quests.clear();
-              _updateScoreQuest();
-              _updateScore();
+              quests.clear();
+              updateScoreQuest();
+              updateScore();
             });
           },
           child: Container(
               child: Text('AG',
                   style: TextStyle(
                       fontSize: 30, color: aog ? Colors.red : Colors.white)))),
-      Stack(
-        children: <Widget>[
-          MaterialButton(
-              minWidth: 30,
-              onPressed: () => _questsDialog(context),
-              child: Container(
-                  child: Text(shield, style: TextStyle(fontSize: 30)))),
-          Positioned(
-            right: 5,
-            top: 10,
-            child: new Container(
-              padding: EdgeInsets.all(1),
-              decoration: new BoxDecoration(
-                color: Colors.red,
-                borderRadius: BorderRadius.circular(6),
-              ),
-              constraints: BoxConstraints(
-                minWidth: 12,
-                minHeight: 12,
-              ),
-              child: new Text(
-                '${_quests.length}',
-                style: new TextStyle(
-                  color: Colors.white,
-                  fontSize: 14,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ),
-          )
-        ],
-      ),
+    QuestDialogWidget(this, _kingdom)
+      ,
       IconButton(
           icon: Icon(_kingdom.size == 5 ? Icons.filter_5 : Icons.filter_7),
           onPressed: () {
@@ -588,7 +465,7 @@ class MainWidgetState extends State<MainWidget> {
               else
                 _kingdom.reSize(5);
 
-              _resetScores();
+              resetScores();
               clearWarnings();
               _onSelectCastle();
             });
@@ -599,7 +476,7 @@ class MainWidgetState extends State<MainWidget> {
             setState(() {
               _kingdom.clear();
               clearWarnings();
-              _resetScores();
+              resetScores();
               _onSelectCastle();
             });
           }),

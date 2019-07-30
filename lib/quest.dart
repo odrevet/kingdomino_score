@@ -4,7 +4,7 @@ import 'kingdom.dart';
 
 const String shield = '\u{1F6E1}';
 
-//render a shield with point awarded in front
+///render a shield with point awarded in front
 class QuestPointWidget extends StatelessWidget {
   int points;
 
@@ -63,7 +63,7 @@ class HarmonyWidget extends QuestWidget {
 }
 
 class MiddleKingdom extends Quest {
-  int extraPoints = 10;
+  final int extraPoints = 10;
 
   int getPoints(Kingdom kingdom) {
     int x, y;

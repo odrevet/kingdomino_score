@@ -247,6 +247,22 @@ class FolieDesGrandeurs extends Quest {
     ]);
   }
 
+  ///return true is 3 crowns are aligned
+  ///in this case, will also set isMarked flag of checked lands to true
+  bool _hasMatch(int x1, int y1, int x2, int y2, Kingdom kingdom){
+    if ((kingdom.isInBound(x1, y1) &&
+        kingdom.lands[x1][y1].getCrowns() > 0 &&
+        !kingdom.lands[x1][y1].isMarked) &&
+        (kingdom.isInBound(x2, y2) &&
+            kingdom.lands[x2][y2].getCrowns() > 0 &&
+            !kingdom.lands[x2][y2].isMarked)) {
+      kingdom.lands[x1][y2].isMarked = true;
+      kingdom.lands[x2][y2].isMarked = true;
+      return true;
+    }
+    return false;
+  }
+
   int getPoints(Kingdom kingdom) {
     int count = 0;
     int size = kingdom.size;
@@ -256,53 +272,17 @@ class FolieDesGrandeurs extends Quest {
         if (kingdom.lands[x][y].getCrowns() == 0) continue;
 
         //check horizontally
-        if ((kingdom.isInBound(x + 1, y) &&
-                kingdom.lands[x + 1][y].getCrowns() > 0 &&
-                !kingdom.lands[x + 1][y].isMarked) &&
-            (kingdom.isInBound(x + 2, y) &&
-                kingdom.lands[x + 2][y].getCrowns() > 0 &&
-                !kingdom.lands[x + 2][y].isMarked)) {
-          count++;
-          kingdom.lands[x + 1][y].isMarked = true;
-              kingdom.lands[x + 2][y].isMarked = true;
-        }
+        if(_hasMatch(x + 1, y, x +2, y, kingdom))count++;
 
         //check vertically
-        if ((kingdom.isInBound(x, y + 1) &&
-                kingdom.lands[x][y + 1].getCrowns() > 0 &&
-                !kingdom.lands[x][y + 1].isMarked) &&
-            (kingdom.isInBound(x, y + 2) &&
-                kingdom.lands[x][y + 2].getCrowns() > 0 &&
-                !kingdom.lands[x][y + 2].isMarked)) {
-          count++;
-          kingdom.lands[x][y + 1].isMarked = true;
-              kingdom.lands[x][y + 2].isMarked = true;
-        }
+        if(_hasMatch(x, y + 1, x, y + 2, kingdom))count++;
+
 
         //check diagonally (down right)
-        if ((kingdom.isInBound(x + 1, y + 1) &&
-                kingdom.lands[x + 1][y + 1].getCrowns() > 0 &&
-                !kingdom.lands[x + 1][y + 1].isMarked) &&
-            (kingdom.isInBound(x + 2, y + 2) &&
-                kingdom.lands[x + 2][y + 2].getCrowns() > 0 &&
-                !kingdom.lands[x + 2][y + 2].isMarked)) {
-          count++;
-          kingdom.lands[x + 1][y + 1].isMarked = true;
-          kingdom.lands[x + 2][y + 2].isMarked = true;
-        }
+        if(_hasMatch(x + 1, y + 1, x + 2, y + 2, kingdom))count++;
 
         //check diagonally (down left)
-        if ((kingdom.isInBound(x - 1, y + 1) &&
-                kingdom.lands[x - 1][y + 1].getCrowns() > 0 &&
-                !kingdom.lands[x - 1][y + 1].isMarked) &&
-            (kingdom.isInBound(x - 2, y + 2) &&
-                kingdom.lands[x - 2][y + 2].getCrowns() > 0 &&
-                !kingdom.lands[x - 2][y + 2].isMarked)) {
-          count++;
-
-          kingdom.lands[x - 1][y + 1].isMarked = true;
-              kingdom.lands[x - 2][y + 2].isMarked = true;
-        }
+        if(_hasMatch(x - 1, y + 1, x - 2, y + 2, kingdom))count++;
       }
     }
 

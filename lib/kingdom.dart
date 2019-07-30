@@ -44,13 +44,16 @@ class Kingdom {
     return properties;
   }
 
-  void _addLandToProperty(int x, int y, Land field, Property property) {
+  /**
+   * add land at x y to the property if it's landType is the same as land
+   */
+  void _addLandToProperty(int x, int y, Land land, Property property) {
     if (isInBound(x, y)) {
-      Land checkField = lands[x][y];
-      if (checkField.landType == field.landType &&
-          checkField.isMarked == false) {
+      Land landToAdd = lands[x][y];
+      if (landToAdd.landType == land.landType &&
+          landToAdd.isMarked == false) {
         property.landCount++;
-        property.crownCount += checkField.crowns;
+        property.crownCount += landToAdd.crowns;
         _getAdjacentLand(x, y, property);
       }
     }
@@ -59,23 +62,23 @@ class Kingdom {
   Property _getAdjacentLand(int x, int y, Property property) {
     if (!isInBound(x, y)) return null;
 
-    var field = lands[x][y];
-    if (field.landType == LandType.castle ||
-        field.landType == LandType.none ||
-        field.isMarked == true) return null;
+    var land = lands[x][y];
+    if (land.landType == LandType.castle ||
+        land.landType == LandType.none ||
+        land.isMarked == true) return null;
 
     if (property == null) {
-      property = Property(field.landType);
+      property = Property(land.landType);
       property.landCount++;
-      property.crownCount += field.crowns;
+      property.crownCount += land.crowns;
     }
 
-    field.isMarked = true;
+    land.isMarked = true;
 
-    _addLandToProperty(x, y - 1, field, property);
-    _addLandToProperty(x, y + 1, field, property);
-    _addLandToProperty(x - 1, y, field, property);
-    _addLandToProperty(x + 1, y, field, property);
+    _addLandToProperty(x, y - 1, land, property);
+    _addLandToProperty(x, y + 1, land, property);
+    _addLandToProperty(x - 1, y, land, property);
+    _addLandToProperty(x + 1, y, land, property);
 
     return property;
   }

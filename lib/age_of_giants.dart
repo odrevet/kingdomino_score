@@ -67,12 +67,12 @@ const Map<LandType, Map<String, dynamic>> gameAogSet = {
 class LocalBusiness extends Quest {
   int extraPoints = 5;
 
-  LandType fieldType;
+  LandType landType;
 
-  LocalBusiness(this.fieldType);
+  LocalBusiness(this.landType);
 
   Widget build() {
-    Color color = getColorForLandType(fieldType);
+    Color color = getColorForLandType(landType);
     return Row(children: <Widget>[
       QuestPointWidget(extraPoints),
       Container(color: color, child: Text('Local Business'))
@@ -100,57 +100,71 @@ class LocalBusiness extends Quest {
 
     x = castleX - 1;
     y = castleY - 1;
-    if (isInBound(x, y, board.size) && board.lands[x][y].landType == fieldType)
+    if (isInBound(x, y, board.size) && board.lands[x][y].landType == landType)
       count++;
 
     x = castleX;
     y = castleY - 1;
-    if (isInBound(x, y, board.size) && board.lands[x][y].landType == fieldType)
+    if (isInBound(x, y, board.size) && board.lands[x][y].landType == landType)
       count++;
 
     x = castleX + 1;
     y = castleY - 1;
-    if (isInBound(x, y, board.size) && board.lands[x][y].landType == fieldType)
+    if (isInBound(x, y, board.size) && board.lands[x][y].landType == landType)
       count++;
 
     x = castleX - 1;
     y = castleY;
-    if (isInBound(x, y, board.size) && board.lands[x][y].landType == fieldType)
+    if (isInBound(x, y, board.size) && board.lands[x][y].landType == landType)
       count++;
 
     x = castleX + 1;
     y = castleY;
-    if (isInBound(x, y, board.size) && board.lands[x][y].landType == fieldType)
+    if (isInBound(x, y, board.size) && board.lands[x][y].landType == landType)
       count++;
 
     x = castleX - 1;
     y = castleY + 1;
-    if (isInBound(x, y, board.size) && board.lands[x][y].landType == fieldType)
+    if (isInBound(x, y, board.size) && board.lands[x][y].landType == landType)
       count++;
 
     x = castleX;
     y = castleY + 1;
-    if (isInBound(x, y, board.size) && board.lands[x][y].landType == fieldType)
+    if (isInBound(x, y, board.size) && board.lands[x][y].landType == landType)
       count++;
 
     x = castleX + 1;
     y = castleY + 1;
-    if (isInBound(x, y, board.size) && board.lands[x][y].landType == fieldType)
+    if (isInBound(x, y, board.size) && board.lands[x][y].landType == landType)
       count++;
 
     return extraPoints * count;
   }
 }
 
+  class LocalBusinessWidget extends QuestWidget {
+  final LocalBusiness quest;
+
+  LocalBusinessWidget(this.quest);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(children: <Widget>[
+      QuestPointWidget(quest.extraPoints),
+      Text('Local business ' + quest.landType.toString())
+    ]);
+  }
+}
+
 class FourCorners extends Quest {
   int extraPoints = 5;
 
-  LandType fieldType;
+  LandType landType;
 
-  FourCorners(this.fieldType);
+  FourCorners(this.landType);
 
   Widget build() {
-    Color color = getColorForLandType(fieldType);
+    Color color = getColorForLandType(landType);
     return Row(children: <Widget>[
       QuestPointWidget(extraPoints),
       Container(color: color, child: Text('Four Corners'))
@@ -160,12 +174,26 @@ class FourCorners extends Quest {
   int getPoints(Board board) {
     int count = 0;
     int size = board.size - 1;
-    if (board.lands[0][0].landType == LandType.castle) count++;
-    if (board.lands[size][0].landType == LandType.castle) count++;
-    if (board.lands[0][size].landType == LandType.castle) count++;
-    if (board.lands[size][size].landType == LandType.castle) count++;
+    if (board.lands[0][0].landType == landType) count++;
+    if (board.lands[size][0].landType == landType) count++;
+    if (board.lands[0][size].landType == landType) count++;
+    if (board.lands[size][size].landType == landType) count++;
 
     return extraPoints * count;
+  }
+}
+
+class FourCornersWidget extends QuestWidget {
+  final FourCorners quest;
+
+  FourCornersWidget(this.quest);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(children: <Widget>[
+      QuestPointWidget(quest.extraPoints),
+      Text('Four Corners ' + quest.landType.toString())
+    ]);
   }
 }
 
@@ -187,6 +215,20 @@ class LostCorner extends Quest {
             board.lands[size][size].landType == LandType.castle
         ? extraPoints
         : 0;
+  }
+}
+
+class LostCornerWidget extends QuestWidget {
+  final Quest quest = LostCorner();
+
+  LostCornerWidget();
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(children: <Widget>[
+      QuestPointWidget(quest.extraPoints),
+      Text('Lost Corner ')
+    ]);
   }
 }
 
@@ -217,7 +259,7 @@ class FolieDesGrandeurs extends Quest {
 
         //check vertically
         if ((isInBound(x, y + 1, size) && board.lands[x][y + 1].crowns > 0) &&
-            (isInBound(x, y + 1, size) && board.lands[x][y + 2].crowns > 0))
+            (isInBound(x, y + 2, size) && board.lands[x][y + 2].crowns > 0))
           count++;
 
         //check diagonally (down right)
@@ -235,6 +277,20 @@ class FolieDesGrandeurs extends Quest {
     }
 
     return extraPoints * count;
+  }
+}
+
+class FolieDesGrandeursWidget extends QuestWidget {
+  final Quest quest = FolieDesGrandeurs();
+
+  FolieDesGrandeursWidget();
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(children: <Widget>[
+      QuestPointWidget(quest.extraPoints),
+      Text('Folie des grandeurs ')
+    ]);
   }
 }
 
@@ -261,5 +317,19 @@ class BleakKing extends Quest {
         .length;
 
     return extraPoints * count;
+  }
+}
+
+class BleakKingWidget extends QuestWidget {
+  final Quest quest = BleakKing();
+
+  BleakKingWidget();
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(children: <Widget>[
+      QuestPointWidget(quest.extraPoints),
+      Text('Bleak King ')
+    ]);
   }
 }

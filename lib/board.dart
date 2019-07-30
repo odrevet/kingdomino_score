@@ -1,5 +1,6 @@
 enum LandType { none, wheat, grassland, forest, lake, swamp, mine, castle }
 
+
 class Board {
   int size = 5;
   List<List<Land>> lands;

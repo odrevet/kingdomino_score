@@ -174,18 +174,34 @@ class _HomePageState extends State<HomePage> {
   static var harmonyWidget = HarmonyWidget();
   static var middleKingdomWidget = MiddleKingdomWidget();
 
-  _questsDialog(BuildContext context) {
-    var options = <Widget>[];
+  static var localBusinessWheatWidget = LocalBusinessWidget(LocalBusiness(LandType.wheat));
+  static var localBusinessGrasslandWidget = LocalBusinessWidget(LocalBusiness(LandType.grassland));
+  static var localBusinessForestWidget = LocalBusinessWidget(LocalBusiness(LandType.forest));
+  static var localBusinessLakeWidget = LocalBusinessWidget(LocalBusiness(LandType.lake));
+  static var localBusinessMineWidget = LocalBusinessWidget(LocalBusiness(LandType.mine));
+  static var localBusinessSwampWidget = LocalBusinessWidget(LocalBusiness(LandType.swamp));
 
+  static var fourCornersWheatWidget = FourCornersWidget(FourCorners(LandType.wheat));
+  static var fourCornersGrasslandWidget = FourCornersWidget(FourCorners(LandType.grassland));
+  static var fourCornersForestWidget = FourCornersWidget(FourCorners(LandType.forest));
+  static var fourCornersLakeWidget = FourCornersWidget(FourCorners(LandType.lake));
+  static var fourCornersMineWidget = FourCornersWidget(FourCorners(LandType.mine));
+  static var fourCornersSwampWidget = FourCornersWidget(FourCorners(LandType.swamp));
+
+  static var lostCornerWidget = LostCornerWidget();
+  static var folieDesGrandeursWidget = FolieDesGrandeursWidget();
+  static var bleakKingWidget = BleakKingWidget();
+  
+  _questDialogAddOption(List<Widget> options, QuestWidget questWidget){
     options.add(
       SimpleDialogOption(
-        child: harmonyWidget,
+        child: questWidget,
         onPressed: () {
           setState(() {
-            if (_quests.contains(harmonyWidget.quest))
-              _quests.remove(harmonyWidget.quest);
+            if (_quests.contains(questWidget.quest))
+              _quests.remove(questWidget.quest);
             else
-              _quests.add(harmonyWidget.quest);
+              _quests.add(questWidget.quest);
           });
 
           _updateScoreQuest();
@@ -193,73 +209,38 @@ class _HomePageState extends State<HomePage> {
         },
       ),
     );
+  }
 
-    options.add(SimpleDialogOption(
-      child: middleKingdomWidget,
-      onPressed: () {
-        setState(() {
-          if (_quests.contains(middleKingdomWidget.quest))
-            _quests.remove(middleKingdomWidget.quest);
-          else
-            _quests.add(middleKingdomWidget.quest);
+  _questsDialog(BuildContext context) {
+    var options = <Widget>[];
 
-          _updateScoreQuest();
-          _updateScore();
-        });
-      },
-    ));
+    _questDialogAddOption(options, harmonyWidget);
+    _questDialogAddOption(options, middleKingdomWidget);
+
+
+    if (aog == true) {
+      _questDialogAddOption(options, localBusinessWheatWidget);
+      _questDialogAddOption(options, localBusinessGrasslandWidget);
+      _questDialogAddOption(options, localBusinessForestWidget);
+      _questDialogAddOption(options, localBusinessLakeWidget);
+      _questDialogAddOption(options, localBusinessMineWidget);
+      _questDialogAddOption(options, localBusinessSwampWidget);
+
+      _questDialogAddOption(options, fourCornersWheatWidget);
+      _questDialogAddOption(options, fourCornersGrasslandWidget);
+      _questDialogAddOption(options, fourCornersForestWidget);
+      _questDialogAddOption(options, fourCornersLakeWidget);
+      _questDialogAddOption(options, fourCornersMineWidget);
+      _questDialogAddOption(options, fourCornersSwampWidget);
+
+      _questDialogAddOption(options, lostCornerWidget);
+      _questDialogAddOption(options, folieDesGrandeursWidget);
+      _questDialogAddOption(options, bleakKingWidget);
+    }
 
     SimpleDialog dialog = SimpleDialog(
       children: options,
     );
-
-    if (aog == true) {
-      /* options.add(LocalBusinessWidget(LandType.wheat))
-      ;
-
-      options.add(LocalBusinessWidget(LandType.lake))
-    ;
-
-      options.add( LocalBusinessWidget(LandType.swamp))
-   ;
-
-      options.add(LocalBusinessWidget(LandType.lake))
-    ;
-
-      options.add(LocalBusinessWidget(LandType.grassland))
-    ;
-
-      options.add( LocalBusinessWidget(LandType.mine))
-     ;
-
-      options.add(FourCornersWidget(LandType.wheat))
-    ;
-
-      options.add(FourCornersWidget(LandType.lake))
-    ;
-
-      options.add(FourCornersWidget(LandType.swamp))
-      ;
-
-      options.add(FourCornersWidget(LandType.lake))
-    ;
-
-      options.add(FourCornersWidget(LandType.grassland))
-    ;
-
-      options.addFourCornersWidget(LandType.mine)()
-    ;
-
-      options.add(LostCornerWidget())
-    ;
-
-
-      options.add(FolieDesGrandeursWidget())
-    ;
-
-      options.add(BleakKingWidget())
-    ;*/
-    }
 
     return showDialog(
       context: context,

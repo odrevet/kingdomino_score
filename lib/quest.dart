@@ -34,6 +34,11 @@ abstract class Quest {
   int getPoints(Board board); //return true is quest if fulfilled
 }
 
+abstract class QuestWidget extends StatelessWidget {
+  Quest quest;
+
+}
+
 class Harmony extends Quest {
   int extraPoints = 5;
 
@@ -48,7 +53,7 @@ class Harmony extends Quest {
   }
 }
 
-class HarmonyWidget extends StatelessWidget {
+class HarmonyWidget extends QuestWidget {
   final quest = Harmony();
 
   @override
@@ -79,7 +84,7 @@ class MiddleKingdom extends Quest {
   }
 }
 
-class MiddleKingdomWidget extends StatelessWidget {
+class MiddleKingdomWidget extends QuestWidget {
   final quest = MiddleKingdom();
 
   @override

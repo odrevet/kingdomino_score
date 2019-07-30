@@ -29,7 +29,7 @@ class QuestPointWidget extends StatelessWidget {
 abstract class Quest {
   int extraPoints; //points awarded if quest is fulfilled
 
-  int getPoints(Kingdom kingdom); //return true is quest if fulfilled
+  int getPoints(Kingdom kingdom);
 }
 
 abstract class QuestWidget extends StatelessWidget {

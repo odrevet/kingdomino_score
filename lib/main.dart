@@ -762,9 +762,9 @@ class _HomePageState extends State<HomePage> {
   final double margin = 5.0;
 
   var selectedBorder = BorderSide(
-    color: Colors.blueGrey,
+    color: Colors.red,
     style: BorderStyle.solid,
-    width: 0.8,
+    width: 1.0,
   );
 
   Container crownButton() => Container(

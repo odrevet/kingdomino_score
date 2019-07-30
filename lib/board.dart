@@ -51,6 +51,18 @@ class Board {
 
     return properties;
   }
+
+  void addLandToProperty(
+      int x, int y, Land field, Property property) {
+    if (isInBound(x, y, size)) {
+      Land checkField = lands[x][y];
+      if (checkField.landType == field.landType && checkField.isMarked == false) {
+        property.landCount++;
+        property.crownCount += checkField.crowns;
+        getAdjacentLand(x, y, this, property);
+      }
+    }
+  }
 }
 
 class Land {
@@ -75,18 +87,6 @@ bool isInBound(int x, int y, int size) {
   return (x >= 0 && x < size && y >= 0 && y < size);
 }
 
-void addLandToProperty(
-    int x, int y, Board board, Land field, Property property) {
-  if (isInBound(x, y, board.size)) {
-    Land checkField = board.lands[x][y];
-    if (checkField.landType == field.landType && checkField.isMarked == false) {
-      property.landCount++;
-      property.crownCount += checkField.crowns;
-      getAdjacentLand(x, y, board, property);
-    }
-  }
-}
-
 Property getAdjacentLand(int x, int y, Board board, Property property) {
   if (!isInBound(x, y, board.size)) return null;
 
@@ -103,10 +103,10 @@ Property getAdjacentLand(int x, int y, Board board, Property property) {
 
   field.isMarked = true;
 
-  addLandToProperty(x, y - 1, board, field, property);
-  addLandToProperty(x, y + 1, board, field, property);
-  addLandToProperty(x - 1, y, board, field, property);
-  addLandToProperty(x + 1, y, board, field, property);
+  board.addLandToProperty(x, y - 1, field, property);
+  board.addLandToProperty(x, y + 1, field, property);
+  board.addLandToProperty(x - 1, y, field, property);
+  board.addLandToProperty(x + 1, y, field, property);
 
   return property;
 }

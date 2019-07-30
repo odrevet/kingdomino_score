@@ -419,6 +419,24 @@ class _HomePageState extends State<HomePage> {
     _updateScores();
   }
 
+  Widget _buildField(int x, int y) {
+    Land field = _board.lands[x][y];
+    Color color = getColorForLandType(field.landType, context);
+    if (field.landType == LandType.castle)
+      return Container(
+          color: color,
+          child: FittedBox(fit: BoxFit.fitWidth, child: Text(castle)));
+    else
+      return Container(
+        color: color,
+        child: new LayoutBuilder(
+            builder: (BuildContext context, BoxConstraints constraints) {
+              return Text(crown * field.crowns,
+                  style: TextStyle(fontSize: constraints.maxWidth / 3));
+            }),
+      );
+  }
+
   Widget _buildFields(BuildContext context, int index) {
     int gridStateLength = _board.lands.length;
     int x, y = 0;
@@ -434,24 +452,6 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
-  }
-
-  Widget _buildField(int x, int y) {
-    Land field = _board.lands[x][y];
-    Color color = getColorForLandType(field.landType, context);
-    if (field.landType == LandType.castle)
-      return Container(
-          color: color,
-          child: FittedBox(fit: BoxFit.fitWidth, child: Text(castle)));
-    else
-      return Container(
-        color: color,
-        child: new LayoutBuilder(
-            builder: (BuildContext context, BoxConstraints constraints) {
-          return Text(crown * field.crowns,
-              style: TextStyle(fontSize: constraints.maxWidth / 3));
-        }),
-      );
   }
 
   Widget _buildBoard() {

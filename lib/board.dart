@@ -1,6 +1,5 @@
 enum LandType { none, wheat, grassland, forest, lake, swamp, mine, castle }
 
-
 class Board {
   int size = 5;
   List<List<Land>> lands;
@@ -29,7 +28,6 @@ class Board {
     }
   }
 
-
   List<Property> getProperties() {
     var properties = <Property>[];
 
@@ -43,20 +41,16 @@ class Board {
     }
 
     //reset marked status
-    for (var x = 0; x < size; x++) {
-      for (var y = 0; y < size; y++) {
-        lands[x][y].isMarked = false;
-      }
-    }
+    lands.expand((i) => i).toList().forEach((land) => land.isMarked = false);
 
     return properties;
   }
 
-  void addLandToProperty(
-      int x, int y, Land field, Property property) {
+  void addLandToProperty(int x, int y, Land field, Property property) {
     if (isInBound(x, y, size)) {
       Land checkField = lands[x][y];
-      if (checkField.landType == field.landType && checkField.isMarked == false) {
+      if (checkField.landType == field.landType &&
+          checkField.isMarked == false) {
         property.landCount++;
         property.crownCount += checkField.crowns;
         getAdjacentLand(x, y, this, property);
@@ -113,6 +107,7 @@ Property getAdjacentLand(int x, int y, Board board, Property property) {
 
 int calculateScoreFromProperties(List<Property> properties) {
   int score = 0;
-  properties.forEach((property) =>  score += property.landCount * property.crownCount);
+  properties
+      .forEach((property) => score += property.landCount * property.crownCount);
   return score;
 }

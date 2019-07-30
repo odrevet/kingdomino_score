@@ -28,6 +28,29 @@ class Board {
       }
     }
   }
+
+
+  List<Property> getProperties() {
+    var properties = <Property>[];
+
+    for (var x = 0; x < size; x++) {
+      for (var y = 0; y < size; y++) {
+        var property = getAdjacentLand(x, y, this, null);
+        if (property != null) {
+          properties.add(property);
+        }
+      }
+    }
+
+    //reset marked status
+    for (var x = 0; x < size; x++) {
+      for (var y = 0; y < size; y++) {
+        lands[x][y].isMarked = false;
+      }
+    }
+
+    return properties;
+  }
 }
 
 class Land {
@@ -59,12 +82,12 @@ void addLandToProperty(
     if (checkField.landType == field.landType && checkField.isMarked == false) {
       property.landCount++;
       property.crownCount += checkField.crowns;
-      getAdjacentFields(x, y, board, property);
+      getAdjacentLand(x, y, board, property);
     }
   }
 }
 
-Property getAdjacentFields(int x, int y, Board board, Property property) {
+Property getAdjacentLand(int x, int y, Board board, Property property) {
   if (!isInBound(x, y, board.size)) return null;
 
   var field = board.lands[x][y];
@@ -88,32 +111,8 @@ Property getAdjacentFields(int x, int y, Board board, Property property) {
   return property;
 }
 
-List<Property> getProperties(Board board) {
-  var properties = <Property>[];
-
-  for (var x = 0; x < board.size; x++) {
-    for (var y = 0; y < board.size; y++) {
-      var property = getAdjacentFields(x, y, board, null);
-      if (property != null) {
-        properties.add(property);
-      }
-    }
-  }
-
-  //reset marked status
-  for (var x = 0; x < board.size; x++) {
-    for (var y = 0; y < board.size; y++) {
-      board.lands[x][y].isMarked = false;
-    }
-  }
-
-  return properties;
-}
-
 int calculateScoreFromProperties(List<Property> properties) {
   int score = 0;
-  for (var property in properties) {
-    score += property.landCount * property.crownCount;
-  }
+  properties.forEach((property) =>  score += property.landCount * property.crownCount);
   return score;
 }

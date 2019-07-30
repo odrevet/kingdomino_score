@@ -125,7 +125,6 @@ class _HomePageState extends State<HomePage> {
       return gameSet;
     } else {
       return gameAogSet;
-
     }
   }
 
@@ -171,37 +170,53 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  static var harmonyWidget = HarmonyWidget();
-  static var middleKingdomWidget = MiddleKingdomWidget();
+  static final harmonyWidget = HarmonyWidget();
+  static final middleKingdomWidget = MiddleKingdomWidget();
 
-  static var localBusinessWheatWidget = LocalBusinessWidget(LocalBusiness(LandType.wheat));
-  static var localBusinessGrasslandWidget = LocalBusinessWidget(LocalBusiness(LandType.grassland));
-  static var localBusinessForestWidget = LocalBusinessWidget(LocalBusiness(LandType.forest));
-  static var localBusinessLakeWidget = LocalBusinessWidget(LocalBusiness(LandType.lake));
-  static var localBusinessMineWidget = LocalBusinessWidget(LocalBusiness(LandType.mine));
-  static var localBusinessSwampWidget = LocalBusinessWidget(LocalBusiness(LandType.swamp));
+  static final localBusinessWheatWidget =
+      LocalBusinessWidget(LocalBusiness(LandType.wheat));
+  static final localBusinessGrasslandWidget =
+      LocalBusinessWidget(LocalBusiness(LandType.grassland));
+  static final localBusinessForestWidget =
+      LocalBusinessWidget(LocalBusiness(LandType.forest));
+  static final localBusinessLakeWidget =
+      LocalBusinessWidget(LocalBusiness(LandType.lake));
+  static final localBusinessMineWidget =
+      LocalBusinessWidget(LocalBusiness(LandType.mine));
+  static final localBusinessSwampWidget =
+      LocalBusinessWidget(LocalBusiness(LandType.swamp));
 
-  static var fourCornersWheatWidget = FourCornersWidget(FourCorners(LandType.wheat));
-  static var fourCornersGrasslandWidget = FourCornersWidget(FourCorners(LandType.grassland));
-  static var fourCornersForestWidget = FourCornersWidget(FourCorners(LandType.forest));
-  static var fourCornersLakeWidget = FourCornersWidget(FourCorners(LandType.lake));
-  static var fourCornersMineWidget = FourCornersWidget(FourCorners(LandType.mine));
-  static var fourCornersSwampWidget = FourCornersWidget(FourCorners(LandType.swamp));
+  static final fourCornersWheatWidget =
+      FourCornersWidget(FourCorners(LandType.wheat));
+  static final fourCornersGrasslandWidget =
+      FourCornersWidget(FourCorners(LandType.grassland));
+  static final fourCornersForestWidget =
+      FourCornersWidget(FourCorners(LandType.forest));
+  static final fourCornersLakeWidget =
+      FourCornersWidget(FourCorners(LandType.lake));
+  static final fourCornersMineWidget =
+      FourCornersWidget(FourCorners(LandType.mine));
+  static final fourCornersSwampWidget =
+      FourCornersWidget(FourCorners(LandType.swamp));
 
-  static var lostCornerWidget = LostCornerWidget();
-  static var folieDesGrandeursWidget = FolieDesGrandeursWidget();
-  static var bleakKingWidget = BleakKingWidget();
-  
-  _questDialogAddOption(List<Widget> options, QuestWidget questWidget){
+  static final lostCornerWidget = LostCornerWidget();
+  static final folieDesGrandeursWidget = FolieDesGrandeursWidget();
+  static final bleakKingWidget = BleakKingWidget();
+
+  _questDialogAddOption(List<Widget> options, QuestWidget questWidget) {
     options.add(
       SimpleDialogOption(
-        child: questWidget,
+        child: _quests.contains(questWidget.quest)
+            ? Container(
+                decoration: new BoxDecoration(
+                    border: new Border.all(color: Colors.blueAccent)),
+                child: questWidget)
+            : questWidget,
         onPressed: () {
           setState(() {
             if (_quests.contains(questWidget.quest))
               _quests.remove(questWidget.quest);
-            else
-              _quests.add(questWidget.quest);
+            else if (_quests.length < 2) _quests.add(questWidget.quest);
           });
 
           _updateScoreQuest();
@@ -216,7 +231,6 @@ class _HomePageState extends State<HomePage> {
 
     _questDialogAddOption(options, harmonyWidget);
     _questDialogAddOption(options, middleKingdomWidget);
-
 
     if (aog == true) {
       _questDialogAddOption(options, localBusinessWheatWidget);
@@ -286,7 +300,7 @@ class _HomePageState extends State<HomePage> {
   _scoreDetailsDialog(BuildContext context) {
     const double fontSize = 25.0;
 
-    var properties = getProperties(_board);
+    var properties = _board.getProperties();
 
     Widget content;
 
@@ -525,7 +539,8 @@ class _HomePageState extends State<HomePage> {
                       text: crown * crownsCounter,
                       style: TextStyle(fontSize: 20)),
                   TextSpan(
-                      text: ' > ${_getGameSet()[fieldType]['crowns'][crownsCounter]}',
+                      text:
+                          ' > ${_getGameSet()[fieldType]['crowns'][crownsCounter]}',
                       style: TextStyle(color: Colors.black, fontSize: 20))
                 ])));
           });
@@ -553,7 +568,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _updateScoreProperty() {
-    var properties = getProperties(_board);
+    var properties = _board.getProperties();
     setState(() {
       _scoreProperty = calculateScoreFromProperties(properties);
     });
@@ -593,6 +608,10 @@ class _HomePageState extends State<HomePage> {
           onPressed: () {
             setState(() {
               aog = !aog;
+
+              _quests.clear();
+              _updateScoreQuest();
+              _updateScore();
             });
           },
           child: Container(
@@ -602,7 +621,7 @@ class _HomePageState extends State<HomePage> {
       Stack(
         children: <Widget>[
           MaterialButton(
-            minWidth: 30,
+              minWidth: 30,
               onPressed: () => _questsDialog(context),
               child: Container(
                   child: Text(shield, style: TextStyle(fontSize: 30)))),

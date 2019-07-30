@@ -31,7 +31,6 @@ import 'quest.dart';
   }
 };*/
 
-//TODO function that merge aogSet and gameSet (addup count and set crown max)
 const Map<LandType, Map<String, dynamic>> gameAogSet = {
   LandType.castle: {
     'count': 1, //per player
@@ -305,7 +304,7 @@ class BleakKing extends Quest {
   }
 
   int getPoints(Board board) {
-    var properties = getProperties(board);
+    var properties = board.getProperties();
     int count = properties
         .where((property) =>
             (property.landType == LandType.wheat ||

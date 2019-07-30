@@ -29,14 +29,11 @@ class QuestPointWidget extends StatelessWidget {
 abstract class Quest {
   int extraPoints; //points awarded if quest is fulfilled
 
-  //Widget build(); //visual representation of the quest
-
   int getPoints(Board board); //return true is quest if fulfilled
 }
 
 abstract class QuestWidget extends StatelessWidget {
   Quest quest;
-
 }
 
 class Harmony extends Quest {

@@ -99,42 +99,42 @@ class LocalBusiness extends Quest {
 
     x = castleX - 1;
     y = castleY - 1;
-    if (isInBound(x, y, kingdom.size) && kingdom.lands[x][y].landType == landType)
+    if (kingdom.isInBound(x, y) && kingdom.lands[x][y].landType == landType)
       count++;
 
     x = castleX;
     y = castleY - 1;
-    if (isInBound(x, y, kingdom.size) && kingdom.lands[x][y].landType == landType)
+    if (kingdom.isInBound(x, y) && kingdom.lands[x][y].landType == landType)
       count++;
 
     x = castleX + 1;
     y = castleY - 1;
-    if (isInBound(x, y, kingdom.size) && kingdom.lands[x][y].landType == landType)
+    if (kingdom.isInBound(x, y) && kingdom.lands[x][y].landType == landType)
       count++;
 
     x = castleX - 1;
     y = castleY;
-    if (isInBound(x, y, kingdom.size) && kingdom.lands[x][y].landType == landType)
+    if (kingdom.isInBound(x, y) && kingdom.lands[x][y].landType == landType)
       count++;
 
     x = castleX + 1;
     y = castleY;
-    if (isInBound(x, y, kingdom.size) && kingdom.lands[x][y].landType == landType)
+    if (kingdom.isInBound(x, y) && kingdom.lands[x][y].landType == landType)
       count++;
 
     x = castleX - 1;
     y = castleY + 1;
-    if (isInBound(x, y, kingdom.size) && kingdom.lands[x][y].landType == landType)
+    if (kingdom.isInBound(x, y) && kingdom.lands[x][y].landType == landType)
       count++;
 
     x = castleX;
     y = castleY + 1;
-    if (isInBound(x, y, kingdom.size) && kingdom.lands[x][y].landType == landType)
+    if (kingdom.isInBound(x, y) && kingdom.lands[x][y].landType == landType)
       count++;
 
     x = castleX + 1;
     y = castleY + 1;
-    if (isInBound(x, y, kingdom.size) && kingdom.lands[x][y].landType == landType)
+    if (kingdom.isInBound(x, y) && kingdom.lands[x][y].landType == landType)
       count++;
 
     return extraPoints * count;
@@ -252,25 +252,25 @@ class FolieDesGrandeurs extends Quest {
         if (kingdom.lands[x][y].crowns == 0) continue;
 
         //check horizontally
-        if ((isInBound(x + 1, y, size) && kingdom.lands[x + 1][y].crowns > 0) &&
-            (isInBound(x + 2, y, size) && kingdom.lands[x + 2][y].crowns > 0))
+        if ((kingdom.isInBound(x + 1, y) && kingdom.lands[x + 1][y].crowns > 0) &&
+            (kingdom.isInBound(x + 2, y) && kingdom.lands[x + 2][y].crowns > 0))
           count++;
 
         //check vertically
-        if ((isInBound(x, y + 1, size) && kingdom.lands[x][y + 1].crowns > 0) &&
-            (isInBound(x, y + 2, size) && kingdom.lands[x][y + 2].crowns > 0))
+        if ((kingdom.isInBound(x, y + 1) && kingdom.lands[x][y + 1].crowns > 0) &&
+            (kingdom.isInBound(x, y + 2) && kingdom.lands[x][y + 2].crowns > 0))
           count++;
 
         //check diagonally (down right)
-        if ((isInBound(x + 1, y + 1, size) &&
+        if ((kingdom.isInBound(x + 1, y + 1) &&
                 kingdom.lands[x + 1][y + 1].crowns > 0) &&
-            (isInBound(x + 2, y + 2, size) &&
+            (kingdom.isInBound(x + 2, y + 2) &&
                 kingdom.lands[x + 2][y + 2].crowns > 0)) count++;
 
         //check diagonally (down left)
-        if ((isInBound(x - 1, y + 1, size) &&
+        if ((kingdom.isInBound(x - 1, y + 1) &&
                 kingdom.lands[x - 1][y + 1].crowns > 0) &&
-            (isInBound(x - 2, y + 2, size) &&
+            (kingdom.isInBound(x - 2, y + 2) &&
                 kingdom.lands[x - 2][y + 2].crowns > 0)) count++;
       }
     }

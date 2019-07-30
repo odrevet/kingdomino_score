@@ -45,7 +45,7 @@ class Kingdom {
   }
 
   void _addLandToProperty(int x, int y, Land field, Property property) {
-    if (isInBound(x, y, size)) {
+    if (isInBound(x, y)) {
       Land checkField = lands[x][y];
       if (checkField.landType == field.landType &&
           checkField.isMarked == false) {
@@ -57,7 +57,7 @@ class Kingdom {
   }
 
   Property _getAdjacentLand(int x, int y, Property property) {
-    if (!isInBound(x, y, size)) return null;
+    if (!isInBound(x, y)) return null;
 
     var field = lands[x][y];
     if (field.landType == LandType.castle ||
@@ -86,6 +86,10 @@ class Kingdom {
         (property) => score += property.landCount * property.crownCount);
     return score;
   }
+
+  bool isInBound(int x, int y) {
+    return (x >= 0 && x < size && y >= 0 && y < size);
+  }
 }
 
 class Land {
@@ -101,8 +105,4 @@ class Property {
   int landCount = 0;
 
   Property(this.landType);
-}
-
-bool isInBound(int x, int y, int size) {
-  return (x >= 0 && x < size && y >= 0 && y < size);
 }

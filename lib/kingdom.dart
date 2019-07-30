@@ -44,9 +44,8 @@ class Kingdom {
     return properties;
   }
 
-  /**
-   * add land at x y to the property if it's landType is the same as land
-   */
+
+   ///add land at x y to the property if it's landType is the same as land
   void _addLandToProperty(int x, int y, Land land, Property property) {
     if (isInBound(x, y)) {
       Land landToAdd = lands[x][y];

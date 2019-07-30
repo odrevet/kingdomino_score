@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'kingdom.dart';
+import 'kingdomWidget.dart';
 import 'quest.dart';
 import 'age_of_giants.dart';
 
@@ -42,40 +43,6 @@ const Map<LandType, Map<String, dynamic>> gameSet = {
   }
 };
 
-Color getColorForLandType(LandType type, [BuildContext context]) {
-  Color color;
-  switch (type) {
-    case LandType.none:
-      color = context == null ? Colors.black : Theme.of(context).canvasColor;
-      break;
-    case LandType.wheat:
-      color = Colors.yellow.shade600;
-      break;
-    case LandType.grassland:
-      color = Colors.lightGreen;
-      break;
-    case LandType.forest:
-      color = Colors.green.shade800;
-      break;
-    case LandType.lake:
-      color = Colors.blue;
-      break;
-    case LandType.mine:
-      color = Colors.brown.shade800;
-      break;
-    case LandType.swamp:
-      color = Colors.grey;
-      break;
-    case LandType.castle:
-      color = Colors.white;
-      break;
-    default:
-      color = context == null ? Colors.black : Theme.of(context).canvasColor;
-  }
-
-  return color;
-}
-
 void main() {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(KingdominoScore());
@@ -90,21 +57,21 @@ class KingdominoScore extends StatelessWidget {
           primarySwatch: Colors.brown,
           canvasColor: Colors.blueGrey,
           fontFamily: 'Augusta'),
-      home: HomePage(),
+      home: MainWidget(),
     );
   }
 }
 
-class HomePage extends StatefulWidget {
-  HomePage({Key key}) : super(key: key);
+class MainWidget extends StatefulWidget {
+  MainWidget({Key key}) : super(key: key);
 
   @override
-  _HomePageState createState() => _HomePageState();
+  MainWidgetState createState() => MainWidgetState();
 }
 
-class _HomePageState extends State<HomePage> {
-  LandType _selectedType = LandType.none;
-  SelectionMode _selectionMode = SelectionMode.land;
+class MainWidgetState extends State<MainWidget> {
+  LandType selectedLandType = LandType.none;
+  SelectionMode selectionMode = SelectionMode.land;
   var _kingdom = Kingdom(5);
   int _scoreProperty = 0;
   int _scoreQuest = 0;
@@ -120,7 +87,7 @@ class _HomePageState extends State<HomePage> {
     _onSelectCastle();
   }
 
-  Map<LandType, Map<String, dynamic>> _getGameSet() {
+  Map<LandType, Map<String, dynamic>> getGameSet() {
     if (aog == false) {
       return gameSet;
     } else {
@@ -130,21 +97,21 @@ class _HomePageState extends State<HomePage> {
 
   void _onSelectLandType(LandType selectedType) {
     setState(() {
-      _selectedType = selectedType;
-      _selectionMode = SelectionMode.land;
+      selectedLandType = selectedType;
+      selectionMode = SelectionMode.land;
     });
   }
 
   void _onSelectCrown() {
     setState(() {
-      _selectionMode = SelectionMode.crown;
+      selectionMode = SelectionMode.crown;
     });
   }
 
   void _onSelectCastle() {
     setState(() {
-      _selectedType = LandType.castle;
-      _selectionMode = SelectionMode.castle;
+      selectedLandType = LandType.castle;
+      selectionMode = SelectionMode.castle;
     });
   }
 
@@ -382,108 +349,14 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void _onFieldTap(int x, int y) {
-    Land field = _kingdom.lands[x][y];
-    setState(() {
-      switch (_selectionMode) {
-        case SelectionMode.land:
-          field.landType = _selectedType;
-          field.crowns = 0;
-          break;
-        case SelectionMode.crown:
-          if (field.landType == LandType.castle ||
-              field.landType == LandType.none) break;
-          field.crowns++;
-          if (field.crowns > _getGameSet()[field.landType]['crowns']['max'])
-            field.crowns = 0;
-          break;
-        case SelectionMode.castle:
-          //remove previous castle if any
-          for (var cx = 0; cx < _kingdom.size; cx++) {
-            for (var cy = 0; cy < _kingdom.size; cy++) {
-              if (_kingdom.lands[cx][cy].landType == LandType.castle) {
-                _kingdom.lands[cx][cy].landType = LandType.none;
-                _kingdom.lands[cx][cy].crowns = 0;
-              }
-            }
-          }
-
-          field.landType = _selectedType; //should be castle
-          field.crowns = 0;
-          break;
-      }
-    });
-
-    _clearWarnings();
-    _checkKingdom();
-    _updateScores();
-  }
-
-  Widget _buildLand(int x, int y) {
-    Land land = _kingdom.lands[x][y];
-    Color color = getColorForLandType(land.landType, context);
-    if (land.landType == LandType.castle)
-      return Container(
-          color: color,
-          child: FittedBox(fit: BoxFit.fitWidth, child: Text(castle)));
-    else
-      return Container(
-        color: color,
-        child: new LayoutBuilder(
-            builder: (BuildContext context, BoxConstraints constraints) {
-              return Text(crown * land.crowns,
-                  style: TextStyle(fontSize: constraints.maxWidth / 3));
-            }),
-      );
-  }
-
-  Widget _buildLands(BuildContext context, int index) {
-    int gridStateLength = _kingdom.lands.length;
-    int x, y = 0;
-    x = (index / gridStateLength).floor();
-    y = (index % gridStateLength);
-    return GestureDetector(
-      onTap: () => _onFieldTap(x, y),
-      child: GridTile(
-        child: Container(
-          decoration: BoxDecoration(
-              border: Border.all(color: Colors.white, width: 0.5)),
-          child: _buildLand(x, y),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildkingdom() {
-    int gridStateLength = _kingdom.lands.length;
-    return AspectRatio(
-      aspectRatio: 1.0,
-      child: Container(
-        margin: const EdgeInsets.all(8.0),
-        decoration: BoxDecoration(
-            border: Border(
-          right: BorderSide(width: 3.5, color: Colors.blueGrey.shade600),
-          bottom: BorderSide(width: 3.5, color: Colors.blueGrey.shade900),
-        )),
-        child: GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: gridStateLength,
-          ),
-          itemBuilder: _buildLands,
-          itemCount: gridStateLength * gridStateLength,
-        ),
-      ),
-    );
-  }
-
-  void _clearWarnings() {
+  void clearWarnings() {
     setState(() {
       _warnings.clear();
     });
   }
 
   //check if the kingdom is conform, if not set warnings
-  void _checkKingdom() {
+  void checkKingdom() {
     //check if more tile in the kingdom than in the gameSet
     for (var fieldType in LandType.values) {
       if (fieldType == LandType.none) continue;
@@ -493,7 +366,7 @@ class _HomePageState extends State<HomePage> {
           .toList()
           .where((field) => field.landType == fieldType)
           .length;
-      if (count > _getGameSet()[fieldType]['count']) {
+      if (count > getGameSet()[fieldType]['count']) {
         setState(() {
           _warnings.add(RichText(
               text: TextSpan(
@@ -506,7 +379,7 @@ class _HomePageState extends State<HomePage> {
                         fontSize: 20,
                         color: getColorForLandType(fieldType, context))),
                 TextSpan(
-                    text: ' > ${_getGameSet()[fieldType]['count']}',
+                    text: ' > ${getGameSet()[fieldType]['count']}',
                     style: TextStyle(color: Colors.black, fontSize: 20))
               ])));
         });
@@ -514,7 +387,7 @@ class _HomePageState extends State<HomePage> {
 
       //check for too many tile with given crowns
       for (var crownsCounter = 1;
-          crownsCounter <= _getGameSet()[fieldType]['crowns']['max'];
+          crownsCounter <= getGameSet()[fieldType]['crowns']['max'];
           crownsCounter++) {
         var count = _kingdom.lands
             .expand((i) => i)
@@ -523,7 +396,7 @@ class _HomePageState extends State<HomePage> {
                 field.landType == fieldType && field.crowns == crownsCounter)
             .length;
 
-        if (count > _getGameSet()[fieldType]['crowns'][crownsCounter]) {
+        if (count > getGameSet()[fieldType]['crowns'][crownsCounter]) {
           setState(() {
             _warnings.add(RichText(
                 text: TextSpan(
@@ -540,7 +413,7 @@ class _HomePageState extends State<HomePage> {
                       style: TextStyle(fontSize: 20)),
                   TextSpan(
                       text:
-                          ' > ${_getGameSet()[fieldType]['crowns'][crownsCounter]}',
+                          ' > ${getGameSet()[fieldType]['crowns'][crownsCounter]}',
                       style: TextStyle(color: Colors.black, fontSize: 20))
                 ])));
           });
@@ -561,7 +434,7 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  void _updateScores() {
+  void updateScores() {
     _updateScoreProperty();
     _updateScoreQuest();
     _updateScore();
@@ -660,7 +533,7 @@ class _HomePageState extends State<HomePage> {
                 _kingdom.reSize(5);
 
               _resetScores();
-              _clearWarnings();
+              clearWarnings();
               _onSelectCastle();
             });
           }),
@@ -669,7 +542,7 @@ class _HomePageState extends State<HomePage> {
           onPressed: () {
             setState(() {
               _kingdom.clear();
-              _clearWarnings();
+              clearWarnings();
               _resetScores();
               _onSelectCastle();
             });
@@ -720,7 +593,7 @@ class _HomePageState extends State<HomePage> {
         bottomNavigationBar: BottomAppBar(
             child: fieldSelection, color: Theme.of(context).primaryColor),
         body: Column(children: <Widget>[
-          _buildkingdom(),
+            KingdomWidget(this, _kingdom),
           Expanded(
             child: FittedBox(
                 fit: BoxFit.fitHeight,
@@ -752,7 +625,7 @@ class _HomePageState extends State<HomePage> {
           )),
           child: Container(
             color: getColorForLandType(type, context),
-            child: _selectionMode == SelectionMode.land && _selectedType == type
+            child: selectionMode == SelectionMode.land && selectedLandType == type
                 ? selected
                 : Text(''),
           ),
@@ -771,7 +644,7 @@ class _HomePageState extends State<HomePage> {
       margin: EdgeInsets.all(margin),
       child: OutlineButton(
           borderSide:
-              _selectionMode == SelectionMode.crown ? selectedBorder : null,
+              selectionMode == SelectionMode.crown ? selectedBorder : null,
           onPressed: () => _onSelectCrown(),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
@@ -782,7 +655,7 @@ class _HomePageState extends State<HomePage> {
         margin: EdgeInsets.all(margin),
         child: OutlineButton(
             borderSide:
-                _selectionMode == SelectionMode.castle ? selectedBorder : null,
+                selectionMode == SelectionMode.castle ? selectedBorder : null,
             onPressed: () => _onSelectCastle(),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0)),

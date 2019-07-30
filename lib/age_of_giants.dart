@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'main.dart';
+import 'kingdomWidget.dart';
 import 'kingdom.dart';
 import 'quest.dart';
 

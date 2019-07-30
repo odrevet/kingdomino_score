@@ -4,6 +4,8 @@ import 'kingdomWidget.dart';
 import 'kingdom.dart';
 import 'quest.dart';
 
+const String giant = '\u{1F9D4}';
+
 /*const Map<LandType, Map<String, dynamic>> aogSet = {
   LandType.wheat: {
     'count': 4,
@@ -38,7 +40,7 @@ const Map<LandType, Map<String, dynamic>> gameAogSet = {
   },
   LandType.wheat: {
     'count': 21 + 5 + 4,
-    'crowns': {'max': 2, 1: 5, 2 : 1}
+    'crowns': {'max': 2, 1: 5, 2: 1}
   },
   LandType.grassland: {
     'count': 10 + 2 + 2 + 5,
@@ -46,11 +48,11 @@ const Map<LandType, Map<String, dynamic>> gameAogSet = {
   },
   LandType.forest: {
     'count': 16 + 6 + 4,
-    'crowns': {'max': 2, 1: 7, 2 : 1}
+    'crowns': {'max': 2, 1: 7, 2: 1}
   },
   LandType.lake: {
     'count': 12 + 6 + 4,
-    'crowns': {'max': 2, 1: 7, 2 : 1}
+    'crowns': {'max': 2, 1: 7, 2: 1}
   },
   LandType.swamp: {
     'count': 6 + 2 + 2 + 4,
@@ -141,7 +143,7 @@ class LocalBusiness extends Quest {
   }
 }
 
-  class LocalBusinessWidget extends QuestWidget {
+class LocalBusinessWidget extends QuestWidget {
   final LocalBusiness quest;
 
   LocalBusinessWidget(this.quest);
@@ -231,6 +233,8 @@ class LostCornerWidget extends QuestWidget {
   }
 }
 
+///`2 different alignments cannot share more than one square`
+///see https://boardgamegeek.com/thread/2040636/tic-tac-toe-bonus-challenge-tile-clarification
 class FolieDesGrandeurs extends Quest {
   int extraPoints = 10;
 
@@ -252,15 +256,29 @@ class FolieDesGrandeurs extends Quest {
         if (kingdom.lands[x][y].crowns == 0) continue;
 
         //check horizontally
-        if ((kingdom.isInBound(x + 1, y) && kingdom.lands[x + 1][y].crowns > 0) &&
-            (kingdom.isInBound(x + 2, y) && kingdom.lands[x + 2][y].crowns > 0))
+        if ((kingdom.isInBound(x + 1, y) &&
+                kingdom.lands[x + 1][y].crowns > 0 &&
+                !kingdom.lands[x + 1][y].isMarked) &&
+            (kingdom.isInBound(x + 2, y) &&
+                kingdom.lands[x + 2][y].crowns > 0 &&
+                !kingdom.lands[x + 2][y].isMarked)) {
           count++;
+          kingdom.lands[x + 1][y].isMarked =
+              kingdom.lands[x + 2][y].isMarked = true;
+        }
 
         //check vertically
-        if ((kingdom.isInBound(x, y + 1) && kingdom.lands[x][y + 1].crowns > 0) &&
-            (kingdom.isInBound(x, y + 2) && kingdom.lands[x][y + 2].crowns > 0))
+        if ((kingdom.isInBound(x, y + 1) &&
+                kingdom.lands[x][y + 1].crowns > 0 &&
+                !kingdom.lands[x][y + 1].isMarked) &&
+            (kingdom.isInBound(x, y + 2) &&
+                kingdom.lands[x][y + 2].crowns > 0 &&
+                !kingdom.lands[x][y + 2].isMarked)) {
           count++;
-
+          kingdom.lands[x][y + 1].isMarked =
+              kingdom.lands[x][y + 2].isMarked = true;
+        }
+/*
         //check diagonally (down right)
         if ((kingdom.isInBound(x + 1, y + 1) &&
                 kingdom.lands[x + 1][y + 1].crowns > 0) &&
@@ -272,8 +290,15 @@ class FolieDesGrandeurs extends Quest {
                 kingdom.lands[x - 1][y + 1].crowns > 0) &&
             (kingdom.isInBound(x - 2, y + 2) &&
                 kingdom.lands[x - 2][y + 2].crowns > 0)) count++;
+        */
       }
     }
+
+    //reset marked status
+    kingdom.lands
+        .expand((i) => i)
+        .toList()
+        .forEach((land) => land.isMarked = false);
 
     return extraPoints * count;
   }

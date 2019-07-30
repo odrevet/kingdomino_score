@@ -263,7 +263,7 @@ class FolieDesGrandeurs extends Quest {
                 kingdom.lands[x + 2][y].getCrowns() > 0 &&
                 !kingdom.lands[x + 2][y].isMarked)) {
           count++;
-          kingdom.lands[x + 1][y].isMarked =
+          kingdom.lands[x + 1][y].isMarked = true;
               kingdom.lands[x + 2][y].isMarked = true;
         }
 
@@ -275,22 +275,34 @@ class FolieDesGrandeurs extends Quest {
                 kingdom.lands[x][y + 2].getCrowns() > 0 &&
                 !kingdom.lands[x][y + 2].isMarked)) {
           count++;
-          kingdom.lands[x][y + 1].isMarked =
+          kingdom.lands[x][y + 1].isMarked = true;
               kingdom.lands[x][y + 2].isMarked = true;
         }
-/*
+
         //check diagonally (down right)
         if ((kingdom.isInBound(x + 1, y + 1) &&
-                kingdom.lands[x + 1][y + 1].getCrowns() > 0) &&
+                kingdom.lands[x + 1][y + 1].getCrowns() > 0 &&
+                !kingdom.lands[x + 1][y + 1].isMarked) &&
             (kingdom.isInBound(x + 2, y + 2) &&
-                kingdom.lands[x + 2][y + 2].getCrowns() > 0)) count++;
+                kingdom.lands[x + 2][y + 2].getCrowns() > 0 &&
+                !kingdom.lands[x + 2][y + 2].isMarked)) {
+          count++;
+          kingdom.lands[x + 1][y + 1].isMarked = true;
+          kingdom.lands[x + 2][y + 2].isMarked = true;
+        }
 
         //check diagonally (down left)
         if ((kingdom.isInBound(x - 1, y + 1) &&
-                kingdom.lands[x - 1][y + 1].getCrowns() > 0) &&
+                kingdom.lands[x - 1][y + 1].getCrowns() > 0 &&
+                !kingdom.lands[x - 1][y + 1].isMarked) &&
             (kingdom.isInBound(x - 2, y + 2) &&
-                kingdom.lands[x - 2][y + 2].getCrowns() > 0)) count++;
-        */
+                kingdom.lands[x - 2][y + 2].getCrowns() > 0 &&
+                !kingdom.lands[x - 2][y + 2].isMarked)) {
+          count++;
+
+          kingdom.lands[x - 1][y + 1].isMarked = true;
+              kingdom.lands[x - 2][y + 2].isMarked = true;
+        }
       }
     }
 

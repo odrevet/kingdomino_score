@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'main.dart';
 import 'kingdom.dart';
+import 'ageOfGiants.dart';
 
 class KingdomWidget extends StatefulWidget {
   MainWidgetState _mainWidgetState;
@@ -32,8 +33,10 @@ class _KingdomWidgetState extends State<KingdomWidget> {
               land.landType == LandType.none) break;
           land.crowns++;
           if (land.crowns >
-              _mainWidgetState.getGameSet()[land.landType]['crowns']['max'])
+              _mainWidgetState.getGameSet()[land.landType]['crowns']['max']) {
             land.crowns = 0;
+            land.hasGiant = false;
+          }
           break;
         case SelectionMode.castle:
           //remove previous castle if any
@@ -48,6 +51,9 @@ class _KingdomWidgetState extends State<KingdomWidget> {
 
           land.landType = _mainWidgetState.selectedLandType; //should be castle
           land.crowns = 0;
+          break;
+        case SelectionMode.giant:
+          if(land.crowns > 0)land.hasGiant = !land.hasGiant;
           break;
       }
     });
@@ -64,15 +70,18 @@ class _KingdomWidgetState extends State<KingdomWidget> {
       return Container(
           color: color,
           child: FittedBox(fit: BoxFit.fitWidth, child: Text(castle)));
-    else
+    else {
+      String text = crown * land.crowns;
+      if(land.hasGiant)text += giant;
       return Container(
         color: color,
         child: new LayoutBuilder(
             builder: (BuildContext context, BoxConstraints constraints) {
-          return Text(crown * land.crowns,
-              style: TextStyle(fontSize: constraints.maxWidth / 3));
-        }),
+              return Text(text,
+                  style: TextStyle(fontSize: constraints.maxWidth / 3));
+            }),
       );
+    }
   }
 
   Widget _buildLands(BuildContext context, int index) {

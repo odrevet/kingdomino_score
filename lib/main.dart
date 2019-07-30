@@ -11,7 +11,7 @@ const String crown = '\u{1F451}';
 const String castle = '\u{1F3F0}';
 final String square = '\u{25A0}';
 
-enum SelectionMode { land, crown, castle }
+enum SelectionMode { land, crown, castle, giant }
 
 const Map<LandType, Map<String, dynamic>> gameSet = {
   LandType.castle: {
@@ -113,6 +113,12 @@ class MainWidgetState extends State<MainWidget> {
     setState(() {
       selectedLandType = LandType.castle;
       selectionMode = SelectionMode.castle;
+    });
+  }
+
+  void _onSelectGiant() {
+    setState(() {
+      selectionMode = SelectionMode.giant;
     });
   }
 
@@ -380,14 +386,15 @@ class MainWidgetState extends State<MainWidget> {
           width: 50.0,
           decoration: BoxDecoration(
               border: Border(
-                right: BorderSide(width: 3.5, color: Colors.blueGrey.shade600),
-                bottom: BorderSide(width: 3.5, color: Colors.blueGrey.shade900),
-              )),
+            right: BorderSide(width: 3.5, color: Colors.blueGrey.shade600),
+            bottom: BorderSide(width: 3.5, color: Colors.blueGrey.shade900),
+          )),
           child: Container(
             color: getColorForLandType(type, context),
-            child: selectionMode == SelectionMode.land && selectedLandType == type
-                ? selected
-                : Text(''),
+            child:
+                selectionMode == SelectionMode.land && selectedLandType == type
+                    ? selected
+                    : Text(''),
           ),
         ));
   }
@@ -404,10 +411,10 @@ class MainWidgetState extends State<MainWidget> {
       margin: EdgeInsets.all(margin),
       child: OutlineButton(
           borderSide:
-          selectionMode == SelectionMode.crown ? selectedBorder : null,
+              selectionMode == SelectionMode.crown ? selectedBorder : null,
           onPressed: () => _onSelectCrown(),
           shape:
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
           child: Text(crown, style: TextStyle(fontSize: 30.0))));
 
   Container castleButton() {
@@ -415,27 +422,43 @@ class MainWidgetState extends State<MainWidget> {
         margin: EdgeInsets.all(margin),
         child: OutlineButton(
             borderSide:
-            selectionMode == SelectionMode.castle ? selectedBorder : null,
+                selectionMode == SelectionMode.castle ? selectedBorder : null,
             onPressed: () => _onSelectCastle(),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0)),
             child: Text(castle, style: TextStyle(fontSize: 30.0))));
   }
 
+  Container giantButton() {
+    return Container(
+        margin: EdgeInsets.all(margin),
+        child: OutlineButton(
+            borderSide:
+                selectionMode == SelectionMode.giant ? selectedBorder : null,
+            onPressed: () => _onSelectGiant(),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0)),
+            child: Text(giant, style: TextStyle(fontSize: 30.0))));
+  }
+
   @override
   Widget build(BuildContext context) {
+    var landSelectionChildren = [
+      landButton(LandType.wheat),
+      landButton(LandType.grassland),
+      landButton(LandType.forest),
+      landButton(LandType.lake),
+      landButton(LandType.swamp),
+      landButton(LandType.mine),
+      landButton(LandType.none),
+      crownButton(),
+      castleButton()
+    ];
+
+    if(aog)landSelectionChildren.add(giantButton());
+
     var landSelection = Wrap(
-      children: [
-        landButton(LandType.wheat),
-        landButton(LandType.grassland),
-        landButton(LandType.forest),
-        landButton(LandType.lake),
-        landButton(LandType.swamp),
-        landButton(LandType.mine),
-        landButton(LandType.none),
-        crownButton(),
-        castleButton()
-      ],
+      children: landSelectionChildren,
     );
 
     var actions = <Widget>[
@@ -454,8 +477,7 @@ class MainWidgetState extends State<MainWidget> {
               child: Text('AG',
                   style: TextStyle(
                       fontSize: 30, color: aog ? Colors.red : Colors.white)))),
-    QuestDialogWidget(this)
-      ,
+      QuestDialogWidget(this),
       IconButton(
           icon: Icon(kingdom.size == 5 ? Icons.filter_5 : Icons.filter_7),
           onPressed: () {
@@ -526,7 +548,7 @@ class MainWidgetState extends State<MainWidget> {
         bottomNavigationBar: BottomAppBar(
             child: landSelection, color: Theme.of(context).primaryColor),
         body: Column(children: <Widget>[
-            KingdomWidget(this),
+          KingdomWidget(this),
           Expanded(
             child: FittedBox(
                 fit: BoxFit.fitHeight,

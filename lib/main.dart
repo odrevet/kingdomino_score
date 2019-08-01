@@ -97,10 +97,13 @@ class MainWidgetState extends State<MainWidget> {
   }
 
   void _onSelectLandType(LandType selectedType) {
-    setState(() {
-      selectedLandType = selectedType;
-      selectionMode = SelectionMode.land;
-    });
+    if (selectedType == LandType.castle)
+      _onSelectCastle();
+    else
+      setState(() {
+        selectedLandType = selectedType;
+        selectionMode = SelectionMode.land;
+      });
   }
 
   void _onSelectCrown() {
@@ -372,30 +375,37 @@ class MainWidgetState extends State<MainWidget> {
     });
   }
 
-  Widget landButton(LandType type) {
-    var selected = Icon(
-      Icons.crop_free,
-      color: Colors.white,
-    );
+  Widget landButton(LandType buttonLandType) {
+    var isSelected = (selectionMode == SelectionMode.land ||
+            selectionMode == SelectionMode.castle) &&
+        selectedLandType == buttonLandType;
 
     return GestureDetector(
-        onTap: () => _onSelectLandType(type),
+        onTap: () => _onSelectLandType(buttonLandType),
         child: Container(
           margin: EdgeInsets.all(5.0),
           height: 50.0,
           width: 50.0,
           decoration: BoxDecoration(
-              border: Border(
-            right: BorderSide(width: 3.5, color: Colors.blueGrey.shade600),
-            bottom: BorderSide(width: 3.5, color: Colors.blueGrey.shade900),
-          )),
+              border: isSelected
+                  ? Border(
+                      right: BorderSide(width: 3.5, color: Colors.red.shade600),
+                      top: BorderSide(width: 3.5, color: Colors.red.shade600),
+                      left: BorderSide(width: 3.5, color: Colors.red.shade600),
+                      bottom:
+                          BorderSide(width: 3.5, color: Colors.red.shade900),
+                    )
+                  : Border(
+                      right: BorderSide(
+                          width: 3.5, color: Colors.blueGrey.shade600),
+                      bottom: BorderSide(
+                          width: 3.5, color: Colors.blueGrey.shade900),
+                    )),
           child: Container(
-            color: getColorForLandType(type, context),
-            child:
-                selectionMode == SelectionMode.land && selectedLandType == type
-                    ? selected
-                    : Text(''),
-          ),
+              color: getColorForLandType(buttonLandType, context),
+              child: buttonLandType == LandType.castle
+                  ? FittedBox(fit: BoxFit.fitHeight, child: Text(castle))
+                  : Text('')),
         ));
   }
 
@@ -416,18 +426,6 @@ class MainWidgetState extends State<MainWidget> {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
           child: Text(crown, style: TextStyle(fontSize: 30.0))));
-
-  Container castleButton() {
-    return Container(
-        margin: EdgeInsets.all(margin),
-        child: OutlineButton(
-            borderSide:
-                selectionMode == SelectionMode.castle ? selectedBorder : null,
-            onPressed: () => _onSelectCastle(),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0)),
-            child: Text(castle, style: TextStyle(fontSize: 30.0))));
-  }
 
   Container giantButton() {
     return Container(
@@ -451,8 +449,8 @@ class MainWidgetState extends State<MainWidget> {
       landButton(LandType.swamp),
       landButton(LandType.mine),
       landButton(LandType.none),
+      landButton(LandType.castle),
       crownButton(),
-      castleButton()
     ];
 
     if (aog) landSelectionChildren.add(giantButton());

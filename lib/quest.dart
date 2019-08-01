@@ -58,9 +58,13 @@ class HarmonyWidget extends QuestWidget {
 
   @override
   Widget build(BuildContext context) {
+    const String rectangle = '\u{25AD}';
+    const String trashCan = '\u{1F5D1}';
+
     return Row(children: <Widget>[
       QuestPointWidget(quest.extraPoints),
-      Text('Harmony')
+      Text(rectangle),
+      Text(trashCan)
     ]);
   }
 }

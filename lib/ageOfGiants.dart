@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'kingdomWidget.dart';
 import 'kingdom.dart';
 import 'quest.dart';
-import 'main.dart' show castle;
+import 'main.dart' show castle, crown, square;
 
 const String giant = '\u{1F9D4}';
 
@@ -185,8 +185,7 @@ class FourCornersWidget extends QuestWidget {
         landWidget(quest.landType),
         QuestPointWidget(quest.extraPoints)
       ]),
-      Text(
-          '$check   $check \n     \n $check   $check \n')
+      Text('$check   $check \n     \n $check   $check \n')
     ]);
   }
 }
@@ -230,13 +229,6 @@ class FolieDesGrandeurs extends Quest {
   int extraPoints = 10;
 
   FolieDesGrandeurs();
-
-  Widget build() {
-    return Row(children: <Widget>[
-      QuestPointWidget(extraPoints),
-      Text('Folie des Grandeurs')
-    ]);
-  }
 
   ///return true is 3 crowns are aligned
   ///in this case, will also set isMarked flag of checked lands to true
@@ -294,7 +286,7 @@ class FolieDesGrandeursWidget extends QuestWidget {
   @override
   Widget build(BuildContext context) {
     return Row(children: <Widget>[
-      QuestPointWidget(quest.extraPoints),
+      Column(children: <Widget>[Text(crown), QuestPointWidget(quest.extraPoints)]),
       Text('Folie des grandeurs ')
     ]);
   }
@@ -333,7 +325,16 @@ class BleakKingWidget extends QuestWidget {
   Widget build(BuildContext context) {
     return Row(children: <Widget>[
       QuestPointWidget(quest.extraPoints),
-      Text('Bleak King ')
+      Text(crown),
+      Column(
+        children: <Widget>[
+          Text('$square x 5\n'),
+          Text('$square x 5\n'),
+          Text('$square x 5\n'),
+          Text('$square x 5\n'),
+          Text('$square x 5\n')
+        ],
+      )
     ]);
   }
 }

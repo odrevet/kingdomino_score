@@ -455,7 +455,7 @@ class MainWidgetState extends State<MainWidget> {
       castleButton()
     ];
 
-    if(aog)landSelectionChildren.add(giantButton());
+    if (aog) landSelectionChildren.add(giantButton());
 
     var landSelection = Wrap(
       children: landSelectionChildren,

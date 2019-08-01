@@ -6,7 +6,6 @@ import 'ageOfGiants.dart';
 
 class KingdomWidget extends StatefulWidget {
   MainWidgetState _mainWidgetState;
-  Kingdom _kingdom;
 
   KingdomWidget(this._mainWidgetState);
 
@@ -41,7 +40,8 @@ class _KingdomWidgetState extends State<KingdomWidget> {
           //remove previous castle if any
           for (var cx = 0; cx < _mainWidgetState.kingdom.size; cx++) {
             for (var cy = 0; cy < _mainWidgetState.kingdom.size; cy++) {
-              if (_mainWidgetState.kingdom.lands[cx][cy].landType == LandType.castle) {
+              if (_mainWidgetState.kingdom.lands[cx][cy].landType ==
+                  LandType.castle) {
                 _mainWidgetState.kingdom.lands[cx][cy].landType = LandType.none;
                 _mainWidgetState.kingdom.lands[cx][cy].crowns = 0;
               }
@@ -52,7 +52,7 @@ class _KingdomWidgetState extends State<KingdomWidget> {
           land.reset();
           break;
         case SelectionMode.giant:
-          if(land.crowns > 0)land.hasGiant = !land.hasGiant;
+          if (land.crowns > 0) land.hasGiant = !land.hasGiant;
           break;
       }
     });
@@ -71,14 +71,14 @@ class _KingdomWidgetState extends State<KingdomWidget> {
           child: FittedBox(fit: BoxFit.fitWidth, child: Text(castle)));
     else {
       String text = crown * land.crowns;
-      if(land.hasGiant)text += giant;
+      if (land.hasGiant) text += giant;
       return Container(
         color: color,
         child: new LayoutBuilder(
             builder: (BuildContext context, BoxConstraints constraints) {
-              return Text(text,
-                  style: TextStyle(fontSize: constraints.maxWidth / 3));
-            }),
+          return Text(text,
+              style: TextStyle(fontSize: constraints.maxWidth / 3));
+        }),
       );
     }
   }
@@ -156,4 +156,23 @@ Color getColorForLandType(LandType type, [BuildContext context]) {
   }
 
   return color;
+}
+
+Widget landWidget(LandType landType) {
+  return Container(
+      child: Container(
+    margin: EdgeInsets.all(5.0),
+    height: 50.0,
+    width: 50.0,
+    decoration: BoxDecoration(
+        border: Border(
+      right: BorderSide(width: 3.5, color: Colors.blueGrey.shade600),
+      bottom: BorderSide(width: 3.5, color: Colors.blueGrey.shade900),
+    )),
+    child: Container(
+        color: getColorForLandType(landType),
+        child: landType == LandType.castle
+            ? FittedBox(fit: BoxFit.fitWidth, child: Text(castle))
+            : Text('')),
+  ));
 }

@@ -44,13 +44,11 @@ class Kingdom {
     return properties;
   }
 
-
-   ///add land at x y to the property if it's landType is the same as land
+  ///add land at x y to the property if it's landType is the same as land
   void _addLandToProperty(int x, int y, Land land, Property property) {
     if (isInBound(x, y)) {
       Land landToAdd = lands[x][y];
-      if (landToAdd.landType == land.landType &&
-          landToAdd.isMarked == false) {
+      if (landToAdd.landType == land.landType && landToAdd.isMarked == false) {
         property.landCount++;
         property.crownCount += landToAdd.getCrowns();
         _getAdjacentLand(x, y, property);
@@ -101,14 +99,14 @@ class Land {
   bool hasGiant = false; //AoG extension
 
   ///set crowns to 0 and hasGiant to false
-  void reset(){
+  void reset() {
     crowns = 0;
     hasGiant = false;
   }
 
   /// return 0 is hasGiant is true
   /// return crowns otherwise
-  int getCrowns(){
+  int getCrowns() {
     return hasGiant ? 0 : crowns;
   }
 

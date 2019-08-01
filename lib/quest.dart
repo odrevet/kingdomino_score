@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
+import 'main.dart' show castle;
 import 'kingdom.dart';
+import 'kingdomWidget.dart' show landWidget;
 
 const String shield = '\u{1F6E1}';
+const String check = '\u{2713}';
 
 ///render a shield with point awarded in front
 class QuestPointWidget extends StatelessWidget {
@@ -20,7 +23,7 @@ class QuestPointWidget extends StatelessWidget {
           shield,
           style: TextStyle(fontSize: 40),
         ),
-        Text(' ' + points.toString(),  style: TextStyle(fontSize: 25))
+        Text(' ' + points.toString(), style: TextStyle(fontSize: 25))
       ],
     );
   }
@@ -87,8 +90,11 @@ class MiddleKingdomWidget extends QuestWidget {
   @override
   Widget build(BuildContext context) {
     return Row(children: <Widget>[
-      QuestPointWidget(quest.extraPoints),
-      Text('Middle Kingdom')
+      Stack(children: [
+        landWidget(LandType.castle),
+        QuestPointWidget(quest.extraPoints)
+      ]),
+      Text('   \n  $check \n   ')
     ]);
   }
 }

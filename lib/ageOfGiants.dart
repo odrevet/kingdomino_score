@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'kingdomWidget.dart';
 import 'kingdom.dart';
 import 'quest.dart';
+import 'main.dart' show castle;
 
 const String giant = '\u{1F9D4}';
 
@@ -71,14 +72,6 @@ class LocalBusiness extends Quest {
   final LandType landType;
 
   LocalBusiness(this.landType);
-
-  Widget build() {
-    Color color = getColorForLandType(landType);
-    return Row(children: <Widget>[
-      QuestPointWidget(extraPoints),
-      Container(color: color, child: Text('Local Business'))
-    ]);
-  }
 
   int getPoints(Kingdom kingdom) {
     int castleX, castleY;
@@ -151,8 +144,12 @@ class LocalBusinessWidget extends QuestWidget {
   @override
   Widget build(BuildContext context) {
     return Row(children: <Widget>[
-      QuestPointWidget(quest.extraPoints),
-      Text('Local business ' + quest.landType.toString())
+      Stack(children: [
+        landWidget(quest.landType),
+        QuestPointWidget(quest.extraPoints)
+      ]),
+      Text(
+          '$check $check $check \n $check $castle $check \n $check $check $check \n')
     ]);
   }
 }
@@ -163,14 +160,6 @@ class FourCorners extends Quest {
   LandType landType;
 
   FourCorners(this.landType);
-
-  Widget build() {
-    Color color = getColorForLandType(landType);
-    return Row(children: <Widget>[
-      QuestPointWidget(extraPoints),
-      Container(color: color, child: Text('Four Corners'))
-    ]);
-  }
 
   int getPoints(Kingdom kingdom) {
     int count = 0;
@@ -192,8 +181,12 @@ class FourCornersWidget extends QuestWidget {
   @override
   Widget build(BuildContext context) {
     return Row(children: <Widget>[
-      QuestPointWidget(quest.extraPoints),
-      Text('Four Corners ' + quest.landType.toString())
+      Stack(children: [
+        landWidget(quest.landType),
+        QuestPointWidget(quest.extraPoints)
+      ]),
+      Text(
+          '$check   $check \n     \n $check   $check \n')
     ]);
   }
 }
@@ -202,11 +195,6 @@ class LostCorner extends Quest {
   final int extraPoints = 20;
 
   LostCorner();
-
-  Widget build() {
-    return Row(
-        children: <Widget>[QuestPointWidget(extraPoints), Text('Lost Corner')]);
-  }
 
   int getPoints(Kingdom kingdom) {
     int size = kingdom.size - 1;
@@ -227,8 +215,11 @@ class LostCornerWidget extends QuestWidget {
   @override
   Widget build(BuildContext context) {
     return Row(children: <Widget>[
-      QuestPointWidget(quest.extraPoints),
-      Text('Lost Corner ')
+      Stack(children: [
+        landWidget(LandType.castle),
+        QuestPointWidget(quest.extraPoints)
+      ]),
+      Text('   \n    \n$check  ')
     ]);
   }
 }
@@ -249,10 +240,10 @@ class FolieDesGrandeurs extends Quest {
 
   ///return true is 3 crowns are aligned
   ///in this case, will also set isMarked flag of checked lands to true
-  bool _hasMatch(int x1, int y1, int x2, int y2, Kingdom kingdom){
+  bool _hasMatch(int x1, int y1, int x2, int y2, Kingdom kingdom) {
     if ((kingdom.isInBound(x1, y1) &&
-        kingdom.lands[x1][y1].getCrowns() > 0 &&
-        !kingdom.lands[x1][y1].isMarked) &&
+            kingdom.lands[x1][y1].getCrowns() > 0 &&
+            !kingdom.lands[x1][y1].isMarked) &&
         (kingdom.isInBound(x2, y2) &&
             kingdom.lands[x2][y2].getCrowns() > 0 &&
             !kingdom.lands[x2][y2].isMarked)) {
@@ -272,17 +263,16 @@ class FolieDesGrandeurs extends Quest {
         if (kingdom.lands[x][y].getCrowns() == 0) continue;
 
         //check horizontally
-        if(_hasMatch(x + 1, y, x +2, y, kingdom))count++;
+        if (_hasMatch(x + 1, y, x + 2, y, kingdom)) count++;
 
         //check vertically
-        if(_hasMatch(x, y + 1, x, y + 2, kingdom))count++;
-
+        if (_hasMatch(x, y + 1, x, y + 2, kingdom)) count++;
 
         //check diagonally (down right)
-        if(_hasMatch(x + 1, y + 1, x + 2, y + 2, kingdom))count++;
+        if (_hasMatch(x + 1, y + 1, x + 2, y + 2, kingdom)) count++;
 
         //check diagonally (down left)
-        if(_hasMatch(x - 1, y + 1, x - 2, y + 2, kingdom))count++;
+        if (_hasMatch(x - 1, y + 1, x - 2, y + 2, kingdom)) count++;
       }
     }
 
@@ -317,11 +307,6 @@ class BleakKing extends Quest {
   int extraPoints = 10;
 
   BleakKing();
-
-  Widget build() {
-    return Row(
-        children: <Widget>[QuestPointWidget(extraPoints), Text('Bleak King')]);
-  }
 
   int getPoints(Kingdom kingdom) {
     var properties = kingdom.getProperties();

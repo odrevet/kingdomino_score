@@ -22,7 +22,8 @@ class _QuestDialogOptionState extends State<_QuestDialogOption> {
 
   bool _active;
 
-  @override initState(){
+  @override
+  initState() {
     _active = _mainWidgetState.quests.contains(questWidget.quest);
   }
 
@@ -45,11 +46,10 @@ class _QuestDialogOptionState extends State<_QuestDialogOption> {
           : questWidget,
       onPressed: () {
         setState(() {
-          if (_mainWidgetState.quests.contains(questWidget.quest)){
+          if (_mainWidgetState.quests.contains(questWidget.quest)) {
             _setActive(false);
             _mainWidgetState.quests.remove(questWidget.quest);
-          }
-          else if (_mainWidgetState.quests.length < 2){
+          } else if (_mainWidgetState.quests.length < 2) {
             _setActive(true);
             _mainWidgetState.quests.add(questWidget.quest);
           }
@@ -118,22 +118,31 @@ class _QuestDialogWidgetState extends State<QuestDialogWidget> {
     options.add(_QuestDialogOption(middleKingdomWidget, _mainWidgetState));
 
     if (_mainWidgetState.aog == true) {
-      options.add(_QuestDialogOption(localBusinessWheatWidget, _mainWidgetState));
-      options.add(_QuestDialogOption(localBusinessGrasslandWidget, _mainWidgetState));
-      options.add(_QuestDialogOption(localBusinessForestWidget, _mainWidgetState));
-      options.add(_QuestDialogOption(localBusinessLakeWidget, _mainWidgetState));
-      options.add(_QuestDialogOption(localBusinessMineWidget, _mainWidgetState));
-      options.add(_QuestDialogOption(localBusinessSwampWidget, _mainWidgetState));
+      options
+          .add(_QuestDialogOption(localBusinessWheatWidget, _mainWidgetState));
+      options.add(
+          _QuestDialogOption(localBusinessGrasslandWidget, _mainWidgetState));
+      options
+          .add(_QuestDialogOption(localBusinessForestWidget, _mainWidgetState));
+      options
+          .add(_QuestDialogOption(localBusinessLakeWidget, _mainWidgetState));
+      options
+          .add(_QuestDialogOption(localBusinessMineWidget, _mainWidgetState));
+      options
+          .add(_QuestDialogOption(localBusinessSwampWidget, _mainWidgetState));
 
       options.add(_QuestDialogOption(fourCornersWheatWidget, _mainWidgetState));
-      options.add(_QuestDialogOption(fourCornersGrasslandWidget, _mainWidgetState));
-      options.add(_QuestDialogOption(fourCornersForestWidget, _mainWidgetState));
+      options.add(
+          _QuestDialogOption(fourCornersGrasslandWidget, _mainWidgetState));
+      options
+          .add(_QuestDialogOption(fourCornersForestWidget, _mainWidgetState));
       options.add(_QuestDialogOption(fourCornersLakeWidget, _mainWidgetState));
       options.add(_QuestDialogOption(fourCornersMineWidget, _mainWidgetState));
       options.add(_QuestDialogOption(fourCornersSwampWidget, _mainWidgetState));
 
       options.add(_QuestDialogOption(lostCornerWidget, _mainWidgetState));
-      options.add(_QuestDialogOption(folieDesGrandeursWidget,_mainWidgetState));
+      options
+          .add(_QuestDialogOption(folieDesGrandeursWidget, _mainWidgetState));
       options.add(_QuestDialogOption(bleakKingWidget, _mainWidgetState));
     }
 

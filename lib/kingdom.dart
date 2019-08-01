@@ -23,6 +23,7 @@ class Kingdom {
     lands.expand((i) => i).toList().forEach((land) {
       land.landType = LandType.none;
       land.crowns = 0;
+      land.hasGiant = false;
     });
   }
 

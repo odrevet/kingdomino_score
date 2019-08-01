@@ -256,7 +256,7 @@ class FolieDesGrandeurs extends Quest {
         (kingdom.isInBound(x2, y2) &&
             kingdom.lands[x2][y2].getCrowns() > 0 &&
             !kingdom.lands[x2][y2].isMarked)) {
-      kingdom.lands[x1][y2].isMarked = true;
+      kingdom.lands[x1][y1].isMarked = true;
       kingdom.lands[x2][y2].isMarked = true;
       return true;
     }
@@ -312,7 +312,6 @@ class FolieDesGrandeursWidget extends QuestWidget {
 
 /// crown covered with giant count as no crown
 /// properties must be `at least` of 5 lands, as stated in the french booklet
-/// propery with 10 or 15, ..., lands should score multiple ?
 /// see https://boardgamegeek.com/thread/2032948/bleak-king-aka-poor-mans-bonus-quest-confusion
 class BleakKing extends Quest {
   int extraPoints = 10;

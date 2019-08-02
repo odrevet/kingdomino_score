@@ -239,9 +239,39 @@ class MainWidgetState extends State<MainWidget> {
 
         var tableRow = TableRow(children: tableCells);
         tableRows.add(tableRow);
-
-        content = SingleChildScrollView(child: Table(children: tableRows));
       }
+
+      //quests points
+      if(quests.isNotEmpty){
+        var tableCells = <TableCell>[];
+
+        tableCells.add(TableCell(child: Text('')));
+        tableCells.add(TableCell(child: Text('')));
+        tableCells.add(TableCell(child: Text('')));
+        tableCells.add(TableCell(child: Text('')));
+        
+        tableCells.add(TableCell(
+            child: Align(
+                alignment: Alignment.centerRight,
+                child: Text(shield,
+                    style: TextStyle(fontSize: fontSize)))));
+
+        tableCells.add(TableCell(
+            child: Align(
+                alignment: Alignment.centerRight,
+                child: Text('=', style: TextStyle(fontSize: fontSize)))));
+
+        tableCells.add(TableCell(
+            child: Align(
+                alignment: Alignment.centerRight,
+                child: Text(_scoreQuest.toString(),
+                    style: TextStyle(fontSize: fontSize)))));
+
+        var tableRow = TableRow(children: tableCells);
+        tableRows.add(tableRow);
+      }
+
+      content = SingleChildScrollView(child: Table(children: tableRows));
     }
 
     return showDialog<void>(

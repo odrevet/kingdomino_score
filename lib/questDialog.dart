@@ -40,8 +40,8 @@ class _QuestDialogOptionState extends State<_QuestDialogOption> {
     return SimpleDialogOption(
       child: _active
           ? Container(
-              decoration: new BoxDecoration(
-                  border: new Border.all(color: Colors.blueAccent)),
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.red)),
               child: questWidget)
           : questWidget,
       onPressed: () {

@@ -497,8 +497,15 @@ class MainWidgetState extends State<MainWidget> {
               aog = !aog;
 
               quests.clear();
-              updateScoreQuest();
-              updateScore();
+
+              kingdom.lands.expand((i) => i).toList().forEach((land) {
+                land.hasGiant = false;
+              });
+
+              clearWarnings();
+              checkKingdom();
+
+              updateScores();
             });
           },
           child: Container(

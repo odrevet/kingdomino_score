@@ -91,6 +91,31 @@ class MiddleKingdom extends Quest {
 class MiddleKingdomWidget extends QuestWidget {
   final quest = MiddleKingdom();
 
+  Widget _buildTable() {
+    return Container(
+        constraints: BoxConstraints(
+            maxHeight: 50.0, maxWidth: 50.0, minWidth: 50.0, minHeight: 50.0),
+        child: Table(
+            border: TableBorder.all(width: 0.1, color: Colors.grey),
+            children: [
+              TableRow(children: [
+                Text(' '),
+                Text(' '),
+                Text(' '),
+              ]),
+              TableRow(children: [
+                Text(' '),
+                Text(check),
+                Text(' '),
+              ]),
+              TableRow(children: [
+                Text(' '),
+                Text(' '),
+                Text(' '),
+              ]),
+            ]));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(children: <Widget>[
@@ -98,7 +123,7 @@ class MiddleKingdomWidget extends QuestWidget {
         landWidget(LandType.castle),
         QuestPointWidget(quest.extraPoints)
       ]),
-      Text('   \n  $check \n   ')
+      _buildTable()
     ]);
   }
 }

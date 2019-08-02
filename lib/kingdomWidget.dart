@@ -158,16 +158,15 @@ Color getColorForLandType(LandType type, [BuildContext context]) {
   return color;
 }
 
-Widget landWidget(LandType landType) {
+Widget landWidget(LandType landType, [double size = 50.0]) {
   return Container(
       child: Container(
-    margin: EdgeInsets.all(5.0),
-    height: 50.0,
-    width: 50.0,
+    height: size,
+    width: size,
     decoration: BoxDecoration(
         border: Border(
-      right: BorderSide(width: 3.5, color: Colors.blueGrey.shade600),
-      bottom: BorderSide(width: 3.5, color: Colors.blueGrey.shade900),
+      right: BorderSide(width: size / 15, color: Colors.blueGrey.shade600),
+      bottom: BorderSide(width: size / 15, color: Colors.blueGrey.shade900),
     )),
     child: Container(
         color: getColorForLandType(landType),

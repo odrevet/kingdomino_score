@@ -249,7 +249,7 @@ class MainWidgetState extends State<MainWidget> {
         tableCells.add(TableCell(child: Text('')));
         tableCells.add(TableCell(child: Text('')));
         tableCells.add(TableCell(child: Text('')));
-        
+
         tableCells.add(TableCell(
             child: Align(
                 alignment: Alignment.centerRight,
@@ -471,7 +471,7 @@ class MainWidgetState extends State<MainWidget> {
 
   @override
   Widget build(BuildContext context) {
-    var landSelectionChildren = [
+    var kingdomEditorWidgets = [
       landButton(LandType.wheat),
       landButton(LandType.grassland),
       landButton(LandType.forest),
@@ -483,10 +483,10 @@ class MainWidgetState extends State<MainWidget> {
       crownButton(),
     ];
 
-    if (aog) landSelectionChildren.add(giantButton());
+    if (aog) kingdomEditorWidgets.add(giantButton());
 
-    var landSelection = Wrap(
-      children: landSelectionChildren,
+    var kingdomEditor = Wrap(
+      children: kingdomEditorWidgets,
     );
 
     var actions = <Widget>[
@@ -574,7 +574,7 @@ class MainWidgetState extends State<MainWidget> {
               Row(mainAxisAlignment: MainAxisAlignment.end, children: actions),
         ),
         bottomNavigationBar: BottomAppBar(
-            child: landSelection, color: Theme.of(context).primaryColor),
+            child: kingdomEditor, color: Theme.of(context).primaryColor),
         body: Column(children: <Widget>[
           KingdomWidget(this),
           Expanded(

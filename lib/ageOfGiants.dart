@@ -141,6 +141,31 @@ class LocalBusinessWidget extends QuestWidget {
 
   LocalBusinessWidget(this.quest);
 
+  Widget _buildTable() {
+    return Container(
+        constraints: BoxConstraints(
+            maxHeight: 50.0, maxWidth: 50.0, minWidth: 50.0, minHeight: 50.0),
+        child: Table(
+            border: TableBorder.all(width: 0.1, color: Colors.grey),
+            children: [
+              TableRow(children: [
+                Text(check),
+                Text(check),
+                Text(check),
+              ]),
+              TableRow(children: [
+                Text(check),
+                Text(castle),
+                Text(check),
+              ]),
+              TableRow(children: [
+                Text(check),
+                Text(check),
+                Text(check),
+              ]),
+            ]));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(children: <Widget>[
@@ -148,8 +173,7 @@ class LocalBusinessWidget extends QuestWidget {
         landWidget(quest.landType),
         QuestPointWidget(quest.extraPoints)
       ]),
-      Text(
-          '$check $check $check \n $check $castle $check \n $check $check $check \n')
+      _buildTable()
     ]);
   }
 }
@@ -178,6 +202,31 @@ class FourCornersWidget extends QuestWidget {
 
   FourCornersWidget(this.quest);
 
+  Widget _buildTable() {
+    return Container(
+        constraints: BoxConstraints(
+            maxHeight: 50.0, maxWidth: 50.0, minWidth: 50.0, minHeight: 50.0),
+        child: Table(
+            border: TableBorder.all(width: 0.1, color: Colors.grey),
+            children: [
+              TableRow(children: [
+                Text(check),
+                Text(' '),
+                Text(check),
+              ]),
+              TableRow(children: [
+                Text(' '),
+                Text(' '),
+                Text(' '),
+              ]),
+              TableRow(children: [
+                Text(check),
+                Text(' '),
+                Text(check),
+              ]),
+            ]));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(children: <Widget>[
@@ -185,7 +234,7 @@ class FourCornersWidget extends QuestWidget {
         landWidget(quest.landType),
         QuestPointWidget(quest.extraPoints)
       ]),
-      Text('$check   $check \n     \n $check   $check \n')
+      _buildTable()
     ]);
   }
 }
@@ -211,6 +260,31 @@ class LostCornerWidget extends QuestWidget {
 
   LostCornerWidget();
 
+  Widget _buildTable() {
+    return Container(
+        constraints: BoxConstraints(
+            maxHeight: 50.0, maxWidth: 50.0, minWidth: 50.0, minHeight: 50.0),
+        child: Table(
+            border: TableBorder.all(width: 0.1, color: Colors.grey),
+            children: [
+              TableRow(children: [
+                Text(' '),
+                Text(' '),
+                Text(' '),
+              ]),
+              TableRow(children: [
+                Text(' '),
+                Text(' '),
+                Text(' '),
+              ]),
+              TableRow(children: [
+                Text(check),
+                Text(' '),
+                Text(' '),
+              ]),
+            ]));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(children: <Widget>[
@@ -218,7 +292,7 @@ class LostCornerWidget extends QuestWidget {
         landWidget(LandType.castle),
         QuestPointWidget(quest.extraPoints)
       ]),
-      Text('   \n    \n$check  ')
+      _buildTable()
     ]);
   }
 }
@@ -286,7 +360,8 @@ class FolieDesGrandeursWidget extends QuestWidget {
   @override
   Widget build(BuildContext context) {
     return Row(children: <Widget>[
-      Column(children: <Widget>[Text(crown), QuestPointWidget(quest.extraPoints)]),
+      Column(
+          children: <Widget>[Text(crown), QuestPointWidget(quest.extraPoints)]),
       Text('Folie des grandeurs ')
     ]);
   }

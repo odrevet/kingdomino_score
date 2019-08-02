@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'kingdomWidget.dart';
 import 'kingdom.dart';
+import 'kingdomWidget.dart';
 import 'quest.dart';
 import 'main.dart' show castle, crown, square;
 
@@ -66,6 +66,7 @@ const Map<LandType, Map<String, dynamic>> gameAogSet = {
 };
 
 // Quests
+
 class LocalBusiness extends Quest {
   final int extraPoints = 5;
 
@@ -400,14 +401,41 @@ class BleakKingWidget extends QuestWidget {
   Widget build(BuildContext context) {
     return Row(children: <Widget>[
       QuestPointWidget(quest.extraPoints),
-      Text(crown),
+      Text(crown, style: TextStyle(fontSize: 30.0)),
       Column(
         children: <Widget>[
-          Text('$square x 5\n'),
-          Text('$square x 5\n'),
-          Text('$square x 5\n'),
-          Text('$square x 5\n'),
-          Text('$square x 5\n')
+          SizedBox(
+              height: 14.0,
+              child: Row(children: [
+                Text('$square',
+                    style:
+                        TextStyle(color: getColorForLandType(LandType.wheat))),
+                Text('x 5')
+              ])),
+          SizedBox(
+              height: 14.0,
+              child: Row(children: [
+                Text('$square',
+                    style:
+                    TextStyle(color: getColorForLandType(LandType.forest))),
+                Text('x 5')
+              ])),
+          SizedBox(
+              height: 14.0,
+              child: Row(children: [
+                Text('$square',
+                    style:
+                    TextStyle(color: getColorForLandType(LandType.grassland))),
+                Text('x 5')
+              ])),
+          SizedBox(
+              height: 14.0,
+              child: Row(children: [
+                Text('$square',
+                    style:
+                    TextStyle(color: getColorForLandType(LandType.lake))),
+                Text('x 5')
+              ])),
         ],
       )
     ]);

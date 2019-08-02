@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'main.dart' show castle;
 import 'kingdom.dart';
-import 'kingdomWidget.dart' show landWidget;
+import 'kingdomWidget.dart';
 
 const String shield = '\u{1F6E1}';
 const String check = '\u{2713}';
@@ -27,6 +27,19 @@ class QuestPointWidget extends StatelessWidget {
       ],
     );
   }
+}
+
+Widget landWidget(LandType landType, [double size = 50.0]) {
+  return Container(
+      child: Container(
+    height: size,
+    width: size,
+    child: Container(
+        color: getColorForLandType(landType),
+        child: landType == LandType.castle
+            ? FittedBox(fit: BoxFit.fitWidth, child: Text(castle))
+            : Text('')),
+  ));
 }
 
 abstract class Quest {
@@ -60,11 +73,15 @@ class HarmonyWidget extends QuestWidget {
   Widget build(BuildContext context) {
     const String rectangle = '\u{25AD}';
     const String trashCan = '\u{1F5D1}';
+    const String cross = '\u{2717}';
 
     return Row(children: <Widget>[
       QuestPointWidget(quest.extraPoints),
-      Text(rectangle),
-      Text(trashCan)
+      Stack(children: [
+        Text(rectangle, style: TextStyle(fontSize: 40)),
+        Text(cross, style: TextStyle(fontSize: 40, color: Colors.red))
+      ]),
+      Icon(Icons.delete)
     ]);
   }
 }

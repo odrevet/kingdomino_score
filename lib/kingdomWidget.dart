@@ -157,21 +157,3 @@ Color getColorForLandType(LandType type, [BuildContext context]) {
 
   return color;
 }
-
-Widget landWidget(LandType landType, [double size = 50.0]) {
-  return Container(
-      child: Container(
-    height: size,
-    width: size,
-    decoration: BoxDecoration(
-        border: Border(
-      right: BorderSide(width: size / 15, color: Colors.blueGrey.shade600),
-      bottom: BorderSide(width: size / 15, color: Colors.blueGrey.shade900),
-    )),
-    child: Container(
-        color: getColorForLandType(landType),
-        child: landType == LandType.castle
-            ? FittedBox(fit: BoxFit.fitWidth, child: Text(castle))
-            : Text('')),
-  ));
-}

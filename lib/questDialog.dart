@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 import 'kingdom.dart';
 import 'quest.dart';
@@ -150,15 +151,16 @@ class _QuestDialogWidgetState extends State<QuestDialogWidget> {
       children: options,
     );
 
-    var button = MaterialButton(
-        minWidth: 30,
+    var button = IconButton(
+      // Use the MdiIcons class for the IconData
+        icon: new Icon(MdiIcons.shield),
         onPressed: () => showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return dialog;
-              },
-            ),
-        child: Container(child: Text(shield, style: TextStyle(fontSize: 30))));
+          context: context,
+          builder: (BuildContext context) {
+            return dialog;
+          },
+        )
+    );
 
     if (_mainWidgetState.quests.isEmpty)
       return button;

@@ -23,12 +23,55 @@ class QuestPointWidget extends StatelessWidget {
           shield,
           style: TextStyle(fontSize: 40),
         ),
-        Text(' ' + points.toString(), style: TextStyle(fontSize: 25))
+        Container(
+            alignment: Alignment.topCenter,
+            margin: EdgeInsets.only(left: 12.0, top: 5.0),
+            child: Text(points.toString(), style: TextStyle(fontSize: 25)))
       ],
     );
   }
 }
 
+///render the mini kingdom on the right side of some quest tiles
+class QuestMiniKingdom extends StatelessWidget {
+  const QuestMiniKingdom({
+    Key key,
+    this.child,
+  }) : super(key: key);
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        height: 50.0,
+        width: 50.0,
+        child: child,
+        decoration: BoxDecoration(
+            border: Border(
+          right: BorderSide(width: 2.0, color: Colors.grey),
+          top: BorderSide(width: 2.0, color: Colors.grey),
+          left: BorderSide(width: 2.0, color: Colors.blueGrey),
+          bottom: BorderSide(width: 2.0, color: Colors.blueGrey),
+        )));
+  }
+}
+
+///to render a square in the right side table of a quest tile
+class QuestMiniTile extends StatelessWidget {
+  final String text;
+  const QuestMiniTile(this.text, {Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        decoration:
+            BoxDecoration(border: Border.all(color: Colors.grey, width: 0.3)),
+        child: Text(text, style: TextStyle(color: Colors.green)));
+  }
+}
+
+///to render the land on the left side of a quest tile
 Widget landWidget(LandType landType, [double size = 50.0]) {
   return Container(
       child: Container(
@@ -112,25 +155,23 @@ class MiddleKingdomWidget extends QuestWidget {
     return Container(
         constraints: BoxConstraints(
             maxHeight: 50.0, maxWidth: 50.0, minWidth: 50.0, minHeight: 50.0),
-        child: Table(
-            border: TableBorder.all(width: 0.1, color: Colors.grey),
-            children: [
-              TableRow(children: [
-                Text(' '),
-                Text(' '),
-                Text(' '),
-              ]),
-              TableRow(children: [
-                Text(' '),
-                Text(check),
-                Text(' '),
-              ]),
-              TableRow(children: [
-                Text(' '),
-                Text(' '),
-                Text(' '),
-              ]),
-            ]));
+        child: Table(children: [
+          TableRow(children: [
+            Text(' '),
+            Text(' '),
+            Text(' '),
+          ]),
+          TableRow(children: [
+            Text(' '),
+            QuestMiniTile(check),
+            Text(' '),
+          ]),
+          TableRow(children: [
+            Text(' '),
+            Text(' '),
+            Text(' '),
+          ]),
+        ]));
   }
 
   @override
@@ -140,7 +181,7 @@ class MiddleKingdomWidget extends QuestWidget {
         landWidget(LandType.castle),
         QuestPointWidget(quest.extraPoints)
       ]),
-      _buildTable()
+      QuestMiniKingdom(child: _buildTable())
     ]);
   }
 }

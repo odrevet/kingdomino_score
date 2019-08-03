@@ -147,22 +147,22 @@ class LocalBusinessWidget extends QuestWidget {
         constraints: BoxConstraints(
             maxHeight: 50.0, maxWidth: 50.0, minWidth: 50.0, minHeight: 50.0),
         child: Table(
-            border: TableBorder.all(width: 0.1, color: Colors.grey),
+            //border: TableBorder.all(width: 0.1, color: Colors.grey),
             children: [
               TableRow(children: [
-                Text(check),
-                Text(check),
-                Text(check),
+                QuestMiniTile(check),
+                QuestMiniTile(check),
+                QuestMiniTile(check),
               ]),
               TableRow(children: [
-                Text(check),
-                Text(castle),
-                Text(check),
+                QuestMiniTile(check),
+                QuestMiniTile(castle),
+                QuestMiniTile(check),
               ]),
               TableRow(children: [
-                Text(check),
-                Text(check),
-                Text(check),
+                QuestMiniTile(check),
+                QuestMiniTile(check),
+                QuestMiniTile(check),
               ]),
             ]));
   }
@@ -174,7 +174,7 @@ class LocalBusinessWidget extends QuestWidget {
         landWidget(quest.landType),
         QuestPointWidget(quest.extraPoints)
       ]),
-      _buildTable()
+      QuestMiniKingdom(child: _buildTable())
     ]);
   }
 }
@@ -208,12 +208,11 @@ class FourCornersWidget extends QuestWidget {
         constraints: BoxConstraints(
             maxHeight: 50.0, maxWidth: 50.0, minWidth: 50.0, minHeight: 50.0),
         child: Table(
-            border: TableBorder.all(width: 0.1, color: Colors.grey),
             children: [
               TableRow(children: [
-                Text(check),
+                QuestMiniTile(check),
                 Text(' '),
-                Text(check),
+                QuestMiniTile(check),
               ]),
               TableRow(children: [
                 Text(' '),
@@ -221,9 +220,9 @@ class FourCornersWidget extends QuestWidget {
                 Text(' '),
               ]),
               TableRow(children: [
-                Text(check),
+                QuestMiniTile(check),
                 Text(' '),
-                Text(check),
+                QuestMiniTile(check),
               ]),
             ]));
   }
@@ -235,7 +234,7 @@ class FourCornersWidget extends QuestWidget {
         landWidget(quest.landType),
         QuestPointWidget(quest.extraPoints)
       ]),
-      _buildTable()
+      QuestMiniKingdom(child:_buildTable())
     ]);
   }
 }
@@ -266,7 +265,6 @@ class LostCornerWidget extends QuestWidget {
         constraints: BoxConstraints(
             maxHeight: 50.0, maxWidth: 50.0, minWidth: 50.0, minHeight: 50.0),
         child: Table(
-            border: TableBorder.all(width: 0.1, color: Colors.grey),
             children: [
               TableRow(children: [
                 Text(' '),
@@ -279,7 +277,7 @@ class LostCornerWidget extends QuestWidget {
                 Text(' '),
               ]),
               TableRow(children: [
-                Text(check),
+                QuestMiniTile(check),
                 Text(' '),
                 Text(' '),
               ]),
@@ -293,7 +291,7 @@ class LostCornerWidget extends QuestWidget {
         landWidget(LandType.castle),
         QuestPointWidget(quest.extraPoints)
       ]),
-      _buildTable()
+      QuestMiniKingdom(child:_buildTable())
     ]);
   }
 }
@@ -363,29 +361,28 @@ class FolieDesGrandeursWidget extends QuestWidget {
         constraints: BoxConstraints(
             maxHeight: 50.0, maxWidth: 50.0, minWidth: 50.0, minHeight: 50.0),
         child: Table(
-            border: TableBorder.all(width: 0.1, color: Colors.grey),
             children: [
               TableRow(children: [
-                Text(check),
-                Text(check),
+                QuestMiniTile(check),
+                QuestMiniTile(check),
                 Text(' '),
-                Text(check),
-                Text(check),
-                Text(check),
+                QuestMiniTile(check),
+                QuestMiniTile(check),
+                QuestMiniTile(check),
               ]),
               TableRow(children: [
-                Text(check),
+                QuestMiniTile(check),
                 Text(' '),
-                Text(check),
+                QuestMiniTile(check),
                 Text(' '),
                 Text(' '),
                 Text(' '),
               ]),
               TableRow(children: [
-                Text(check),
+                QuestMiniTile(check),
                 Text(' '),
                 Text(' '),
-                Text(check),
+                QuestMiniTile(check),
                 Text(' '),
                 Text(' '),
               ]),
@@ -394,14 +391,15 @@ class FolieDesGrandeursWidget extends QuestWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-        children: <Widget>[
-          Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: <Widget>[
+    return Row(children: <Widget>[
+      Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
             Text(crown, style: TextStyle(fontSize: 25.0)),
             QuestPointWidget(quest.extraPoints)
           ]),
-          _buildTable()
-        ]);
+      QuestMiniKingdom(child:_buildTable())
+    ]);
   }
 }
 

@@ -506,6 +506,10 @@ class MainWidgetState extends State<MainWidget> {
               checkKingdom();
 
               updateScores();
+
+              if(selectionMode == SelectionMode.giant){
+                selectionMode = SelectionMode.crown;
+              }
             });
           },
           child: Container(

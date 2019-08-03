@@ -143,28 +143,25 @@ class LocalBusinessWidget extends QuestWidget {
   LocalBusinessWidget(this.quest);
 
   Widget _buildTable() {
-    return Container(
-        constraints: BoxConstraints(
-            maxHeight: 50.0, maxWidth: 50.0, minWidth: 50.0, minHeight: 50.0),
-        child: Table(
-            //border: TableBorder.all(width: 0.1, color: Colors.grey),
-            children: [
-              TableRow(children: [
-                QuestMiniTile(check),
-                QuestMiniTile(check),
-                QuestMiniTile(check),
-              ]),
-              TableRow(children: [
-                QuestMiniTile(check),
-                QuestMiniTile(castle),
-                QuestMiniTile(check),
-              ]),
-              TableRow(children: [
-                QuestMiniTile(check),
-                QuestMiniTile(check),
-                QuestMiniTile(check),
-              ]),
-            ]));
+    return Table(
+      //border: TableBorder.all(width: 0.1, color: Colors.grey),
+        children: [
+          TableRow(children: [
+            QuestMiniTile(check),
+            QuestMiniTile(check),
+            QuestMiniTile(check),
+          ]),
+          TableRow(children: [
+            QuestMiniTile(check),
+            QuestMiniTile(castle),
+            QuestMiniTile(check),
+          ]),
+          TableRow(children: [
+            QuestMiniTile(check),
+            QuestMiniTile(check),
+            QuestMiniTile(check),
+          ]),
+        ]);
   }
 
   @override
@@ -204,27 +201,24 @@ class FourCornersWidget extends QuestWidget {
   FourCornersWidget(this.quest);
 
   Widget _buildTable() {
-    return Container(
-        constraints: BoxConstraints(
-            maxHeight: 50.0, maxWidth: 50.0, minWidth: 50.0, minHeight: 50.0),
-        child: Table(
-            children: [
-              TableRow(children: [
-                QuestMiniTile(check),
-                Text(' '),
-                QuestMiniTile(check),
-              ]),
-              TableRow(children: [
-                Text(' '),
-                Text(' '),
-                Text(' '),
-              ]),
-              TableRow(children: [
-                QuestMiniTile(check),
-                Text(' '),
-                QuestMiniTile(check),
-              ]),
-            ]));
+    return Table(
+        children: [
+          TableRow(children: [
+            QuestMiniTile(check),
+            Text(' '),
+            QuestMiniTile(check),
+          ]),
+          TableRow(children: [
+            Text(' '),
+            Text(' '),
+            Text(' '),
+          ]),
+          TableRow(children: [
+            QuestMiniTile(check),
+            Text(' '),
+            QuestMiniTile(check),
+          ]),
+        ]);
   }
 
   @override
@@ -261,27 +255,24 @@ class LostCornerWidget extends QuestWidget {
   LostCornerWidget();
 
   Widget _buildTable() {
-    return Container(
-        constraints: BoxConstraints(
-            maxHeight: 50.0, maxWidth: 50.0, minWidth: 50.0, minHeight: 50.0),
-        child: Table(
-            children: [
-              TableRow(children: [
-                Text(' '),
-                Text(' '),
-                Text(' '),
-              ]),
-              TableRow(children: [
-                Text(' '),
-                Text(' '),
-                Text(' '),
-              ]),
-              TableRow(children: [
-                QuestMiniTile(check),
-                Text(' '),
-                Text(' '),
-              ]),
-            ]));
+    return Table(
+        children: [
+          TableRow(children: [
+            Text(' '),
+            Text(' '),
+            Text(' '),
+          ]),
+          TableRow(children: [
+            Text(' '),
+            Text(' '),
+            Text(' '),
+          ]),
+          TableRow(children: [
+            QuestMiniTile(check),
+            Text(' '),
+            Text(' '),
+          ]),
+        ]);
   }
 
   @override
@@ -357,36 +348,33 @@ class FolieDesGrandeursWidget extends QuestWidget {
   FolieDesGrandeursWidget();
 
   Widget _buildTable() {
-    return Container(
-        constraints: BoxConstraints(
-            maxHeight: 50.0, maxWidth: 50.0, minWidth: 50.0, minHeight: 50.0),
-        child: Table(
-            children: [
-              TableRow(children: [
-                QuestMiniTile(check),
-                QuestMiniTile(check),
-                Text(' '),
-                QuestMiniTile(check),
-                QuestMiniTile(check),
-                QuestMiniTile(check),
-              ]),
-              TableRow(children: [
-                QuestMiniTile(check),
-                Text(' '),
-                QuestMiniTile(check),
-                Text(' '),
-                Text(' '),
-                Text(' '),
-              ]),
-              TableRow(children: [
-                QuestMiniTile(check),
-                Text(' '),
-                Text(' '),
-                QuestMiniTile(check),
-                Text(' '),
-                Text(' '),
-              ]),
-            ]));
+    return Table(
+        children: [
+          TableRow(children: [
+            QuestMiniTile(check),
+            QuestMiniTile(check),
+            Text(' '),
+            QuestMiniTile(check),
+            QuestMiniTile(check),
+            QuestMiniTile(check),
+          ]),
+          TableRow(children: [
+            QuestMiniTile(check),
+            Text(' '),
+            QuestMiniTile(check),
+            Text(' '),
+            Text(' '),
+            Text(' '),
+          ]),
+          TableRow(children: [
+            QuestMiniTile(check),
+            Text(' '),
+            Text(' '),
+            QuestMiniTile(check),
+            Text(' '),
+            Text(' '),
+          ]),
+        ]);
   }
 
   @override

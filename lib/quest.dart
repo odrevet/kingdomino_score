@@ -67,7 +67,7 @@ class QuestMiniTile extends StatelessWidget {
     return Container(
         decoration:
             BoxDecoration(border: Border.all(color: Colors.grey, width: 0.3)),
-        child: Text(text, style: TextStyle(color: Colors.green)));
+        child: Text(text, style: TextStyle(fontSize: 10.0, color: Colors.green)));
   }
 }
 
@@ -115,7 +115,6 @@ class HarmonyWidget extends QuestWidget {
   @override
   Widget build(BuildContext context) {
     const String rectangle = '\u{25AD}';
-    const String trashCan = '\u{1F5D1}';
     const String cross = '\u{2717}';
 
     return Row(children: <Widget>[
@@ -152,26 +151,23 @@ class MiddleKingdomWidget extends QuestWidget {
   final quest = MiddleKingdom();
 
   Widget _buildTable() {
-    return Container(
-        constraints: BoxConstraints(
-            maxHeight: 50.0, maxWidth: 50.0, minWidth: 50.0, minHeight: 50.0),
-        child: Table(children: [
-          TableRow(children: [
-            Text(' '),
-            Text(' '),
-            Text(' '),
-          ]),
-          TableRow(children: [
-            Text(' '),
-            QuestMiniTile(check),
-            Text(' '),
-          ]),
-          TableRow(children: [
-            Text(' '),
-            Text(' '),
-            Text(' '),
-          ]),
-        ]));
+    return Table(children: [
+      TableRow(children: [
+        Text(' '),
+        Text(' '),
+        Text(' '),
+      ]),
+      TableRow(children: [
+        Text(' '),
+        QuestMiniTile(check),
+        Text(' '),
+      ]),
+      TableRow(children: [
+        Text(' '),
+        Text(' '),
+        Text(' '),
+      ]),
+    ]);
   }
 
   @override

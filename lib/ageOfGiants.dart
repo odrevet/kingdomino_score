@@ -358,13 +358,50 @@ class FolieDesGrandeursWidget extends QuestWidget {
 
   FolieDesGrandeursWidget();
 
+  Widget _buildTable() {
+    return Container(
+        constraints: BoxConstraints(
+            maxHeight: 50.0, maxWidth: 50.0, minWidth: 50.0, minHeight: 50.0),
+        child: Table(
+            border: TableBorder.all(width: 0.1, color: Colors.grey),
+            children: [
+              TableRow(children: [
+                Text(check),
+                Text(check),
+                Text(' '),
+                Text(check),
+                Text(check),
+                Text(check),
+              ]),
+              TableRow(children: [
+                Text(check),
+                Text(' '),
+                Text(check),
+                Text(' '),
+                Text(' '),
+                Text(' '),
+              ]),
+              TableRow(children: [
+                Text(check),
+                Text(' '),
+                Text(' '),
+                Text(check),
+                Text(' '),
+                Text(' '),
+              ]),
+            ]));
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Row(children: <Widget>[
-      Column(
-          children: <Widget>[Text(crown), QuestPointWidget(quest.extraPoints)]),
-      Text('Folie des grandeurs ')
-    ]);
+    return Row(
+        children: <Widget>[
+          Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: <Widget>[
+            Text(crown, style: TextStyle(fontSize: 25.0)),
+            QuestPointWidget(quest.extraPoints)
+          ]),
+          _buildTable()
+        ]);
   }
 }
 
@@ -417,7 +454,15 @@ class BleakKingWidget extends QuestWidget {
               child: Row(children: [
                 Text('$square',
                     style:
-                    TextStyle(color: getColorForLandType(LandType.forest))),
+                        TextStyle(color: getColorForLandType(LandType.forest))),
+                Text('x 5')
+              ])),
+          SizedBox(
+              height: 14.0,
+              child: Row(children: [
+                Text('$square',
+                    style: TextStyle(
+                        color: getColorForLandType(LandType.grassland))),
                 Text('x 5')
               ])),
           SizedBox(
@@ -425,15 +470,7 @@ class BleakKingWidget extends QuestWidget {
               child: Row(children: [
                 Text('$square',
                     style:
-                    TextStyle(color: getColorForLandType(LandType.grassland))),
-                Text('x 5')
-              ])),
-          SizedBox(
-              height: 14.0,
-              child: Row(children: [
-                Text('$square',
-                    style:
-                    TextStyle(color: getColorForLandType(LandType.lake))),
+                        TextStyle(color: getColorForLandType(LandType.lake))),
                 Text('x 5')
               ])),
         ],

@@ -155,8 +155,8 @@ class MainWidgetState extends State<MainWidget> {
           backgroundColor: Colors.white70,
           title: Text('Kingdomino Score',
               style: TextStyle(
-                  color: Colors.orange,
-                  fontSize: 30.0,
+                  color: Colors.amber,
+                  fontSize: 35.0,
                   shadows: <Shadow>[
                     Shadow(
                       offset: Offset(1.0, 1.0),
@@ -164,7 +164,7 @@ class MainWidgetState extends State<MainWidget> {
                       color: Color.fromARGB(255, 255, 255, 255),
                     )
                   ])),
-          content: const Text('Olivier Drevet - GPL v.3'),
+          content: const Text('Olivier Drevet - GPL v.3',  style: TextStyle(fontSize: 15.0)),
           actions: <Widget>[
             FlatButton(
               child: Icon(

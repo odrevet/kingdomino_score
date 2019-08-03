@@ -511,7 +511,7 @@ class MainWidgetState extends State<MainWidget> {
           child: Container(
               child: Text('AG',
                   style: TextStyle(
-                      fontSize: 30, color: aog ? Colors.red : Colors.white)))),
+                      fontSize: 25.0, color: aog ? Colors.red : Colors.white)))),
       QuestDialogWidget(this),
       IconButton(
           icon: Icon(kingdom.size == 5 ? Icons.filter_5 : Icons.filter_7),

@@ -23,10 +23,13 @@ class QuestPointWidget extends StatelessWidget {
           shield,
           style: TextStyle(fontSize: 40),
         ),
-        Container(
-            alignment: Alignment.topCenter,
-            margin: EdgeInsets.only(left: 12.0, top: 5.0),
-            child: Text(points.toString(), style: TextStyle(fontSize: 25)))
+        Positioned.fill(
+          child: Align(
+              alignment: Alignment.center,
+              child: Text(points.toString(), style: TextStyle(fontSize: 20.0))
+
+          ),
+        )
       ],
     );
   }

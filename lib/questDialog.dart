@@ -41,8 +41,7 @@ class _QuestDialogOptionState extends State<_QuestDialogOption> {
     return SimpleDialogOption(
       child: _active
           ? Container(
-              decoration: BoxDecoration(
-                  border: Border.all(color: Colors.red)),
+              decoration: BoxDecoration(border: Border.all(color: Colors.red)),
               child: questWidget)
           : questWidget,
       onPressed: () {
@@ -152,15 +151,14 @@ class _QuestDialogWidgetState extends State<QuestDialogWidget> {
     );
 
     var button = IconButton(
-      // Use the MdiIcons class for the IconData
+        // Use the MdiIcons class for the IconData
         icon: Icon(MdiIcons.shieldOutline),
         onPressed: () => showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return dialog;
-          },
-        )
-    );
+              context: context,
+              builder: (BuildContext context) {
+                return dialog;
+              },
+            ));
 
     if (_mainWidgetState.quests.isEmpty)
       return button;

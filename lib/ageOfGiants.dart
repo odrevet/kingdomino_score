@@ -144,7 +144,7 @@ class LocalBusinessWidget extends QuestWidget {
 
   Widget _buildTable() {
     return Table(
-      //border: TableBorder.all(width: 0.1, color: Colors.grey),
+        //border: TableBorder.all(width: 0.1, color: Colors.grey),
         children: [
           TableRow(children: [
             QuestMiniTile(check),
@@ -201,24 +201,23 @@ class FourCornersWidget extends QuestWidget {
   FourCornersWidget(this.quest);
 
   Widget _buildTable() {
-    return Table(
-        children: [
-          TableRow(children: [
-            QuestMiniTile(check),
-            Text(' '),
-            QuestMiniTile(check),
-          ]),
-          TableRow(children: [
-            Text(' '),
-            Text(' '),
-            Text(' '),
-          ]),
-          TableRow(children: [
-            QuestMiniTile(check),
-            Text(' '),
-            QuestMiniTile(check),
-          ]),
-        ]);
+    return Table(children: [
+      TableRow(children: [
+        QuestMiniTile(check),
+        Text(' '),
+        QuestMiniTile(check),
+      ]),
+      TableRow(children: [
+        Text(' '),
+        Text(' '),
+        Text(' '),
+      ]),
+      TableRow(children: [
+        QuestMiniTile(check),
+        Text(' '),
+        QuestMiniTile(check),
+      ]),
+    ]);
   }
 
   @override
@@ -228,7 +227,7 @@ class FourCornersWidget extends QuestWidget {
         landWidget(quest.landType),
         QuestPointWidget(quest.extraPoints)
       ]),
-      QuestMiniKingdom(child:_buildTable())
+      QuestMiniKingdom(child: _buildTable())
     ]);
   }
 }
@@ -255,24 +254,23 @@ class LostCornerWidget extends QuestWidget {
   LostCornerWidget();
 
   Widget _buildTable() {
-    return Table(
-        children: [
-          TableRow(children: [
-            Text(' '),
-            Text(' '),
-            Text(' '),
-          ]),
-          TableRow(children: [
-            Text(' '),
-            Text(' '),
-            Text(' '),
-          ]),
-          TableRow(children: [
-            QuestMiniTile(check),
-            Text(' '),
-            Text(' '),
-          ]),
-        ]);
+    return Table(children: [
+      TableRow(children: [
+        Text(' '),
+        Text(' '),
+        Text(' '),
+      ]),
+      TableRow(children: [
+        Text(' '),
+        Text(' '),
+        Text(' '),
+      ]),
+      TableRow(children: [
+        QuestMiniTile(check),
+        Text(' '),
+        Text(' '),
+      ]),
+    ]);
   }
 
   @override
@@ -282,7 +280,7 @@ class LostCornerWidget extends QuestWidget {
         landWidget(LandType.castle),
         QuestPointWidget(quest.extraPoints)
       ]),
-      QuestMiniKingdom(child:_buildTable())
+      QuestMiniKingdom(child: _buildTable())
     ]);
   }
 }
@@ -294,15 +292,16 @@ class FolieDesGrandeurs extends Quest {
 
   FolieDesGrandeurs();
 
+  bool _check(Kingdom kingdom, int x, int y) {
+    return (kingdom.isInBound(x, y) &&
+        kingdom.lands[x][y].getCrowns() > 0 &&
+        !kingdom.lands[x][y].isMarked);
+  }
+
   ///return true is 3 crowns are aligned
   ///in this case, will also set isMarked flag of checked lands to true
   bool _hasMatch(int x1, int y1, int x2, int y2, Kingdom kingdom) {
-    if ((kingdom.isInBound(x1, y1) &&
-            kingdom.lands[x1][y1].getCrowns() > 0 &&
-            !kingdom.lands[x1][y1].isMarked) &&
-        (kingdom.isInBound(x2, y2) &&
-            kingdom.lands[x2][y2].getCrowns() > 0 &&
-            !kingdom.lands[x2][y2].isMarked)) {
+    if (_check(kingdom, x1, y1) && _check(kingdom, x2, y2)) {
       kingdom.lands[x1][y1].isMarked = true;
       kingdom.lands[x2][y2].isMarked = true;
       return true;
@@ -348,33 +347,32 @@ class FolieDesGrandeursWidget extends QuestWidget {
   FolieDesGrandeursWidget();
 
   Widget _buildTable() {
-    return Table(
-        children: [
-          TableRow(children: [
-            QuestMiniTile(check),
-            QuestMiniTile(check),
-            Text(' '),
-            QuestMiniTile(check),
-            QuestMiniTile(check),
-            QuestMiniTile(check),
-          ]),
-          TableRow(children: [
-            QuestMiniTile(check),
-            Text(' '),
-            QuestMiniTile(check),
-            Text(' '),
-            Text(' '),
-            Text(' '),
-          ]),
-          TableRow(children: [
-            QuestMiniTile(check),
-            Text(' '),
-            Text(' '),
-            QuestMiniTile(check),
-            Text(' '),
-            Text(' '),
-          ]),
-        ]);
+    return Table(children: [
+      TableRow(children: [
+        QuestMiniTile(check),
+        QuestMiniTile(check),
+        Text(' '),
+        QuestMiniTile(check),
+        QuestMiniTile(check),
+        QuestMiniTile(check),
+      ]),
+      TableRow(children: [
+        QuestMiniTile(check),
+        Text(' '),
+        QuestMiniTile(check),
+        Text(' '),
+        Text(' '),
+        Text(' '),
+      ]),
+      TableRow(children: [
+        QuestMiniTile(check),
+        Text(' '),
+        Text(' '),
+        QuestMiniTile(check),
+        Text(' '),
+        Text(' '),
+      ]),
+    ]);
   }
 
   @override
@@ -386,7 +384,7 @@ class FolieDesGrandeursWidget extends QuestWidget {
             Text(crown, style: TextStyle(fontSize: 25.0)),
             QuestPointWidget(quest.extraPoints)
           ]),
-      QuestMiniKingdom(child:_buildTable())
+      QuestMiniKingdom(child: _buildTable())
     ]);
   }
 }

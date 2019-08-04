@@ -67,7 +67,8 @@ class QuestMiniTile extends StatelessWidget {
     return Container(
         decoration:
             BoxDecoration(border: Border.all(color: Colors.grey, width: 0.3)),
-        child: Text(text, style: TextStyle(fontSize: 10.0, color: Colors.green)));
+        child:
+            Text(text, style: TextStyle(fontSize: 10.0, color: Colors.green)));
   }
 }
 

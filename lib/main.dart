@@ -164,7 +164,8 @@ class MainWidgetState extends State<MainWidget> {
                       color: Color.fromARGB(255, 255, 255, 255),
                     )
                   ])),
-          content: const Text('Olivier Drevet - GPL v.3',  style: TextStyle(fontSize: 15.0)),
+          content: const Text('Olivier Drevet - GPL v.3',
+              style: TextStyle(fontSize: 15.0)),
           actions: <Widget>[
             FlatButton(
               child: Icon(
@@ -242,7 +243,7 @@ class MainWidgetState extends State<MainWidget> {
       }
 
       //quests points
-      if(quests.isNotEmpty){
+      if (quests.isNotEmpty) {
         var tableCells = <TableCell>[];
 
         tableCells.add(TableCell(child: Text('')));
@@ -253,8 +254,7 @@ class MainWidgetState extends State<MainWidget> {
         tableCells.add(TableCell(
             child: Align(
                 alignment: Alignment.centerRight,
-                child: Text(shield,
-                    style: TextStyle(fontSize: fontSize)))));
+                child: Text(shield, style: TextStyle(fontSize: fontSize)))));
 
         tableCells.add(TableCell(
             child: Align(
@@ -507,7 +507,7 @@ class MainWidgetState extends State<MainWidget> {
 
               updateScores();
 
-              if(selectionMode == SelectionMode.giant){
+              if (selectionMode == SelectionMode.giant) {
                 selectionMode = SelectionMode.crown;
               }
             });
@@ -515,7 +515,8 @@ class MainWidgetState extends State<MainWidget> {
           child: Container(
               child: Text('AG',
                   style: TextStyle(
-                      fontSize: 25.0, color: aog ? Colors.red : Colors.white)))),
+                      fontSize: 25.0,
+                      color: aog ? Colors.red : Colors.white)))),
       QuestDialogWidget(this),
       IconButton(
           icon: Icon(kingdom.size == 5 ? Icons.filter_5 : Icons.filter_7),

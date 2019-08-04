@@ -293,34 +293,42 @@ class FolieDesGrandeurs extends Quest {
   FolieDesGrandeurs();
 
   bool _check(Kingdom kingdom, int x, int y) {
-    return !kingdom.isInBound(x, y) || kingdom.lands[x][y].getCrowns() == 0;
+    return kingdom.isInBound(x, y) && kingdom.lands[x][y].getCrowns() > 0;
   }
 
-  ///return true is 3 crowns are aligned
-  ///in this case, will also set isMarked flag of checked lands to true
-  bool _hasMatch(
+  int _hasMatch(
       int x0, int y0, int x1, int y1, int x2, int y2, Kingdom kingdom) {
     int referCount = 0;
 
-    if (_check(kingdom, x0, y0))
-      return false;
+    if (!_check(kingdom, x0, y0))
+      return 0;
     if (kingdom.lands[x0][y0].isMarked) referCount++;
 
-    if (_check(kingdom, x1, y1))
-      return false;
+    if (!_check(kingdom, x1, y1))
+      return 0;
     if (kingdom.lands[x1][y1].isMarked) referCount++;
 
-    if (_check(kingdom, x2, y2))
-      return false;
+    if (!_check(kingdom, x2, y2))
+      return 0;
     if (kingdom.lands[x2][y2].isMarked) referCount++;
 
     if (referCount <= 1) {
+      //print('$x0:$y0 $x1:$y1 $x2:$y2 -> $referCount');
       kingdom.lands[x0][y0].isMarked = true;
       kingdom.lands[x1][y1].isMarked = true;
       kingdom.lands[x2][y2].isMarked = true;
-      return true;
+      return 1 + getAlign(x1, y1, kingdom) + getAlign(x2, y2, kingdom);
     }
-    return false;
+    return 0;
+  }
+
+  int getAlign(int x, int y, Kingdom kingdom){
+    int count = 0;
+    count += _hasMatch(x, y, x + 1, y, x + 2, y, kingdom);
+    count += _hasMatch(x, y, x, y + 1, x, y + 2, kingdom);
+    count += _hasMatch(x, y, x + 1, y + 1, x + 2, y + 2, kingdom);
+    count += _hasMatch(x, y, x - 1, y + 1, x - 2, y + 2, kingdom);
+    return count;
   }
 
   int getPoints(Kingdom kingdom) {
@@ -329,29 +337,7 @@ class FolieDesGrandeurs extends Quest {
 
     for (var x = 0; x < size; x++) {
       for (var y = 0; y < size; y++) {
-        //check horizontally
-        if (_hasMatch(x, y, x + 1, y, x + 2, y, kingdom)) count++;
-      }
-    }
-
-    for (var x = 0; x < size; x++) {
-      for (var y = 0; y < size; y++) {
-        //check vertically
-        if (_hasMatch(x, y, x, y + 1, x, y + 2, kingdom)) count++;
-      }
-    }
-
-    for (var x = 0; x < size; x++) {
-      for (var y = 0; y < size; y++) {
-        //check diagonally (down right)
-        if (_hasMatch(x, y, x + 1, y + 1, x + 2, y + 2, kingdom)) count++;
-      }
-    }
-
-    for (var x = 0; x < size; x++) {
-      for (var y = 0; y < size; y++) {
-        //check diagonally (down left)
-        if (_hasMatch(x, y, x - 1, y + 1, x - 2, y + 2, kingdom)) count++;
+        count += getAlign(x, y, kingdom);
       }
     }
 

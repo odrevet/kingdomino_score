@@ -332,6 +332,21 @@ class FolieDesGrandeurs extends Quest {
     return crownAlignment;
   }
 
+  int _countSharedSquare(
+      List<List<int>> placedAlignments, CrownAlignment crownAlignment) {
+    int sharedSquareCount = 0;
+    if (placedAlignments[crownAlignment.x0][crownAlignment.y0] > 1)
+      sharedSquareCount++;
+
+    if (placedAlignments[crownAlignment.x1][crownAlignment.y1] > 1)
+      sharedSquareCount++;
+
+    if (placedAlignments[crownAlignment.x2][crownAlignment.y2] > 1)
+      sharedSquareCount++;
+
+    return sharedSquareCount;
+  }
+
   int getPoints(Kingdom kingdom) {
     int size = kingdom.size;
 
@@ -362,20 +377,10 @@ class FolieDesGrandeurs extends Quest {
       placedAlignments[anAlignment.x1][anAlignment.y1]++;
       placedAlignments[anAlignment.x2][anAlignment.y2]++;
 
-      //for every alignments in crownAlignmentsResult, check if any alignment
-      //have more than one shared square
       bool validAlignment = true;
 
       //check if more than one shared square for the alignment being checked
-      int sharedSquareCount = 0;
-      if (placedAlignments[anAlignment.x0][anAlignment.y0] > 1)
-        sharedSquareCount++;
-
-      if (placedAlignments[anAlignment.x1][anAlignment.y1] > 1)
-        sharedSquareCount++;
-
-      if (placedAlignments[anAlignment.x2][anAlignment.y2] > 1)
-        sharedSquareCount++;
+      int sharedSquareCount = _countSharedSquare(placedAlignments, anAlignment);
 
       if (sharedSquareCount > 1) {
         //remove this alignment from the placedAlignments
@@ -386,15 +391,8 @@ class FolieDesGrandeurs extends Quest {
       } else {
         //check if more than one shared square with already placed squares
         for (var aResultAlignment in resultAlignments) {
-          int sharedSquareCount = 0;
-          if (placedAlignments[aResultAlignment.x0][aResultAlignment.y0] > 1)
-            sharedSquareCount++;
-
-          if (placedAlignments[aResultAlignment.x1][aResultAlignment.y1] > 1)
-            sharedSquareCount++;
-
-          if (placedAlignments[aResultAlignment.x2][aResultAlignment.y2] > 1)
-            sharedSquareCount++;
+          int sharedSquareCount =
+              _countSharedSquare(placedAlignments, aResultAlignment);
 
           if (sharedSquareCount > 1) {
             //remove this alignment from the placedAlignments
@@ -407,7 +405,7 @@ class FolieDesGrandeurs extends Quest {
         }
       }
 
-      if (validAlignment)resultAlignments.add(anAlignment);
+      if (validAlignment) resultAlignments.add(anAlignment);
     });
 
     return extraPoints * resultAlignments.length;

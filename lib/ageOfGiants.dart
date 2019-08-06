@@ -313,39 +313,54 @@ class FolieDesGrandeurs extends Quest {
         _checkLandBoundAndCrown(x2, y2, kingdom);
   }
 
+  void _addCrownAlignmentVertical(
+      List<CrownAlignment> crownAlignment, int x, int y, Kingdom kingdom) {
+    int x1 = x;
+    int y1 = y + 1;
+    int x2 = x;
+    int y2 = y + 2;
+    if (_hasCrownAlignment(x, y, x1, y1, x2, y2, kingdom))
+      crownAlignment.add(CrownAlignment(x, y, x1, y1, x2, y2));
+  }
+
+  void _addCrownAlignmentHorizontal(
+      List<CrownAlignment> crownAlignment, int x, int y, Kingdom kingdom) {
+    int x1 = x + 1;
+    int y1 = y;
+    int x2 = x + 2;
+    int y2 = y;
+    if (_hasCrownAlignment(x, y, x1, y1, x2, y2, kingdom))
+      crownAlignment.add(CrownAlignment(x, y, x1, y1, x2, y2));
+  }
+
+  void _addCrownAlignmentDiagonalRight(
+      List<CrownAlignment> crownAlignment, int x, int y, Kingdom kingdom) {
+    int x1 = x + 1;
+    int y1 = y + 1;
+    int x2 = x + 2;
+    int y2 = y + 2;
+    if (_hasCrownAlignment(x, y, x1, y1, x2, y2, kingdom))
+      crownAlignment.add(CrownAlignment(x, y, x1, y1, x2, y2));
+  }
+
+  void _addCrownAlignmentDiagonalLeft(
+      List<CrownAlignment> crownAlignment, int x, int y, Kingdom kingdom) {
+    int x1 = x - 1;
+    int y1 = y + 1;
+    int x2 = x - 2;
+    int y2 = y - 2;
+    if (_hasCrownAlignment(x, y, x1, y1, x2, y2, kingdom))
+      crownAlignment.add(CrownAlignment(x, y, x1, y1, x2, y2));
+  }
+  
   /// get every 3 crowns alignments, regardless of shared squares
   List<CrownAlignment> _getAlignments(int x, int y, Kingdom kingdom) {
     List<CrownAlignment> crownAlignment = List();
     int x1, y1, x2, y2;
-
-    x1 =  x + 1;
-    y1 = y;
-    x2 = x + 2;
-    y2 = y;
-    if (_hasCrownAlignment(x, y, x1, y1, x2, y2, kingdom))
-      crownAlignment.add(CrownAlignment(x, y, x1, y1, x2, y2));
-
-    x1 = x;
-    y1 = y +1;
-    x2 = x;
-    y2 = y + 2;
-    if (_hasCrownAlignment(x, y, x1, y1, x2, y2, kingdom))
-      crownAlignment.add(CrownAlignment(x, y, x1, y1, x2, y2));
-
-    x1 = x + 1;
-    y1 = y + 1;
-    x2 = x + 2;
-    y2 = y + 2;
-    if (_hasCrownAlignment(x, y, x1, y1, x2, y2, kingdom))
-      crownAlignment.add(CrownAlignment(x, y, x1, y1, x2, y2));
-
-    x1 = x - 1;
-    y1 = y + 1;
-    x2 = x - 2;
-    y2 = y - 2;
-    if (_hasCrownAlignment(x, y, x1, y1, x2, y2, kingdom))
-      crownAlignment.add(CrownAlignment(x, y, x1, y1, x2, y2));
-
+    _addCrownAlignmentVertical(crownAlignment, x, y, kingdom);
+    _addCrownAlignmentHorizontal(crownAlignment, x, y, kingdom);
+    _addCrownAlignmentDiagonalRight(crownAlignment, x, y, kingdom);
+    _addCrownAlignmentDiagonalLeft(crownAlignment, x, y, kingdom);
     return crownAlignment;
   }
 

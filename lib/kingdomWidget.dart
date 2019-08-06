@@ -20,7 +20,7 @@ class _KingdomWidgetState extends State<KingdomWidget> {
   _KingdomWidgetState(this._mainWidgetState);
 
   void _onLandTap(int x, int y) {
-    Land land = _mainWidgetState.kingdom.lands[x][y];
+    Land land = _mainWidgetState.kingdom.getLand(x, y);
     setState(() {
       switch (_mainWidgetState.selectionMode) {
         case SelectionMode.land:
@@ -40,10 +40,10 @@ class _KingdomWidgetState extends State<KingdomWidget> {
           //remove previous castle if any
           for (var cx = 0; cx < _mainWidgetState.kingdom.size; cx++) {
             for (var cy = 0; cy < _mainWidgetState.kingdom.size; cy++) {
-              if (_mainWidgetState.kingdom.lands[cx][cy].landType ==
+              if (_mainWidgetState.kingdom.getLand(cx, cy).landType ==
                   LandType.castle) {
-                _mainWidgetState.kingdom.lands[cx][cy].landType = LandType.none;
-                _mainWidgetState.kingdom.lands[cx][cy].crowns = 0;
+                _mainWidgetState.kingdom.getLand(cx, cy).landType = LandType.none;
+                _mainWidgetState.kingdom.getLand(cx, cy).crowns = 0;
               }
             }
           }
@@ -63,7 +63,7 @@ class _KingdomWidgetState extends State<KingdomWidget> {
   }
 
   Widget _buildLand(int x, int y) {
-    Land land = _mainWidgetState.kingdom.lands[x][y];
+    Land land = _mainWidgetState.kingdom.getLand(x, y);
     Color color = getColorForLandType(land.landType, context);
     if (land.landType == LandType.castle)
       return Container(
@@ -84,7 +84,7 @@ class _KingdomWidgetState extends State<KingdomWidget> {
   }
 
   Widget _buildLands(BuildContext context, int index) {
-    int gridStateLength = _mainWidgetState.kingdom.lands.length;
+    int gridStateLength = _mainWidgetState.kingdom.getLands().length;
     int x, y = 0;
     x = (index / gridStateLength).floor();
     y = (index % gridStateLength);
@@ -102,7 +102,7 @@ class _KingdomWidgetState extends State<KingdomWidget> {
 
   @override
   Widget build(BuildContext context) {
-    int gridStateLength = _mainWidgetState.kingdom.lands.length;
+    int gridStateLength = _mainWidgetState.kingdom.getLands().length;
     return AspectRatio(
       aspectRatio: 1.0,
       child: Container(

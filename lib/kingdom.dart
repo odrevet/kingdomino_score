@@ -2,25 +2,33 @@ enum LandType { none, wheat, grassland, forest, lake, swamp, mine, castle }
 
 class Kingdom {
   int size = 5;
-  List<List<Land>> lands;
+  List<List<Land>> _lands;
+
+  List<List<Land>> getLands(){
+    return _lands;
+  }
+
+  Land getLand(int x, int y){
+    return _lands[y][x];  ///column ordered
+  }
 
   Kingdom(this.size) {
-    this.lands = [];
+    this._lands = [];
     for (var i = 0; i < size; i++) {
-      this.lands.add(List<Land>.generate(size, (_) => Land(LandType.none)));
+      this._lands.add(List<Land>.generate(size, (_) => Land(LandType.none)));
     }
   }
 
   void reSize(int size) {
     this.size = size;
-    this.lands = [];
+    this._lands = [];
     for (var i = 0; i < size; i++) {
-      this.lands.add(List<Land>.generate(size, (_) => Land(LandType.none)));
+      this._lands.add(List<Land>.generate(size, (_) => Land(LandType.none)));
     }
   }
 
   void clear() {
-    lands.expand((i) => i).toList().forEach((land) {
+    _lands.expand((i) => i).toList().forEach((land) {
       land.landType = LandType.none;
       land.crowns = 0;
       land.hasGiant = false;
@@ -40,7 +48,7 @@ class Kingdom {
     }
 
     //reset marked status
-    lands.expand((i) => i).toList().forEach((land) => land.isMarked = false);
+    _lands.expand((i) => i).toList().forEach((land) => land.isMarked = false);
 
     return properties;
   }
@@ -48,7 +56,7 @@ class Kingdom {
   ///add land at x y to the property if it's landType is the same as land
   void _addLandToProperty(int x, int y, Land land, Property property) {
     if (isInBound(x, y)) {
-      Land landToAdd = lands[x][y];
+      Land landToAdd = getLand(x, y);
       if (landToAdd.landType == land.landType && landToAdd.isMarked == false) {
         property.landCount++;
         property.crownCount += landToAdd.getCrowns();
@@ -60,7 +68,7 @@ class Kingdom {
   Property _getAdjacentLand(int x, int y, Property property) {
     if (!isInBound(x, y)) return null;
 
-    var land = lands[x][y];
+    var land = getLand(x, y);
     if (land.landType == LandType.castle ||
         land.landType == LandType.none ||
         land.isMarked == true) return null;

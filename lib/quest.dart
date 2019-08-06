@@ -103,7 +103,7 @@ class Harmony extends Quest {
   int extraPoints = 5;
 
   int getPoints(Kingdom kingdom) {
-    return kingdom.lands
+    return kingdom.getLands()
             .expand((i) => i)
             .toList()
             .where((land) => land.landType == LandType.none)
@@ -144,7 +144,7 @@ class MiddleKingdom extends Quest {
       x = y = 3;
     }
 
-    if (kingdom.lands[x][y].landType == LandType.castle)
+    if (kingdom.getLand(x, y).landType == LandType.castle)
       return extraPoints;
     else
       return 0;

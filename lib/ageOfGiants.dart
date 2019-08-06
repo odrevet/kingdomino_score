@@ -79,7 +79,7 @@ class LocalBusiness extends Quest {
 
     for (var x = 0; x < kingdom.size; x++) {
       for (var y = 0; y < kingdom.size; y++) {
-        if (kingdom.lands[x][y].landType == LandType.castle) {
+        if (kingdom.getLand(x, y).landType == LandType.castle) {
           castleX = x;
           castleY = y;
           break;
@@ -95,42 +95,42 @@ class LocalBusiness extends Quest {
 
     x = castleX - 1;
     y = castleY - 1;
-    if (kingdom.isInBound(x, y) && kingdom.lands[x][y].landType == landType)
+    if (kingdom.isInBound(x, y) && kingdom.getLand(x, y).landType == landType)
       count++;
 
     x = castleX;
     y = castleY - 1;
-    if (kingdom.isInBound(x, y) && kingdom.lands[x][y].landType == landType)
+    if (kingdom.isInBound(x, y) && kingdom.getLand(x, y).landType == landType)
       count++;
 
     x = castleX + 1;
     y = castleY - 1;
-    if (kingdom.isInBound(x, y) && kingdom.lands[x][y].landType == landType)
+    if (kingdom.isInBound(x, y) && kingdom.getLand(x, y).landType == landType)
       count++;
 
     x = castleX - 1;
     y = castleY;
-    if (kingdom.isInBound(x, y) && kingdom.lands[x][y].landType == landType)
+    if (kingdom.isInBound(x, y) && kingdom.getLand(x, y).landType == landType)
       count++;
 
     x = castleX + 1;
     y = castleY;
-    if (kingdom.isInBound(x, y) && kingdom.lands[x][y].landType == landType)
+    if (kingdom.isInBound(x, y) && kingdom.getLand(x, y).landType == landType)
       count++;
 
     x = castleX - 1;
     y = castleY + 1;
-    if (kingdom.isInBound(x, y) && kingdom.lands[x][y].landType == landType)
+    if (kingdom.isInBound(x, y) && kingdom.getLand(x, y).landType == landType)
       count++;
 
     x = castleX;
     y = castleY + 1;
-    if (kingdom.isInBound(x, y) && kingdom.lands[x][y].landType == landType)
+    if (kingdom.isInBound(x, y) && kingdom.getLand(x, y).landType == landType)
       count++;
 
     x = castleX + 1;
     y = castleY + 1;
-    if (kingdom.isInBound(x, y) && kingdom.lands[x][y].landType == landType)
+    if (kingdom.isInBound(x, y) && kingdom.getLand(x, y).landType == landType)
       count++;
 
     return extraPoints * count;
@@ -186,10 +186,10 @@ class FourCorners extends Quest {
   int getPoints(Kingdom kingdom) {
     int count = 0;
     int size = kingdom.size - 1;
-    if (kingdom.lands[0][0].landType == landType) count++;
-    if (kingdom.lands[size][0].landType == landType) count++;
-    if (kingdom.lands[0][size].landType == landType) count++;
-    if (kingdom.lands[size][size].landType == landType) count++;
+    if (kingdom.getLand(0, 0).landType == landType) count++;
+    if (kingdom.getLand(size,0).landType == landType) count++;
+    if (kingdom.getLand(0, size).landType == landType) count++;
+    if (kingdom.getLand(size, size).landType == landType) count++;
 
     return extraPoints * count;
   }
@@ -239,10 +239,10 @@ class LostCorner extends Quest {
 
   int getPoints(Kingdom kingdom) {
     int size = kingdom.size - 1;
-    return kingdom.lands[0][0].landType == LandType.castle ||
-            kingdom.lands[size][0].landType == LandType.castle ||
-            kingdom.lands[0][size].landType == LandType.castle ||
-            kingdom.lands[size][size].landType == LandType.castle
+    return kingdom.getLand(0, 0).landType == LandType.castle ||
+            kingdom.getLand(size, 0).landType == LandType.castle ||
+            kingdom.getLand(0, size).landType == LandType.castle ||
+            kingdom.getLand(size, size).landType == LandType.castle
         ? extraPoints
         : 0;
   }
@@ -302,7 +302,7 @@ class FolieDesGrandeurs extends Quest {
 
   ///check if land at coord is in bound and has at least a crown
   bool _checkLandBoundAndCrown(int x, int y, Kingdom kingdom) {
-    return kingdom.isInBound(x, y) && kingdom.lands[x][y].getCrowns() > 0;
+    return kingdom.isInBound(x, y) && kingdom.getLand(x, y).getCrowns() > 0;
   }
 
   // for every land listed has at least a crown

@@ -307,7 +307,7 @@ class MainWidgetState extends State<MainWidget> {
     for (var landType in LandType.values) {
       if (landType == LandType.none) continue;
 
-      var count = kingdom.lands
+      var count = kingdom.getLands()
           .expand((i) => i)
           .toList()
           .where((land) => land.landType == landType)
@@ -335,7 +335,7 @@ class MainWidgetState extends State<MainWidget> {
       for (var crownsCounter = 1;
           crownsCounter <= getGameSet()[landType]['crowns']['max'];
           crownsCounter++) {
-        var count = kingdom.lands
+        var count = kingdom.getLands()
             .expand((i) => i)
             .toList()
             .where((land) =>
@@ -498,7 +498,7 @@ class MainWidgetState extends State<MainWidget> {
 
               quests.clear();
 
-              kingdom.lands.expand((i) => i).toList().forEach((land) {
+              kingdom.getLands().expand((i) => i).toList().forEach((land) {
                 land.hasGiant = false;
               });
 

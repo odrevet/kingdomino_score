@@ -287,67 +287,130 @@ class LostCornerWidget extends QuestWidget {
 
 ///`2 different alignments cannot share more than one square`
 ///see https://boardgamegeek.com/thread/2040636/tic-tac-toe-bonus-challenge-tile-clarification
+class CrownAlignment {
+  int x0, y0;
+  int x1, y1;
+  int x2, y2;
+
+  CrownAlignment(this.x0, this.y0, this.x1, this.y1, this.x2, this.y2);
+}
+
 class FolieDesGrandeurs extends Quest {
   int extraPoints = 10;
 
   FolieDesGrandeurs();
 
-  bool _check(Kingdom kingdom, int x, int y) {
+  ///check if land at coord is in bound and has at least a crown
+  bool _checkLandBoundAndCrown(int x, int y, Kingdom kingdom) {
     return kingdom.isInBound(x, y) && kingdom.lands[x][y].getCrowns() > 0;
   }
 
-  int _hasMatch(
+  // for every land listed has at least a crown
+  bool _hasCrownAlignment(
       int x0, int y0, int x1, int y1, int x2, int y2, Kingdom kingdom) {
-    int referCount = 0;
-
-    if (!_check(kingdom, x0, y0))
-      return 0;
-    if (kingdom.lands[x0][y0].isMarked) referCount++;
-
-    if (!_check(kingdom, x1, y1))
-      return 0;
-    if (kingdom.lands[x1][y1].isMarked) referCount++;
-
-    if (!_check(kingdom, x2, y2))
-      return 0;
-    if (kingdom.lands[x2][y2].isMarked) referCount++;
-
-    if (referCount <= 1) {
-      //print('$x0:$y0 $x1:$y1 $x2:$y2 -> $referCount');
-      kingdom.lands[x0][y0].isMarked = true;
-      kingdom.lands[x1][y1].isMarked = true;
-      kingdom.lands[x2][y2].isMarked = true;
-      return 1 + getAlign(x1, y1, kingdom) + getAlign(x2, y2, kingdom);
-    }
-    return 0;
+    return _checkLandBoundAndCrown(x0, y0, kingdom) &&
+        _checkLandBoundAndCrown(x1, y1, kingdom) &&
+        _checkLandBoundAndCrown(x2, y2, kingdom);
   }
 
-  int getAlign(int x, int y, Kingdom kingdom){
-    int count = 0;
-    count += _hasMatch(x, y, x + 1, y, x + 2, y, kingdom);
-    count += _hasMatch(x, y, x, y + 1, x, y + 2, kingdom);
-    count += _hasMatch(x, y, x + 1, y + 1, x + 2, y + 2, kingdom);
-    count += _hasMatch(x, y, x - 1, y + 1, x - 2, y + 2, kingdom);
-    return count;
+  /// get every 3 crowns alignments, regardless of shared squares
+  List<CrownAlignment> _getAlignments(int x, int y, Kingdom kingdom) {
+    List<CrownAlignment> crownAlignment = List();
+
+    if (_hasCrownAlignment(x, y, x + 1, y, x + 2, y, kingdom))
+      crownAlignment.add(CrownAlignment(x, y, x + 1, y, x + 2, y));
+
+    if (_hasCrownAlignment(x, y, x, y + 1, x, y + 2, kingdom))
+      crownAlignment.add(CrownAlignment(x, y, x, y + 1, x, y + 2));
+
+    if (_hasCrownAlignment(x, y, x + 1, y + 1, x + 2, y + 2, kingdom))
+      crownAlignment.add(CrownAlignment(x, y, x + 1, y + 1, x + 2, y + 2));
+
+    if (_hasCrownAlignment(x, y, x - 1, y + 1, x - 2, y + 2, kingdom))
+      crownAlignment.add(CrownAlignment(x, y, x - 1, y + 1, x - 2, y + 2));
+
+    return crownAlignment;
   }
 
   int getPoints(Kingdom kingdom) {
-    int count = 0;
     int size = kingdom.size;
+
+    //get every alignments, regardless of shared squares
+    List<CrownAlignment> allAlignments = List();
 
     for (var x = 0; x < size; x++) {
       for (var y = 0; y < size; y++) {
-        count += getAlign(x, y, kingdom);
+        allAlignments = List.from(allAlignments)
+          ..addAll(_getAlignments(x, y, kingdom));
       }
     }
 
-    //reset marked status
-    kingdom.lands
-        .expand((i) => i)
-        .toList()
-        .forEach((land) => land.isMarked = false);
+    //count for every land how many square crosses
+    List<List<int>> placedAlignments = [];
+    for (var i = 0; i < kingdom.size; i++) {
+      placedAlignments.add(List<int>.generate(kingdom.size, (_) => 0));
+    }
 
-    return extraPoints * count;
+    //do not keep alignments that have more than one shared square with another
+    //alignment, and do not keep an alignment if an other alignment will share
+    //more than one square when the said alignment would be place
+    List<CrownAlignment> resultAlignments = List();
+
+    allAlignments.forEach((anAlignment) {
+      //add this alignment to the placedAlignments
+      placedAlignments[anAlignment.x0][anAlignment.y0]++;
+      placedAlignments[anAlignment.x1][anAlignment.y1]++;
+      placedAlignments[anAlignment.x2][anAlignment.y2]++;
+
+      //for every alignments in crownAlignmentsResult, check if any alignment
+      //have more than one shared square
+      bool validAlignment = true;
+
+      //check if more than one shared square for the alignment being checked
+      int sharedSquareCount = 0;
+      if (placedAlignments[anAlignment.x0][anAlignment.y0] > 1)
+        sharedSquareCount++;
+
+      if (placedAlignments[anAlignment.x1][anAlignment.y1] > 1)
+        sharedSquareCount++;
+
+      if (placedAlignments[anAlignment.x2][anAlignment.y2] > 1)
+        sharedSquareCount++;
+
+      if (sharedSquareCount > 1) {
+        //remove this alignment from the placedAlignments
+        placedAlignments[anAlignment.x0][anAlignment.y0]--;
+        placedAlignments[anAlignment.x1][anAlignment.y1]--;
+        placedAlignments[anAlignment.x2][anAlignment.y2]--;
+        validAlignment = false;
+      } else {
+        //check if more than one shared square with already placed squares
+        for (var aResultAlignment in resultAlignments) {
+          int sharedSquareCount = 0;
+          if (placedAlignments[aResultAlignment.x0][aResultAlignment.y0] > 1)
+            sharedSquareCount++;
+
+          if (placedAlignments[aResultAlignment.x1][aResultAlignment.y1] > 1)
+            sharedSquareCount++;
+
+          if (placedAlignments[aResultAlignment.x2][aResultAlignment.y2] > 1)
+            sharedSquareCount++;
+
+          if (sharedSquareCount > 1) {
+            //remove this alignment from the placedAlignments
+            placedAlignments[anAlignment.x0][anAlignment.y0]--;
+            placedAlignments[anAlignment.x1][anAlignment.y1]--;
+            placedAlignments[anAlignment.x2][anAlignment.y2]--;
+            validAlignment = false;
+            break;
+          }
+        }
+      }
+
+      if (validAlignment)resultAlignments.add(anAlignment);
+    });
+
+    return extraPoints * resultAlignments.length;
   }
 }
 

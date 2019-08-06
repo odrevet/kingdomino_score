@@ -378,7 +378,8 @@ class FolieDesGrandeurs extends Quest {
     return sharedSquareCount;
   }
 
-  int countValidAlignment(List<CrownAlignment> allAlignments, Kingdom kingdom) {
+  int countValidAlignments(
+      List<CrownAlignment> allAlignments, Kingdom kingdom) {
     //count for every land how many square crosses
     List<List<int>> placedAlignments = [];
     for (var i = 0; i < kingdom.size; i++) {
@@ -434,17 +435,43 @@ class FolieDesGrandeurs extends Quest {
     int size = kingdom.size;
 
     //get every alignments, regardless of shared squares
-    List<CrownAlignment> allAlignments = List();
+    List<CrownAlignment> alignmentVertical = List();
+    List<CrownAlignment> alignmentHorizontal = List();
+    List<CrownAlignment> alignmentDiagonalRight = List();
+    List<CrownAlignment> alignmentDiagonalLeft = List();
 
     for (var x = 0; x < size; x++) {
       for (var y = 0; y < size; y++) {
-        allAlignments = List.from(allAlignments)
-          ..addAll(_getAlignments(x, y, kingdom));
+        _addCrownAlignmentVertical(alignmentVertical, x, y, kingdom);
       }
     }
 
-    int validAlignment = countValidAlignment(allAlignments, kingdom);
-    return extraPoints * validAlignment;
+    for (var x = 0; x < size; x++) {
+      for (var y = 0; y < size; y++) {
+        _addCrownAlignmentHorizontal(alignmentHorizontal, x, y, kingdom);
+      }
+    }
+
+    for (var x = 0; x < size; x++) {
+      for (var y = 0; y < size; y++) {
+        _addCrownAlignmentDiagonalRight(alignmentDiagonalRight, x, y, kingdom);
+      }
+    }
+
+    for (var x = 0; x < size; x++) {
+      for (var y = 0; y < size; y++) {
+        _addCrownAlignmentDiagonalLeft(alignmentDiagonalLeft, x, y, kingdom);
+      }
+    }
+
+    int validAlignments = countValidAlignments([
+      ...alignmentVertical,
+      ...alignmentHorizontal,
+      ...alignmentDiagonalRight,
+      ...alignmentDiagonalLeft
+    ], kingdom);
+
+    return extraPoints * validAlignments;
   }
 }
 

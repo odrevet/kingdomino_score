@@ -316,18 +316,35 @@ class FolieDesGrandeurs extends Quest {
   /// get every 3 crowns alignments, regardless of shared squares
   List<CrownAlignment> _getAlignments(int x, int y, Kingdom kingdom) {
     List<CrownAlignment> crownAlignment = List();
+    int x1, y1, x2, y2;
 
-    if (_hasCrownAlignment(x, y, x + 1, y, x + 2, y, kingdom))
-      crownAlignment.add(CrownAlignment(x, y, x + 1, y, x + 2, y));
+    x1 =  x + 1;
+    y1 = y;
+    x2 = x + 2;
+    y2 = y;
+    if (_hasCrownAlignment(x, y, x1, y1, x2, y2, kingdom))
+      crownAlignment.add(CrownAlignment(x, y, x1, y1, x2, y2));
 
-    if (_hasCrownAlignment(x, y, x, y + 1, x, y + 2, kingdom))
-      crownAlignment.add(CrownAlignment(x, y, x, y + 1, x, y + 2));
+    x1 = x;
+    y1 = y +1;
+    x2 = x;
+    y2 = y + 2;
+    if (_hasCrownAlignment(x, y, x1, y1, x2, y2, kingdom))
+      crownAlignment.add(CrownAlignment(x, y, x1, y1, x2, y2));
 
-    if (_hasCrownAlignment(x, y, x + 1, y + 1, x + 2, y + 2, kingdom))
-      crownAlignment.add(CrownAlignment(x, y, x + 1, y + 1, x + 2, y + 2));
+    x1 = x + 1;
+    y1 = y + 1;
+    x2 = x + 2;
+    y2 = y + 2;
+    if (_hasCrownAlignment(x, y, x1, y1, x2, y2, kingdom))
+      crownAlignment.add(CrownAlignment(x, y, x1, y1, x2, y2));
 
-    if (_hasCrownAlignment(x, y, x - 1, y + 1, x - 2, y + 2, kingdom))
-      crownAlignment.add(CrownAlignment(x, y, x - 1, y + 1, x - 2, y + 2));
+    x1 = x - 1;
+    y1 = y + 1;
+    x2 = x - 2;
+    y2 = y - 2;
+    if (_hasCrownAlignment(x, y, x1, y1, x2, y2, kingdom))
+      crownAlignment.add(CrownAlignment(x, y, x1, y1, x2, y2));
 
     return crownAlignment;
   }

@@ -4,12 +4,14 @@ class Kingdom {
   int size = 5;
   List<List<Land>> _lands;
 
-  List<List<Land>> getLands(){
+  List<List<Land>> getLands() {
     return _lands;
   }
 
-  Land getLand(int x, int y){
-    return _lands[y][x];  ///column ordered
+  Land getLand(int x, int y) {
+    return _lands[y][x];
+
+    ///column ordered
   }
 
   Kingdom(this.size) {

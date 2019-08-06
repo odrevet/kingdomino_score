@@ -42,7 +42,8 @@ class _KingdomWidgetState extends State<KingdomWidget> {
             for (var cy = 0; cy < _mainWidgetState.kingdom.size; cy++) {
               if (_mainWidgetState.kingdom.getLand(cx, cy).landType ==
                   LandType.castle) {
-                _mainWidgetState.kingdom.getLand(cx, cy).landType = LandType.none;
+                _mainWidgetState.kingdom.getLand(cx, cy).landType =
+                    LandType.none;
                 _mainWidgetState.kingdom.getLand(cx, cy).crowns = 0;
               }
             }

@@ -26,9 +26,7 @@ class QuestPointWidget extends StatelessWidget {
         Positioned.fill(
           child: Align(
               alignment: Alignment.center,
-              child: Text(points.toString(), style: TextStyle(fontSize: 20.0))
-
-          ),
+              child: Text(points.toString(), style: TextStyle(fontSize: 20.0))),
         )
       ],
     );
@@ -103,7 +101,8 @@ class Harmony extends Quest {
   int extraPoints = 5;
 
   int getPoints(Kingdom kingdom) {
-    return kingdom.getLands()
+    return kingdom
+            .getLands()
             .expand((i) => i)
             .toList()
             .where((land) => land.landType == LandType.none)

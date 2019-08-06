@@ -143,25 +143,23 @@ class LocalBusinessWidget extends QuestWidget {
   LocalBusinessWidget(this.quest);
 
   Widget _buildTable() {
-    return Table(
-        //border: TableBorder.all(width: 0.1, color: Colors.grey),
-        children: [
-          TableRow(children: [
-            QuestMiniTile(check),
-            QuestMiniTile(check),
-            QuestMiniTile(check),
-          ]),
-          TableRow(children: [
-            QuestMiniTile(check),
-            QuestMiniTile(castle),
-            QuestMiniTile(check),
-          ]),
-          TableRow(children: [
-            QuestMiniTile(check),
-            QuestMiniTile(check),
-            QuestMiniTile(check),
-          ]),
-        ]);
+    return Table(children: [
+      TableRow(children: [
+        QuestMiniTile(check),
+        QuestMiniTile(check),
+        QuestMiniTile(check),
+      ]),
+      TableRow(children: [
+        QuestMiniTile(check),
+        QuestMiniTile(castle),
+        QuestMiniTile(check),
+      ]),
+      TableRow(children: [
+        QuestMiniTile(check),
+        QuestMiniTile(check),
+        QuestMiniTile(check),
+      ]),
+    ]);
   }
 
   @override
@@ -187,7 +185,7 @@ class FourCorners extends Quest {
     int count = 0;
     int size = kingdom.size - 1;
     if (kingdom.getLand(0, 0).landType == landType) count++;
-    if (kingdom.getLand(size,0).landType == landType) count++;
+    if (kingdom.getLand(size, 0).landType == landType) count++;
     if (kingdom.getLand(0, size).landType == landType) count++;
     if (kingdom.getLand(size, size).landType == landType) count++;
 

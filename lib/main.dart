@@ -49,6 +49,15 @@ void main() {
   runApp(KingdominoScore());
 }
 
+class Warning {
+  Text leftOperand;
+  Text unit;
+  Text operator;
+  Text rightOperand;
+
+  Warning(this.leftOperand, this.unit, this.operator, this.rightOperand);
+}
+
 class KingdominoScore extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -80,7 +89,7 @@ class MainWidgetState extends State<MainWidget> {
 
   bool aog = false; // Age of Giants extension
   List<Quest> quests = []; //standard : 0, 1 or 2, aog : 2
-  List<RichText> _warnings = [];
+  List<Warning> _warnings = [];
 
   @override
   initState() {
@@ -126,12 +135,36 @@ class MainWidgetState extends State<MainWidget> {
   }
 
   _warningsDialog(BuildContext context) {
+    var tableRows = <TableRow>[];
+
+    for (Warning warning in _warnings) {
+      var tableCells = <TableCell>[];
+
+      tableCells.add(TableCell(
+          child: Align(
+              alignment: Alignment.centerRight, child: warning.leftOperand)));
+
+      tableCells.add(TableCell(
+          child: Align(alignment: Alignment.centerRight, child: warning.unit)));
+
+      tableCells.add(TableCell(
+          child: Align(
+              alignment: Alignment.centerRight, child: warning.operator)));
+
+      tableCells.add(TableCell(
+          child: Align(
+              alignment: Alignment.centerRight, child: warning.rightOperand)));
+
+      TableRow tableRow = TableRow(children: tableCells);
+      tableRows.add(tableRow);
+    }
+
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: Colors.white70,
-          content: SingleChildScrollView(child: Column(children: _warnings)),
+          content: SingleChildScrollView(child: Table(children: tableRows)),
           actions: <Widget>[
             FlatButton(
               child: Icon(
@@ -303,6 +336,8 @@ class MainWidgetState extends State<MainWidget> {
 
   ///check if the kingdom is conform, if not set warnings
   void checkKingdom() {
+    const double fontSize = 25.0;
+
     //check if more tile in the kingdom than in the gameSet
     for (var landType in LandType.values) {
       if (landType == LandType.none) continue;
@@ -314,20 +349,15 @@ class MainWidgetState extends State<MainWidget> {
           .where((land) => land.landType == landType)
           .length;
       if (count > getGameSet()[landType]['count']) {
+        Warning warning = Warning(
+            Text('$count ', style: TextStyle(fontSize: fontSize)),
+            Text(square,
+                style: TextStyle(color: getColorForLandType(landType), fontSize: fontSize)),
+            Text('>', style : TextStyle(fontSize: fontSize)),
+            Text('${getGameSet()[landType]['count']}', style: TextStyle(fontSize: fontSize)));
+
         setState(() {
-          _warnings.add(RichText(
-              text: TextSpan(
-                  text: '$count ',
-                  style: TextStyle(color: Colors.black, fontSize: 20),
-                  children: [
-                TextSpan(
-                    text: square,
-                    style: TextStyle(
-                        fontSize: 20, color: getColorForLandType(landType))),
-                TextSpan(
-                    text: ' > ${getGameSet()[landType]['count']}',
-                    style: TextStyle(color: Colors.black, fontSize: 20))
-              ])));
+          _warnings.add(warning);
         });
       }
 
@@ -344,24 +374,15 @@ class MainWidgetState extends State<MainWidget> {
             .length;
 
         if (count > getGameSet()[landType]['crowns'][crownsCounter]) {
+          Warning warning = Warning(
+              Text('$count ', style: TextStyle(fontSize: fontSize)),
+              Text(square + ' ' + crown * crownsCounter,
+                  style: TextStyle(color: getColorForLandType(landType), fontSize: fontSize)),
+              Text('>', style : TextStyle(fontSize: fontSize)),
+              Text('${getGameSet()[landType]['crowns'][crownsCounter]}', style: TextStyle(fontSize: fontSize)));
+
           setState(() {
-            _warnings.add(RichText(
-                text: TextSpan(
-                    text: '$count ',
-                    style: TextStyle(color: Colors.black, fontSize: 20),
-                    children: [
-                  TextSpan(
-                      text: square,
-                      style: TextStyle(
-                          fontSize: 20, color: getColorForLandType(landType))),
-                  TextSpan(
-                      text: crown * crownsCounter,
-                      style: TextStyle(fontSize: 20)),
-                  TextSpan(
-                      text:
-                          ' > ${getGameSet()[landType]['crowns'][crownsCounter]}',
-                      style: TextStyle(color: Colors.black, fontSize: 20))
-                ])));
+            _warnings.add(warning);
           });
         }
       }

@@ -17,9 +17,14 @@ class QuestPointWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
-        Text(
-          shield,
-          style: TextStyle(fontSize: 40),
+        Container(
+          height: 35,
+          width: 35,
+          child: FittedBox(
+              fit: BoxFit.fitWidth,
+              child: Text(
+                shield,
+              )),
         ),
         Positioned.fill(
           child: Align(
@@ -64,10 +69,14 @@ class QuestMiniTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+        height: 10.0,
+        width: 10.0,
         decoration:
             BoxDecoration(border: Border.all(color: Colors.grey, width: 0.3)),
-        child:
-            Text(text, style: TextStyle(fontSize: 10.0, color: Colors.green)));
+        child: FittedBox(
+            fit: BoxFit.fitHeight,
+            child: Text(text,
+                style: TextStyle(fontSize: 10.0, color: Colors.green))));
   }
 }
 

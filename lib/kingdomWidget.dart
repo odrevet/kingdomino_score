@@ -65,7 +65,7 @@ class _KingdomWidgetState extends State<KingdomWidget> {
 
   Widget _buildLand(int x, int y) {
     Land land = _mainWidgetState.kingdom.getLand(x, y);
-    Color color = getColorForLandType(land.landType, context);
+    Color color = getColorForLandType(land.landType);
     if (land.landType == LandType.castle)
       return Container(
           color: color,
@@ -125,11 +125,11 @@ class _KingdomWidgetState extends State<KingdomWidget> {
   }
 }
 
-Color getColorForLandType(LandType type, [BuildContext context]) {
+Color getColorForLandType(LandType type) {
   Color color;
   switch (type) {
     case LandType.none:
-      color = context == null ? Colors.black : Theme.of(context).canvasColor;
+      color = Colors.blueGrey.shade400;
       break;
     case LandType.wheat:
       color = Colors.yellow.shade600;
@@ -153,7 +153,7 @@ Color getColorForLandType(LandType type, [BuildContext context]) {
       color = Colors.white;
       break;
     default:
-      color = context == null ? Colors.black : Theme.of(context).canvasColor;
+      color = Colors.red;
   }
 
   return color;

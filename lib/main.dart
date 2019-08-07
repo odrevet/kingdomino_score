@@ -56,7 +56,7 @@ class KingdominoScore extends StatelessWidget {
       title: 'Kingdomino Score',
       theme: ThemeData(
           primarySwatch: Colors.brown,
-          canvasColor: Colors.blueGrey,
+          canvasColor: Colors.blue.shade400,
           fontFamily: 'Augusta'),
       home: MainWidget(),
     );
@@ -213,7 +213,7 @@ class MainWidgetState extends State<MainWidget> {
           child: Text(square,
               style: TextStyle(
                   fontSize: 20,
-                  color: getColorForLandType(property.landType, context))),
+                  color: getColorForLandType(property.landType))),
         )));
         tableCells.add(TableCell(
             child: Align(
@@ -324,7 +324,7 @@ class MainWidgetState extends State<MainWidget> {
                     text: square,
                     style: TextStyle(
                         fontSize: 20,
-                        color: getColorForLandType(landType, context))),
+                        color: getColorForLandType(landType))),
                 TextSpan(
                     text: ' > ${getGameSet()[landType]['count']}',
                     style: TextStyle(color: Colors.black, fontSize: 20))
@@ -355,7 +355,7 @@ class MainWidgetState extends State<MainWidget> {
                       text: square,
                       style: TextStyle(
                           fontSize: 20,
-                          color: getColorForLandType(landType, context))),
+                          color: getColorForLandType(landType))),
                   TextSpan(
                       text: crown * crownsCounter,
                       style: TextStyle(fontSize: 20)),
@@ -434,7 +434,7 @@ class MainWidgetState extends State<MainWidget> {
                           width: 3.5, color: Colors.blueGrey.shade900),
                     )),
           child: Container(
-              color: getColorForLandType(buttonLandType, context),
+              color: getColorForLandType(buttonLandType),
               child: buttonLandType == LandType.castle
                   ? FittedBox(fit: BoxFit.fitHeight, child: Text(castle))
                   : Text('')),

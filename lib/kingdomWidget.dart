@@ -66,14 +66,16 @@ class _KingdomWidgetState extends State<KingdomWidget> {
   Widget _buildLand(int x, int y) {
     Land land = _mainWidgetState.kingdom.getLand(x, y);
     Color color = getColorForLandType(land.landType);
+
+    var container;
     if (land.landType == LandType.castle)
-      return Container(
+      container = Container(
           color: color,
           child: FittedBox(fit: BoxFit.fitWidth, child: Text(castle)));
     else {
       String text = crown * land.crowns;
       if (land.hasGiant) text += giant;
-      return Container(
+      container = Container(
         color: color,
         child: LayoutBuilder(
             builder: (BuildContext context, BoxConstraints constraints) {
@@ -82,6 +84,21 @@ class _KingdomWidgetState extends State<KingdomWidget> {
         }),
       );
     }
+
+    return Container(
+        child: container,
+        decoration: BoxDecoration(
+            border: land.landType == LandType.none
+                ? Border.all(
+                    width: 0.5,
+                    color: Colors.blueGrey.shade900,
+                  )
+                : Border(
+                    right:
+                        BorderSide(width: 2.5, color: Colors.blueGrey.shade600),
+                    bottom:
+                        BorderSide(width: 2.5, color: Colors.blueGrey.shade900),
+                  )));
   }
 
   Widget _buildLands(BuildContext context, int index) {
@@ -93,8 +110,6 @@ class _KingdomWidgetState extends State<KingdomWidget> {
       onTap: () => _onLandTap(x, y),
       child: GridTile(
         child: Container(
-          decoration: BoxDecoration(
-              border: Border.all(color: Colors.white, width: 0.5)),
           child: _buildLand(x, y),
         ),
       ),

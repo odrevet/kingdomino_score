@@ -352,9 +352,11 @@ class MainWidgetState extends State<MainWidget> {
         Warning warning = Warning(
             Text('$count ', style: TextStyle(fontSize: fontSize)),
             Text(square,
-                style: TextStyle(color: getColorForLandType(landType), fontSize: fontSize)),
-            Text('>', style : TextStyle(fontSize: fontSize)),
-            Text('${getGameSet()[landType]['count']}', style: TextStyle(fontSize: fontSize)));
+                style: TextStyle(
+                    color: getColorForLandType(landType), fontSize: fontSize)),
+            Text('>', style: TextStyle(fontSize: fontSize)),
+            Text('${getGameSet()[landType]['count']}',
+                style: TextStyle(fontSize: fontSize)));
 
         setState(() {
           _warnings.add(warning);
@@ -377,9 +379,12 @@ class MainWidgetState extends State<MainWidget> {
           Warning warning = Warning(
               Text('$count ', style: TextStyle(fontSize: fontSize)),
               Text(square + ' ' + crown * crownsCounter,
-                  style: TextStyle(color: getColorForLandType(landType), fontSize: fontSize)),
-              Text('>', style : TextStyle(fontSize: fontSize)),
-              Text('${getGameSet()[landType]['crowns'][crownsCounter]}', style: TextStyle(fontSize: fontSize)));
+                  style: TextStyle(
+                      color: getColorForLandType(landType),
+                      fontSize: fontSize)),
+              Text('>', style: TextStyle(fontSize: fontSize)),
+              Text('${getGameSet()[landType]['crowns'][crownsCounter]}',
+                  style: TextStyle(fontSize: fontSize)));
 
           setState(() {
             _warnings.add(warning);

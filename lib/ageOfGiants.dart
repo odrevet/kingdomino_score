@@ -346,7 +346,7 @@ class FolieDesGrandeurs extends Quest {
     int x1 = x - 1;
     int y1 = y + 1;
     int x2 = x - 2;
-    int y2 = y - 2;
+    int y2 = y + 2;
     if (_hasCrownAlignment(x, y, x1, y1, x2, y2, kingdom))
       crownAlignment.add(CrownAlignment(x, y, x1, y1, x2, y2));
   }

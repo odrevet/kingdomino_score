@@ -351,16 +351,6 @@ class FolieDesGrandeurs extends Quest {
       crownAlignment.add(CrownAlignment(x, y, x1, y1, x2, y2));
   }
 
-  /// get every 3 crowns alignments, regardless of shared squares
-  List<CrownAlignment> _getAlignments(int x, int y, Kingdom kingdom) {
-    List<CrownAlignment> crownAlignment = List();
-    _addCrownAlignmentVertical(crownAlignment, x, y, kingdom);
-    _addCrownAlignmentHorizontal(crownAlignment, x, y, kingdom);
-    _addCrownAlignmentDiagonalRight(crownAlignment, x, y, kingdom);
-    _addCrownAlignmentDiagonalLeft(crownAlignment, x, y, kingdom);
-    return crownAlignment;
-  }
-
   int _countSharedSquare(
       List<List<int>> placedAlignments, CrownAlignment crownAlignment) {
     int sharedSquareCount = 0;

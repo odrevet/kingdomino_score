@@ -455,8 +455,8 @@ class FolieDesGrandeurs extends Quest {
 
     //sometimes check in for diagonals first gets more points and sometime
     //less. Try different strategies and retain the one that scores the most
-
     List<int> validAlignments = [];
+
     validAlignments.add(countValidAlignments([
       ...alignmentVertical,
       ...alignmentHorizontal,
@@ -465,8 +465,22 @@ class FolieDesGrandeurs extends Quest {
     ], kingdom));
 
     validAlignments.add(countValidAlignments([
+      ...alignmentHorizontal,
+      ...alignmentVertical,
+      ...alignmentDiagonalRight,
+      ...alignmentDiagonalLeft
+    ], kingdom));
+
+    validAlignments.add(countValidAlignments([
       ...alignmentDiagonalRight,
       ...alignmentDiagonalLeft,
+      ...alignmentVertical,
+      ...alignmentHorizontal
+    ], kingdom));
+
+    validAlignments.add(countValidAlignments([
+      ...alignmentDiagonalLeft,
+      ...alignmentDiagonalRight,
       ...alignmentVertical,
       ...alignmentHorizontal
     ], kingdom));

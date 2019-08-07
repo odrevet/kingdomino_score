@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 
 import 'kingdom.dart';
@@ -452,14 +453,25 @@ class FolieDesGrandeurs extends Quest {
       }
     }
 
-    int validAlignments = countValidAlignments([
+    //sometimes check in for diagonals first gets more points and sometime
+    //less. Try different strategies and retain the one that scores the most
+
+    List<int> validAlignments = [];
+    validAlignments.add(countValidAlignments([
       ...alignmentVertical,
       ...alignmentHorizontal,
       ...alignmentDiagonalRight,
       ...alignmentDiagonalLeft
-    ], kingdom);
+    ], kingdom));
 
-    return extraPoints * validAlignments;
+    validAlignments.add(countValidAlignments([
+      ...alignmentDiagonalRight,
+      ...alignmentDiagonalLeft,
+      ...alignmentVertical,
+      ...alignmentHorizontal
+    ], kingdom));
+
+    return extraPoints * validAlignments.reduce(max);
   }
 }
 

@@ -544,7 +544,15 @@ class BleakKingWidget extends QuestWidget {
   Widget build(BuildContext context) {
     return Row(children: <Widget>[
       QuestPointWidget(quest.extraPoints),
-      Text(crown, style: TextStyle(fontSize: 30.0)),
+      Stack(children: <Widget>[
+        Text(crown, style: TextStyle(fontSize: 30.0)),
+        Positioned.fill(
+          child: Align(
+              alignment: Alignment.center,
+              child: Text(cross,
+                  style: TextStyle(color: Colors.red, fontSize: 30.0))),
+        )
+      ]),
       Column(
         children: <Widget>[
           SizedBox(

@@ -6,6 +6,7 @@ import 'main.dart' show castle;
 
 const String shield = '\u{1F6E1}';
 const String check = '\u{2713}';
+const String cross = '\u{2717}';
 
 ///render a shield with point awarded in front
 class QuestPointWidget extends StatelessWidget {
@@ -132,7 +133,6 @@ class HarmonyWidget extends QuestWidget {
   @override
   Widget build(BuildContext context) {
     const String rectangle = '\u{25AD}';
-    const String cross = '\u{2717}';
 
     return Row(children: <Widget>[
       QuestPointWidget(quest.extraPoints),

@@ -291,7 +291,7 @@ class CrownAlignment {
   int x1, y1;
   int x2, y2;
 
-  CrownAlignment(this.x0, this.y0, this.x1, this.y1, this.x2, this.y2);
+  CrownAlignment(this.y0, this.x0, this.y1, this.x1, this.y2, this.x2);
 }
 
 class FolieDesGrandeurs extends Quest {
@@ -300,46 +300,46 @@ class FolieDesGrandeurs extends Quest {
   FolieDesGrandeurs();
 
   ///check if land at coord is in bound and has at least a crown
-  bool _checkLandBoundAndCrown(int x, int y, Kingdom kingdom) {
+  bool _checkLandBoundAndCrown(int y, int x, Kingdom kingdom) {
     return kingdom.isInBound(x, y) && kingdom.getLand(x, y).getCrowns() > 0;
   }
 
   // for every land listed has at least a crown
   bool _hasCrownAlignment(
-      int x0, int y0, int x1, int y1, int x2, int y2, Kingdom kingdom) {
+      int y0, int x0, int y1, int x1, int y2, int x2, Kingdom kingdom) {
     return _checkLandBoundAndCrown(x0, y0, kingdom) &&
         _checkLandBoundAndCrown(x1, y1, kingdom) &&
         _checkLandBoundAndCrown(x2, y2, kingdom);
   }
 
   void _addCrownAlignmentVertical(
-      List<CrownAlignment> crownAlignment, int x, int y, Kingdom kingdom) {
+      List<CrownAlignment> crownAlignment, int y, int x, Kingdom kingdom) {
     int x1 = x;
     int y1 = y + 1;
     int x2 = x;
     int y2 = y + 2;
-    if (_hasCrownAlignment(x, y, x1, y1, x2, y2, kingdom))
-      crownAlignment.add(CrownAlignment(x, y, x1, y1, x2, y2));
+    if (_hasCrownAlignment(y, x, y1, x1, y2, x2, kingdom))
+      crownAlignment.add(CrownAlignment(y, x, y1, x1, y2, x2));
   }
 
   void _addCrownAlignmentHorizontal(
-      List<CrownAlignment> crownAlignment, int x, int y, Kingdom kingdom) {
+      List<CrownAlignment> crownAlignment, int y, int x, Kingdom kingdom) {
     int x1 = x + 1;
     int y1 = y;
     int x2 = x + 2;
     int y2 = y;
-    if (_hasCrownAlignment(x, y, x1, y1, x2, y2, kingdom))
-      crownAlignment.add(CrownAlignment(x, y, x1, y1, x2, y2));
+    if (_hasCrownAlignment(y, x, y1, x1, y2, x2, kingdom))
+      crownAlignment.add(CrownAlignment(y, x, y1, x1, y2, x2));
   }
 
   void _addCrownAlignmentDiagonalRight(
-      List<CrownAlignment> crownAlignment, int x, int y, Kingdom kingdom) {
+      List<CrownAlignment> crownAlignment, int y, int x, Kingdom kingdom) {
     int x1 = x + 1;
     int y1 = y + 1;
     int x2 = x + 2;
     int y2 = y + 2;
-    if (_hasCrownAlignment(x, y, x1, y1, x2, y2, kingdom))
-      crownAlignment.add(CrownAlignment(x, y, x1, y1, x2, y2));
+    if (_hasCrownAlignment(y, x, y1, x1, y2, x2, kingdom))
+      crownAlignment.add(CrownAlignment(y, x, y1, x1, y2, x2));
   }
 
   void _addCrownAlignmentDiagonalLeft(
@@ -348,8 +348,8 @@ class FolieDesGrandeurs extends Quest {
     int y1 = y + 1;
     int x2 = x - 2;
     int y2 = y + 2;
-    if (_hasCrownAlignment(x, y, x1, y1, x2, y2, kingdom))
-      crownAlignment.add(CrownAlignment(x, y, x1, y1, x2, y2));
+    if (_hasCrownAlignment(y, x, y1, x1, y2, x2, kingdom))
+      crownAlignment.add(CrownAlignment(y, x, y1, x1, y2, x2));
   }
 
   int _countSharedSquare(
@@ -429,27 +429,27 @@ class FolieDesGrandeurs extends Quest {
     List<CrownAlignment> alignmentDiagonalRight = List();
     List<CrownAlignment> alignmentDiagonalLeft = List();
 
-    for (var x = 0; x < size; x++) {
-      for (var y = 0; y < size; y++) {
-        _addCrownAlignmentVertical(alignmentVertical, x, y, kingdom);
+    for (int y = 0; y < size; y++) {
+      for (int x = 0; x < size; x++) {
+        _addCrownAlignmentVertical(alignmentVertical, y, x, kingdom);
       }
     }
 
-    for (var x = 0; x < size; x++) {
-      for (var y = 0; y < size; y++) {
-        _addCrownAlignmentHorizontal(alignmentHorizontal, x, y, kingdom);
+    for (int y = 0; y < size; y++) {
+      for (int x = 0; x < size; x++) {
+        _addCrownAlignmentHorizontal(alignmentHorizontal, y, x, kingdom);
       }
     }
 
-    for (var x = 0; x < size; x++) {
-      for (var y = 0; y < size; y++) {
-        _addCrownAlignmentDiagonalRight(alignmentDiagonalRight, x, y, kingdom);
+    for (int y = 0; y < size; y++) {
+      for (int x = 0; x < size; x++) {
+        _addCrownAlignmentDiagonalRight(alignmentDiagonalRight, y, x, kingdom);
       }
     }
 
-    for (var x = 0; x < size; x++) {
-      for (var y = 0; y < size; y++) {
-        _addCrownAlignmentDiagonalLeft(alignmentDiagonalLeft, x, y, kingdom);
+    for (int y = 0; y < size; y++) {
+      for (int x = 0; x < size; x++) {
+        _addCrownAlignmentDiagonalLeft(alignmentDiagonalLeft, y, x, kingdom);
       }
     }
 

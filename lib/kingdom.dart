@@ -9,9 +9,7 @@ class Kingdom {
   }
 
   Land getLand(int x, int y) {
-    return _lands[y][x];
-
-    ///column ordered
+    return _lands[x][y];
   }
 
   Kingdom(this.size) {

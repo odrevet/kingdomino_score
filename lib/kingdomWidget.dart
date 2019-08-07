@@ -156,13 +156,13 @@ Color getColorForLandType(LandType type) {
       color = Colors.green.shade800;
       break;
     case LandType.lake:
-      color = Colors.blue;
+      color = Colors.blue.shade400;
       break;
     case LandType.mine:
       color = Colors.brown.shade800;
       break;
     case LandType.swamp:
-      color = Colors.grey;
+      color = Colors.grey.shade400;
       break;
     case LandType.castle:
       color = Colors.white;

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'main.dart' show castle;
 import 'kingdom.dart';
 import 'kingdomWidget.dart';
+import 'main.dart' show castle;
 
 const String shield = '\u{1F6E1}';
 const String check = '\u{2713}';

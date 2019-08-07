@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'main.dart';
-import 'kingdom.dart';
 import 'ageOfGiants.dart';
+import 'kingdom.dart';
+import 'main.dart';
 
 class KingdomWidget extends StatefulWidget {
   final MainWidgetState _mainWidgetState;

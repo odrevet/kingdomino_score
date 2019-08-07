@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'kingdom.dart';
 import 'kingdomWidget.dart';
-import 'quest.dart';
 import 'main.dart' show castle, crown, square;
+import 'quest.dart';
 
 const String giant = '\u{1F9D4}';
 

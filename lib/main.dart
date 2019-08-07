@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'ageOfGiants.dart';
 import 'kingdom.dart';
 import 'kingdomWidget.dart';
 import 'quest.dart';
-import 'ageOfGiants.dart';
 import 'questDialog.dart';
 
 const String crown = '\u{1F451}';
@@ -212,8 +212,7 @@ class MainWidgetState extends State<MainWidget> {
           alignment: Alignment.centerRight,
           child: Text(square,
               style: TextStyle(
-                  fontSize: 20,
-                  color: getColorForLandType(property.landType))),
+                  fontSize: 20, color: getColorForLandType(property.landType))),
         )));
         tableCells.add(TableCell(
             child: Align(
@@ -323,8 +322,7 @@ class MainWidgetState extends State<MainWidget> {
                 TextSpan(
                     text: square,
                     style: TextStyle(
-                        fontSize: 20,
-                        color: getColorForLandType(landType))),
+                        fontSize: 20, color: getColorForLandType(landType))),
                 TextSpan(
                     text: ' > ${getGameSet()[landType]['count']}',
                     style: TextStyle(color: Colors.black, fontSize: 20))
@@ -354,8 +352,7 @@ class MainWidgetState extends State<MainWidget> {
                   TextSpan(
                       text: square,
                       style: TextStyle(
-                          fontSize: 20,
-                          color: getColorForLandType(landType))),
+                          fontSize: 20, color: getColorForLandType(landType))),
                   TextSpan(
                       text: crown * crownsCounter,
                       style: TextStyle(fontSize: 20)),

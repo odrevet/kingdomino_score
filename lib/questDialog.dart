@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-import 'kingdom.dart';
-import 'quest.dart';
 import 'ageOfGiants.dart';
+import 'kingdom.dart';
 import 'main.dart';
+import 'quest.dart';
 
 class _QuestDialogOption extends StatefulWidget {
   final MainWidgetState _mainWidgetState;

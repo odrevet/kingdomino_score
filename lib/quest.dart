@@ -68,15 +68,17 @@ class QuestMiniTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        height: 10.0,
-        width: 10.0,
-        decoration:
-            BoxDecoration(border: Border.all(color: Colors.grey, width: 0.3)),
-        child: FittedBox(
-            fit: BoxFit.fitHeight,
-            child: Text(text,
-                style: TextStyle(fontSize: 10.0, color: Colors.green))));
+    return SizedBox(
+        width: 16,
+        height: 16,
+        child: Container(
+            decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey, width: 0.3)),
+            child: FittedBox(
+                fit: BoxFit.fitHeight,
+                child: Container(
+                    child:
+                        Text(text, style: TextStyle(color: Colors.green))))));
   }
 }
 

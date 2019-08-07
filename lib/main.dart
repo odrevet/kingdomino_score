@@ -65,7 +65,7 @@ class KingdominoScore extends StatelessWidget {
       title: 'Kingdomino Score',
       theme: ThemeData(
           primarySwatch: Colors.brown,
-          canvasColor: Colors.blue.shade400,
+          canvasColor: Colors.blueGrey,
           fontFamily: 'HammersmithOne'),
       home: MainWidget(),
     );

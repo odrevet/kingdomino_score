@@ -301,15 +301,15 @@ class FolieDesGrandeurs extends Quest {
 
   ///check if land at coord is in bound and has at least a crown
   bool _checkLandBoundAndCrown(int y, int x, Kingdom kingdom) {
-    return kingdom.isInBound(x, y) && kingdom.getLand(x, y).getCrowns() > 0;
+    return kingdom.isInBound(x, y) && kingdom.getLand(y, x).getCrowns() > 0;
   }
 
   // for every land listed has at least a crown
   bool _hasCrownAlignment(
       int y0, int x0, int y1, int x1, int y2, int x2, Kingdom kingdom) {
-    return _checkLandBoundAndCrown(x0, y0, kingdom) &&
-        _checkLandBoundAndCrown(x1, y1, kingdom) &&
-        _checkLandBoundAndCrown(x2, y2, kingdom);
+    return _checkLandBoundAndCrown(y0, x0, kingdom) &&
+        _checkLandBoundAndCrown(y1, x1, kingdom) &&
+        _checkLandBoundAndCrown(y2, x2, kingdom);
   }
 
   void _addCrownAlignmentVertical(

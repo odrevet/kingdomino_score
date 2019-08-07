@@ -8,7 +8,7 @@ class Kingdom {
     return _lands;
   }
 
-  Land getLand(int x, int y) {
+  Land getLand(int y, int x) {
     return _lands[x][y];
   }
 

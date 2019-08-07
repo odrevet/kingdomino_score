@@ -1,7 +1,7 @@
 name: kingdomino_score_count
-description: Calculate kingdomino score from a given grid
+description: Calculate kingdomino score easly by entering each land of your kingdom in the app
 
-version: 2.0.0+6
+version: 2.0.1+7
 
 environment:
   sdk: ">=2.3.0 <3.0.0"

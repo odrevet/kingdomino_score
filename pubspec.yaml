@@ -24,3 +24,6 @@ flutter:
     - family: Augusta
       fonts:
         - asset: fonts/Augusta.ttf
+    - family: HammersmithOne
+      fonts:
+        - asset: fonts/HammersmithOne-Regular.ttf

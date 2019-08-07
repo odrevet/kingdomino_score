@@ -57,7 +57,7 @@ class KingdominoScore extends StatelessWidget {
       theme: ThemeData(
           primarySwatch: Colors.brown,
           canvasColor: Colors.blue.shade400,
-          fontFamily: 'Augusta'),
+          fontFamily: 'HammersmithOne'),
       home: MainWidget(),
     );
   }
@@ -157,6 +157,7 @@ class MainWidgetState extends State<MainWidget> {
               style: TextStyle(
                   color: Colors.amber,
                   fontSize: 35.0,
+                  fontFamily: 'Augusta',
                   shadows: <Shadow>[
                     Shadow(
                       offset: Offset(1.0, 1.0),
@@ -515,6 +516,7 @@ class MainWidgetState extends State<MainWidget> {
               child: Text('AG',
                   style: TextStyle(
                       fontSize: 25.0,
+                      fontFamily: 'Augusta',
                       color: aog ? Colors.red : Colors.white)))),
       QuestDialogWidget(this),
       IconButton(

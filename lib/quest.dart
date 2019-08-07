@@ -9,11 +9,9 @@ const String check = '\u{2713}';
 
 ///render a shield with point awarded in front
 class QuestPointWidget extends StatelessWidget {
-  int points;
+  final int points;
 
-  QuestPointWidget(int points) {
-    this.points = points;
-  }
+  QuestPointWidget(this.points);
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +92,12 @@ abstract class Quest {
 }
 
 abstract class QuestWidget extends StatelessWidget {
-  Quest quest;
+  final Quest quest;
+
+  const QuestWidget({
+    Key key,
+    this.quest,
+  }) : super(key: key);
 }
 
 class Harmony extends Quest {

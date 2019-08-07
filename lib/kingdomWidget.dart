@@ -5,7 +5,7 @@ import 'kingdom.dart';
 import 'ageOfGiants.dart';
 
 class KingdomWidget extends StatefulWidget {
-  MainWidgetState _mainWidgetState;
+  final MainWidgetState _mainWidgetState;
 
   KingdomWidget(this._mainWidgetState);
 

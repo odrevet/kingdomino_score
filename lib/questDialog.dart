@@ -7,8 +7,8 @@ import 'ageOfGiants.dart';
 import 'main.dart';
 
 class _QuestDialogOption extends StatefulWidget {
-  MainWidgetState _mainWidgetState;
-  QuestWidget questWidget;
+  final MainWidgetState _mainWidgetState;
+  final QuestWidget questWidget;
 
   _QuestDialogOption(this.questWidget, this._mainWidgetState);
 
@@ -25,6 +25,7 @@ class _QuestDialogOptionState extends State<_QuestDialogOption> {
 
   @override
   initState() {
+    super.initState();
     _active = _mainWidgetState.quests.contains(questWidget.quest);
   }
 
@@ -63,7 +64,7 @@ class _QuestDialogOptionState extends State<_QuestDialogOption> {
 }
 
 class QuestDialogWidget extends StatefulWidget {
-  MainWidgetState _mainWidgetState;
+  final MainWidgetState _mainWidgetState;
 
   QuestDialogWidget(this._mainWidgetState);
 

@@ -75,7 +75,7 @@ class _KingdomWidgetState extends State<KingdomWidget> {
       if (land.hasGiant) text += giant;
       return Container(
         color: color,
-        child: new LayoutBuilder(
+        child: LayoutBuilder(
             builder: (BuildContext context, BoxConstraints constraints) {
           return Text(text,
               style: TextStyle(fontSize: constraints.maxWidth / 3));

@@ -190,7 +190,7 @@ class _QuestDialogWidgetState extends State<QuestDialogWidget> {
                 '${_mainWidgetState.quests.length}',
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 14,
+                  fontSize: 10,
                 ),
                 textAlign: TextAlign.center,
               ),

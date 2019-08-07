@@ -578,9 +578,9 @@ class MainWidgetState extends State<MainWidget> {
               Positioned(
                 right: 5,
                 top: 10,
-                child: new Container(
+                child: Container(
                   padding: EdgeInsets.all(1),
-                  decoration: new BoxDecoration(
+                  decoration: BoxDecoration(
                     color: Colors.red,
                     borderRadius: BorderRadius.circular(6),
                   ),
@@ -588,9 +588,9 @@ class MainWidgetState extends State<MainWidget> {
                     minWidth: 12,
                     minHeight: 12,
                   ),
-                  child: new Text(
+                  child: Text(
                     '${_warnings.length}',
-                    style: new TextStyle(
+                    style: TextStyle(
                       color: Colors.white,
                       fontSize: 10,
                     ),

@@ -63,7 +63,7 @@ class _KingdomWidgetState extends State<KingdomWidget> {
     _mainWidgetState.updateScores();
   }
 
-  Widget _buildLand(int x, int y) {
+  Widget _buildLand(int y, int x) {
     Land land = _mainWidgetState.kingdom.getLand(x, y);
     Color color = getColorForLandType(land.landType);
 
@@ -110,7 +110,7 @@ class _KingdomWidgetState extends State<KingdomWidget> {
       onTap: () => _onLandTap(x, y),
       child: GridTile(
         child: Container(
-          child: _buildLand(x, y),
+          child: _buildLand(y, x),
         ),
       ),
     );

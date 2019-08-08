@@ -123,11 +123,6 @@ class _KingdomWidgetState extends State<KingdomWidget> {
       aspectRatio: 1.0,
       child: Container(
         margin: const EdgeInsets.all(8.0),
-        decoration: BoxDecoration(
-            border: Border(
-          right: BorderSide(width: 3.5, color: Colors.blueGrey.shade600),
-          bottom: BorderSide(width: 3.5, color: Colors.blueGrey.shade900),
-        )),
         child: GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: gridStateLength,

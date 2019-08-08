@@ -355,9 +355,15 @@ class FolieDesGrandeurs extends Quest {
   ///return how many square is shared by crownAlignment on the placedAlignments
   int _countSharedSquare(
       List<List<int>> placedAlignments, CrownAlignment crownAlignment) {
-    return placedAlignments[crownAlignment.x0][crownAlignment.y0] +
-        placedAlignments[crownAlignment.x1][crownAlignment.y1] +
-        placedAlignments[crownAlignment.x2][crownAlignment.y2];
+    int sharedSquareCount = 0;
+    if (placedAlignments[crownAlignment.x0][crownAlignment.y0] > 1)
+      sharedSquareCount++;
+    if (placedAlignments[crownAlignment.x1][crownAlignment.y1] > 1)
+      sharedSquareCount++;
+    if (placedAlignments[crownAlignment.x2][crownAlignment.y2] > 1)
+      sharedSquareCount++;
+
+    return sharedSquareCount;
   }
 
   ///for every shared square, return the count of the most shared square
@@ -368,6 +374,27 @@ class FolieDesGrandeurs extends Quest {
       placedAlignments[crownAlignment.x1][crownAlignment.y1],
       placedAlignments[crownAlignment.x2][crownAlignment.y2]
     ].reduce(max);
+  }
+
+  bool _alignmentCrosses(crownAlignmentA, crownAlignmentB) {
+    return ((crownAlignmentA.x0 == crownAlignmentB.x0 &&
+            crownAlignmentA.y0 == crownAlignmentB.y0) ||
+        (crownAlignmentA.x1 == crownAlignmentB.x0 &&
+            crownAlignmentA.y1 == crownAlignmentB.y0) ||
+        (crownAlignmentA.x2 == crownAlignmentB.x0 &&
+            crownAlignmentA.y2 == crownAlignmentB.y0) ||
+        (crownAlignmentA.x0 == crownAlignmentB.x1 &&
+            crownAlignmentA.y0 == crownAlignmentB.y1) ||
+        (crownAlignmentA.x1 == crownAlignmentB.x1 &&
+            crownAlignmentA.y1 == crownAlignmentB.y1) ||
+        (crownAlignmentA.x2 == crownAlignmentB.x1 &&
+            crownAlignmentA.y2 == crownAlignmentB.y1) ||
+        (crownAlignmentA.x0 == crownAlignmentB.x2 &&
+            crownAlignmentA.y0 == crownAlignmentB.y2) ||
+        (crownAlignmentA.x1 == crownAlignmentB.x2 &&
+            crownAlignmentA.y1 == crownAlignmentB.y2) ||
+        (crownAlignmentA.x2 == crownAlignmentB.x2 &&
+            crownAlignmentA.y2 == crownAlignmentB.y2));
   }
 
   int countValidAlignments(
@@ -385,31 +412,45 @@ class FolieDesGrandeurs extends Quest {
 
     crownAlignments.forEach((crownAlignment) {
       bool addAlignment = true;
+      placedAlignments[crownAlignment.x0][crownAlignment.y0]++;
+      placedAlignments[crownAlignment.x1][crownAlignment.y1]++;
+      placedAlignments[crownAlignment.x2][crownAlignment.y2]++;
 
       //check if more than one shared square for the alignment being checked
       int sharedSquareCount =
           _countSharedSquare(placedAlignments, crownAlignment);
 
-      if (sharedSquareCount > 0) {
-        if (sharedSquareCount == 1) {
-          for (CrownAlignment aResultAlignment in resultAlignments) {
-            int maxSharedSquare =
-                _maxSharedSquare(placedAlignments, aResultAlignment);
-            if (maxSharedSquare > 1) {
-              addAlignment = false;
-              break;
-            }
+      /*print(
+          '-----\n${crownAlignment.x0}:${crownAlignment.y0} ${crownAlignment.x1}:${crownAlignment.y1} ${crownAlignment.x2}:${crownAlignment.y2}');
+      print('shared square count $sharedSquareCount');*/
+
+      if (sharedSquareCount == 0) {
+        addAlignment = true;
+      } else if (sharedSquareCount == 1) {
+        int sharedSquareCount = 0;
+        for (CrownAlignment resultAlignment in resultAlignments) {
+          if (_alignmentCrosses(resultAlignment, crownAlignment)) {
+            sharedSquareCount +=
+                _countSharedSquare(placedAlignments, resultAlignment);
+            //print('  * shared square count $sharedSquareCount');
           }
-        } else {
-          addAlignment = false;
+
+          if (sharedSquareCount >= 2) {
+            addAlignment = false;
+            break;
+          }
         }
+      } else if (sharedSquareCount >= 2) {
+        addAlignment = false;
       }
 
       if (addAlignment) {
+        //print('ADD');
         resultAlignments.add(crownAlignment);
-        placedAlignments[crownAlignment.x0][crownAlignment.y0]++;
-        placedAlignments[crownAlignment.x1][crownAlignment.y1]++;
-        placedAlignments[crownAlignment.x2][crownAlignment.y2]++;
+      } else {
+        placedAlignments[crownAlignment.x0][crownAlignment.y0]--;
+        placedAlignments[crownAlignment.x1][crownAlignment.y1]--;
+        placedAlignments[crownAlignment.x2][crownAlignment.y2]--;
       }
     });
 
@@ -454,31 +495,60 @@ class FolieDesGrandeurs extends Quest {
     List<int> validAlignments = [];
 
     validAlignments.add(countValidAlignments([
-      ...alignmentVertical,
       ...alignmentHorizontal,
+      ...alignmentVertical,
       ...alignmentDiagonalRight,
-      ...alignmentDiagonalLeft
+      ...alignmentDiagonalLeft,
     ], kingdom));
 
     validAlignments.add(countValidAlignments([
       ...alignmentHorizontal,
       ...alignmentVertical,
+      ...alignmentDiagonalLeft,
       ...alignmentDiagonalRight,
-      ...alignmentDiagonalLeft
+    ], kingdom));
+
+    validAlignments.add(countValidAlignments([
+      ...alignmentVertical,
+      ...alignmentHorizontal,
+      ...alignmentDiagonalRight,
+      ...alignmentDiagonalLeft,
+    ], kingdom));
+
+    validAlignments.add(countValidAlignments([
+      ...alignmentVertical,
+      ...alignmentHorizontal,
+      ...alignmentDiagonalLeft,
+      ...alignmentDiagonalRight,
+    ], kingdom));
+
+    //
+    validAlignments.add(countValidAlignments([
+      ...alignmentDiagonalRight,
+      ...alignmentDiagonalLeft,
+      ...alignmentHorizontal,
+      ...alignmentVertical,
     ], kingdom));
 
     validAlignments.add(countValidAlignments([
       ...alignmentDiagonalRight,
       ...alignmentDiagonalLeft,
       ...alignmentVertical,
-      ...alignmentHorizontal
+      ...alignmentHorizontal,
+    ], kingdom));
+
+    validAlignments.add(countValidAlignments([
+      ...alignmentDiagonalLeft,
+      ...alignmentDiagonalRight,
+      ...alignmentHorizontal,
+      ...alignmentVertical,
     ], kingdom));
 
     validAlignments.add(countValidAlignments([
       ...alignmentDiagonalLeft,
       ...alignmentDiagonalRight,
       ...alignmentVertical,
-      ...alignmentHorizontal
+      ...alignmentHorizontal,
     ], kingdom));
 
     return extraPoints * validAlignments.reduce(max);

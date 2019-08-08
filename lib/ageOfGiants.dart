@@ -352,23 +352,26 @@ class FolieDesGrandeurs extends Quest {
       crownAlignment.add(CrownAlignment(y, x, y1, x1, y2, x2));
   }
 
+  ///return how many square is shared by crownAlignment on the placedAlignments
   int _countSharedSquare(
       List<List<int>> placedAlignments, CrownAlignment crownAlignment) {
-    int sharedSquareCount = 0;
-    if (placedAlignments[crownAlignment.x0][crownAlignment.y0] > 1)
-      sharedSquareCount++;
+    return placedAlignments[crownAlignment.x0][crownAlignment.y0] +
+        placedAlignments[crownAlignment.x1][crownAlignment.y1] +
+        placedAlignments[crownAlignment.x2][crownAlignment.y2];
+  }
 
-    if (placedAlignments[crownAlignment.x1][crownAlignment.y1] > 1)
-      sharedSquareCount++;
-
-    if (placedAlignments[crownAlignment.x2][crownAlignment.y2] > 1)
-      sharedSquareCount++;
-
-    return sharedSquareCount;
+  ///for every shared square, return the count of the most shared square
+  int _maxSharedSquare(
+      List<List<int>> placedAlignments, CrownAlignment crownAlignment) {
+    return [
+      placedAlignments[crownAlignment.x0][crownAlignment.y0],
+      placedAlignments[crownAlignment.x1][crownAlignment.y1],
+      placedAlignments[crownAlignment.x2][crownAlignment.y2]
+    ].reduce(max);
   }
 
   int countValidAlignments(
-      List<CrownAlignment> allAlignments, Kingdom kingdom) {
+      List<CrownAlignment> crownAlignments, Kingdom kingdom) {
     //count for every land how many square crosses
     List<List<int>> placedAlignments = [];
     for (var i = 0; i < kingdom.size; i++) {
@@ -380,41 +383,34 @@ class FolieDesGrandeurs extends Quest {
     //more than one square when the said alignment would be place
     List<CrownAlignment> resultAlignments = List();
 
-    allAlignments.forEach((anAlignment) {
-      //add this alignment to the placedAlignments
-      placedAlignments[anAlignment.x0][anAlignment.y0]++;
-      placedAlignments[anAlignment.x1][anAlignment.y1]++;
-      placedAlignments[anAlignment.x2][anAlignment.y2]++;
-
-      bool validAlignment = true;
+    crownAlignments.forEach((crownAlignment) {
+      bool addAlignment = true;
 
       //check if more than one shared square for the alignment being checked
-      int sharedSquareCount = _countSharedSquare(placedAlignments, anAlignment);
+      int sharedSquareCount =
+          _countSharedSquare(placedAlignments, crownAlignment);
 
-      if (sharedSquareCount > 1) {
-        //remove this alignment from the placedAlignments
-        placedAlignments[anAlignment.x0][anAlignment.y0]--;
-        placedAlignments[anAlignment.x1][anAlignment.y1]--;
-        placedAlignments[anAlignment.x2][anAlignment.y2]--;
-        validAlignment = false;
-      } else {
-        //check if more than one shared square with already placed squares
-        for (var aResultAlignment in resultAlignments) {
-          int sharedSquareCount =
-              _countSharedSquare(placedAlignments, aResultAlignment);
-
-          if (sharedSquareCount > 1) {
-            //remove this alignment from the placedAlignments
-            placedAlignments[anAlignment.x0][anAlignment.y0]--;
-            placedAlignments[anAlignment.x1][anAlignment.y1]--;
-            placedAlignments[anAlignment.x2][anAlignment.y2]--;
-            validAlignment = false;
-            break;
+      if (sharedSquareCount > 0) {
+        if (sharedSquareCount == 1) {
+          for (CrownAlignment aResultAlignment in resultAlignments) {
+            int maxSharedSquare =
+                _maxSharedSquare(placedAlignments, aResultAlignment);
+            if (maxSharedSquare > 1) {
+              addAlignment = false;
+              break;
+            }
           }
+        } else {
+          addAlignment = false;
         }
       }
 
-      if (validAlignment) resultAlignments.add(anAlignment);
+      if (addAlignment) {
+        resultAlignments.add(crownAlignment);
+        placedAlignments[crownAlignment.x0][crownAlignment.y0]++;
+        placedAlignments[crownAlignment.x1][crownAlignment.y1]++;
+        placedAlignments[crownAlignment.x2][crownAlignment.y2]++;
+      }
     });
 
     return resultAlignments.length;
@@ -454,7 +450,7 @@ class FolieDesGrandeurs extends Quest {
     }
 
     //sometimes check in for diagonals first gets more points and sometime
-    //less. Try different strategies and retain the one that scores the most
+    //less. Try different strategies and keep the one that scores the most
     List<int> validAlignments = [];
 
     validAlignments.add(countValidAlignments([

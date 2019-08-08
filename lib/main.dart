@@ -431,13 +431,20 @@ class MainWidgetState extends State<MainWidget> {
     });
   }
 
-  Widget landButton(LandType buttonLandType) {
+  Widget landButton(LandType landType) {
     var isSelected = (selectionMode == SelectionMode.land ||
             selectionMode == SelectionMode.castle) &&
-        selectedLandType == buttonLandType;
+        selectedLandType == landType;
 
+    var outline = Border(
+      right: BorderSide(
+          width: 3.5, color: Colors.blueGrey.shade600),
+      bottom: BorderSide(
+          width: 3.5, color: Colors.blueGrey.shade900),
+    );
+    
     return GestureDetector(
-        onTap: () => _onSelectLandType(buttonLandType),
+        onTap: () => _onSelectLandType(landType),
         child: Container(
           margin: EdgeInsets.all(5.0),
           height: 50.0,
@@ -451,15 +458,10 @@ class MainWidgetState extends State<MainWidget> {
                       bottom:
                           BorderSide(width: 3.5, color: Colors.red.shade900),
                     )
-                  : Border(
-                      right: BorderSide(
-                          width: 3.5, color: Colors.blueGrey.shade600),
-                      bottom: BorderSide(
-                          width: 3.5, color: Colors.blueGrey.shade900),
-                    )),
+                  : landType == LandType.none ? null : outline),
           child: Container(
-              color: getColorForLandType(buttonLandType),
-              child: buttonLandType == LandType.castle
+              color: getColorForLandType(landType),
+              child: landType == LandType.castle
                   ? FittedBox(fit: BoxFit.fitHeight, child: Text(castle))
                   : Text('')),
         ));

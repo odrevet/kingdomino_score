@@ -87,7 +87,7 @@ class FolieDesGrandeurs extends Quest {
 
   bool _alignmentCrosses(crownAlignmentA, crownAlignmentB) {
     return ((crownAlignmentA.x0 == crownAlignmentB.x0 &&
-        crownAlignmentA.y0 == crownAlignmentB.y0) ||
+            crownAlignmentA.y0 == crownAlignmentB.y0) ||
         (crownAlignmentA.x1 == crownAlignmentB.x0 &&
             crownAlignmentA.y1 == crownAlignmentB.y0) ||
         (crownAlignmentA.x2 == crownAlignmentB.x0 &&
@@ -106,6 +106,44 @@ class FolieDesGrandeurs extends Quest {
             crownAlignmentA.y2 == crownAlignmentB.y2));
   }
 
+  bool _alignmentCanBeAdded(CrownAlignment crownAlignment,
+      List<CrownAlignment> resultAlignments, List<List<int>> placedAlignments) {
+    bool addAlignment = true;
+    placedAlignments[crownAlignment.x0][crownAlignment.y0]++;
+    placedAlignments[crownAlignment.x1][crownAlignment.y1]++;
+    placedAlignments[crownAlignment.x2][crownAlignment.y2]++;
+
+    //check if more than one shared square for the alignment being checked
+    int sharedSquareCount =
+        _countSharedSquare(placedAlignments, crownAlignment);
+
+    /*print(
+          '-----\n${crownAlignment.x0}:${crownAlignment.y0} ${crownAlignment.x1}:${crownAlignment.y1} ${crownAlignment.x2}:${crownAlignment.y2}');
+      print('shared square count $sharedSquareCount');*/
+
+    if (sharedSquareCount == 0) {
+      addAlignment = true;
+    } else if (sharedSquareCount == 1) {
+      int sharedSquareCount = 0;
+      for (CrownAlignment resultAlignment in resultAlignments) {
+        if (_alignmentCrosses(resultAlignment, crownAlignment)) {
+          sharedSquareCount +=
+              _countSharedSquare(placedAlignments, resultAlignment);
+          //print('  * shared square count $sharedSquareCount');
+        }
+
+        if (sharedSquareCount >= 2) {
+          addAlignment = false;
+          break;
+        }
+      }
+    } else if (sharedSquareCount >= 2) {
+      addAlignment = false;
+    }
+
+    return addAlignment;
+  }
+
   int countValidAlignments(
       List<CrownAlignment> crownAlignments, Kingdom kingdom) {
     //count for every land how many square crosses
@@ -120,38 +158,8 @@ class FolieDesGrandeurs extends Quest {
     List<CrownAlignment> resultAlignments = List();
 
     crownAlignments.forEach((crownAlignment) {
-      bool addAlignment = true;
-      placedAlignments[crownAlignment.x0][crownAlignment.y0]++;
-      placedAlignments[crownAlignment.x1][crownAlignment.y1]++;
-      placedAlignments[crownAlignment.x2][crownAlignment.y2]++;
-
-      //check if more than one shared square for the alignment being checked
-      int sharedSquareCount =
-      _countSharedSquare(placedAlignments, crownAlignment);
-
-      /*print(
-          '-----\n${crownAlignment.x0}:${crownAlignment.y0} ${crownAlignment.x1}:${crownAlignment.y1} ${crownAlignment.x2}:${crownAlignment.y2}');
-      print('shared square count $sharedSquareCount');*/
-
-      if (sharedSquareCount == 0) {
-        addAlignment = true;
-      } else if (sharedSquareCount == 1) {
-        int sharedSquareCount = 0;
-        for (CrownAlignment resultAlignment in resultAlignments) {
-          if (_alignmentCrosses(resultAlignment, crownAlignment)) {
-            sharedSquareCount +=
-                _countSharedSquare(placedAlignments, resultAlignment);
-            //print('  * shared square count $sharedSquareCount');
-          }
-
-          if (sharedSquareCount >= 2) {
-            addAlignment = false;
-            break;
-          }
-        }
-      } else if (sharedSquareCount >= 2) {
-        addAlignment = false;
-      }
+      bool addAlignment = _alignmentCanBeAdded(
+          crownAlignment, resultAlignments, placedAlignments);
 
       if (addAlignment) {
         //print('ADD');

@@ -11,6 +11,29 @@ class CrownAlignment {
   int x2, y2;
 
   CrownAlignment(this.y0, this.x0, this.y1, this.x1, this.y2, this.x2);
+
+  @override
+  bool operator ==(other) {
+    return ((this.x0 == other.x0 && this.y0 == other.y0) &&
+        (this.x1 == other.x1 && this.y1 == other.y1) &&
+        (this.x2 == other.x2 && this.y2 == other.y2));
+  }
+
+  bool cross(CrownAlignment other) {
+    return ((this.x0 == other.x0 && this.y0 == other.y0) ||
+        (this.x1 == other.x0 && this.y1 == other.y0) ||
+        (this.x2 == other.x0 && this.y2 == other.y0) ||
+        (this.x0 == other.x1 && this.y0 == other.y1) ||
+        (this.x1 == other.x1 && this.y1 == other.y1) ||
+        (this.x2 == other.x1 && this.y2 == other.y1) ||
+        (this.x0 == other.x2 && this.y0 == other.y2) ||
+        (this.x1 == other.x2 && this.y1 == other.y2) ||
+        (this.x2 == other.x2 && this.y2 == other.y2));
+  }
+
+  String toString() {
+    return '[${this.x0}:${this.y0} ${this.x1}:${this.y1} ${this.x2}:${this.y2}]';
+  }
 }
 
 class FolieDesGrandeurs extends Quest {
@@ -85,28 +108,7 @@ class FolieDesGrandeurs extends Quest {
     return sharedSquareCount;
   }
 
-  bool _alignmentCrosses(crownAlignmentA, crownAlignmentB) {
-    return ((crownAlignmentA.x0 == crownAlignmentB.x0 &&
-            crownAlignmentA.y0 == crownAlignmentB.y0) ||
-        (crownAlignmentA.x1 == crownAlignmentB.x0 &&
-            crownAlignmentA.y1 == crownAlignmentB.y0) ||
-        (crownAlignmentA.x2 == crownAlignmentB.x0 &&
-            crownAlignmentA.y2 == crownAlignmentB.y0) ||
-        (crownAlignmentA.x0 == crownAlignmentB.x1 &&
-            crownAlignmentA.y0 == crownAlignmentB.y1) ||
-        (crownAlignmentA.x1 == crownAlignmentB.x1 &&
-            crownAlignmentA.y1 == crownAlignmentB.y1) ||
-        (crownAlignmentA.x2 == crownAlignmentB.x1 &&
-            crownAlignmentA.y2 == crownAlignmentB.y1) ||
-        (crownAlignmentA.x0 == crownAlignmentB.x2 &&
-            crownAlignmentA.y0 == crownAlignmentB.y2) ||
-        (crownAlignmentA.x1 == crownAlignmentB.x2 &&
-            crownAlignmentA.y1 == crownAlignmentB.y2) ||
-        (crownAlignmentA.x2 == crownAlignmentB.x2 &&
-            crownAlignmentA.y2 == crownAlignmentB.y2));
-  }
-
-  bool _alignmentCanBeAdded(CrownAlignment crownAlignment,
+  bool _alignmentAdd(CrownAlignment crownAlignment,
       List<CrownAlignment> resultAlignments, List<List<int>> placedAlignments) {
     bool addAlignment = true;
     placedAlignments[crownAlignment.x0][crownAlignment.y0]++;
@@ -117,8 +119,7 @@ class FolieDesGrandeurs extends Quest {
     int sharedSquareCount =
         _countSharedSquare(placedAlignments, crownAlignment);
 
-    /*print(
-          '-----\n${crownAlignment.x0}:${crownAlignment.y0} ${crownAlignment.x1}:${crownAlignment.y1} ${crownAlignment.x2}:${crownAlignment.y2}');
+    /*print($crownAlignment);
       print('shared square count $sharedSquareCount');*/
 
     if (sharedSquareCount == 0) {
@@ -126,7 +127,7 @@ class FolieDesGrandeurs extends Quest {
     } else if (sharedSquareCount == 1) {
       int sharedSquareCount = 0;
       for (CrownAlignment resultAlignment in resultAlignments) {
-        if (_alignmentCrosses(resultAlignment, crownAlignment)) {
+        if (resultAlignment.cross(crownAlignment)) {
           sharedSquareCount +=
               _countSharedSquare(placedAlignments, resultAlignment);
           //print('  * shared square count $sharedSquareCount');
@@ -141,6 +142,15 @@ class FolieDesGrandeurs extends Quest {
       addAlignment = false;
     }
 
+    if (addAlignment) {
+      //print('ADD');
+      resultAlignments.add(crownAlignment);
+    } else {
+      placedAlignments[crownAlignment.x0][crownAlignment.y0]--;
+      placedAlignments[crownAlignment.x1][crownAlignment.y1]--;
+      placedAlignments[crownAlignment.x2][crownAlignment.y2]--;
+    }
+    
     return addAlignment;
   }
 
@@ -158,17 +168,7 @@ class FolieDesGrandeurs extends Quest {
     List<CrownAlignment> resultAlignments = List();
 
     crownAlignments.forEach((crownAlignment) {
-      bool addAlignment = _alignmentCanBeAdded(
-          crownAlignment, resultAlignments, placedAlignments);
-
-      if (addAlignment) {
-        //print('ADD');
-        resultAlignments.add(crownAlignment);
-      } else {
-        placedAlignments[crownAlignment.x0][crownAlignment.y0]--;
-        placedAlignments[crownAlignment.x1][crownAlignment.y1]--;
-        placedAlignments[crownAlignment.x2][crownAlignment.y2]--;
-      }
+      _alignmentAdd(crownAlignment, resultAlignments, placedAlignments);
     });
 
     return resultAlignments.length;

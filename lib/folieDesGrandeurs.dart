@@ -150,7 +150,7 @@ class FolieDesGrandeurs extends Quest {
       placedAlignments[crownAlignment.x1][crownAlignment.y1]--;
       placedAlignments[crownAlignment.x2][crownAlignment.y2]--;
     }
-    
+
     return addAlignment;
   }
 

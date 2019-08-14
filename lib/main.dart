@@ -437,12 +437,10 @@ class MainWidgetState extends State<MainWidget> {
         selectedLandType == landType;
 
     var outline = Border(
-      right: BorderSide(
-          width: 3.5, color: Colors.blueGrey.shade600),
-      bottom: BorderSide(
-          width: 3.5, color: Colors.blueGrey.shade900),
+      right: BorderSide(width: 3.5, color: Colors.blueGrey.shade600),
+      bottom: BorderSide(width: 3.5, color: Colors.blueGrey.shade900),
     );
-    
+
     return GestureDetector(
         onTap: () => _onSelectLandType(landType),
         child: Container(

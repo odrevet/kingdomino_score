@@ -8,6 +8,10 @@ import 'package:kingdomino_score_count/folieDesGrandeurs.dart';
 /// game but do not matter for tests has folieDesGrandeurs score is only
 /// affected by crowns and not land types.
 
+/// Each alignment scores 10 points, so we will expect 10 times the number
+/// of expected alignments
+
+
 _setCrowns(Kingdom kingdom, List<List<int>> crowns){
   for (var x = 0; x < kingdom.size; x++) {
     for (var y = 0; y < kingdom.size; y++) {
@@ -57,6 +61,7 @@ void main() {
     expect(100, folieDesGrandeurs.getPoints(kingdom));
   });
 
+  /// A 3x3 square with an extra crown at the bottom right
   /// 4 alignments :
   /// 0:0 0:1 0:2
   /// 0;2 1:1 0:2
@@ -79,5 +84,25 @@ void main() {
     expect(40, folieDesGrandeurs.getPoints(kingdom));
   });
 
+   ///Expect 3 alignments
+  ///the horizontal double alignment should not be used as it will prevent
+  ///the diagonal and the vertical alignment to be used
+  /// prevent
+  test("shape #2", () {
+    var kingdom = Kingdom(5);
+
+    List<List<int>> crowns = [
+      [0, 0, 0, 0, 1],
+      [0, 0, 0, 0, 1],
+      [1, 1, 1, 1, 1],
+      [0, 0, 1, 0, 0],
+      [0, 1, 0, 0, 0]
+    ];
+
+    _setCrowns(kingdom, crowns);
+
+    var folieDesGrandeurs = FolieDesGrandeurs();
+    expect(30, folieDesGrandeurs.getPoints(kingdom));
+  });
 
 }

@@ -17,6 +17,8 @@ _setCrowns(Kingdom kingdom, List<List<int>> crowns){
 }
 
 void main() {
+
+  ///Expect 3 alignments, either horizontal or vertical
   test("square 3x3", () {
     var kingdom = Kingdom(5);
 
@@ -33,4 +35,49 @@ void main() {
     var folieDesGrandeurs = FolieDesGrandeurs();
     expect(30, folieDesGrandeurs.getPoints(kingdom));
   });
+
+  ///Expect 10 alignments, either horizontal or vertical
+  /// this configuration is impossible in the actual game as the castle
+  /// cannot have crown, but it should be tested anyway as it may happen in a
+  /// 7x7 kingdom
+  test("full", () {
+    var kingdom = Kingdom(5);
+
+    List<List<int>> crowns = [
+      [1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1]
+    ];
+
+    _setCrowns(kingdom, crowns);
+
+    var folieDesGrandeurs = FolieDesGrandeurs();
+    expect(100, folieDesGrandeurs.getPoints(kingdom));
+  });
+
+  /// 4 alignments :
+  /// 0:0 0:1 0:2
+  /// 0;2 1:1 0:2
+  /// 0:1 1:2 3:3
+  /// 2:1 2:2 2:3
+  test("shape #1", () {
+    var kingdom = Kingdom(5);
+
+    List<List<int>> crowns = [
+      [1, 1, 1, 0, 0],
+      [1, 1, 1, 0, 0],
+      [1, 1, 1, 0, 0],
+      [0, 0, 1, 0, 0],
+      [0, 0, 0, 0, 0]
+    ];
+
+    _setCrowns(kingdom, crowns);
+
+    var folieDesGrandeurs = FolieDesGrandeurs();
+    expect(40, folieDesGrandeurs.getPoints(kingdom));
+  });
+
+
 }

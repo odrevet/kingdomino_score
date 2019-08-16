@@ -87,7 +87,7 @@ class LocalBusinessWidget extends QuestWidget {
       ]),
       TableRow(children: [
         QuestMiniTile(check),
-        QuestMiniTile(castle),
+        QuestMiniTile(Text(castle)),
         QuestMiniTile(check),
       ]),
       TableRow(children: [
@@ -154,22 +154,9 @@ class LostCornerWidget extends QuestWidget {
   LostCornerWidget();
 
   Widget _buildTable() {
-    return Table(children: [
-      TableRow(children: [
-        Text(' '),
-        Text(' '),
-        Text(' '),
-      ]),
-      TableRow(children: [
-        Text(' '),
-        Text(' '),
-        Text(' '),
-      ]),
-      TableRow(children: [
-        QuestMiniTile(check),
-        Text(' '),
-        Text(' '),
-      ]),
+    return Stack(children: [
+      Container(),
+      Positioned(left: 0.0, bottom: 0.0, child: QuestMiniTile(check),)
     ]);
   }
 

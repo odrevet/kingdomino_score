@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 import 'kingdom.dart';
 import 'kingdomWidget.dart';
@@ -7,8 +8,9 @@ import 'quests/harmony.dart';
 import 'quests/middleKingdom.dart';
 
 const String shield = '\u{1F6E1}';
-const String check = '\u{2713}';
 const String cross = '\u{2717}';
+
+Widget check =  Icon(MdiIcons.check, color: Colors.green);
 
 ///render a shield with point awarded in front
 class QuestPointWidget extends StatelessWidget {
@@ -66,8 +68,8 @@ class QuestMiniKingdom extends StatelessWidget {
 
 ///to render a square in the right side table of a quest tile
 class QuestMiniTile extends StatelessWidget {
-  final String text;
-  const QuestMiniTile(this.text, {Key key}) : super(key: key);
+  final Widget child;
+  const QuestMiniTile(this.child, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -80,8 +82,7 @@ class QuestMiniTile extends StatelessWidget {
             child: FittedBox(
                 fit: BoxFit.fitHeight,
                 child: Container(
-                    child:
-                        Text(text, style: TextStyle(color: Colors.green))))));
+                    child: child))));
   }
 }
 

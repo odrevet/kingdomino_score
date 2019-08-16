@@ -50,12 +50,14 @@ void main() {
 }
 
 class Warning {
-  Text leftOperand;
-  Text unit;
-  Text operator;
-  Text rightOperand;
+  int leftOperand;
+  LandType landType;
+  int crown;
+  String operator;
+  int rightOperand;
 
-  Warning(this.leftOperand, this.unit, this.operator, this.rightOperand);
+  Warning(this.leftOperand, this.landType, this.crown, this.operator,
+      this.rightOperand);
 }
 
 class KingdominoScore extends StatelessWidget {
@@ -137,23 +139,37 @@ class MainWidgetState extends State<MainWidget> {
   _warningsDialog(BuildContext context) {
     var tableRows = <TableRow>[];
 
+    const double fontSize = 20.0;
+
     for (Warning warning in _warnings) {
       var tableCells = <TableCell>[];
 
       tableCells.add(TableCell(
           child: Align(
-              alignment: Alignment.centerRight, child: warning.leftOperand)));
-
-      tableCells.add(TableCell(
-          child: Align(alignment: Alignment.centerRight, child: warning.unit)));
-
-      tableCells.add(TableCell(
-          child: Align(
-              alignment: Alignment.centerRight, child: warning.operator)));
+              alignment: Alignment.centerRight,
+              child: Text(warning.leftOperand.toString(), style: TextStyle(fontSize: fontSize)))));
 
       tableCells.add(TableCell(
           child: Align(
-              alignment: Alignment.centerRight, child: warning.rightOperand)));
+              alignment: Alignment.center,
+              child: Text(square,
+                  style: TextStyle(
+                      color: getColorForLandType(warning.landType), fontSize: fontSize)))));
+
+      tableCells.add(TableCell(
+          child: Align(
+              alignment: Alignment.center,
+              child: Text(crown * warning.crown, style: TextStyle(fontSize: fontSize)))));
+
+      tableCells.add(TableCell(
+          child: Align(
+              alignment: Alignment.center,
+              child: Text(warning.operator, style: TextStyle(fontSize: fontSize)))));
+
+      tableCells.add(TableCell(
+          child: Align(
+              alignment: Alignment.centerRight,
+              child: Text(warning.rightOperand.toString(), style: TextStyle(fontSize: fontSize)))));
 
       TableRow tableRow = TableRow(children: tableCells);
       tableRows.add(tableRow);
@@ -163,8 +179,11 @@ class MainWidgetState extends State<MainWidget> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          backgroundColor: Colors.white70,
-          content: SingleChildScrollView(child: Table(children: tableRows)),
+          contentPadding: EdgeInsets.all(1.5),
+          backgroundColor: Colors.white54,
+          content: SingleChildScrollView(
+              child: Table(
+                  children: tableRows)),
           actions: <Widget>[
             FlatButton(
               child: Icon(
@@ -185,7 +204,7 @@ class MainWidgetState extends State<MainWidget> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          backgroundColor: Colors.white70,
+          backgroundColor: Colors.white54,
           title: Text('Kingdomino Score',
               style: TextStyle(
                   color: Colors.amber,
@@ -216,7 +235,7 @@ class MainWidgetState extends State<MainWidget> {
   }
 
   _scoreDetailsDialog(BuildContext context) {
-    const double fontSize = 25.0;
+    const double fontSize = 20.0;
 
     var properties = kingdom.getProperties();
 
@@ -263,7 +282,7 @@ class MainWidgetState extends State<MainWidget> {
                 child: Text(crown, style: TextStyle(fontSize: fontSize)))));
         tableCells.add(TableCell(
             child: Align(
-                alignment: Alignment.centerRight,
+                alignment: Alignment.center,
                 child: Text('=', style: TextStyle(fontSize: fontSize)))));
         tableCells.add(TableCell(
             child: Align(
@@ -291,7 +310,7 @@ class MainWidgetState extends State<MainWidget> {
 
         tableCells.add(TableCell(
             child: Align(
-                alignment: Alignment.centerRight,
+                alignment: Alignment.center,
                 child: Text('=', style: TextStyle(fontSize: fontSize)))));
 
         tableCells.add(TableCell(
@@ -311,7 +330,8 @@ class MainWidgetState extends State<MainWidget> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          backgroundColor: Colors.white70,
+          contentPadding: EdgeInsets.all(1.5),
+          backgroundColor: Colors.white54,
           content: content,
           actions: <Widget>[
             FlatButton(
@@ -336,8 +356,6 @@ class MainWidgetState extends State<MainWidget> {
 
   ///check if the kingdom is conform, if not set warnings
   void checkKingdom() {
-    const double fontSize = 25.0;
-
     //check if more tile in the kingdom than in the gameSet
     for (var landType in LandType.values) {
       if (landType == LandType.none) continue;
@@ -349,14 +367,8 @@ class MainWidgetState extends State<MainWidget> {
           .where((land) => land.landType == landType)
           .length;
       if (count > getGameSet()[landType]['count']) {
-        Warning warning = Warning(
-            Text('$count ', style: TextStyle(fontSize: fontSize)),
-            Text(square,
-                style: TextStyle(
-                    color: getColorForLandType(landType), fontSize: fontSize)),
-            Text('>', style: TextStyle(fontSize: fontSize)),
-            Text('${getGameSet()[landType]['count']}',
-                style: TextStyle(fontSize: fontSize)));
+        Warning warning =
+            Warning(count, landType, 0, '>', getGameSet()[landType]['count']);
 
         setState(() {
           _warnings.add(warning);
@@ -376,15 +388,8 @@ class MainWidgetState extends State<MainWidget> {
             .length;
 
         if (count > getGameSet()[landType]['crowns'][crownsCounter]) {
-          Warning warning = Warning(
-              Text('$count ', style: TextStyle(fontSize: fontSize)),
-              Text(square + ' ' + crown * crownsCounter,
-                  style: TextStyle(
-                      color: getColorForLandType(landType),
-                      fontSize: fontSize)),
-              Text('>', style: TextStyle(fontSize: fontSize)),
-              Text('${getGameSet()[landType]['crowns'][crownsCounter]}',
-                  style: TextStyle(fontSize: fontSize)));
+          Warning warning = Warning(count, landType, crownsCounter, '>',
+              getGameSet()[landType]['crowns'][crownsCounter]);
 
           setState(() {
             _warnings.add(warning);

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 import 'ageOfGiants.dart';
 import 'kingdom.dart';
@@ -152,9 +153,7 @@ class MainWidgetState extends State<MainWidget> {
       tableCells.add(TableCell(
           child: Align(
               alignment: Alignment.center,
-              child: Text(square,
-                  style: TextStyle(
-                      color: getColorForLandType(warning.landType), fontSize: fontSize)))));
+              child: Icon(MdiIcons.square, color: getColorForLandType(warning.landType)))));
 
       tableCells.add(TableCell(
           child: Align(
@@ -263,9 +262,7 @@ class MainWidgetState extends State<MainWidget> {
         tableCells.add(TableCell(
             child: Align(
           alignment: Alignment.centerRight,
-          child: Text(square,
-              style: TextStyle(
-                  fontSize: 20, color: getColorForLandType(property.landType))),
+          child:  Icon(MdiIcons.square, color: getColorForLandType(property.landType)),
         )));
         tableCells.add(TableCell(
             child: Align(

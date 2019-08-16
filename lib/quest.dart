@@ -10,7 +10,7 @@ import 'quests/middleKingdom.dart';
 const String shield = '\u{1F6E1}';
 const String cross = '\u{2717}';
 
-Widget check =  Icon(MdiIcons.check, color: Colors.green);
+Widget check = Icon(MdiIcons.check, color: Colors.green);
 
 ///render a shield with point awarded in front
 class QuestPointWidget extends StatelessWidget {
@@ -69,7 +69,7 @@ class QuestMiniKingdom extends StatelessWidget {
 ///to render a square in the right side table of a quest tile
 class QuestMiniTile extends StatelessWidget {
   final Widget child;
-  const QuestMiniTile({this.child,Key key}) : super(key: key);
+  const QuestMiniTile({this.child, Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -78,11 +78,12 @@ class QuestMiniTile extends StatelessWidget {
         height: 16,
         child: Container(
             decoration: BoxDecoration(
-                border: child == null ? null : Border.all(color: Colors.grey, width: 0.3)),
+                border: child == null
+                    ? null
+                    : Border.all(color: Colors.grey, width: 0.3)),
             child: FittedBox(
                 fit: BoxFit.fitHeight,
-                child: Container(
-                    child: child == null ? Text('') : child))));
+                child: Container(child: child == null ? Text('') : child))));
   }
 }
 

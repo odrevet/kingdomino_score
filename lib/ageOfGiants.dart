@@ -4,12 +4,11 @@ import 'kingdom.dart';
 import 'kingdomWidget.dart';
 import 'main.dart' show castle, crown, square;
 import 'quest.dart';
-import 'quests/folieDesGrandeurs.dart';
 import 'quests/bleakKing.dart';
+import 'quests/folieDesGrandeurs.dart';
 import 'quests/fourCorners.dart';
 import 'quests/localBusiness.dart';
 import 'quests/lostCorner.dart';
-
 
 const String giant = '\u{1F9D4}';
 
@@ -147,7 +146,6 @@ class FourCornersWidget extends QuestWidget {
   }
 }
 
-
 class LostCornerWidget extends QuestWidget {
   final Quest quest = LostCorner();
 
@@ -156,7 +154,11 @@ class LostCornerWidget extends QuestWidget {
   Widget _buildTable() {
     return Stack(children: [
       Container(),
-      Positioned(left: 0.0, bottom: 0.0, child: QuestMiniTile(child: check),)
+      Positioned(
+        left: 0.0,
+        bottom: 0.0,
+        child: QuestMiniTile(child: check),
+      )
     ]);
   }
 

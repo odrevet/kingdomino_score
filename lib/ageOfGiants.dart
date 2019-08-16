@@ -81,19 +81,19 @@ class LocalBusinessWidget extends QuestWidget {
   Widget _buildTable() {
     return Table(children: [
       TableRow(children: [
-        QuestMiniTile(check),
-        QuestMiniTile(check),
-        QuestMiniTile(check),
+        QuestMiniTile(child: check),
+        QuestMiniTile(child: check),
+        QuestMiniTile(child: check),
       ]),
       TableRow(children: [
-        QuestMiniTile(check),
-        QuestMiniTile(Text(castle)),
-        QuestMiniTile(check),
+        QuestMiniTile(child: check),
+        QuestMiniTile(child: Text(castle)),
+        QuestMiniTile(child: check),
       ]),
       TableRow(children: [
-        QuestMiniTile(check),
-        QuestMiniTile(check),
-        QuestMiniTile(check),
+        QuestMiniTile(child: check),
+        QuestMiniTile(child: check),
+        QuestMiniTile(child: check),
       ]),
     ]);
   }
@@ -118,19 +118,19 @@ class FourCornersWidget extends QuestWidget {
   Widget _buildTable() {
     return Table(children: [
       TableRow(children: [
-        QuestMiniTile(check),
-        Text(' '),
-        QuestMiniTile(check),
+        QuestMiniTile(child: check),
+        QuestMiniTile(),
+        QuestMiniTile(child: check),
       ]),
       TableRow(children: [
-        Text(' '),
-        Text(' '),
-        Text(' '),
+        QuestMiniTile(),
+        QuestMiniTile(),
+        QuestMiniTile(),
       ]),
       TableRow(children: [
-        QuestMiniTile(check),
-        Text(' '),
-        QuestMiniTile(check),
+        QuestMiniTile(child: check),
+        QuestMiniTile(),
+        QuestMiniTile(child: check),
       ]),
     ]);
   }
@@ -156,7 +156,7 @@ class LostCornerWidget extends QuestWidget {
   Widget _buildTable() {
     return Stack(children: [
       Container(),
-      Positioned(left: 0.0, bottom: 0.0, child: QuestMiniTile(check),)
+      Positioned(left: 0.0, bottom: 0.0, child: QuestMiniTile(child: check),)
     ]);
   }
 
@@ -180,28 +180,28 @@ class FolieDesGrandeursWidget extends QuestWidget {
   Widget _buildTable() {
     return Table(children: [
       TableRow(children: [
-        QuestMiniTile(check),
-        QuestMiniTile(check),
-        Text(' '),
-        QuestMiniTile(check),
-        QuestMiniTile(check),
-        QuestMiniTile(check),
+        QuestMiniTile(child: check),
+        QuestMiniTile(child: check),
+        QuestMiniTile(),
+        QuestMiniTile(child: check),
+        QuestMiniTile(child: check),
+        QuestMiniTile(child: check),
       ]),
       TableRow(children: [
-        QuestMiniTile(check),
-        Text(' '),
-        QuestMiniTile(check),
-        Text(' '),
-        Text(' '),
-        Text(' '),
+        QuestMiniTile(child: check),
+        QuestMiniTile(),
+        QuestMiniTile(child: check),
+        QuestMiniTile(),
+        QuestMiniTile(),
+        QuestMiniTile(),
       ]),
       TableRow(children: [
-        QuestMiniTile(check),
-        Text(' '),
-        Text(' '),
-        QuestMiniTile(check),
-        Text(' '),
-        Text(' '),
+        QuestMiniTile(child: check),
+        QuestMiniTile(),
+        QuestMiniTile(),
+        QuestMiniTile(child: check),
+        QuestMiniTile(),
+        QuestMiniTile(),
       ]),
     ]);
   }

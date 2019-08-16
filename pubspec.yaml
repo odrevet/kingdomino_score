@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
 
+  auto_size_text:
   material_design_icons_flutter: 3.2.3895
   cupertino_icons: ^0.1.2
 

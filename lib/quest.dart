@@ -69,7 +69,7 @@ class QuestMiniKingdom extends StatelessWidget {
 ///to render a square in the right side table of a quest tile
 class QuestMiniTile extends StatelessWidget {
   final Widget child;
-  const QuestMiniTile(this.child, {Key key}) : super(key: key);
+  const QuestMiniTile({this.child,Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -78,11 +78,11 @@ class QuestMiniTile extends StatelessWidget {
         height: 16,
         child: Container(
             decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey, width: 0.3)),
+                border: child == null ? null : Border.all(color: Colors.grey, width: 0.3)),
             child: FittedBox(
                 fit: BoxFit.fitHeight,
                 child: Container(
-                    child: child))));
+                    child: child == null ? Text('') : child))));
   }
 }
 
@@ -139,19 +139,19 @@ class MiddleKingdomWidget extends QuestWidget {
   Widget _buildTable() {
     return Table(children: [
       TableRow(children: [
-        Text(' '),
-        Text(' '),
-        Text(' '),
+        QuestMiniTile(),
+        QuestMiniTile(),
+        QuestMiniTile(),
       ]),
       TableRow(children: [
-        Text(' '),
-        QuestMiniTile(check),
-        Text(' '),
+        QuestMiniTile(),
+        QuestMiniTile(child: check),
+        QuestMiniTile(),
       ]),
       TableRow(children: [
-        Text(' '),
-        Text(' '),
-        Text(' '),
+        QuestMiniTile(),
+        QuestMiniTile(),
+        QuestMiniTile(),
       ]),
     ]);
   }

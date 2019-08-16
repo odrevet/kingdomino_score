@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 import 'ageOfGiants.dart';
 import 'kingdom.dart';
@@ -85,6 +86,9 @@ class MainWidget extends StatefulWidget {
 class MainWidgetState extends State<MainWidget> {
   LandType selectedLandType = LandType.none;
   SelectionMode selectionMode = SelectionMode.land;
+  var groupWarning = AutoSizeGroup();
+  var groupScore = AutoSizeGroup();
+
   var kingdom = Kingdom(5);
   int _scoreProperty = 0;
   int _scoreQuest = 0;
@@ -148,27 +152,43 @@ class MainWidgetState extends State<MainWidget> {
       tableCells.add(TableCell(
           child: Align(
               alignment: Alignment.centerRight,
-              child: Text(warning.leftOperand.toString(), style: TextStyle(fontSize: fontSize)))));
+              child: AutoSizeText(warning.leftOperand.toString(),
+                  maxLines: 1,
+                  group: groupWarning,
+                  style: TextStyle(fontSize: fontSize)))));
 
       tableCells.add(TableCell(
           child: Align(
               alignment: Alignment.center,
-              child: Icon(MdiIcons.square, color: getColorForLandType(warning.landType)))));
+              child: AutoSizeText(square,
+                  maxLines: 1,
+                  group: groupWarning,
+                  style: TextStyle(
+                      color: getColorForLandType(warning.landType))))));
 
       tableCells.add(TableCell(
           child: Align(
               alignment: Alignment.center,
-              child: Text(crown * warning.crown, style: TextStyle(fontSize: fontSize)))));
+              child: AutoSizeText(crown * warning.crown,
+                  maxLines: 1,
+                  group: groupWarning,
+                  style: TextStyle(fontSize: fontSize)))));
 
       tableCells.add(TableCell(
           child: Align(
               alignment: Alignment.center,
-              child: Text(warning.operator, style: TextStyle(fontSize: fontSize)))));
+              child: AutoSizeText(warning.operator,
+                  maxLines: 1,
+                  group: groupWarning,
+                  style: TextStyle(fontSize: fontSize)))));
 
       tableCells.add(TableCell(
           child: Align(
               alignment: Alignment.centerRight,
-              child: Text(warning.rightOperand.toString(), style: TextStyle(fontSize: fontSize)))));
+              child: AutoSizeText(warning.rightOperand.toString(),
+                  maxLines: 1,
+                  group: groupWarning,
+                  style: TextStyle(fontSize: fontSize)))));
 
       TableRow tableRow = TableRow(children: tableCells);
       tableRows.add(tableRow);
@@ -180,9 +200,7 @@ class MainWidgetState extends State<MainWidget> {
         return AlertDialog(
           contentPadding: EdgeInsets.all(1.5),
           backgroundColor: Colors.white60,
-          content: SingleChildScrollView(
-              child: Table(
-                  children: tableRows)),
+          content: SingleChildScrollView(child: Table(children: tableRows)),
           actions: <Widget>[
             FlatButton(
               child: Icon(
@@ -256,35 +274,54 @@ class MainWidgetState extends State<MainWidget> {
         tableCells.add(TableCell(
             child: Align(
           alignment: Alignment.centerRight,
-          child: Text('${property.landCount}',
+          child: AutoSizeText('${property.landCount}',
+              maxLines: 1,
+              group: groupScore,
               style: TextStyle(fontSize: fontSize)),
         )));
         tableCells.add(TableCell(
             child: Align(
           alignment: Alignment.centerRight,
-          child:  Icon(MdiIcons.square, color: getColorForLandType(property.landType)),
+          child: AutoSizeText(square,
+              maxLines: 1,
+              group: groupScore,
+              style: TextStyle(color: getColorForLandType(property.landType))),
         )));
         tableCells.add(TableCell(
             child: Align(
                 alignment: Alignment.centerRight,
-                child: Text('x', style: TextStyle(fontSize: fontSize)))));
-        tableCells.add(TableCell(
-            child: Align(
-                alignment: Alignment.centerRight,
-                child: Text(property.crownCount.toString(),
+                child: AutoSizeText('x',
+                    maxLines: 1,
+                    group: groupScore,
                     style: TextStyle(fontSize: fontSize)))));
         tableCells.add(TableCell(
             child: Align(
                 alignment: Alignment.centerRight,
-                child: Text(crown, style: TextStyle(fontSize: fontSize)))));
-        tableCells.add(TableCell(
-            child: Align(
-                alignment: Alignment.center,
-                child: Text('=', style: TextStyle(fontSize: fontSize)))));
+                child: AutoSizeText(property.crownCount.toString(),
+                    maxLines: 1,
+                    group: groupScore,
+                    style: TextStyle(fontSize: fontSize)))));
         tableCells.add(TableCell(
             child: Align(
                 alignment: Alignment.centerRight,
-                child: Text('${property.landCount * property.crownCount}',
+                child: AutoSizeText(crown,
+                    maxLines: 1,
+                    group: groupScore,
+                    style: TextStyle(fontSize: fontSize)))));
+        tableCells.add(TableCell(
+            child: Align(
+                alignment: Alignment.center,
+                child: AutoSizeText('=',
+                    maxLines: 1,
+                    group: groupScore,
+                    style: TextStyle(fontSize: fontSize)))));
+        tableCells.add(TableCell(
+            child: Align(
+                alignment: Alignment.centerRight,
+                child: AutoSizeText(
+                    '${property.landCount * property.crownCount}',
+                    maxLines: 1,
+                    group: groupScore,
                     style: TextStyle(fontSize: fontSize)))));
 
         var tableRow = TableRow(children: tableCells);
@@ -295,25 +332,33 @@ class MainWidgetState extends State<MainWidget> {
       if (quests.isNotEmpty) {
         var tableCells = <TableCell>[];
 
-        tableCells.add(TableCell(child: Text('')));
-        tableCells.add(TableCell(child: Text('')));
-        tableCells.add(TableCell(child: Text('')));
-        tableCells.add(TableCell(child: Text('')));
+        tableCells.add(TableCell(child: AutoSizeText('')));
+        tableCells.add(TableCell(child: AutoSizeText('')));
+        tableCells.add(TableCell(child: AutoSizeText('')));
+        tableCells.add(TableCell(child: AutoSizeText('')));
 
         tableCells.add(TableCell(
             child: Align(
                 alignment: Alignment.centerRight,
-                child: Text(shield, style: TextStyle(fontSize: fontSize)))));
+                child: AutoSizeText(shield,
+                    maxLines: 1,
+                    group: groupScore,
+                    style: TextStyle(fontSize: fontSize)))));
 
         tableCells.add(TableCell(
             child: Align(
                 alignment: Alignment.center,
-                child: Text('=', style: TextStyle(fontSize: fontSize)))));
+                child: AutoSizeText('=',
+                    maxLines: 1,
+                    group: groupScore,
+                    style: TextStyle(fontSize: fontSize)))));
 
         tableCells.add(TableCell(
             child: Align(
                 alignment: Alignment.centerRight,
-                child: Text(_scoreQuest.toString(),
+                child: AutoSizeText(_scoreQuest.toString(),
+                    maxLines: 1,
+                    group: groupScore,
                     style: TextStyle(fontSize: fontSize)))));
 
         var tableRow = TableRow(children: tableCells);

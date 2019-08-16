@@ -179,7 +179,7 @@ class MainWidgetState extends State<MainWidget> {
       builder: (BuildContext context) {
         return AlertDialog(
           contentPadding: EdgeInsets.all(1.5),
-          backgroundColor: Colors.white54,
+          backgroundColor: Colors.white60,
           content: SingleChildScrollView(
               child: Table(
                   children: tableRows)),
@@ -203,7 +203,7 @@ class MainWidgetState extends State<MainWidget> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          backgroundColor: Colors.white54,
+          backgroundColor: Colors.white60,
           title: Text('Kingdomino Score',
               style: TextStyle(
                   color: Colors.amber,
@@ -328,7 +328,7 @@ class MainWidgetState extends State<MainWidget> {
       builder: (BuildContext context) {
         return AlertDialog(
           contentPadding: EdgeInsets.all(1.5),
-          backgroundColor: Colors.white54,
+          backgroundColor: Colors.white60,
           content: content,
           actions: <Widget>[
             FlatButton(

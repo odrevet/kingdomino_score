@@ -5,6 +5,8 @@ import 'ageOfGiants.dart';
 import 'kingdom.dart';
 import 'main.dart';
 import 'quest.dart';
+import 'quests/fourCorners.dart';
+import 'quests/localBusiness.dart';
 
 class _QuestDialogOption extends StatefulWidget {
   final MainWidgetState _mainWidgetState;

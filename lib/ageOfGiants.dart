@@ -4,7 +4,12 @@ import 'kingdom.dart';
 import 'kingdomWidget.dart';
 import 'main.dart' show castle, crown, square;
 import 'quest.dart';
-import 'folieDesGrandeurs.dart';
+import 'quests/folieDesGrandeurs.dart';
+import 'quests/bleakKing.dart';
+import 'quests/fourCorners.dart';
+import 'quests/localBusiness.dart';
+import 'quests/lostCorner.dart';
+
 
 const String giant = '\u{1F9D4}';
 
@@ -68,76 +73,6 @@ const Map<LandType, Map<String, dynamic>> gameAogSet = {
 
 // Quests
 
-class LocalBusiness extends Quest {
-  final int extraPoints = 5;
-
-  final LandType landType;
-
-  LocalBusiness(this.landType);
-
-  int getPoints(Kingdom kingdom) {
-    int castleX, castleY;
-
-    for (var x = 0; x < kingdom.size; x++) {
-      for (var y = 0; y < kingdom.size; y++) {
-        if (kingdom.getLand(x, y).landType == LandType.castle) {
-          castleX = x;
-          castleY = y;
-          break;
-        }
-      }
-    }
-
-    if (castleX == null) return 0;
-
-    int count = 0;
-
-    int x, y;
-
-    x = castleX - 1;
-    y = castleY - 1;
-    if (kingdom.isInBound(x, y) && kingdom.getLand(x, y).landType == landType)
-      count++;
-
-    x = castleX;
-    y = castleY - 1;
-    if (kingdom.isInBound(x, y) && kingdom.getLand(x, y).landType == landType)
-      count++;
-
-    x = castleX + 1;
-    y = castleY - 1;
-    if (kingdom.isInBound(x, y) && kingdom.getLand(x, y).landType == landType)
-      count++;
-
-    x = castleX - 1;
-    y = castleY;
-    if (kingdom.isInBound(x, y) && kingdom.getLand(x, y).landType == landType)
-      count++;
-
-    x = castleX + 1;
-    y = castleY;
-    if (kingdom.isInBound(x, y) && kingdom.getLand(x, y).landType == landType)
-      count++;
-
-    x = castleX - 1;
-    y = castleY + 1;
-    if (kingdom.isInBound(x, y) && kingdom.getLand(x, y).landType == landType)
-      count++;
-
-    x = castleX;
-    y = castleY + 1;
-    if (kingdom.isInBound(x, y) && kingdom.getLand(x, y).landType == landType)
-      count++;
-
-    x = castleX + 1;
-    y = castleY + 1;
-    if (kingdom.isInBound(x, y) && kingdom.getLand(x, y).landType == landType)
-      count++;
-
-    return extraPoints * count;
-  }
-}
-
 class LocalBusinessWidget extends QuestWidget {
   final LocalBusiness quest;
 
@@ -172,25 +107,6 @@ class LocalBusinessWidget extends QuestWidget {
       ]),
       QuestMiniKingdom(child: _buildTable())
     ]);
-  }
-}
-
-class FourCorners extends Quest {
-  final int extraPoints = 5;
-
-  LandType landType;
-
-  FourCorners(this.landType);
-
-  int getPoints(Kingdom kingdom) {
-    int count = 0;
-    int size = kingdom.size - 1;
-    if (kingdom.getLand(0, 0).landType == landType) count++;
-    if (kingdom.getLand(size, 0).landType == landType) count++;
-    if (kingdom.getLand(0, size).landType == landType) count++;
-    if (kingdom.getLand(size, size).landType == landType) count++;
-
-    return extraPoints * count;
   }
 }
 
@@ -231,21 +147,6 @@ class FourCornersWidget extends QuestWidget {
   }
 }
 
-class LostCorner extends Quest {
-  final int extraPoints = 20;
-
-  LostCorner();
-
-  int getPoints(Kingdom kingdom) {
-    int size = kingdom.size - 1;
-    return kingdom.getLand(0, 0).landType == LandType.castle ||
-            kingdom.getLand(size, 0).landType == LandType.castle ||
-            kingdom.getLand(0, size).landType == LandType.castle ||
-            kingdom.getLand(size, size).landType == LandType.castle
-        ? extraPoints
-        : 0;
-  }
-}
 
 class LostCornerWidget extends QuestWidget {
   final Quest quest = LostCorner();
@@ -329,30 +230,6 @@ class FolieDesGrandeursWidget extends QuestWidget {
           ]),
       QuestMiniKingdom(child: _buildTable())
     ]);
-  }
-}
-
-/// crown covered with giant count as no crown
-/// properties must be `at least` of 5 lands, as stated in the french booklet
-/// see https://boardgamegeek.com/thread/2032948/bleak-king-aka-poor-mans-bonus-quest-confusion
-class BleakKing extends Quest {
-  int extraPoints = 10;
-
-  BleakKing();
-
-  int getPoints(Kingdom kingdom) {
-    var properties = kingdom.getProperties();
-    int count = properties
-        .where((property) =>
-            (property.landType == LandType.wheat ||
-                property.landType == LandType.forest ||
-                property.landType == LandType.grassland ||
-                property.landType == LandType.lake) &&
-            property.crownCount == 0 &&
-            property.landCount >= 5)
-        .length;
-
-    return extraPoints * count;
   }
 }
 

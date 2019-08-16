@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'kingdom.dart';
 import 'kingdomWidget.dart';
 import 'main.dart' show castle;
+import 'quests/harmony.dart';
+import 'quests/middleKingdom.dart';
 
 const String shield = '\u{1F6E1}';
 const String check = '\u{2713}';
@@ -112,21 +114,6 @@ abstract class QuestWidget extends StatelessWidget {
   }) : super(key: key);
 }
 
-class Harmony extends Quest {
-  int extraPoints = 5;
-
-  int getPoints(Kingdom kingdom) {
-    return kingdom
-            .getLands()
-            .expand((i) => i)
-            .toList()
-            .where((land) => land.landType == LandType.none)
-            .isEmpty
-        ? extraPoints
-        : 0;
-  }
-}
-
 class HarmonyWidget extends QuestWidget {
   final quest = Harmony();
 
@@ -142,25 +129,6 @@ class HarmonyWidget extends QuestWidget {
       ]),
       Icon(Icons.delete)
     ]);
-  }
-}
-
-class MiddleKingdom extends Quest {
-  final int extraPoints = 10;
-
-  int getPoints(Kingdom kingdom) {
-    int x, y;
-
-    if (kingdom.size == 5) {
-      x = y = 2;
-    } else {
-      x = y = 3;
-    }
-
-    if (kingdom.getLand(x, y).landType == LandType.castle)
-      return extraPoints;
-    else
-      return 0;
   }
 }
 

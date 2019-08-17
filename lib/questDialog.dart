@@ -156,6 +156,9 @@ class _QuestDialogWidgetState extends State<QuestDialogWidget> {
     }
 
     SimpleDialog dialog = SimpleDialog(
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20.0))
+      ),
       children: options,
     );
 

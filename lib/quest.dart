@@ -57,6 +57,7 @@ class QuestMiniKingdom extends StatelessWidget {
         width: 50.0,
         child: child,
         decoration: BoxDecoration(
+          color: Colors.white,
             border: Border(
           right: BorderSide(width: 2.0, color: Colors.grey),
           top: BorderSide(width: 2.0, color: Colors.grey),

@@ -67,6 +67,7 @@ class KingdominoScore extends StatelessWidget {
     return MaterialApp(
       title: 'Kingdomino Score',
       theme: ThemeData(
+          dialogBackgroundColor: Color.fromARGB(225, 99, 203, 223),
           primarySwatch: Colors.brown,
           canvasColor: Colors.blueGrey,
           fontFamily: 'HammersmithOne'),
@@ -197,8 +198,9 @@ class MainWidgetState extends State<MainWidget> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          contentPadding: EdgeInsets.all(1.5),
-          backgroundColor: Colors.white60,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(20.0))
+          ),
           content: SingleChildScrollView(child: Table(children: tableRows)),
           actions: <Widget>[
             FlatButton(
@@ -220,7 +222,9 @@ class MainWidgetState extends State<MainWidget> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          backgroundColor: Colors.white60,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(20.0))
+          ),
           title: Text('Kingdomino Score',
               style: TextStyle(
                   color: Colors.amber,
@@ -371,8 +375,9 @@ class MainWidgetState extends State<MainWidget> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          contentPadding: EdgeInsets.all(1.5),
-          backgroundColor: Colors.white60,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(20.0))
+          ),
           content: content,
           actions: <Widget>[
             FlatButton(

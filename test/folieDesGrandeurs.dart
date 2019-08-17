@@ -1,7 +1,7 @@
 import "package:test/test.dart";
 
 import 'package:kingdomino_score_count/kingdom.dart';
-import 'package:kingdomino_score_count/folieDesGrandeurs.dart';
+import 'package:kingdomino_score_count/quests/folieDesGrandeurs.dart';
 
 /// Test crown configuration on multiple kingdoms
 /// We add crowns on lands of type 'none', which never happen in the actual

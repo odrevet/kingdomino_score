@@ -67,7 +67,7 @@ class KingdominoScore extends StatelessWidget {
     return MaterialApp(
       title: 'Kingdomino Score',
       theme: ThemeData(
-          dialogBackgroundColor: Color.fromARGB(225, 99, 203, 223),
+          dialogBackgroundColor: Color.fromARGB(225, 50, 150, 180),
           primarySwatch: Colors.brown,
           canvasColor: Colors.blueGrey,
           fontFamily: 'HammersmithOne'),

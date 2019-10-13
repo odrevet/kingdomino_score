@@ -272,7 +272,6 @@ class MainWidgetState extends State<MainWidget> {
           showDialog(
             context: context,
             builder: (context) {
-              String contentText = "Content of Dialog";
               return StatefulBuilder(
                 builder: (context, setState) {
                   return AlertDialog(

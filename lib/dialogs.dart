@@ -114,8 +114,6 @@ class ScoreDetailsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const double fontSize = 20.0;
-
     var properties = _mainWidgetState.kingdom.getProperties();
 
     Widget content;
@@ -275,8 +273,6 @@ class GiantsDetailsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const double fontSize = 20.0;
-
     List<Property> properties = _mainWidgetState.kingdom
         .getProperties()
         .where((property) => property.crownLost > 0)

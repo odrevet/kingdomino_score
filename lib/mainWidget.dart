@@ -212,30 +212,41 @@ class MainWidgetState extends State<MainWidget> {
   }
 
   Widget landButton(LandType landType) {
-    var isSelected = (selectionMode == SelectionMode.land ||
-            selectionMode == SelectionMode.castle) &&
-        selectedLandType == landType;
-
-    var outline = Border(
-      right: BorderSide(width: 3.5, color: Colors.blueGrey.shade600),
-      bottom: BorderSide(width: 3.5, color: Colors.blueGrey.shade900),
-    );
+    var isSelected =
+        selectionMode == SelectionMode.land && selectedLandType == landType;
 
     return GestureDetector(
         onTap: () => _onSelectLandType(landType),
         child: Container(
+            margin: EdgeInsets.all(5.0),
+            height: 50.0,
+            width: 50.0,
+            decoration: BoxDecoration(
+                border: isSelected
+                    ? _selectedBorder
+                    : landType == LandType.none ? null : outline),
+            child: Container(
+              color: getColorForLandType(landType),
+              child: null,
+            )));
+  }
+
+  Widget castleButton() {
+    bool isSelected = selectionMode == SelectionMode.castle &&
+        selectedLandType == LandType.castle;
+
+    return GestureDetector(
+        onTap: () => setState(() {
+              selectionMode = SelectionMode.castle;
+              selectedLandType = LandType.castle;
+            }),
+        child: Container(
           margin: EdgeInsets.all(5.0),
           height: 50.0,
           width: 50.0,
-          decoration: BoxDecoration(
-              border: isSelected
-                  ? _selectedBorder
-                  : landType == LandType.none ? null : outline),
-          child: Container(
-              color: getColorForLandType(landType),
-              child: landType == LandType.castle
-                  ? FittedBox(fit: BoxFit.fitHeight, child: Text(castle))
-                  : Text('')),
+          decoration:
+              BoxDecoration(border: isSelected ? _selectedBorder : outline),
+          child: FittedBox(fit: BoxFit.fitHeight, child: Text(castle)),
         ));
   }
 
@@ -280,7 +291,7 @@ class MainWidgetState extends State<MainWidget> {
       landButton(LandType.swamp),
       landButton(LandType.mine),
       landButton(LandType.none),
-      landButton(LandType.castle),
+      castleButton(),
       crownButton(),
     ];
 

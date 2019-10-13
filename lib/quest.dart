@@ -84,7 +84,7 @@ class QuestMiniTile extends StatelessWidget {
                     : Border.all(color: Colors.grey, width: 0.3)),
             child: FittedBox(
                 fit: BoxFit.fitHeight,
-                child: Container(child: child == null ? Text('') : child))));
+                child: Container(child: child == null ? Container() : child))));
   }
 }
 
@@ -98,7 +98,7 @@ Widget landWidget(LandType landType, [double size = 50.0]) {
         color: getColorForLandType(landType),
         child: landType == LandType.castle
             ? FittedBox(fit: BoxFit.fitWidth, child: Text(castle))
-            : Text('')),
+            : Container()),
   ));
 }
 

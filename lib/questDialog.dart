@@ -3,7 +3,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 
 import 'ageOfGiants.dart';
 import 'kingdom.dart';
-import 'main.dart';
+import 'mainWidget.dart';
 import 'quest.dart';
 import 'quests/fourCorners.dart';
 import 'quests/localBusiness.dart';
@@ -157,8 +157,7 @@ class _QuestDialogWidgetState extends State<QuestDialogWidget> {
 
     SimpleDialog dialog = SimpleDialog(
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(20.0))
-      ),
+          borderRadius: BorderRadius.all(Radius.circular(20.0))),
       children: options,
     );
 

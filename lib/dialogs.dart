@@ -1,10 +1,12 @@
-import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'kingdomWidget.dart';
+import 'package:flutter/material.dart';
+
 import 'ageOfGiants.dart';
 import 'kingdom.dart';
-import 'main.dart';
+import 'kingdomWidget.dart';
+import 'mainWidget.dart';
 import 'quest.dart';
+import 'warning.dart';
 
 class WarningsWidget extends StatelessWidget {
   final MainWidgetState _mainWidgetState;
@@ -133,20 +135,20 @@ class ScoreDetailsWidget extends StatelessWidget {
 
         tableCells.add(TableCell(
             child: Align(
-              alignment: Alignment.centerRight,
-              child: AutoSizeText('${property.landCount}',
-                  maxLines: 1,
-                  group: _mainWidgetState.groupScore,
-                  style: TextStyle(fontSize: fontSize)),
-            )));
+          alignment: Alignment.centerRight,
+          child: AutoSizeText('${property.landCount}',
+              maxLines: 1,
+              group: _mainWidgetState.groupScore,
+              style: TextStyle(fontSize: fontSize)),
+        )));
         tableCells.add(TableCell(
             child: Align(
-              alignment: Alignment.centerRight,
-              child: AutoSizeText(square,
-                  maxLines: 1,
-                  group: _mainWidgetState.groupScore,
-                  style: TextStyle(color: getColorForLandType(property.landType))),
-            )));
+          alignment: Alignment.centerRight,
+          child: AutoSizeText(square,
+              maxLines: 1,
+              group: _mainWidgetState.groupScore,
+              style: TextStyle(color: getColorForLandType(property.landType))),
+        )));
         tableCells.add(TableCell(
             child: Align(
                 alignment: Alignment.centerRight,
@@ -260,12 +262,11 @@ class ScoreDetailsWidget extends StatelessWidget {
       var tableRow = TableRow(children: tableCells);
       tableRows.add(tableRow);
 
-      content =  SingleChildScrollView(child: Table(children: tableRows));
+      content = SingleChildScrollView(child: Table(children: tableRows));
     }
     return content;
   }
 }
-
 
 class GiantsDetailsWidget extends StatelessWidget {
   final MainWidgetState _mainWidgetState;
@@ -301,20 +302,20 @@ class GiantsDetailsWidget extends StatelessWidget {
 
         tableCells.add(TableCell(
             child: Align(
-              alignment: Alignment.centerRight,
-              child: AutoSizeText('${property.landCount}',
-                  maxLines: 1,
-                  group: _mainWidgetState.groupScore,
-                  style: TextStyle(fontSize: fontSize)),
-            )));
+          alignment: Alignment.centerRight,
+          child: AutoSizeText('${property.landCount}',
+              maxLines: 1,
+              group: _mainWidgetState.groupScore,
+              style: TextStyle(fontSize: fontSize)),
+        )));
         tableCells.add(TableCell(
             child: Align(
-              alignment: Alignment.centerRight,
-              child: AutoSizeText(square,
-                  maxLines: 1,
-                  group: _mainWidgetState.groupScore,
-                  style: TextStyle(color: getColorForLandType(property.landType))),
-            )));
+          alignment: Alignment.centerRight,
+          child: AutoSizeText(square,
+              maxLines: 1,
+              group: _mainWidgetState.groupScore,
+              style: TextStyle(color: getColorForLandType(property.landType))),
+        )));
         tableCells.add(TableCell(
             child: Align(
                 alignment: Alignment.centerRight,
@@ -346,8 +347,7 @@ class GiantsDetailsWidget extends StatelessWidget {
         tableCells.add(TableCell(
             child: Align(
                 alignment: Alignment.centerRight,
-                child: AutoSizeText(
-                    '- $rowScore',
+                child: AutoSizeText('- $rowScore',
                     maxLines: 1,
                     group: _mainWidgetState.groupScore,
                     style: TextStyle(fontSize: fontSize)))));
@@ -372,7 +372,8 @@ class GiantsDetailsWidget extends StatelessWidget {
             }
           }
 
-          scoreQuestWithoutGiants += _mainWidgetState.quests[i].getPoints(kingdomWithoutGiants);
+          scoreQuestWithoutGiants +=
+              _mainWidgetState.quests[i].getPoints(kingdomWithoutGiants);
         }
 
         var tableCells = <TableCell>[];
@@ -385,7 +386,7 @@ class GiantsDetailsWidget extends StatelessWidget {
         tableCells.add(TableCell(
             child: Align(
                 alignment: Alignment.centerRight,
-                child: AutoSizeText(shield+giant,
+                child: AutoSizeText(shield + giant,
                     maxLines: 1,
                     group: _mainWidgetState.groupScore,
                     style: TextStyle(fontSize: fontSize)))));
@@ -401,7 +402,8 @@ class GiantsDetailsWidget extends StatelessWidget {
         tableCells.add(TableCell(
             child: Align(
                 alignment: Alignment.centerRight,
-                child: AutoSizeText('${_mainWidgetState.scoreOfQuest - scoreQuestWithoutGiants}',
+                child: AutoSizeText(
+                    '${_mainWidgetState.scoreOfQuest - scoreQuestWithoutGiants}',
                     maxLines: 1,
                     group: _mainWidgetState.groupScore,
                     style: TextStyle(fontSize: fontSize)))));
@@ -421,7 +423,7 @@ class GiantsDetailsWidget extends StatelessWidget {
       tableCells.add(TableCell(
           child: Align(
               alignment: Alignment.centerRight,
-              child: AutoSizeText('Σ'+giant,
+              child: AutoSizeText('Σ' + giant,
                   maxLines: 1,
                   group: _mainWidgetState.groupScore,
                   style: TextStyle(fontSize: fontSize)))));
@@ -437,7 +439,8 @@ class GiantsDetailsWidget extends StatelessWidget {
       tableCells.add(TableCell(
           child: Align(
               alignment: Alignment.centerRight,
-              child: AutoSizeText('- ${total - (_mainWidgetState.scoreOfQuest - scoreQuestWithoutGiants)}',
+              child: AutoSizeText(
+                  '- ${total - (_mainWidgetState.scoreOfQuest - scoreQuestWithoutGiants)}',
                   maxLines: 1,
                   group: _mainWidgetState.groupScore,
                   style: TextStyle(fontSize: fontSize)))));
@@ -445,7 +448,7 @@ class GiantsDetailsWidget extends StatelessWidget {
       var tableRow = TableRow(children: tableCells);
       tableRows.add(tableRow);
 
-      content =  SingleChildScrollView(child: Table(children: tableRows));
+      content = SingleChildScrollView(child: Table(children: tableRows));
     }
     return content;
   }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'kingdom.dart';
 import 'kingdomWidget.dart';
-import 'main.dart' show castle, crown, square;
+import 'mainWidget.dart' show castle, crown, square;
 import 'quest.dart';
 import 'quests/bleakKing.dart';
 import 'quests/folieDesGrandeurs.dart';

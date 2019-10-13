@@ -60,7 +60,7 @@ class Kingdom {
       if (landToAdd.landType == land.landType && landToAdd.isMarked == false) {
         property.landCount++;
         property.crownCount += landToAdd.getCrowns();
-        if(landToAdd.hasGiant)property.crownLost += landToAdd.crowns;
+        if (landToAdd.hasGiant) property.crownLost += landToAdd.crowns;
         _getAdjacentLand(x, y, property);
       }
     }
@@ -78,7 +78,7 @@ class Kingdom {
       property = Property(land.landType);
       property.landCount++;
       property.crownCount += land.getCrowns();
-      if(land.hasGiant)property.crownLost += land.crowns;
+      if (land.hasGiant) property.crownLost += land.crowns;
     }
 
     land.isMarked = true;
@@ -128,7 +128,7 @@ class Property {
   LandType landType;
   int crownCount = 0;
   int landCount = 0;
-  int crownLost = 0;  //AoG
+  int crownLost = 0; //AoG
 
   Property(this.landType);
 }

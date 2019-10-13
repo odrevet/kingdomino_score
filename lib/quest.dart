@@ -3,7 +3,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 
 import 'kingdom.dart';
 import 'kingdomWidget.dart';
-import 'main.dart' show castle;
+import 'mainWidget.dart' show castle;
 import 'quests/harmony.dart';
 import 'quests/middleKingdom.dart';
 
@@ -57,13 +57,13 @@ class QuestMiniKingdom extends StatelessWidget {
         width: 50.0,
         child: child,
         decoration: BoxDecoration(
-          color: Colors.white,
+            color: Colors.white,
             border: Border(
-          right: BorderSide(width: 2.0, color: Colors.grey),
-          top: BorderSide(width: 2.0, color: Colors.grey),
-          left: BorderSide(width: 2.0, color: Colors.blueGrey),
-          bottom: BorderSide(width: 2.0, color: Colors.blueGrey),
-        )));
+              right: BorderSide(width: 2.0, color: Colors.grey),
+              top: BorderSide(width: 2.0, color: Colors.grey),
+              left: BorderSide(width: 2.0, color: Colors.blueGrey),
+              bottom: BorderSide(width: 2.0, color: Colors.blueGrey),
+            )));
   }
 }
 

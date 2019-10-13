@@ -473,6 +473,26 @@ class MainWidgetState extends State<MainWidget> {
 
       //quests points
       if (quests.isNotEmpty) {
+
+        //calculate quest score without giant
+        int scoreQuestWithoutGiants = 0;
+
+        //create a temporary kingdom without giants
+        for (var i = 0; i < quests.length; i++) {
+          Kingdom kingdomWithoutGiants = Kingdom(kingdom.size);
+
+          for (var x = 0; x < kingdom.size; x++) {
+            for (var y = 0; y < kingdom.size; y++) {
+              Land land = kingdomWithoutGiants.getLand(y, x);
+              land.hasGiant = false;
+              land.crowns = kingdom.getLand(y, x).crowns;
+              land.landType = kingdom.getLand(y, x).landType;
+            }
+          }
+
+          scoreQuestWithoutGiants += quests[i].getPoints(kingdomWithoutGiants);
+        }
+
         var tableCells = <TableCell>[];
 
         tableCells.add(TableCell(child: AutoSizeText('')));
@@ -483,7 +503,7 @@ class MainWidgetState extends State<MainWidget> {
         tableCells.add(TableCell(
             child: Align(
                 alignment: Alignment.centerRight,
-                child: AutoSizeText(shield,
+                child: AutoSizeText(shield+giant,
                     maxLines: 1,
                     group: groupScore,
                     style: TextStyle(fontSize: fontSize)))));
@@ -499,7 +519,7 @@ class MainWidgetState extends State<MainWidget> {
         tableCells.add(TableCell(
             child: Align(
                 alignment: Alignment.centerRight,
-                child: AutoSizeText(_scoreQuest.toString(),
+                child: AutoSizeText('${_scoreQuest - scoreQuestWithoutGiants}',
                     maxLines: 1,
                     group: groupScore,
                     style: TextStyle(fontSize: fontSize)))));

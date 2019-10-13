@@ -472,6 +472,7 @@ class MainWidgetState extends State<MainWidget> {
             FlatButton(
               child: Icon(
                 Icons.done,
+                color: Colors.black87,
               ),
               onPressed: () {
                 Navigator.of(context).pop();

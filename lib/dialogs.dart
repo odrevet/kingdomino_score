@@ -8,6 +8,8 @@ import 'mainWidget.dart';
 import 'quest.dart';
 import 'warning.dart';
 
+var _textStyle = TextStyle(color: Colors.black87);
+
 class WarningsWidget extends StatelessWidget {
   final MainWidgetState _mainWidgetState;
 
@@ -16,8 +18,6 @@ class WarningsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var tableRows = <TableRow>[];
-
-    const double fontSize = 20.0;
 
     for (Warning warning in _mainWidgetState.warnings) {
       var tableCells = <TableCell>[];
@@ -28,7 +28,7 @@ class WarningsWidget extends StatelessWidget {
               child: AutoSizeText(warning.leftOperand.toString(),
                   maxLines: 1,
                   group: _mainWidgetState.groupWarning,
-                  style: TextStyle(fontSize: fontSize)))));
+                  style: _textStyle))));
 
       tableCells.add(TableCell(
           child: Align(
@@ -45,7 +45,7 @@ class WarningsWidget extends StatelessWidget {
               child: AutoSizeText(crown * warning.crown,
                   maxLines: 1,
                   group: _mainWidgetState.groupWarning,
-                  style: TextStyle(fontSize: fontSize)))));
+                  style: _textStyle))));
 
       tableCells.add(TableCell(
           child: Align(
@@ -53,7 +53,7 @@ class WarningsWidget extends StatelessWidget {
               child: AutoSizeText(warning.operator,
                   maxLines: 1,
                   group: _mainWidgetState.groupWarning,
-                  style: TextStyle(fontSize: fontSize)))));
+                  style: _textStyle))));
 
       tableCells.add(TableCell(
           child: Align(
@@ -61,7 +61,7 @@ class WarningsWidget extends StatelessWidget {
               child: AutoSizeText(warning.rightOperand.toString(),
                   maxLines: 1,
                   group: _mainWidgetState.groupWarning,
-                  style: TextStyle(fontSize: fontSize)))));
+                  style: _textStyle))));
 
       TableRow tableRow = TableRow(children: tableCells);
       tableRows.add(tableRow);
@@ -91,7 +91,7 @@ aboutDialog(BuildContext context) {
                   )
                 ])),
         content: const Text('Olivier Drevet - GPL v.3',
-            style: TextStyle(fontSize: 15.0)),
+            style: TextStyle(fontSize: 20.0, color: Colors.black)),
         actions: <Widget>[
           FlatButton(
             child: Icon(
@@ -139,7 +139,7 @@ class ScoreDetailsWidget extends StatelessWidget {
           child: AutoSizeText('${property.landCount}',
               maxLines: 1,
               group: _mainWidgetState.groupScore,
-              style: TextStyle(fontSize: fontSize)),
+              style: _textStyle),
         )));
         tableCells.add(TableCell(
             child: Align(
@@ -155,28 +155,28 @@ class ScoreDetailsWidget extends StatelessWidget {
                 child: AutoSizeText('x',
                     maxLines: 1,
                     group: _mainWidgetState.groupScore,
-                    style: TextStyle(fontSize: fontSize)))));
+                    style: _textStyle))));
         tableCells.add(TableCell(
             child: Align(
                 alignment: Alignment.centerRight,
                 child: AutoSizeText(property.crownCount.toString(),
                     maxLines: 1,
                     group: _mainWidgetState.groupScore,
-                    style: TextStyle(fontSize: fontSize)))));
+                    style: _textStyle))));
         tableCells.add(TableCell(
             child: Align(
                 alignment: Alignment.centerRight,
                 child: AutoSizeText(crown,
                     maxLines: 1,
                     group: _mainWidgetState.groupScore,
-                    style: TextStyle(fontSize: fontSize)))));
+                    style: _textStyle))));
         tableCells.add(TableCell(
             child: Align(
                 alignment: Alignment.center,
                 child: AutoSizeText('=',
                     maxLines: 1,
                     group: _mainWidgetState.groupScore,
-                    style: TextStyle(fontSize: fontSize)))));
+                    style: _textStyle))));
         tableCells.add(TableCell(
             child: Align(
                 alignment: Alignment.centerRight,
@@ -184,7 +184,7 @@ class ScoreDetailsWidget extends StatelessWidget {
                     '${property.landCount * property.crownCount}',
                     maxLines: 1,
                     group: _mainWidgetState.groupScore,
-                    style: TextStyle(fontSize: fontSize)))));
+                    style: _textStyle))));
 
         var tableRow = TableRow(children: tableCells);
         tableRows.add(tableRow);
@@ -205,7 +205,7 @@ class ScoreDetailsWidget extends StatelessWidget {
                 child: AutoSizeText(shield,
                     maxLines: 1,
                     group: _mainWidgetState.groupScore,
-                    style: TextStyle(fontSize: fontSize)))));
+                    style: _textStyle))));
 
         tableCells.add(TableCell(
             child: Align(
@@ -213,7 +213,7 @@ class ScoreDetailsWidget extends StatelessWidget {
                 child: AutoSizeText('=',
                     maxLines: 1,
                     group: _mainWidgetState.groupScore,
-                    style: TextStyle(fontSize: fontSize)))));
+                    style: _textStyle))));
 
         tableCells.add(TableCell(
             child: Align(
@@ -221,7 +221,7 @@ class ScoreDetailsWidget extends StatelessWidget {
                 child: AutoSizeText(_mainWidgetState.scoreOfQuest.toString(),
                     maxLines: 1,
                     group: _mainWidgetState.groupScore,
-                    style: TextStyle(fontSize: fontSize)))));
+                    style: _textStyle))));
 
         var tableRow = TableRow(children: tableCells);
         tableRows.add(tableRow);
@@ -241,7 +241,7 @@ class ScoreDetailsWidget extends StatelessWidget {
               child: AutoSizeText('Σ',
                   maxLines: 1,
                   group: _mainWidgetState.groupScore,
-                  style: TextStyle(fontSize: fontSize)))));
+                  style: _textStyle))));
 
       tableCells.add(TableCell(
           child: Align(
@@ -249,7 +249,7 @@ class ScoreDetailsWidget extends StatelessWidget {
               child: AutoSizeText('=',
                   maxLines: 1,
                   group: _mainWidgetState.groupScore,
-                  style: TextStyle(fontSize: fontSize)))));
+                  style: _textStyle))));
 
       tableCells.add(TableCell(
           child: Align(
@@ -257,7 +257,7 @@ class ScoreDetailsWidget extends StatelessWidget {
               child: AutoSizeText(_mainWidgetState.score.toString(),
                   maxLines: 1,
                   group: _mainWidgetState.groupScore,
-                  style: TextStyle(fontSize: fontSize)))));
+                  style: _textStyle))));
 
       var tableRow = TableRow(children: tableCells);
       tableRows.add(tableRow);
@@ -306,7 +306,7 @@ class GiantsDetailsWidget extends StatelessWidget {
           child: AutoSizeText('${property.landCount}',
               maxLines: 1,
               group: _mainWidgetState.groupScore,
-              style: TextStyle(fontSize: fontSize)),
+              style: _textStyle),
         )));
         tableCells.add(TableCell(
             child: Align(
@@ -322,35 +322,35 @@ class GiantsDetailsWidget extends StatelessWidget {
                 child: AutoSizeText('x',
                     maxLines: 1,
                     group: _mainWidgetState.groupScore,
-                    style: TextStyle(fontSize: fontSize)))));
+                    style: _textStyle))));
         tableCells.add(TableCell(
             child: Align(
                 alignment: Alignment.centerRight,
                 child: AutoSizeText(property.crownLost.toString(),
                     maxLines: 1,
                     group: _mainWidgetState.groupScore,
-                    style: TextStyle(fontSize: fontSize)))));
+                    style: _textStyle))));
         tableCells.add(TableCell(
             child: Align(
                 alignment: Alignment.centerRight,
                 child: AutoSizeText(crown + giant,
                     maxLines: 1,
                     group: _mainWidgetState.groupScore,
-                    style: TextStyle(fontSize: fontSize)))));
+                    style: _textStyle))));
         tableCells.add(TableCell(
             child: Align(
                 alignment: Alignment.center,
                 child: AutoSizeText('=',
                     maxLines: 1,
                     group: _mainWidgetState.groupScore,
-                    style: TextStyle(fontSize: fontSize)))));
+                    style: _textStyle))));
         tableCells.add(TableCell(
             child: Align(
                 alignment: Alignment.centerRight,
                 child: AutoSizeText('- $rowScore',
                     maxLines: 1,
                     group: _mainWidgetState.groupScore,
-                    style: TextStyle(fontSize: fontSize)))));
+                    style: _textStyle))));
 
         var tableRow = TableRow(children: tableCells);
         tableRows.add(tableRow);
@@ -389,7 +389,7 @@ class GiantsDetailsWidget extends StatelessWidget {
                 child: AutoSizeText(shield + giant,
                     maxLines: 1,
                     group: _mainWidgetState.groupScore,
-                    style: TextStyle(fontSize: fontSize)))));
+                    style: _textStyle))));
 
         tableCells.add(TableCell(
             child: Align(
@@ -397,7 +397,7 @@ class GiantsDetailsWidget extends StatelessWidget {
                 child: AutoSizeText('=',
                     maxLines: 1,
                     group: _mainWidgetState.groupScore,
-                    style: TextStyle(fontSize: fontSize)))));
+                    style: _textStyle))));
 
         tableCells.add(TableCell(
             child: Align(
@@ -406,7 +406,7 @@ class GiantsDetailsWidget extends StatelessWidget {
                     '${_mainWidgetState.scoreOfQuest - scoreQuestWithoutGiants}',
                     maxLines: 1,
                     group: _mainWidgetState.groupScore,
-                    style: TextStyle(fontSize: fontSize)))));
+                    style: _textStyle))));
 
         var tableRow = TableRow(children: tableCells);
         tableRows.add(tableRow);
@@ -426,7 +426,7 @@ class GiantsDetailsWidget extends StatelessWidget {
               child: AutoSizeText('Σ' + giant,
                   maxLines: 1,
                   group: _mainWidgetState.groupScore,
-                  style: TextStyle(fontSize: fontSize)))));
+                  style: _textStyle))));
 
       tableCells.add(TableCell(
           child: Align(
@@ -434,7 +434,7 @@ class GiantsDetailsWidget extends StatelessWidget {
               child: AutoSizeText('=',
                   maxLines: 1,
                   group: _mainWidgetState.groupScore,
-                  style: TextStyle(fontSize: fontSize)))));
+                  style: _textStyle))));
 
       tableCells.add(TableCell(
           child: Align(
@@ -443,7 +443,7 @@ class GiantsDetailsWidget extends StatelessWidget {
                   '- ${total - (_mainWidgetState.scoreOfQuest - scoreQuestWithoutGiants)}',
                   maxLines: 1,
                   group: _mainWidgetState.groupScore,
-                  style: TextStyle(fontSize: fontSize)))));
+                  style: _textStyle))));
 
       var tableRow = TableRow(children: tableCells);
       tableRows.add(tableRow);
@@ -453,6 +453,3 @@ class GiantsDetailsWidget extends StatelessWidget {
     return content;
   }
 }
-
-
-

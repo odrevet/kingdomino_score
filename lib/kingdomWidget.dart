@@ -65,18 +65,17 @@ class _KingdomWidgetState extends State<KingdomWidget> {
 
   Widget _buildLand(int y, int x) {
     Land land = _mainWidgetState.kingdom.getLand(x, y);
-    Color color = getColorForLandType(land.landType);
 
     var container;
     if (land.landType == LandType.castle)
       container = Container(
-          color: color,
+          color: _mainWidgetState.color,
           child: FittedBox(fit: BoxFit.fitWidth, child: Text(castle)));
     else {
       String text = crown * land.crowns;
       if (land.hasGiant) text += giant;
       container = Container(
-        color: color,
+        color: getColorForLandType(land.landType),
         child: LayoutBuilder(
             builder: (BuildContext context, BoxConstraints constraints) {
           return Text(text,

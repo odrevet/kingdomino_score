@@ -453,3 +453,6 @@ class GiantsDetailsWidget extends StatelessWidget {
     return content;
   }
 }
+
+
+

@@ -64,6 +64,8 @@ class MainWidgetState extends State<MainWidget> {
   int scoreOfQuest = 0;
   int score = 0;
 
+  Color color;
+
   bool aog = false; // Age of Giants extension
   List<Quest> quests = []; //standard : 0, 1 or 2, aog : 2
   List<Warning> warnings = [];
@@ -82,8 +84,9 @@ class MainWidgetState extends State<MainWidget> {
 
   @override
   initState() {
-    super.initState();
+    color = Colors.white;
     _onSelectCastle();
+    super.initState();
   }
 
   Map<LandType, Map<String, dynamic>> getGameSet() {
@@ -231,6 +234,20 @@ class MainWidgetState extends State<MainWidget> {
             )));
   }
 
+  _colorbutton(Color color) {
+    return GestureDetector(
+        onTap: () => setState(() {
+              this.color = color;
+            }),
+        child: Container(
+          margin: EdgeInsets.all(5.0),
+          height: 50.0,
+          width: 50.0,
+          decoration: BoxDecoration(color: color),
+          child: Container(),
+        ));
+  }
+
   Widget castleButton() {
     bool isSelected = selectionMode == SelectionMode.castle &&
         selectedLandType == LandType.castle;
@@ -240,12 +257,41 @@ class MainWidgetState extends State<MainWidget> {
               selectionMode = SelectionMode.castle;
               selectedLandType = LandType.castle;
             }),
+        onLongPress: () {
+          var buttons = <Widget>[
+            _colorbutton(Colors.yellow),
+            _colorbutton(Colors.blue),
+            _colorbutton(Colors.green),
+            _colorbutton(Colors.pink)
+          ];
+
+          if (aog == true) {
+            buttons.add(_colorbutton(Colors.brown));
+          }
+
+          showDialog(
+            context: context,
+            builder: (context) {
+              String contentText = "Content of Dialog";
+              return StatefulBuilder(
+                builder: (context, setState) {
+                  return AlertDialog(
+                    content: Wrap(
+                      children: buttons,
+                    ),
+                  );
+                },
+              );
+            },
+          );
+        },
         child: Container(
           margin: EdgeInsets.all(5.0),
           height: 50.0,
           width: 50.0,
-          decoration:
-              BoxDecoration(border: isSelected ? _selectedBorder : outline),
+          decoration: BoxDecoration(
+              color: this.color,
+              border: isSelected ? _selectedBorder : outline),
           child: FittedBox(fit: BoxFit.fitHeight, child: Text(castle)),
         ));
   }

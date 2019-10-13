@@ -7,6 +7,7 @@ import 'kingdom.dart';
 import 'kingdomWidget.dart';
 import 'quest.dart';
 import 'questDialog.dart';
+import 'dialogs.dart';
 
 const String crown = '\u{1F451}';
 const String castle = '\u{1F3F0}';
@@ -90,13 +91,13 @@ class MainWidgetState extends State<MainWidget> {
   var groupScore = AutoSizeGroup();
 
   var kingdom = Kingdom(5);
-  int _scoreProperty = 0;
-  int _scoreQuest = 0;
-  int _score = 0;
+  int scoreProperty = 0;
+  int scoreOfQuest = 0;
+  int score = 0;
 
   bool aog = false; // Age of Giants extension
   List<Quest> quests = []; //standard : 0, 1 or 2, aog : 2
-  List<Warning> _warnings = [];
+  List<Warning> warnings = [];
 
   @override
   initState() {
@@ -141,491 +142,10 @@ class MainWidgetState extends State<MainWidget> {
     });
   }
 
-  _warningsDialog(BuildContext context) {
-    var tableRows = <TableRow>[];
-
-    const double fontSize = 20.0;
-
-    for (Warning warning in _warnings) {
-      var tableCells = <TableCell>[];
-
-      tableCells.add(TableCell(
-          child: Align(
-              alignment: Alignment.centerRight,
-              child: AutoSizeText(warning.leftOperand.toString(),
-                  maxLines: 1,
-                  group: groupWarning,
-                  style: TextStyle(fontSize: fontSize)))));
-
-      tableCells.add(TableCell(
-          child: Align(
-              alignment: Alignment.center,
-              child: AutoSizeText(square,
-                  maxLines: 1,
-                  group: groupWarning,
-                  style: TextStyle(
-                      color: getColorForLandType(warning.landType))))));
-
-      tableCells.add(TableCell(
-          child: Align(
-              alignment: Alignment.center,
-              child: AutoSizeText(crown * warning.crown,
-                  maxLines: 1,
-                  group: groupWarning,
-                  style: TextStyle(fontSize: fontSize)))));
-
-      tableCells.add(TableCell(
-          child: Align(
-              alignment: Alignment.center,
-              child: AutoSizeText(warning.operator,
-                  maxLines: 1,
-                  group: groupWarning,
-                  style: TextStyle(fontSize: fontSize)))));
-
-      tableCells.add(TableCell(
-          child: Align(
-              alignment: Alignment.centerRight,
-              child: AutoSizeText(warning.rightOperand.toString(),
-                  maxLines: 1,
-                  group: groupWarning,
-                  style: TextStyle(fontSize: fontSize)))));
-
-      TableRow tableRow = TableRow(children: tableCells);
-      tableRows.add(tableRow);
-    }
-
-    return showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(20.0))),
-          content: SingleChildScrollView(child: Table(children: tableRows)),
-          actions: <Widget>[
-            FlatButton(
-              child: Icon(
-                Icons.done,
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  _aboutDialog(BuildContext context) {
-    return showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(20.0))),
-          title: Text('Kingdomino Score',
-              style: TextStyle(
-                  color: Colors.amber,
-                  fontSize: 35.0,
-                  fontFamily: 'Augusta',
-                  shadows: <Shadow>[
-                    Shadow(
-                      offset: Offset(1.0, 1.0),
-                      blurRadius: 3.0,
-                      color: Color.fromARGB(255, 255, 255, 255),
-                    )
-                  ])),
-          content: const Text('Olivier Drevet - GPL v.3',
-              style: TextStyle(fontSize: 15.0)),
-          actions: <Widget>[
-            FlatButton(
-              child: Icon(
-                Icons.done,
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  _scoreDetailsDialog(BuildContext context) {
-    const double fontSize = 20.0;
-
-    var properties = kingdom.getProperties();
-
-    Widget content;
-
-    if (properties.isEmpty) {
-      const String shrug = '\u{1F937}';
-      content = Text(shrug,
-          textAlign: TextAlign.center, style: TextStyle(fontSize: 50.0));
-    } else {
-      properties.sort((property, propertyToComp) =>
-          (property.crownCount * property.landCount)
-              .compareTo(propertyToComp.crownCount * propertyToComp.landCount));
-
-      var tableRows = <TableRow>[];
-      for (var property in properties) {
-        var tableCells = <TableCell>[];
-
-        tableCells.add(TableCell(
-            child: Align(
-          alignment: Alignment.centerRight,
-          child: AutoSizeText('${property.landCount}',
-              maxLines: 1,
-              group: groupScore,
-              style: TextStyle(fontSize: fontSize)),
-        )));
-        tableCells.add(TableCell(
-            child: Align(
-          alignment: Alignment.centerRight,
-          child: AutoSizeText(square,
-              maxLines: 1,
-              group: groupScore,
-              style: TextStyle(color: getColorForLandType(property.landType))),
-        )));
-        tableCells.add(TableCell(
-            child: Align(
-                alignment: Alignment.centerRight,
-                child: AutoSizeText('x',
-                    maxLines: 1,
-                    group: groupScore,
-                    style: TextStyle(fontSize: fontSize)))));
-        tableCells.add(TableCell(
-            child: Align(
-                alignment: Alignment.centerRight,
-                child: AutoSizeText(property.crownCount.toString(),
-                    maxLines: 1,
-                    group: groupScore,
-                    style: TextStyle(fontSize: fontSize)))));
-        tableCells.add(TableCell(
-            child: Align(
-                alignment: Alignment.centerRight,
-                child: AutoSizeText(crown,
-                    maxLines: 1,
-                    group: groupScore,
-                    style: TextStyle(fontSize: fontSize)))));
-        tableCells.add(TableCell(
-            child: Align(
-                alignment: Alignment.center,
-                child: AutoSizeText('=',
-                    maxLines: 1,
-                    group: groupScore,
-                    style: TextStyle(fontSize: fontSize)))));
-        tableCells.add(TableCell(
-            child: Align(
-                alignment: Alignment.centerRight,
-                child: AutoSizeText(
-                    '${property.landCount * property.crownCount}',
-                    maxLines: 1,
-                    group: groupScore,
-                    style: TextStyle(fontSize: fontSize)))));
-
-        var tableRow = TableRow(children: tableCells);
-        tableRows.add(tableRow);
-      }
-
-      //quests points
-      if (quests.isNotEmpty) {
-        var tableCells = <TableCell>[];
-
-        tableCells.add(TableCell(child: AutoSizeText('')));
-        tableCells.add(TableCell(child: AutoSizeText('')));
-        tableCells.add(TableCell(child: AutoSizeText('')));
-        tableCells.add(TableCell(child: AutoSizeText('')));
-
-        tableCells.add(TableCell(
-            child: Align(
-                alignment: Alignment.centerRight,
-                child: AutoSizeText(shield,
-                    maxLines: 1,
-                    group: groupScore,
-                    style: TextStyle(fontSize: fontSize)))));
-
-        tableCells.add(TableCell(
-            child: Align(
-                alignment: Alignment.center,
-                child: AutoSizeText('=',
-                    maxLines: 1,
-                    group: groupScore,
-                    style: TextStyle(fontSize: fontSize)))));
-
-        tableCells.add(TableCell(
-            child: Align(
-                alignment: Alignment.centerRight,
-                child: AutoSizeText(_scoreQuest.toString(),
-                    maxLines: 1,
-                    group: groupScore,
-                    style: TextStyle(fontSize: fontSize)))));
-
-        var tableRow = TableRow(children: tableCells);
-        tableRows.add(tableRow);
-      }
-
-      //SUM
-      var tableCells = <TableCell>[];
-
-      tableCells.add(TableCell(child: AutoSizeText('')));
-      tableCells.add(TableCell(child: AutoSizeText('')));
-      tableCells.add(TableCell(child: AutoSizeText('')));
-      tableCells.add(TableCell(child: AutoSizeText('')));
-
-      tableCells.add(TableCell(
-          child: Align(
-              alignment: Alignment.centerRight,
-              child: AutoSizeText('Σ',
-                  maxLines: 1,
-                  group: groupScore,
-                  style: TextStyle(fontSize: fontSize)))));
-
-      tableCells.add(TableCell(
-          child: Align(
-              alignment: Alignment.center,
-              child: AutoSizeText('=',
-                  maxLines: 1,
-                  group: groupScore,
-                  style: TextStyle(fontSize: fontSize)))));
-
-      tableCells.add(TableCell(
-          child: Align(
-              alignment: Alignment.centerRight,
-              child: AutoSizeText(_score.toString(),
-                  maxLines: 1,
-                  group: groupScore,
-                  style: TextStyle(fontSize: fontSize)))));
-
-      var tableRow = TableRow(children: tableCells);
-      tableRows.add(tableRow);
-
-      content = SingleChildScrollView(child: Table(children: tableRows));
-    }
-
-    return showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(20.0))),
-          content: content,
-          actions: <Widget>[
-            FlatButton(
-              child: Icon(
-                Icons.done,
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  _giantDetailsDialog(BuildContext context) {
-    const double fontSize = 20.0;
-
-    List<Property> properties = kingdom
-        .getProperties()
-        .where((property) => property.crownLost > 0)
-        .toList();
-
-    Widget content;
-
-    if (properties.isEmpty) {
-      const String shrug = '\u{1F937}';
-      content = Text(shrug,
-          textAlign: TextAlign.center, style: TextStyle(fontSize: 50.0));
-    } else {
-      properties.sort((property, propertyToComp) =>
-          (property.crownCount * property.landCount)
-              .compareTo(propertyToComp.crownCount * propertyToComp.landCount));
-
-      int total = 0;
-      var tableRows = <TableRow>[];
-      for (var property in properties) {
-        int rowScore = property.landCount * property.crownLost;
-        total += rowScore;
-        var tableCells = <TableCell>[];
-
-        tableCells.add(TableCell(
-            child: Align(
-          alignment: Alignment.centerRight,
-          child: AutoSizeText('${property.landCount}',
-              maxLines: 1,
-              group: groupScore,
-              style: TextStyle(fontSize: fontSize)),
-        )));
-        tableCells.add(TableCell(
-            child: Align(
-          alignment: Alignment.centerRight,
-          child: AutoSizeText(square,
-              maxLines: 1,
-              group: groupScore,
-              style: TextStyle(color: getColorForLandType(property.landType))),
-        )));
-        tableCells.add(TableCell(
-            child: Align(
-                alignment: Alignment.centerRight,
-                child: AutoSizeText('x',
-                    maxLines: 1,
-                    group: groupScore,
-                    style: TextStyle(fontSize: fontSize)))));
-        tableCells.add(TableCell(
-            child: Align(
-                alignment: Alignment.centerRight,
-                child: AutoSizeText(property.crownLost.toString(),
-                    maxLines: 1,
-                    group: groupScore,
-                    style: TextStyle(fontSize: fontSize)))));
-        tableCells.add(TableCell(
-            child: Align(
-                alignment: Alignment.centerRight,
-                child: AutoSizeText(crown + giant,
-                    maxLines: 1,
-                    group: groupScore,
-                    style: TextStyle(fontSize: fontSize)))));
-        tableCells.add(TableCell(
-            child: Align(
-                alignment: Alignment.center,
-                child: AutoSizeText('=',
-                    maxLines: 1,
-                    group: groupScore,
-                    style: TextStyle(fontSize: fontSize)))));
-        tableCells.add(TableCell(
-            child: Align(
-                alignment: Alignment.centerRight,
-                child: AutoSizeText(
-                    '- $rowScore',
-                    maxLines: 1,
-                    group: groupScore,
-                    style: TextStyle(fontSize: fontSize)))));
-
-        var tableRow = TableRow(children: tableCells);
-        tableRows.add(tableRow);
-      }
-
-      //quests points
-      int scoreQuestWithoutGiants = 0;
-      if (quests.isNotEmpty) {
-        //create a temporary kingdom without giants
-        for (var i = 0; i < quests.length; i++) {
-          Kingdom kingdomWithoutGiants = Kingdom(kingdom.size);
-
-          for (var x = 0; x < kingdom.size; x++) {
-            for (var y = 0; y < kingdom.size; y++) {
-              Land land = kingdomWithoutGiants.getLand(y, x);
-              land.hasGiant = false;
-              land.crowns = kingdom.getLand(y, x).crowns;
-              land.landType = kingdom.getLand(y, x).landType;
-            }
-          }
-
-          scoreQuestWithoutGiants += quests[i].getPoints(kingdomWithoutGiants);
-        }
-
-        var tableCells = <TableCell>[];
-
-        tableCells.add(TableCell(child: AutoSizeText('')));
-        tableCells.add(TableCell(child: AutoSizeText('')));
-        tableCells.add(TableCell(child: AutoSizeText('')));
-        tableCells.add(TableCell(child: AutoSizeText('')));
-
-        tableCells.add(TableCell(
-            child: Align(
-                alignment: Alignment.centerRight,
-                child: AutoSizeText(shield+giant,
-                    maxLines: 1,
-                    group: groupScore,
-                    style: TextStyle(fontSize: fontSize)))));
-
-        tableCells.add(TableCell(
-            child: Align(
-                alignment: Alignment.center,
-                child: AutoSizeText('=',
-                    maxLines: 1,
-                    group: groupScore,
-                    style: TextStyle(fontSize: fontSize)))));
-
-        tableCells.add(TableCell(
-            child: Align(
-                alignment: Alignment.centerRight,
-                child: AutoSizeText('${_scoreQuest - scoreQuestWithoutGiants}',
-                    maxLines: 1,
-                    group: groupScore,
-                    style: TextStyle(fontSize: fontSize)))));
-
-        var tableRow = TableRow(children: tableCells);
-        tableRows.add(tableRow);
-      }
-
-      //SUM
-      var tableCells = <TableCell>[];
-
-      tableCells.add(TableCell(child: AutoSizeText('')));
-      tableCells.add(TableCell(child: AutoSizeText('')));
-      tableCells.add(TableCell(child: AutoSizeText('')));
-      tableCells.add(TableCell(child: AutoSizeText('')));
-
-      tableCells.add(TableCell(
-          child: Align(
-              alignment: Alignment.centerRight,
-              child: AutoSizeText('Σ'+giant,
-                  maxLines: 1,
-                  group: groupScore,
-                  style: TextStyle(fontSize: fontSize)))));
-
-      tableCells.add(TableCell(
-          child: Align(
-              alignment: Alignment.center,
-              child: AutoSizeText('=',
-                  maxLines: 1,
-                  group: groupScore,
-                  style: TextStyle(fontSize: fontSize)))));
-
-      tableCells.add(TableCell(
-          child: Align(
-              alignment: Alignment.centerRight,
-              child: AutoSizeText('- ${total - (_scoreQuest - scoreQuestWithoutGiants)}',
-                  maxLines: 1,
-                  group: groupScore,
-                  style: TextStyle(fontSize: fontSize)))));
-
-      var tableRow = TableRow(children: tableCells);
-      tableRows.add(tableRow);
-
-      content = SingleChildScrollView(child: Table(children: tableRows));
-    }
-
-    return showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(20.0))),
-          content: content,
-          actions: <Widget>[
-            FlatButton(
-              child: Icon(
-                Icons.done,
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
 
   void clearWarnings() {
     setState(() {
-      _warnings.clear();
+      warnings.clear();
     });
   }
 
@@ -646,7 +166,7 @@ class MainWidgetState extends State<MainWidget> {
             Warning(count, landType, 0, '>', getGameSet()[landType]['count']);
 
         setState(() {
-          _warnings.add(warning);
+          warnings.add(warning);
         });
       }
 
@@ -667,7 +187,7 @@ class MainWidgetState extends State<MainWidget> {
               getGameSet()[landType]['crowns'][crownsCounter]);
 
           setState(() {
-            _warnings.add(warning);
+            warnings.add(warning);
           });
         }
       }
@@ -682,7 +202,7 @@ class MainWidgetState extends State<MainWidget> {
     }
 
     setState(() {
-      _scoreQuest = scoreQuest;
+      scoreOfQuest = scoreQuest;
     });
   }
 
@@ -695,19 +215,19 @@ class MainWidgetState extends State<MainWidget> {
   void updateScoreProperty() {
     var properties = kingdom.getProperties();
     setState(() {
-      _scoreProperty = kingdom.calculateScoreFromProperties(properties);
+      scoreProperty = kingdom.calculateScoreFromProperties(properties);
     });
   }
 
   void updateScore() {
     setState(() {
-      _score = _scoreProperty + _scoreQuest;
+      score = scoreProperty + scoreOfQuest;
     });
   }
 
   void resetScores() {
     setState(() {
-      _score = _scoreProperty = _scoreQuest = 0;
+      score = scoreProperty = scoreOfQuest = 0;
     });
   }
 
@@ -791,7 +311,7 @@ class MainWidgetState extends State<MainWidget> {
 
     return GestureDetector(
         onTap: () => _onSelectGiant(),
-        onLongPress: () => _giantDetailsDialog(context),
+        onLongPress: () => _showDialog(GiantsDetailsWidget(this), context),
         child: Container(
           margin: EdgeInsets.all(5.0),
           height: 50.0,
@@ -884,17 +404,17 @@ class MainWidgetState extends State<MainWidget> {
               _onSelectCastle();
             });
           }),
-      IconButton(icon: Icon(Icons.help), onPressed: () => _aboutDialog(context))
+      IconButton(icon: Icon(Icons.help), onPressed: () => aboutDialog(context))
     ];
 
-    if (_warnings.isNotEmpty) {
+    if (warnings.isNotEmpty) {
       actions.insert(
           0,
           Stack(
             children: <Widget>[
               IconButton(
                   icon: Icon(Icons.warning),
-                  onPressed: () => _warningsDialog(context)),
+                  onPressed: () => _showDialog(WarningsWidget(this), context)),
               Positioned(
                 right: 5,
                 top: 10,
@@ -909,7 +429,7 @@ class MainWidgetState extends State<MainWidget> {
                     minHeight: 12,
                   ),
                   child: Text(
-                    '${_warnings.length}',
+                    '${warnings.length}',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 10,
@@ -935,11 +455,34 @@ class MainWidgetState extends State<MainWidget> {
             child: FittedBox(
                 fit: BoxFit.fitHeight,
                 child: InkWell(
-                  child: Text(_score.toString(),
+                  child: Text(score.toString(),
                       style: TextStyle(color: Colors.white)),
-                  onTap: () => _scoreDetailsDialog(context),
+                  onTap: () => _showDialog(ScoreDetailsWidget(this), context),
                 )),
           )
         ]));
+  }
+
+  _showDialog(Widget content, BuildContext context){
+    showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(20.0))),
+          content: content,
+          actions: <Widget>[
+            FlatButton(
+              child: Icon(
+                Icons.done,
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }

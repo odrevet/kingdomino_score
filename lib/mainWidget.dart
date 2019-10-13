@@ -68,6 +68,18 @@ class MainWidgetState extends State<MainWidget> {
   List<Quest> quests = []; //standard : 0, 1 or 2, aog : 2
   List<Warning> warnings = [];
 
+  Border _selectedBorder = Border(
+    right: BorderSide(width: 3.5, color: Colors.red.shade600),
+    top: BorderSide(width: 3.5, color: Colors.red.shade600),
+    left: BorderSide(width: 3.5, color: Colors.red.shade600),
+    bottom: BorderSide(width: 3.5, color: Colors.red.shade900),
+  );
+
+  var outline = Border(
+    right: BorderSide(width: 3.5, color: Colors.blueGrey.shade600),
+    bottom: BorderSide(width: 3.5, color: Colors.blueGrey.shade900),
+  );
+
   @override
   initState() {
     super.initState();
@@ -217,13 +229,7 @@ class MainWidgetState extends State<MainWidget> {
           width: 50.0,
           decoration: BoxDecoration(
               border: isSelected
-                  ? Border(
-                      right: BorderSide(width: 3.5, color: Colors.red.shade600),
-                      top: BorderSide(width: 3.5, color: Colors.red.shade600),
-                      left: BorderSide(width: 3.5, color: Colors.red.shade600),
-                      bottom:
-                          BorderSide(width: 3.5, color: Colors.red.shade900),
-                    )
+                  ? _selectedBorder
                   : landType == LandType.none ? null : outline),
           child: Container(
               color: getColorForLandType(landType),
@@ -233,21 +239,8 @@ class MainWidgetState extends State<MainWidget> {
         ));
   }
 
-  final double margin = 5.0;
-
-  var selectedBorder = BorderSide(
-    color: Colors.red,
-    style: BorderStyle.solid,
-    width: 1.0,
-  );
-
   Widget crownButton() {
     var isSelected = selectionMode == SelectionMode.crown;
-
-    var outline = Border(
-      right: BorderSide(width: 3.5, color: Colors.blueGrey.shade600),
-      bottom: BorderSide(width: 3.5, color: Colors.blueGrey.shade900),
-    );
 
     return GestureDetector(
         onTap: () => _onSelectCrown(),
@@ -255,27 +248,14 @@ class MainWidgetState extends State<MainWidget> {
           margin: EdgeInsets.all(5.0),
           height: 50.0,
           width: 50.0,
-          decoration: BoxDecoration(
-              border: isSelected
-                  ? Border(
-                      right: BorderSide(width: 3.5, color: Colors.red.shade600),
-                      top: BorderSide(width: 3.5, color: Colors.red.shade600),
-                      left: BorderSide(width: 3.5, color: Colors.red.shade600),
-                      bottom:
-                          BorderSide(width: 3.5, color: Colors.red.shade900),
-                    )
-                  : outline),
+          decoration:
+              BoxDecoration(border: isSelected ? _selectedBorder : outline),
           child: FittedBox(fit: BoxFit.fitHeight, child: Text(crown)),
         ));
   }
 
   Widget giantButton() {
     var isSelected = selectionMode == SelectionMode.giant;
-
-    var outline = Border(
-      right: BorderSide(width: 3.5, color: Colors.blueGrey.shade600),
-      bottom: BorderSide(width: 3.5, color: Colors.blueGrey.shade900),
-    );
 
     return GestureDetector(
         onTap: () => _onSelectGiant(),
@@ -284,16 +264,8 @@ class MainWidgetState extends State<MainWidget> {
           margin: EdgeInsets.all(5.0),
           height: 50.0,
           width: 50.0,
-          decoration: BoxDecoration(
-              border: isSelected
-                  ? Border(
-                      right: BorderSide(width: 3.5, color: Colors.red.shade600),
-                      top: BorderSide(width: 3.5, color: Colors.red.shade600),
-                      left: BorderSide(width: 3.5, color: Colors.red.shade600),
-                      bottom:
-                          BorderSide(width: 3.5, color: Colors.red.shade900),
-                    )
-                  : outline),
+          decoration:
+              BoxDecoration(border: isSelected ? _selectedBorder : outline),
           child: FittedBox(fit: BoxFit.fitHeight, child: Text(giant)),
         ));
   }

@@ -366,6 +366,41 @@ class MainWidgetState extends State<MainWidget> {
         tableRows.add(tableRow);
       }
 
+      //SUM
+      var tableCells = <TableCell>[];
+
+      tableCells.add(TableCell(child: AutoSizeText('')));
+      tableCells.add(TableCell(child: AutoSizeText('')));
+      tableCells.add(TableCell(child: AutoSizeText('')));
+      tableCells.add(TableCell(child: AutoSizeText('')));
+
+      tableCells.add(TableCell(
+          child: Align(
+              alignment: Alignment.centerRight,
+              child: AutoSizeText('Σ',
+                  maxLines: 1,
+                  group: groupScore,
+                  style: TextStyle(fontSize: fontSize)))));
+
+      tableCells.add(TableCell(
+          child: Align(
+              alignment: Alignment.center,
+              child: AutoSizeText('=',
+                  maxLines: 1,
+                  group: groupScore,
+                  style: TextStyle(fontSize: fontSize)))));
+
+      tableCells.add(TableCell(
+          child: Align(
+              alignment: Alignment.centerRight,
+              child: AutoSizeText(_score.toString(),
+                  maxLines: 1,
+                  group: groupScore,
+                  style: TextStyle(fontSize: fontSize)))));
+
+      var tableRow = TableRow(children: tableCells);
+      tableRows.add(tableRow);
+
       content = SingleChildScrollView(child: Table(children: tableRows));
     }
 
@@ -410,8 +445,11 @@ class MainWidgetState extends State<MainWidget> {
           (property.crownCount * property.landCount)
               .compareTo(propertyToComp.crownCount * propertyToComp.landCount));
 
+      int total = 0;
       var tableRows = <TableRow>[];
       for (var property in properties) {
+        int rowScore = property.landCount * property.crownLost;
+        total += rowScore;
         var tableCells = <TableCell>[];
 
         tableCells.add(TableCell(
@@ -462,7 +500,7 @@ class MainWidgetState extends State<MainWidget> {
             child: Align(
                 alignment: Alignment.centerRight,
                 child: AutoSizeText(
-                    '- ${property.landCount * property.crownLost}',
+                    '- $rowScore',
                     maxLines: 1,
                     group: groupScore,
                     style: TextStyle(fontSize: fontSize)))));
@@ -472,11 +510,8 @@ class MainWidgetState extends State<MainWidget> {
       }
 
       //quests points
+      int scoreQuestWithoutGiants = 0;
       if (quests.isNotEmpty) {
-
-        //calculate quest score without giant
-        int scoreQuestWithoutGiants = 0;
-
         //create a temporary kingdom without giants
         for (var i = 0; i < quests.length; i++) {
           Kingdom kingdomWithoutGiants = Kingdom(kingdom.size);
@@ -527,6 +562,41 @@ class MainWidgetState extends State<MainWidget> {
         var tableRow = TableRow(children: tableCells);
         tableRows.add(tableRow);
       }
+
+      //SUM
+      var tableCells = <TableCell>[];
+
+      tableCells.add(TableCell(child: AutoSizeText('')));
+      tableCells.add(TableCell(child: AutoSizeText('')));
+      tableCells.add(TableCell(child: AutoSizeText('')));
+      tableCells.add(TableCell(child: AutoSizeText('')));
+
+      tableCells.add(TableCell(
+          child: Align(
+              alignment: Alignment.centerRight,
+              child: AutoSizeText('Σ'+giant,
+                  maxLines: 1,
+                  group: groupScore,
+                  style: TextStyle(fontSize: fontSize)))));
+
+      tableCells.add(TableCell(
+          child: Align(
+              alignment: Alignment.center,
+              child: AutoSizeText('=',
+                  maxLines: 1,
+                  group: groupScore,
+                  style: TextStyle(fontSize: fontSize)))));
+
+      tableCells.add(TableCell(
+          child: Align(
+              alignment: Alignment.centerRight,
+              child: AutoSizeText('- ${total - (_scoreQuest - scoreQuestWithoutGiants)}',
+                  maxLines: 1,
+                  group: groupScore,
+                  style: TextStyle(fontSize: fontSize)))));
+
+      var tableRow = TableRow(children: tableCells);
+      tableRows.add(tableRow);
 
       content = SingleChildScrollView(child: Table(children: tableRows));
     }

@@ -199,8 +199,7 @@ class MainWidgetState extends State<MainWidget> {
       builder: (BuildContext context) {
         return AlertDialog(
           shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(20.0))
-          ),
+              borderRadius: BorderRadius.all(Radius.circular(20.0))),
           content: SingleChildScrollView(child: Table(children: tableRows)),
           actions: <Widget>[
             FlatButton(
@@ -223,8 +222,7 @@ class MainWidgetState extends State<MainWidget> {
       builder: (BuildContext context) {
         return AlertDialog(
           shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(20.0))
-          ),
+              borderRadius: BorderRadius.all(Radius.circular(20.0))),
           title: Text('Kingdomino Score',
               style: TextStyle(
                   color: Colors.amber,
@@ -376,8 +374,149 @@ class MainWidgetState extends State<MainWidget> {
       builder: (BuildContext context) {
         return AlertDialog(
           shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(20.0))
-          ),
+              borderRadius: BorderRadius.all(Radius.circular(20.0))),
+          content: content,
+          actions: <Widget>[
+            FlatButton(
+              child: Icon(
+                Icons.done,
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  _giantDetailsDialog(BuildContext context) {
+    const double fontSize = 20.0;
+
+    List<Property> properties = kingdom
+        .getProperties()
+        .where((property) => property.crownLost > 0)
+        .toList();
+
+    Widget content;
+
+    if (properties.isEmpty) {
+      const String shrug = '\u{1F937}';
+      content = Text(shrug,
+          textAlign: TextAlign.center, style: TextStyle(fontSize: 50.0));
+    } else {
+      properties.sort((property, propertyToComp) =>
+          (property.crownCount * property.landCount)
+              .compareTo(propertyToComp.crownCount * propertyToComp.landCount));
+
+      var tableRows = <TableRow>[];
+      for (var property in properties) {
+        var tableCells = <TableCell>[];
+
+        tableCells.add(TableCell(
+            child: Align(
+          alignment: Alignment.centerRight,
+          child: AutoSizeText('${property.landCount}',
+              maxLines: 1,
+              group: groupScore,
+              style: TextStyle(fontSize: fontSize)),
+        )));
+        tableCells.add(TableCell(
+            child: Align(
+          alignment: Alignment.centerRight,
+          child: AutoSizeText(square,
+              maxLines: 1,
+              group: groupScore,
+              style: TextStyle(color: getColorForLandType(property.landType))),
+        )));
+        tableCells.add(TableCell(
+            child: Align(
+                alignment: Alignment.centerRight,
+                child: AutoSizeText('x',
+                    maxLines: 1,
+                    group: groupScore,
+                    style: TextStyle(fontSize: fontSize)))));
+        tableCells.add(TableCell(
+            child: Align(
+                alignment: Alignment.centerRight,
+                child: AutoSizeText(property.crownLost.toString(),
+                    maxLines: 1,
+                    group: groupScore,
+                    style: TextStyle(fontSize: fontSize)))));
+        tableCells.add(TableCell(
+            child: Align(
+                alignment: Alignment.centerRight,
+                child: AutoSizeText(crown + giant,
+                    maxLines: 1,
+                    group: groupScore,
+                    style: TextStyle(fontSize: fontSize)))));
+        tableCells.add(TableCell(
+            child: Align(
+                alignment: Alignment.center,
+                child: AutoSizeText('=',
+                    maxLines: 1,
+                    group: groupScore,
+                    style: TextStyle(fontSize: fontSize)))));
+        tableCells.add(TableCell(
+            child: Align(
+                alignment: Alignment.centerRight,
+                child: AutoSizeText(
+                    '- ${property.landCount * property.crownLost}',
+                    maxLines: 1,
+                    group: groupScore,
+                    style: TextStyle(fontSize: fontSize)))));
+
+        var tableRow = TableRow(children: tableCells);
+        tableRows.add(tableRow);
+      }
+
+      //quests points
+      if (quests.isNotEmpty) {
+        var tableCells = <TableCell>[];
+
+        tableCells.add(TableCell(child: AutoSizeText('')));
+        tableCells.add(TableCell(child: AutoSizeText('')));
+        tableCells.add(TableCell(child: AutoSizeText('')));
+        tableCells.add(TableCell(child: AutoSizeText('')));
+
+        tableCells.add(TableCell(
+            child: Align(
+                alignment: Alignment.centerRight,
+                child: AutoSizeText(shield,
+                    maxLines: 1,
+                    group: groupScore,
+                    style: TextStyle(fontSize: fontSize)))));
+
+        tableCells.add(TableCell(
+            child: Align(
+                alignment: Alignment.center,
+                child: AutoSizeText('=',
+                    maxLines: 1,
+                    group: groupScore,
+                    style: TextStyle(fontSize: fontSize)))));
+
+        tableCells.add(TableCell(
+            child: Align(
+                alignment: Alignment.centerRight,
+                child: AutoSizeText(_scoreQuest.toString(),
+                    maxLines: 1,
+                    group: groupScore,
+                    style: TextStyle(fontSize: fontSize)))));
+
+        var tableRow = TableRow(children: tableCells);
+        tableRows.add(tableRow);
+      }
+
+      content = SingleChildScrollView(child: Table(children: tableRows));
+    }
+
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(20.0))),
           content: content,
           actions: <Widget>[
             FlatButton(
@@ -524,26 +663,61 @@ class MainWidgetState extends State<MainWidget> {
     width: 1.0,
   );
 
-  Container crownButton() => Container(
-      margin: EdgeInsets.all(margin),
-      child: OutlineButton(
-          borderSide:
-              selectionMode == SelectionMode.crown ? selectedBorder : null,
-          onPressed: () => _onSelectCrown(),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-          child: Text(crown, style: TextStyle(fontSize: 30.0))));
+  Widget crownButton() {
+    var isSelected = selectionMode == SelectionMode.crown;
 
-  Container giantButton() {
-    return Container(
-        margin: EdgeInsets.all(margin),
-        child: OutlineButton(
-            borderSide:
-                selectionMode == SelectionMode.giant ? selectedBorder : null,
-            onPressed: () => _onSelectGiant(),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0)),
-            child: Text(giant, style: TextStyle(fontSize: 30.0))));
+    var outline = Border(
+      right: BorderSide(width: 3.5, color: Colors.blueGrey.shade600),
+      bottom: BorderSide(width: 3.5, color: Colors.blueGrey.shade900),
+    );
+
+    return GestureDetector(
+        onTap: () => _onSelectCrown(),
+        child: Container(
+          margin: EdgeInsets.all(5.0),
+          height: 50.0,
+          width: 50.0,
+          decoration: BoxDecoration(
+              border: isSelected
+                  ? Border(
+                      right: BorderSide(width: 3.5, color: Colors.red.shade600),
+                      top: BorderSide(width: 3.5, color: Colors.red.shade600),
+                      left: BorderSide(width: 3.5, color: Colors.red.shade600),
+                      bottom:
+                          BorderSide(width: 3.5, color: Colors.red.shade900),
+                    )
+                  : outline),
+          child: FittedBox(fit: BoxFit.fitHeight, child: Text(crown)),
+        ));
+  }
+
+  Widget giantButton() {
+    var isSelected = selectionMode == SelectionMode.giant;
+
+    var outline = Border(
+      right: BorderSide(width: 3.5, color: Colors.blueGrey.shade600),
+      bottom: BorderSide(width: 3.5, color: Colors.blueGrey.shade900),
+    );
+
+    return GestureDetector(
+        onTap: () => _onSelectGiant(),
+        onLongPress: () => _giantDetailsDialog(context),
+        child: Container(
+          margin: EdgeInsets.all(5.0),
+          height: 50.0,
+          width: 50.0,
+          decoration: BoxDecoration(
+              border: isSelected
+                  ? Border(
+                      right: BorderSide(width: 3.5, color: Colors.red.shade600),
+                      top: BorderSide(width: 3.5, color: Colors.red.shade600),
+                      left: BorderSide(width: 3.5, color: Colors.red.shade600),
+                      bottom:
+                          BorderSide(width: 3.5, color: Colors.red.shade900),
+                    )
+                  : outline),
+          child: FittedBox(fit: BoxFit.fitHeight, child: Text(giant)),
+        ));
   }
 
   @override

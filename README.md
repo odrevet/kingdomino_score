@@ -4,15 +4,23 @@ Calculate kingdomino score by entering the board !
 
 # Top menu buttons 
 
-AG : Activate / Deactivate the Age of Giants extension
+* Warnings (only displayed when at least on warning): check board for anomalities
 
-Shield : Select / Unselect quests
+* AG : Activate / Deactivate the Age of Giants extension
 
-5 / 7 : change the size of the board. Changing the size of the board reset all tiles
+* Shield : Select / Unselect quests
 
-Trash : Reset the board
+Two quests maximum can be selected at a time. 
 
-About : Display author and license
+There are more queets when Age of Giants is activated
+
+The number of quests activated are displayed in a red bubble 
+
+* 5 / 7 : change the size of the board. Changing the size of the board reset all tiles
+
+* Trash : Reset the board
+
+* About : Display author and license
 
 # Score 
 

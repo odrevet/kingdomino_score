@@ -70,8 +70,6 @@ the score you could had have without giants
 
 # Screenshots 
 
-# Captures d'écran 
-
 |  <img src="/screenshots/Screenshot_Principale.jpg" width="240px" /> |  <img src="/screenshots/board.jpg" width="240px" /> |
 |---|---|
 | <img src="/screenshots/Screenshot_titres.jpg" width="240px" />  | <img src="/screenshots/score.jpg" width="240px" />  |

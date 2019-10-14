@@ -445,6 +445,43 @@ class GiantsDetailsWidget extends StatelessWidget {
       var tableRow = TableRow(children: tableCells);
       tableRows.add(tableRow);
 
+      //SCORE WITHOUT GIANTS
+      var tableCellsTotalWithoutGiants = <TableCell>[];
+
+      tableCellsTotalWithoutGiants.add(TableCell(child: AutoSizeText('')));
+      tableCellsTotalWithoutGiants.add(TableCell(child: AutoSizeText('')));
+      tableCellsTotalWithoutGiants.add(TableCell(child: AutoSizeText('')));
+      tableCellsTotalWithoutGiants.add(TableCell(child: AutoSizeText('')));
+
+      tableCellsTotalWithoutGiants.add(TableCell(
+          child: Align(
+              alignment: Alignment.centerRight,
+              child: AutoSizeText('Σ',
+                  maxLines: 1,
+                  group: _mainWidgetState.groupScore,
+                  style: _textStyle))));
+
+      tableCellsTotalWithoutGiants.add(TableCell(
+          child: Align(
+              alignment: Alignment.center,
+              child: AutoSizeText('=',
+                  maxLines: 1,
+                  group: _mainWidgetState.groupScore,
+                  style: _textStyle))));
+
+      tableCellsTotalWithoutGiants.add(TableCell(
+          child: Align(
+              alignment: Alignment.centerRight,
+              child: AutoSizeText(
+                  '${_mainWidgetState.score + total}',
+                  maxLines: 1,
+                  group: _mainWidgetState.groupScore,
+                  style: _textStyle))));
+
+      var tableRowTotalWithoutGiants =
+          TableRow(children: tableCellsTotalWithoutGiants);
+      tableRows.add(tableRowTotalWithoutGiants);
+
       content = SingleChildScrollView(child: Table(children: tableRows));
     }
     return content;

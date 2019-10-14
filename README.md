@@ -1,6 +1,6 @@
 # kingdomino Score
 
-Calculate kingdomino score by entering the board ! 
+Calculate your "Kingdomino" and "Kingdomino Age of Giants" score easily
 
 # Top menu buttons 
 

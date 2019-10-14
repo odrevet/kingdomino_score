@@ -290,11 +290,11 @@ class GiantsDetailsWidget extends StatelessWidget {
           (property.crownCount * property.landCount)
               .compareTo(propertyToComp.crownCount * propertyToComp.landCount));
 
-      int total = 0;
+      int totalCrownPointLoss = 0;
       var tableRows = <TableRow>[];
       for (var property in properties) {
         int rowScore = property.landCount * property.crownLost;
-        total += rowScore;
+        totalCrownPointLoss += rowScore;
         var tableCells = <TableCell>[];
 
         tableCells.add(TableCell(
@@ -410,6 +410,7 @@ class GiantsDetailsWidget extends StatelessWidget {
       }
 
       //SUM
+      int totalGiantScore = (_mainWidgetState.scoreOfQuest - scoreQuestWithoutGiants) - totalCrownPointLoss;
       var tableCells = <TableCell>[];
 
       tableCells.add(TableCell(child: AutoSizeText('')));
@@ -437,7 +438,7 @@ class GiantsDetailsWidget extends StatelessWidget {
           child: Align(
               alignment: Alignment.centerRight,
               child: AutoSizeText(
-                  '${(_mainWidgetState.scoreOfQuest - scoreQuestWithoutGiants) - total}',
+                  '${totalGiantScore}',
                   maxLines: 1,
                   group: _mainWidgetState.groupScore,
                   style: _textStyle))));
@@ -473,7 +474,7 @@ class GiantsDetailsWidget extends StatelessWidget {
           child: Align(
               alignment: Alignment.centerRight,
               child: AutoSizeText(
-                  '${_mainWidgetState.score + total}',
+                  '${_mainWidgetState.score - totalGiantScore}',
                   maxLines: 1,
                   group: _mainWidgetState.groupScore,
                   style: _textStyle))));

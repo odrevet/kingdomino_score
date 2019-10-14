@@ -41,18 +41,20 @@ class _QuestDialogOptionState extends State<_QuestDialogOption> {
 
   @override
   Widget build(BuildContext context) {
+    Widget child = _active
+        ? Container(
+            decoration: BoxDecoration(
+                border: Border(
+              right: BorderSide(width: 3.5, color: Colors.red.shade600),
+              top: BorderSide(width: 3.5, color: Colors.red.shade600),
+              left: BorderSide(width: 3.5, color: Colors.red.shade600),
+              bottom: BorderSide(width: 3.5, color: Colors.red.shade900),
+            )),
+            child: questWidget)
+        : questWidget;
+
     return SimpleDialogOption(
-      child: _active
-          ? Container(
-              decoration: BoxDecoration(
-                  border: Border(
-                right: BorderSide(width: 3.5, color: Colors.red.shade600),
-                top: BorderSide(width: 3.5, color: Colors.red.shade600),
-                left: BorderSide(width: 3.5, color: Colors.red.shade600),
-                bottom: BorderSide(width: 3.5, color: Colors.red.shade900),
-              )),
-              child: questWidget)
-          : questWidget,
+      child: child,
       onPressed: () {
         setState(() {
           if (_mainWidgetState.quests.contains(questWidget.quest)) {

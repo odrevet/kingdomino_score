@@ -91,11 +91,12 @@ aboutDialog(BuildContext context) {
                   )
                 ])),
         content: const Text('Olivier Drevet - GPL v.3',
-            style: TextStyle(fontSize: 20.0, color: Colors.black)),
+            style: TextStyle(fontSize: 18.0, color: Colors.black)),
         actions: <Widget>[
           FlatButton(
             child: Icon(
               Icons.done,
+              color: Colors.black87,
             ),
             onPressed: () {
               Navigator.of(context).pop();
@@ -436,7 +437,7 @@ class GiantsDetailsWidget extends StatelessWidget {
           child: Align(
               alignment: Alignment.centerRight,
               child: AutoSizeText(
-                  '- ${total - (_mainWidgetState.scoreOfQuest - scoreQuestWithoutGiants)}',
+                  '${(_mainWidgetState.scoreOfQuest - scoreQuestWithoutGiants) - total}',
                   maxLines: 1,
                   group: _mainWidgetState.groupScore,
                   style: _textStyle))));

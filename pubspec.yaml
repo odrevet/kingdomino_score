@@ -4,15 +4,14 @@ description: Calculate kingdomino score easly by entering each land of your king
 version: 2.0.6+12
 
 environment:
-  sdk: ">=2.3.0 <3.0.0"
+  sdk: ">=2.3.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
   auto_size_text: ^2.1.0
-  material_design_icons_flutter: ^3.2.3895
-  cupertino_icons: ^0.1.2
+  material_design_icons_flutter: ^3.4.4795
 
 dev_dependencies:
   test:

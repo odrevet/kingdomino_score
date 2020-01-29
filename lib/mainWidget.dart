@@ -438,6 +438,40 @@ class MainWidgetState extends State<MainWidget> {
           ));
     }
 
+
+    Widget body = OrientationBuilder(
+      builder: (context, orientation) {
+        if (orientation == Orientation.portrait) {
+          return Column(children: <Widget>[
+            KingdomWidget(this),
+            Expanded(
+              child: FittedBox(
+                  fit: BoxFit.fitHeight,
+                  child: InkWell(
+                    child: Text(score.toString(),
+                        style: TextStyle(color: Colors.white)),
+                    onTap: () => _showDialog(ScoreDetailsWidget(this), context),
+                  )),
+            )
+          ]);
+        }
+        else {
+          return Row(children: <Widget>[
+            KingdomWidget(this),
+            Expanded(
+              child: FittedBox(
+                  fit: BoxFit.fitHeight,
+                  child: InkWell(
+                    child: Text(score.toString(),
+                        style: TextStyle(color: Colors.white)),
+                    onTap: () => _showDialog(ScoreDetailsWidget(this), context),
+                  )),
+            )
+          ]);
+        }
+      }
+    );
+
     return Scaffold(
         appBar: AppBar(
           title:
@@ -445,18 +479,7 @@ class MainWidgetState extends State<MainWidget> {
         ),
         bottomNavigationBar: BottomAppBar(
             child: kingdomEditor, color: Theme.of(context).primaryColor),
-        body: Column(children: <Widget>[
-          KingdomWidget(this),
-          Expanded(
-            child: FittedBox(
-                fit: BoxFit.fitHeight,
-                child: InkWell(
-                  child: Text(score.toString(),
-                      style: TextStyle(color: Colors.white)),
-                  onTap: () => _showDialog(ScoreDetailsWidget(this), context),
-                )),
-          )
-        ]));
+        body: body);
   }
 
   _showDialog(Widget content, BuildContext context) {

@@ -438,7 +438,7 @@ class GiantsDetailsWidget extends StatelessWidget {
           child: Align(
               alignment: Alignment.centerRight,
               child: AutoSizeText(
-                  '${totalGiantScore}',
+                  '$totalGiantScore',
                   maxLines: 1,
                   group: _mainWidgetState.groupScore,
                   style: _textStyle))));

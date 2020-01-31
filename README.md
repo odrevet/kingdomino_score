@@ -45,13 +45,13 @@ Each land type has it's own color :
 
 * Dark green : Forest
 
-* Water : Lake
+* Blue : Lake
 
 * Grey : Swamp 
 
 * Brown : Mine 
 
-* Blue grey : Empty
+* Grey : Empty
 
 * Castle : Place your castle. 
 

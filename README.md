@@ -79,4 +79,20 @@ the score you could had have without giants
 |---|
 | <img src="/screenshots/score.jpg" width="240px" />  |
 
+# TroubleShooting
+
+## In the online version, crowns and castle are replaced with squares
+
+You need to have emoticon support to display some graphics like crowns and castle. 
+
+Under Ubuntu : 
+
+```
+sudo apt install fonts-emojione
+``` 
+
+and then set emojione as the standard font in your web browser
+
+
+
 

@@ -294,13 +294,13 @@ class MainWidgetState extends State<MainWidget> {
         }
         else {
           return Row(children: <Widget>[
+            Expanded(child: ScoreDetailsWidget(this)),
             KingdomWidget(this),
             Expanded(
               child: FittedBox(
                   fit: BoxFit.fitHeight,
                   child: Text(score.toString(), style: TextStyle(color: Colors.white))),
-            ),
-            Expanded(child: ScoreDetailsWidget(this))
+            )
           ]);
         }
       }

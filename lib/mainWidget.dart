@@ -298,12 +298,9 @@ class MainWidgetState extends State<MainWidget> {
             Expanded(
               child: FittedBox(
                   fit: BoxFit.fitHeight,
-                  child: InkWell(
-                    child: Text(score.toString(),
-                        style: TextStyle(color: Colors.white)),
-                    onTap: () => runDialog(ScoreDetailsWidget(this), context),
-                  )),
-            )
+                  child: Text(score.toString(), style: TextStyle(color: Colors.white))),
+            ),
+            Expanded(child: ScoreDetailsWidget(this))
           ]);
         }
       }

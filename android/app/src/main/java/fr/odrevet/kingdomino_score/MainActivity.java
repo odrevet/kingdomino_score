@@ -1,4 +1,4 @@
-package fr.odrevet.kingdomino_score;
+package fr.odrevet.kingdomino_score_count;
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity;

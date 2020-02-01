@@ -8,6 +8,7 @@ import 'kingdomWidget.dart';
 import 'quest.dart';
 import 'questDialog.dart';
 import 'warning.dart';
+import 'menuBar.dart';
 
 const String crown = '\u{1F451}';
 const String castle = '\u{1F3F0}';
@@ -70,13 +71,6 @@ class MainWidgetState extends State<MainWidget> {
   List<Quest> quests = []; //standard : 0, 1 or 2, aog : 2
   List<Warning> warnings = [];
 
-  Border _selectedBorder = Border(
-    right: BorderSide(width: 3.5, color: Colors.red.shade600),
-    top: BorderSide(width: 3.5, color: Colors.red.shade600),
-    left: BorderSide(width: 3.5, color: Colors.red.shade600),
-    bottom: BorderSide(width: 3.5, color: Colors.red.shade900),
-  );
-
   var outline = Border(
     right: BorderSide(width: 3.5, color: Colors.blueGrey.shade600),
     bottom: BorderSide(width: 3.5, color: Colors.blueGrey.shade900),
@@ -85,7 +79,7 @@ class MainWidgetState extends State<MainWidget> {
   @override
   initState() {
     color = Colors.white;
-    _onSelectCastle();
+    //_onSelectCastle();
     super.initState();
   }
 
@@ -97,34 +91,7 @@ class MainWidgetState extends State<MainWidget> {
     }
   }
 
-  void _onSelectLandType(LandType selectedType) {
-    if (selectedType == LandType.castle)
-      _onSelectCastle();
-    else
-      setState(() {
-        selectedLandType = selectedType;
-        selectionMode = SelectionMode.land;
-      });
-  }
 
-  void _onSelectCrown() {
-    setState(() {
-      selectionMode = SelectionMode.crown;
-    });
-  }
-
-  void _onSelectCastle() {
-    setState(() {
-      selectedLandType = LandType.castle;
-      selectionMode = SelectionMode.castle;
-    });
-  }
-
-  void _onSelectGiant() {
-    setState(() {
-      selectionMode = SelectionMode.giant;
-    });
-  }
 
   void clearWarnings() {
     setState(() {
@@ -214,138 +181,9 @@ class MainWidgetState extends State<MainWidget> {
     });
   }
 
-  Widget landButton(LandType landType) {
-    var isSelected =
-        selectionMode == SelectionMode.land && selectedLandType == landType;
-
-    return GestureDetector(
-        onTap: () => _onSelectLandType(landType),
-        child: Container(
-            margin: EdgeInsets.all(5.0),
-            height: 50.0,
-            width: 50.0,
-            decoration: BoxDecoration(
-                border: isSelected
-                    ? _selectedBorder
-                    : landType == LandType.none ? null : outline),
-            child: Container(
-              color: getColorForLandType(landType),
-              child: null,
-            )));
-  }
-
-  _colorbutton(Color color) {
-    return GestureDetector(
-        onTap: () => setState(() {
-              this.color = color;
-            }),
-        child: Container(
-          margin: EdgeInsets.all(5.0),
-          height: 50.0,
-          width: 50.0,
-          decoration: BoxDecoration(color: color),
-          child: Container(),
-        ));
-  }
-
-  Widget castleButton() {
-    bool isSelected = selectionMode == SelectionMode.castle &&
-        selectedLandType == LandType.castle;
-
-    return GestureDetector(
-        onTap: () => setState(() {
-              selectionMode = SelectionMode.castle;
-              selectedLandType = LandType.castle;
-            }),
-        onLongPress: () {
-          var buttons = <Widget>[
-            _colorbutton(Colors.yellow),
-            _colorbutton(Colors.blue),
-            _colorbutton(Colors.green),
-            _colorbutton(Colors.pink)
-          ];
-
-          if (aog == true) {
-            buttons.add(_colorbutton(Colors.brown));
-          }
-
-          showDialog(
-            context: context,
-            builder: (context) {
-              return StatefulBuilder(
-                builder: (context, setState) {
-                  return AlertDialog(
-                    content: Wrap(
-                      children: buttons,
-                    ),
-                  );
-                },
-              );
-            },
-          );
-        },
-        child: Container(
-          margin: EdgeInsets.all(5.0),
-          height: 50.0,
-          width: 50.0,
-          decoration: BoxDecoration(
-              color: this.color,
-              border: isSelected ? _selectedBorder : outline),
-          child: FittedBox(fit: BoxFit.fitHeight, child: Text(castle)),
-        ));
-  }
-
-  Widget crownButton() {
-    var isSelected = selectionMode == SelectionMode.crown;
-
-    return GestureDetector(
-        onTap: () => _onSelectCrown(),
-        child: Container(
-          margin: EdgeInsets.all(5.0),
-          height: 50.0,
-          width: 50.0,
-          decoration:
-              BoxDecoration(border: isSelected ? _selectedBorder : outline),
-          child: FittedBox(fit: BoxFit.fitHeight, child: Text(crown)),
-        ));
-  }
-
-  Widget giantButton() {
-    var isSelected = selectionMode == SelectionMode.giant;
-
-    return GestureDetector(
-        onTap: () => _onSelectGiant(),
-        onLongPress: () => _showDialog(GiantsDetailsWidget(this), context),
-        child: Container(
-          margin: EdgeInsets.all(5.0),
-          height: 50.0,
-          width: 50.0,
-          decoration:
-              BoxDecoration(border: isSelected ? _selectedBorder : outline),
-          child: FittedBox(fit: BoxFit.fitHeight, child: Text(giant)),
-        ));
-  }
 
   @override
   Widget build(BuildContext context) {
-    var kingdomEditorWidgets = [
-      landButton(LandType.wheat),
-      landButton(LandType.grassland),
-      landButton(LandType.forest),
-      landButton(LandType.lake),
-      landButton(LandType.swamp),
-      landButton(LandType.mine),
-      landButton(LandType.none),
-      castleButton(),
-      crownButton(),
-    ];
-
-    if (aog) kingdomEditorWidgets.add(giantButton());
-
-    var kingdomEditor = Wrap(
-      children: kingdomEditorWidgets,
-    );
-
     var actions = <Widget>[
       MaterialButton(
           minWidth: 30,
@@ -387,7 +225,7 @@ class MainWidgetState extends State<MainWidget> {
 
               resetScores();
               clearWarnings();
-              _onSelectCastle();
+              //_onSelectCastle();
             });
           }),
       IconButton(
@@ -397,7 +235,7 @@ class MainWidgetState extends State<MainWidget> {
               kingdom.clear();
               clearWarnings();
               resetScores();
-              _onSelectCastle();
+              //_onSelectCastle();
             });
           }),
       IconButton(icon: Icon(Icons.help), onPressed: () => aboutDialog(context))
@@ -410,7 +248,7 @@ class MainWidgetState extends State<MainWidget> {
             children: <Widget>[
               IconButton(
                   icon: Icon(Icons.warning),
-                  onPressed: () => _showDialog(WarningsWidget(this), context)),
+                  onPressed: () => runDialog(WarningsWidget(this), context)),
               Positioned(
                 right: 5,
                 top: 10,
@@ -438,7 +276,6 @@ class MainWidgetState extends State<MainWidget> {
           ));
     }
 
-
     Widget body = OrientationBuilder(
       builder: (context, orientation) {
         if (orientation == Orientation.portrait) {
@@ -450,7 +287,7 @@ class MainWidgetState extends State<MainWidget> {
                   child: InkWell(
                     child: Text(score.toString(),
                         style: TextStyle(color: Colors.white)),
-                    onTap: () => _showDialog(ScoreDetailsWidget(this), context),
+                    onTap: () => runDialog(ScoreDetailsWidget(this), context),
                   )),
             )
           ]);
@@ -464,7 +301,7 @@ class MainWidgetState extends State<MainWidget> {
                   child: InkWell(
                     child: Text(score.toString(),
                         style: TextStyle(color: Colors.white)),
-                    onTap: () => _showDialog(ScoreDetailsWidget(this), context),
+                    onTap: () => runDialog(ScoreDetailsWidget(this), context),
                   )),
             )
           ]);
@@ -478,11 +315,11 @@ class MainWidgetState extends State<MainWidget> {
               Row(mainAxisAlignment: MainAxisAlignment.end, children: actions),
         ),
         bottomNavigationBar: BottomAppBar(
-            child: kingdomEditor, color: Theme.of(context).primaryColor),
+            child: MenuBar(this), color: Theme.of(context).primaryColor),
         body: body);
   }
 
-  _showDialog(Widget content, BuildContext context) {
+  runDialog(Widget content, BuildContext context) {
     showDialog<void>(
       context: context,
       builder: (BuildContext context) {

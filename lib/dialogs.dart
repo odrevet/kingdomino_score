@@ -410,7 +410,9 @@ class GiantsDetailsWidget extends StatelessWidget {
       }
 
       //SUM
-      int totalGiantScore = (_mainWidgetState.scoreOfQuest - scoreQuestWithoutGiants) - totalCrownPointLoss;
+      int totalGiantScore =
+          (_mainWidgetState.scoreOfQuest - scoreQuestWithoutGiants) -
+              totalCrownPointLoss;
       var tableCells = <TableCell>[];
 
       tableCells.add(TableCell(child: AutoSizeText('')));
@@ -437,8 +439,7 @@ class GiantsDetailsWidget extends StatelessWidget {
       tableCells.add(TableCell(
           child: Align(
               alignment: Alignment.centerRight,
-              child: AutoSizeText(
-                  '$totalGiantScore',
+              child: AutoSizeText('$totalGiantScore',
                   maxLines: 1,
                   group: _mainWidgetState.groupScore,
                   style: _textStyle))));
@@ -473,8 +474,7 @@ class GiantsDetailsWidget extends StatelessWidget {
       tableCellsTotalWithoutGiants.add(TableCell(
           child: Align(
               alignment: Alignment.centerRight,
-              child: AutoSizeText(
-                  '${_mainWidgetState.score - totalGiantScore}',
+              child: AutoSizeText('${_mainWidgetState.score - totalGiantScore}',
                   maxLines: 1,
                   group: _mainWidgetState.groupScore,
                   style: _textStyle))));

@@ -5,10 +5,10 @@ import 'ageOfGiants.dart';
 import 'dialogs.dart';
 import 'kingdom.dart';
 import 'kingdomWidget.dart';
+import 'menuBar.dart';
 import 'quest.dart';
 import 'questDialog.dart';
 import 'warning.dart';
-import 'menuBar.dart';
 
 const String crown = '\u{1F451}';
 const String castle = '\u{1F3F0}';
@@ -90,8 +90,6 @@ class MainWidgetState extends State<MainWidget> {
       return gameAogSet;
     }
   }
-
-
 
   void clearWarnings() {
     setState(() {
@@ -180,7 +178,6 @@ class MainWidgetState extends State<MainWidget> {
       score = scoreProperty = scoreOfQuest = 0;
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -276,35 +273,33 @@ class MainWidgetState extends State<MainWidget> {
           ));
     }
 
-    Widget body = OrientationBuilder(
-      builder: (context, orientation) {
-        if (orientation == Orientation.portrait) {
-          return Column(children: <Widget>[
-            KingdomWidget(this),
-            Expanded(
-              child: FittedBox(
-                  fit: BoxFit.fitHeight,
-                  child: InkWell(
-                    child: Text(score.toString(),
-                        style: TextStyle(color: Colors.white)),
-                    onTap: () => runDialog(ScoreDetailsWidget(this), context),
-                  )),
-            )
-          ]);
-        }
-        else {
-          return Row(children: <Widget>[
-            Expanded(child: ScoreDetailsWidget(this)),
-            KingdomWidget(this),
-            Expanded(
-              child: FittedBox(
-                  fit: BoxFit.fitHeight,
-                  child: Text(score.toString(), style: TextStyle(color: Colors.white))),
-            )
-          ]);
-        }
+    Widget body = OrientationBuilder(builder: (context, orientation) {
+      if (orientation == Orientation.portrait) {
+        return Column(children: <Widget>[
+          KingdomWidget(this),
+          Expanded(
+            child: FittedBox(
+                fit: BoxFit.fitHeight,
+                child: InkWell(
+                  child: Text(score.toString(),
+                      style: TextStyle(color: Colors.white)),
+                  onTap: () => runDialog(ScoreDetailsWidget(this), context),
+                )),
+          )
+        ]);
+      } else {
+        return Row(children: <Widget>[
+          Expanded(child: ScoreDetailsWidget(this)),
+          KingdomWidget(this),
+          Expanded(
+            child: FittedBox(
+                fit: BoxFit.fitHeight,
+                child: Text(score.toString(),
+                    style: TextStyle(color: Colors.white))),
+          )
+        ]);
       }
-    );
+    });
 
     return Scaffold(
         appBar: AppBar(

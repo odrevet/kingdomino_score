@@ -20,6 +20,8 @@ class _MenuBarState extends State<MenuBar> {
 
   _MenuBarState(this._mainWidgetState);
 
+  final double _buttonSize = 40.0;
+
   @override
   Widget build(BuildContext context) {
     var kingdomEditorWidgets = [
@@ -39,7 +41,6 @@ class _MenuBarState extends State<MenuBar> {
     return Wrap(
       children: kingdomEditorWidgets,
     );
-
   }
 
   Border _selectedBorder = Border(
@@ -49,21 +50,22 @@ class _MenuBarState extends State<MenuBar> {
     bottom: BorderSide(width: 3.5, color: Colors.red.shade900),
   );
 
-
   Widget landButton(LandType landType) {
-    var isSelected =
-        _mainWidgetState.selectionMode == SelectionMode.land && _mainWidgetState.selectedLandType == landType;
+    var isSelected = _mainWidgetState.selectionMode == SelectionMode.land &&
+        _mainWidgetState.selectedLandType == landType;
 
     return GestureDetector(
         onTap: () => _onSelectLandType(landType),
         child: Container(
             margin: EdgeInsets.all(5.0),
-            height: 50.0,
-            width: 50.0,
+            height: _buttonSize,
+            width: _buttonSize,
             decoration: BoxDecoration(
                 border: isSelected
                     ? _selectedBorder
-                    : landType == LandType.none ? null : _mainWidgetState.outline),
+                    : landType == LandType.none
+                        ? null
+                        : _mainWidgetState.outline),
             child: Container(
               color: getColorForLandType(landType),
               child: null,
@@ -73,12 +75,12 @@ class _MenuBarState extends State<MenuBar> {
   _colorbutton(Color color) {
     return GestureDetector(
         onTap: () => setState(() {
-          _mainWidgetState..color = color;
-        }),
+              _mainWidgetState..color = color;
+            }),
         child: Container(
           margin: EdgeInsets.all(5.0),
-          height: 50.0,
-          width: 50.0,
+          height: _buttonSize,
+          width: _buttonSize,
           decoration: BoxDecoration(color: color),
           child: Container(),
         ));
@@ -90,9 +92,9 @@ class _MenuBarState extends State<MenuBar> {
 
     return GestureDetector(
         onTap: () => setState(() {
-          _mainWidgetState.selectionMode = SelectionMode.castle;
-          _mainWidgetState.selectedLandType = LandType.castle;
-        }),
+              _mainWidgetState.selectionMode = SelectionMode.castle;
+              _mainWidgetState.selectedLandType = LandType.castle;
+            }),
         onLongPress: () {
           var buttons = <Widget>[
             _colorbutton(Colors.yellow),
@@ -122,8 +124,8 @@ class _MenuBarState extends State<MenuBar> {
         },
         child: Container(
           margin: EdgeInsets.all(5.0),
-          height: 50.0,
-          width: 50.0,
+          height: _buttonSize,
+          width: _buttonSize,
           decoration: BoxDecoration(
               color: _mainWidgetState.color,
               border: isSelected ? _selectedBorder : _mainWidgetState.outline),
@@ -138,10 +140,10 @@ class _MenuBarState extends State<MenuBar> {
         onTap: () => _onSelectCrown(),
         child: Container(
           margin: EdgeInsets.all(5.0),
-          height: 50.0,
-          width: 50.0,
-          decoration:
-          BoxDecoration(border: isSelected ? _selectedBorder : _mainWidgetState.outline),
+          height: _buttonSize,
+          width: _buttonSize,
+          decoration: BoxDecoration(
+              border: isSelected ? _selectedBorder : _mainWidgetState.outline),
           child: FittedBox(fit: BoxFit.fitHeight, child: Text(crown)),
         ));
   }
@@ -151,17 +153,17 @@ class _MenuBarState extends State<MenuBar> {
 
     return GestureDetector(
         onTap: () => _onSelectGiant(),
-        onLongPress: () => _mainWidgetState.runDialog(GiantsDetailsWidget(_mainWidgetState), context),
+        onLongPress: () => _mainWidgetState.runDialog(
+            GiantsDetailsWidget(_mainWidgetState), context),
         child: Container(
           margin: EdgeInsets.all(5.0),
-          height: 50.0,
-          width: 50.0,
-          decoration:
-          BoxDecoration(border: isSelected ? _selectedBorder : _mainWidgetState.outline),
+          height: _buttonSize,
+          width: _buttonSize,
+          decoration: BoxDecoration(
+              border: isSelected ? _selectedBorder : _mainWidgetState.outline),
           child: FittedBox(fit: BoxFit.fitHeight, child: Text(giant)),
         ));
   }
-
 
   //CALLBACKS
   void _onSelectLandType(LandType selectedType) {

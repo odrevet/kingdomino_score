@@ -1,12 +1,3 @@
-# kingdomino Score
-
-Calculate your "Kingdomino" and "Kingdomino Age of Giants" score easily
-
-Available for :
-
-* [Android Google play store](https://play.google.com/store/apps/details?id=fr.odrevet.kingdomino_score_count)
-* [Online with a web browser](https://odrevet.github.io/kingdomino_score)
-
 # Top menu buttons
 
 * Warnings (only displayed when at least on warning): check board for anomalities
@@ -45,13 +36,13 @@ Each land type has it's own color :
 
 * Dark green : Forest
 
-* Blue : Lake
+* Water : Lake
 
 * Grey : Swamp
 
 * Brown : Mine
 
-* Grey : Empty
+* Blue grey : Empty
 
 * Castle : Place your castle.
 
@@ -72,23 +63,3 @@ how many quests points are lost (or gained in case of bleak king quest)
 total points lost due to giants
 
 the score you could had have without giants
-
-# Screenshots
-
-|  <img src="fastlane/metadata/android/en-US/images/board.jpg" width="240px" /> |
-|---|
-| <img src="fastlane/metadata/android/en-US/images/score.jpg" width="240px" />  |
-
-# TroubleShooting
-
-## In the online version, crowns and castle are replaced with squares
-
-You need to have emoticon support to display some graphics like crowns and castle.
-
-Under Ubuntu :
-
-```
-sudo apt install fonts-emojione
-```
-
-and then set emojione as the standard font in your web browser

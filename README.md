@@ -75,9 +75,9 @@ the score you could had have without giants
 
 # Screenshots
 
-|  <img src="fastlane/metadata/android/en-US/images/board.jpg" width="240px" /> |
+|  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/board.jpg" width="240px" /> |
 |---|
-| <img src="fastlane/metadata/android/en-US/images/score.jpg" width="240px" />  |
+| <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/score.jpg" width="240px" />  |
 
 # TroubleShooting
 

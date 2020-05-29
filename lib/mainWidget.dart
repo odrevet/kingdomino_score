@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:package_info/package_info.dart';
 
 import 'ageOfGiants.dart';
 import 'dialogs.dart';
@@ -71,6 +72,8 @@ class MainWidgetState extends State<MainWidget> {
   List<Quest> quests = []; //standard : 0, 1 or 2, aog : 2
   List<Warning> warnings = [];
 
+  PackageInfo _packageInfo;
+
   var outline = Border(
     right: BorderSide(width: 3.5, color: Colors.blueGrey.shade600),
     bottom: BorderSide(width: 3.5, color: Colors.blueGrey.shade900),
@@ -79,7 +82,13 @@ class MainWidgetState extends State<MainWidget> {
   @override
   initState() {
     color = Colors.white;
-    //_onSelectCastle();
+
+    PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
+      setState(() {
+        _packageInfo = packageInfo;
+      });
+    });
+
     super.initState();
   }
 
@@ -235,7 +244,17 @@ class MainWidgetState extends State<MainWidget> {
               //_onSelectCastle();
             });
           }),
-      IconButton(icon: Icon(Icons.help), onPressed: () => aboutDialog(context))
+      IconButton(
+          icon: Icon(Icons.help),
+          onPressed: () => showAboutDialog(
+              context: context,
+              applicationName: _packageInfo.appName,
+              applicationVersion: _packageInfo.version,
+              applicationLegalese: '''Drevet Olivier built the Kingdomino Score app as an Open Source app under the GPL license Version 3. This SERVICE is provided by Drevet Olivier at no cost and is intended for use as is.
+This page is used to inform visitors regarding my policies with the collection, use, and disclosure of Personal Information if anyone decided to use my Service.
+I will not use or share your information with anyone : Kingdomino Score works offline and does not send any informations on a network. ''',
+              applicationIcon: Image.asset(
+                  'android/app/src/main/res/mipmap-mdpi/ic_launcher.png')))
     ];
 
     if (warnings.isNotEmpty) {

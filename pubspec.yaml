@@ -1,7 +1,7 @@
 name: kingdomino_score_count
 description: Calculate kingdomino score easly by entering each land of your kingdom in the app
 
-version: 2.0.7+13
+version: 2.0.8+14
 
 environment:
   sdk: ">=2.3.0"
@@ -11,7 +11,8 @@ dependencies:
     sdk: flutter
 
   auto_size_text: ^2.1.0
-  material_design_icons_flutter: ^3.4.4895
+  material_design_icons_flutter: ^4.0.5345
+  package_info: ^0.4.0+18
 
 dev_dependencies:
   test:
@@ -21,6 +22,8 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - android/app/src/main/res/mipmap-mdpi/ic_launcher.png
   fonts:
     - family: Augusta
       fonts:

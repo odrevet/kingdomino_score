@@ -71,7 +71,7 @@ class WarningsWidget extends StatelessWidget {
   }
 }
 
-aboutDialog(BuildContext context) {
+/*aboutDialog(BuildContext context) {
   return showDialog<void>(
     context: context,
     builder: (BuildContext context) {
@@ -106,7 +106,7 @@ aboutDialog(BuildContext context) {
       );
     },
   );
-}
+}*/
 
 class ScoreDetailsWidget extends StatelessWidget {
   final MainWidgetState _mainWidgetState;

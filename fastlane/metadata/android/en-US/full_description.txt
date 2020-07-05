@@ -1,16 +1,16 @@
 <h1>Top menu buttons</h1>
 <ul>
-<li>Warnings (only displayed when at least on warning): check board for anomalities</li>
-<li>AG : Activate / Deactivate the Age of Giants extension</li>
-<li>Shield : Select / Unselect quests<ul>
-<li>Two quests maximum can be selected at a time.</li>
-<li>There are more queets when Age of Giants is activated</li>
-<li>The number of quests activated are displayed in a red bubble</li>
-</ul>
-</li>
-<li>5 / 7 : change the size of the board. Changing the size of the board reset all tiles</li>
-<li>Trash : Reset the board</li>
-<li>About : Display author and license</li>
+    <li>Warnings (only displayed when at least on warning): check board for anomalities</li>
+    <li>AG : Activate / Deactivate the Age of Giants extension</li>
+    <li>Shield : Select / Unselect quests<ul>
+    <li>Two quests maximum can be selected at a time.</li>
+    <li>There are more queets when Age of Giants is activated</li>
+    <li>The number of quests activated are displayed in a red bubble</li>
+    </ul>
+    </li>
+    <li>5 / 7 : change the size of the board. Changing the size of the board reset all tiles</li>
+    <li>Trash : Reset the board</li>
+    <li>About : Display author and license</li>
 </ul>
 
 <h1>Score</h1>

@@ -1,4 +1,4 @@
-<h1>Top menu buttons</h1>
+<b>Top menu buttons</b>
 <ul>
     <li>Warnings (only displayed when at least on warning): check board for anomalities</li>
     <li>AG : Activate / Deactivate the Age of Giants extension</li>
@@ -13,10 +13,10 @@
     <li>About : Display author and license</li>
 </ul>
 
-<h1>Score</h1>
+<b>Score</b>
 <p>The score is updated as each change on the board.</p>
 <p>In portrait mode, tapping the score display the calculation details. </p>
-<h1 id="bottom-menu-buttons">Bottom menu buttons</h1>
+<b id="bottom-menu-buttons">Bottom menu buttons</b>
 <p>Each land type has it&#39;s own color :</p>
 <ul>
 <li>Yellow : Wheat</li>

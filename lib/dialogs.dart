@@ -276,7 +276,7 @@ class GiantsDetailsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Property> properties = _mainWidgetState.kingdom
         .getProperties()
-        .where((property) => property.crownLost > 0)
+        .where((property) => property.giantCount > 0)
         .toList();
 
     Widget content;
@@ -293,7 +293,7 @@ class GiantsDetailsWidget extends StatelessWidget {
       int totalCrownPointLoss = 0;
       var tableRows = <TableRow>[];
       for (var property in properties) {
-        int rowScore = property.landCount * property.crownLost;
+        int rowScore = property.landCount * property.giantCount;
         totalCrownPointLoss += rowScore;
         var tableCells = <TableCell>[];
 
@@ -323,14 +323,14 @@ class GiantsDetailsWidget extends StatelessWidget {
         tableCells.add(TableCell(
             child: Align(
                 alignment: Alignment.centerRight,
-                child: AutoSizeText(property.crownLost.toString(),
+                child: AutoSizeText(property.giantCount.toString(),
                     maxLines: 1,
                     group: _mainWidgetState.groupScore,
                     style: _textStyle))));
         tableCells.add(TableCell(
             child: Align(
                 alignment: Alignment.centerRight,
-                child: AutoSizeText(crown + giant,
+                child: AutoSizeText(giant,
                     maxLines: 1,
                     group: _mainWidgetState.groupScore,
                     style: _textStyle))));
@@ -363,7 +363,7 @@ class GiantsDetailsWidget extends StatelessWidget {
           for (var x = 0; x < _mainWidgetState.kingdom.size; x++) {
             for (var y = 0; y < _mainWidgetState.kingdom.size; y++) {
               Land land = kingdomWithoutGiants.getLand(y, x);
-              land.hasGiant = false;
+              land.giants = 0;
               land.crowns = _mainWidgetState.kingdom.getLand(y, x).crowns;
               land.landType = _mainWidgetState.kingdom.getLand(y, x).landType;
             }

@@ -31,7 +31,7 @@ class Kingdom {
     _lands.expand((i) => i).toList().forEach((land) {
       land.landType = LandType.none;
       land.crowns = 0;
-      land.hasGiant = false;
+      land.giants = 0;
     });
   }
 
@@ -60,7 +60,7 @@ class Kingdom {
       if (landToAdd.landType == land.landType && landToAdd.isMarked == false) {
         property.landCount++;
         property.crownCount += landToAdd.getCrowns();
-        if (landToAdd.hasGiant) property.crownLost += landToAdd.crowns;
+        property.giantCount += landToAdd.giants;
         _getAdjacentLand(x, y, property);
       }
     }
@@ -78,7 +78,7 @@ class Kingdom {
       property = Property(land.landType);
       property.landCount++;
       property.crownCount += land.getCrowns();
-      if (land.hasGiant) property.crownLost += land.crowns;
+      property.giantCount += land.giants;
     }
 
     land.isMarked = true;
@@ -107,18 +107,17 @@ class Land {
   LandType landType = LandType.none;
   int crowns = 0;
   bool isMarked = false; //to create properties
-  bool hasGiant = false; //AoG extension
+  int giants = 0; //AoG extension
 
   ///set crowns to 0 and hasGiant to false
   void reset() {
     crowns = 0;
-    hasGiant = false;
+    giants = 0;
   }
 
-  /// return 0 is hasGiant is true
-  /// return crowns otherwise
+  /// count crowns minus the number of giants
   int getCrowns() {
-    return hasGiant ? 0 : crowns;
+    return crowns - giants;
   }
 
   Land(this.landType);
@@ -128,7 +127,7 @@ class Property {
   LandType landType;
   int crownCount = 0;
   int landCount = 0;
-  int crownLost = 0; //AoG
+  int giantCount = 0; //AoG
 
   Property(this.landType);
 }

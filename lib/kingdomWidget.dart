@@ -53,7 +53,7 @@ class _KingdomWidgetState extends State<KingdomWidget> {
           land.reset();
           break;
         case SelectionMode.giant:
-          if (land.crowns > 0) land.hasGiant = !land.hasGiant;
+          land.giants = (land.giants + 1) % (land.crowns + 1);
           break;
       }
     });
@@ -73,7 +73,7 @@ class _KingdomWidgetState extends State<KingdomWidget> {
           child: FittedBox(fit: BoxFit.fitWidth, child: Text(castle)));
     else {
       String text = crown * land.crowns;
-      if (land.hasGiant) text += giant;
+      text += giant * land.giants;
       container = Container(
         color: getColorForLandType(land.landType),
         child: LayoutBuilder(

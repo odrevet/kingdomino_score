@@ -12,33 +12,6 @@ import 'quests/lostCorner.dart';
 
 const String giant = '\u{1F9D4}';
 
-/*const Map<LandType, Map<String, dynamic>> aogSet = {
-  LandType.wheat: {
-    'count': 4,
-    'crowns': {'max': 2, 2 : 1}
-  },
-  LandType.grassland: {
-    'count': 5,
-    'crowns': {'max': 2, 1 : 1, 2 : 1}
-  },
-  LandType.forest: {
-    'count': 4,
-    'crowns': {'max': 2, 1 : 1, 2 : 1}
-  },
-  LandType.lake: {
-    'count': 4,
-    'crowns': {'max': 2, 1 : 1, 2 : 1}
-  },
-  LandType.swamp: {
-    'count': 4,
-    'crowns': {1 : 2, 2 : 1}
-  },
-  LandType.mine: {
-    'count': 3,
-    'crowns': {1 : 1, 2 : 1}
-  }
-};*/
-
 const Map<LandType, Map<String, dynamic>> gameAogSet = {
   LandType.castle: {
     'count': 1, //per player

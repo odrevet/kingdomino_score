@@ -200,7 +200,7 @@ class MainWidgetState extends State<MainWidget> {
               quests.clear();
 
               kingdom.getLands().expand((i) => i).toList().forEach((land) {
-                land.hasGiant = false;
+                land.giants = 0;
               });
 
               clearWarnings();

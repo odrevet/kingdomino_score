@@ -11,8 +11,8 @@ dependencies:
     sdk: flutter
 
   auto_size_text: ^2.1.0
-  material_design_icons_flutter: ^4.0.5345
-  package_info: ^0.4.1
+  material_design_icons_flutter: ^4.0.5655
+  package_info: ^0.4.3
 
 dev_dependencies:
   test:

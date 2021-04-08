@@ -70,6 +70,7 @@ class QuestMiniKingdom extends StatelessWidget {
 ///to render a square in the right side table of a quest tile
 class QuestMiniTile extends StatelessWidget {
   final Widget child;
+
   const QuestMiniTile({this.child, Key key}) : super(key: key);
 
   @override

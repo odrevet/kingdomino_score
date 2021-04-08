@@ -165,7 +165,7 @@ class FolieDesGrandeurs extends Quest {
     //do not keep alignments that have more than one shared square with another
     //alignment, and do not keep an alignment if an other alignment will share
     //more than one square when the said alignment would be place
-    List<CrownAlignment> resultAlignments = List();
+    List<CrownAlignment> resultAlignments = [];
 
     crownAlignments.forEach((crownAlignment) {
       _alignmentAdd(crownAlignment, resultAlignments, placedAlignments);
@@ -178,10 +178,10 @@ class FolieDesGrandeurs extends Quest {
     int size = kingdom.size;
 
     //get every alignments, regardless of shared squares
-    List<CrownAlignment> alignmentVertical = List();
-    List<CrownAlignment> alignmentHorizontal = List();
-    List<CrownAlignment> alignmentDiagonalRight = List();
-    List<CrownAlignment> alignmentDiagonalLeft = List();
+    List<CrownAlignment> alignmentVertical = [];
+    List<CrownAlignment> alignmentHorizontal = [];
+    List<CrownAlignment> alignmentDiagonalRight = [];
+    List<CrownAlignment> alignmentDiagonalLeft = [];
 
     for (int y = 0; y < size; y++) {
       for (int x = 0; x < size; x++) {

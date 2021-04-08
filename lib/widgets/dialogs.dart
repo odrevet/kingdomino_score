@@ -1,12 +1,12 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
-import 'ageOfGiants.dart';
-import 'kingdom.dart';
+import '../models/ageOfGiants.dart';
+import '../models/kingdom.dart';
+import '../models/warning.dart';
 import 'kingdomWidget.dart';
 import 'mainWidget.dart';
 import 'quest.dart';
-import 'warning.dart';
 
 var _textStyle = TextStyle(color: Colors.black87);
 
@@ -70,43 +70,6 @@ class WarningsWidget extends StatelessWidget {
     return SingleChildScrollView(child: Table(children: tableRows));
   }
 }
-
-/*aboutDialog(BuildContext context) {
-  return showDialog<void>(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(20.0))),
-        title: Text('Kingdomino Score',
-            style: TextStyle(
-                color: Colors.amber,
-                fontSize: 35.0,
-                fontFamily: 'Augusta',
-                shadows: <Shadow>[
-                  Shadow(
-                    offset: Offset(1.0, 1.0),
-                    blurRadius: 3.0,
-                    color: Color.fromARGB(255, 255, 255, 255),
-                  )
-                ])),
-        content: const Text('Olivier Drevet - GPL v.3',
-            style: TextStyle(fontSize: 18.0, color: Colors.black)),
-        actions: <Widget>[
-          FlatButton(
-            child: Icon(
-              Icons.done,
-              color: Colors.black87,
-            ),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
-      );
-    },
-  );
-}*/
 
 class ScoreDetailsWidget extends StatelessWidget {
   final MainWidgetState _mainWidgetState;

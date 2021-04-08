@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-import 'ageOfGiants.dart';
-import 'kingdom.dart';
+import '../models/kingdom.dart';
+import '../models/quests/fourCorners.dart';
+import '../models/quests/localBusiness.dart';
 import 'mainWidget.dart';
 import 'quest.dart';
-import 'quests/fourCorners.dart';
-import 'quests/localBusiness.dart';
 
 class _QuestDialogOption extends StatefulWidget {
   final MainWidgetState _mainWidgetState;

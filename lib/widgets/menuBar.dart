@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'ageOfGiants.dart';
+import '../models/ageOfGiants.dart';
+import '../models/kingdom.dart';
 import 'dialogs.dart';
-import 'kingdom.dart';
 import 'kingdomWidget.dart';
 import 'mainWidget.dart';
 

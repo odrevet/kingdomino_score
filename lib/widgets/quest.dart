@@ -4,14 +4,14 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import '../models/kingdom.dart';
 import '../models/quest.dart';
 import '../models/quests/bleakKing.dart';
-import '../models/quests/folieDesGrandeurs.dart';
-import '../models/quests/fourCorners.dart';
+import '../models/quests/folie_des_grandeurs.dart';
+import '../models/quests/four_corners.dart';
 import '../models/quests/harmony.dart';
-import '../models/quests/localBusiness.dart';
-import '../models/quests/lostCorner.dart';
-import '../models/quests/middleKingdom.dart';
-import 'kingdomWidget.dart';
-import 'mainWidget.dart' show castle, crown, square;
+import '../models/quests/local_business.dart';
+import '../models/quests/lost_corner.dart';
+import '../models/quests/middle_kingdom.dart';
+import 'kingdom_widget.dart';
+import 'main_widget.dart' show castle, crown, square;
 
 const String shield = '\u{1F6E1}';
 const String cross = '\u{2717}';

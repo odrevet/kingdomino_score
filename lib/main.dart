@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'widgets/mainWidget.dart';
+import 'widgets/main_widget.dart';
 
 void main() {
   runApp(KingdominoScore());

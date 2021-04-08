@@ -2,14 +2,14 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info/package_info.dart';
 
-import '../models/ageOfGiants.dart';
+import '../models/age_of_giants.dart';
 import '../models/kingdom.dart';
 import '../models/quest.dart';
 import '../models/warning.dart';
 import 'dialogs.dart';
-import 'kingdomWidget.dart';
-import 'menuBar.dart';
-import 'questDialog.dart';
+import 'kingdom_widget.dart';
+import 'menu_bar.dart';
+import 'quest_dialog.dart';
 
 const String crown = '\u{1F451}';
 const String castle = '\u{1F3F0}';

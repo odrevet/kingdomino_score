@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../models/ageOfGiants.dart';
+import '../models/age_of_giants.dart';
 import '../models/kingdom.dart';
 import 'dialogs.dart';
-import 'kingdomWidget.dart';
-import 'mainWidget.dart';
+import 'kingdom_widget.dart';
+import 'main_widget.dart';
 
 class MenuBar extends StatefulWidget {
   final MainWidgetState _mainWidgetState;

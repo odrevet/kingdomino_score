@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 import '../models/kingdom.dart';
-import '../models/quests/fourCorners.dart';
-import '../models/quests/localBusiness.dart';
-import 'mainWidget.dart';
+import '../models/quests/four_corners.dart';
+import '../models/quests/local_business.dart';
+import 'main_widget.dart';
 import 'quest.dart';
 
 class _QuestDialogOption extends StatefulWidget {

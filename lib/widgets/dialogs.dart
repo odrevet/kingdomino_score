@@ -1,11 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
-import '../models/ageOfGiants.dart';
+import '../models/age_of_giants.dart';
 import '../models/kingdom.dart';
 import '../models/warning.dart';
-import 'kingdomWidget.dart';
-import 'mainWidget.dart';
+import 'kingdom_widget.dart';
+import 'main_widget.dart';
 import 'quest.dart';
 
 var _textStyle = TextStyle(color: Colors.black87);

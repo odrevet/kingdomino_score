@@ -90,6 +90,16 @@ class MainWidgetState extends State<MainWidget> {
     super.initState();
   }
 
+  LandType getSelectedLandType() => selectedLandType;
+
+  SelectionMode getSelectionMode() => selectionMode;
+
+  void calculateScore() {
+    clearWarnings();
+    checkKingdom();
+    updateScores();
+  }
+
   Map<LandType, Map<String, dynamic>> getGameSet() {
     if (aog == false) {
       return gameSet;
@@ -294,7 +304,12 @@ I will not use or share your information with anyone : Kingdomino Score works of
     Widget body = OrientationBuilder(builder: (context, orientation) {
       if (orientation == Orientation.portrait) {
         return Column(children: <Widget>[
-          KingdomWidget(this),
+          KingdomWidget(
+              getSelectionMode: this.getSelectionMode,
+              getSelectedLandType: this.getSelectedLandType,
+              getGameSet: this.getGameSet,
+              calculateScore: this.calculateScore,
+              kingdom: this.kingdom),
           Expanded(
             child: FittedBox(
                 fit: BoxFit.fitHeight,
@@ -308,7 +323,12 @@ I will not use or share your information with anyone : Kingdomino Score works of
       } else {
         return Row(children: <Widget>[
           Expanded(child: ScoreDetailsWidget(this)),
-          KingdomWidget(this),
+          KingdomWidget(
+              getSelectionMode: this.getSelectionMode,
+              getSelectedLandType: this.getSelectedLandType,
+              getGameSet: this.getGameSet,
+              calculateScore: this.calculateScore,
+              kingdom: this.kingdom),
           Expanded(
             child: FittedBox(
                 fit: BoxFit.fitHeight,

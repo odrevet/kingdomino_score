@@ -5,51 +5,70 @@ import '../models/kingdom.dart';
 import 'main_widget.dart';
 
 class KingdomWidget extends StatefulWidget {
-  final MainWidgetState _mainWidgetState;
+  KingdomWidget(
+      {this.getSelectionMode,
+      this.getSelectedLandType,
+      this.getGameSet,
+      this.calculateScore,
+      this.kingdom});
 
-  KingdomWidget(this._mainWidgetState);
+  final getSelectionMode;
+  final getSelectedLandType;
+  final getGameSet;
+  final calculateScore;
+  final kingdom;
 
   @override
-  _KingdomWidgetState createState() =>
-      _KingdomWidgetState(this._mainWidgetState);
+  _KingdomWidgetState createState() => _KingdomWidgetState(
+      getSelectionMode: this.getSelectionMode,
+      getSelectedLandType: this.getSelectedLandType,
+      getGameSet: this.getGameSet,
+      calculateScore: this.calculateScore,
+      kingdom: this.kingdom);
 }
 
 class _KingdomWidgetState extends State<KingdomWidget> {
-  MainWidgetState _mainWidgetState;
+  final getSelectionMode;
+  final getSelectedLandType;
+  final getGameSet;
+  final calculateScore;
+  final kingdom;
 
-  _KingdomWidgetState(this._mainWidgetState);
+  _KingdomWidgetState(
+      {this.getSelectionMode,
+      this.getSelectedLandType,
+      this.getGameSet,
+      this.calculateScore,
+      this.kingdom});
 
   void _onLandTap(int x, int y) {
-    Land land = _mainWidgetState.kingdom.getLand(x, y);
+    Land land = kingdom.getLand(x, y);
     setState(() {
-      switch (_mainWidgetState.selectionMode) {
+      switch (getSelectionMode()) {
         case SelectionMode.land:
-          land.landType = _mainWidgetState.selectedLandType;
+          land.landType = getSelectedLandType();
           land.reset();
           break;
         case SelectionMode.crown:
           if (land.landType == LandType.castle ||
               land.landType == LandType.none) break;
           land.crowns++;
-          if (land.crowns >
-              _mainWidgetState.getGameSet()[land.landType]['crowns']['max']) {
+          if (land.crowns > getGameSet()[land.landType]['crowns']['max']) {
             land.reset();
           }
           break;
         case SelectionMode.castle:
           //remove previous castle if any
-          for (var cx = 0; cx < _mainWidgetState.kingdom.size; cx++) {
-            for (var cy = 0; cy < _mainWidgetState.kingdom.size; cy++) {
-              if (_mainWidgetState.kingdom.getLand(cx, cy).landType ==
-                  LandType.castle) {
-                _mainWidgetState.kingdom.getLand(cx, cy).landType =
-                    LandType.none;
-                _mainWidgetState.kingdom.getLand(cx, cy).crowns = 0;
+          for (var cx = 0; cx < kingdom.size; cx++) {
+            for (var cy = 0; cy < kingdom.size; cy++) {
+              if (kingdom.getLand(cx, cy).landType == LandType.castle) {
+                kingdom.getLand(cx, cy).landType = LandType.none;
+                kingdom.getLand(cx, cy).crowns = 0;
               }
             }
           }
 
-          land.landType = _mainWidgetState.selectedLandType; //should be castle
+          land.landType = getSelectedLandType(); //should be castle
           land.reset();
           break;
         case SelectionMode.giant:
@@ -58,18 +77,16 @@ class _KingdomWidgetState extends State<KingdomWidget> {
       }
     });
 
-    _mainWidgetState.clearWarnings();
-    _mainWidgetState.checkKingdom();
-    _mainWidgetState.updateScores();
+    calculateScore();
   }
 
   Widget _buildLand(int y, int x) {
-    Land land = _mainWidgetState.kingdom.getLand(x, y);
+    Land land = kingdom.getLand(x, y);
 
     var container;
     if (land.landType == LandType.castle)
       container = Container(
-          color: _mainWidgetState.color,
+          color: Colors.white, //_mainWidgetState.color,
           child: FittedBox(fit: BoxFit.fitWidth, child: Text(castle)));
     else {
       String text = crown * land.crowns;
@@ -101,7 +118,7 @@ class _KingdomWidgetState extends State<KingdomWidget> {
   }
 
   Widget _buildLands(BuildContext context, int index) {
-    int gridStateLength = _mainWidgetState.kingdom.getLands().length;
+    int gridStateLength = kingdom.getLands().length;
     int x, y = 0;
     x = (index / gridStateLength).floor();
     y = (index % gridStateLength);
@@ -117,7 +134,7 @@ class _KingdomWidgetState extends State<KingdomWidget> {
 
   @override
   Widget build(BuildContext context) {
-    int gridStateLength = _mainWidgetState.kingdom.getLands().length;
+    int gridStateLength = kingdom.getLands().length;
     return AspectRatio(
       aspectRatio: 1.0,
       child: Container(

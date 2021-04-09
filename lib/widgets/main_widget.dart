@@ -66,7 +66,7 @@ class MainWidgetState extends State<MainWidget> {
   int scoreOfQuest = 0;
   int score = 0;
 
-  Color color;
+  Color color = Colors.white;
 
   bool aog = false; // Age of Giants extension
   List<Quest> quests = []; //standard : 0, 1 or 2, aog : 2
@@ -81,8 +81,6 @@ class MainWidgetState extends State<MainWidget> {
 
   @override
   initState() {
-    color = Colors.white;
-
     PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
       setState(() {
         _packageInfo = packageInfo;

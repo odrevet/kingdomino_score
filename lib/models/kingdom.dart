@@ -2,7 +2,7 @@ enum LandType { none, wheat, grassland, forest, lake, swamp, mine, castle }
 
 class Kingdom {
   int size = 5;
-  List<List<Land>> _lands;
+  List<List<Land>> _lands = [];
 
   List<List<Land>> getLands() {
     return _lands;
@@ -13,7 +13,6 @@ class Kingdom {
   }
 
   Kingdom(this.size) {
-    this._lands = [];
     for (var i = 0; i < size; i++) {
       this._lands.add(List<Land>.generate(size, (_) => Land(LandType.none)));
     }

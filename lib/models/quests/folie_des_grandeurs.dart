@@ -13,11 +13,10 @@ class CrownAlignment {
   CrownAlignment(this.y0, this.x0, this.y1, this.x1, this.y2, this.x2);
 
   @override
-  bool operator ==(other) {
-    return ((this.x0 == other.x0 && this.y0 == other.y0) &&
-        (this.x1 == other.x1 && this.y1 == other.y1) &&
-        (this.x2 == other.x2 && this.y2 == other.y2));
-  }
+  bool operator ==(other) =>
+      ((this.x0 == other.x0 && this.y0 == other.y0) &&
+          (this.x1 == other.x1 && this.y1 == other.y1) &&
+          (this.x2 == other.x2 && this.y2 == other.y2));
 
   bool cross(CrownAlignment other) {
     return ((this.x0 == other.x0 && this.y0 == other.y0) ||

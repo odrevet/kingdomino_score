@@ -2,6 +2,14 @@ import '../kingdom.dart';
 import '../quest.dart';
 
 class MiddleKingdom extends Quest {
+  static final MiddleKingdom _singleton = MiddleKingdom._internal();
+
+  factory MiddleKingdom() {
+    return _singleton;
+  }
+
+  MiddleKingdom._internal();
+
   final int extraPoints = 10;
 
   int getPoints(Kingdom kingdom) {

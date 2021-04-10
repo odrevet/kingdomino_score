@@ -5,7 +5,6 @@ import '../models/age_of_giants.dart';
 import '../models/kingdom.dart';
 import 'kingdom_widget.dart';
 import 'main_widget.dart';
-import 'quest.dart';
 
 var _textStyle = TextStyle(color: Colors.black87);
 
@@ -121,7 +120,7 @@ class GiantsDetailsWidget extends StatelessWidget {
         tableCells.add(TableCell(
             child: Align(
                 alignment: Alignment.centerRight,
-                child: AutoSizeText(shield + giant,
+                child: AutoSizeText('shield' + giant,
                     maxLines: 1, group: groupScore, style: _textStyle))));
 
         tableCells.add(TableCell(

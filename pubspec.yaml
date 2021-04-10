@@ -1,5 +1,5 @@
 name: kingdomino_score_count
-description: Calculate kingdomino score easly by entering each land of your kingdom in the app
+description: Calculate your Kingdomino score easly
 
 version: 2.0.8+14
 
@@ -13,6 +13,7 @@ dependencies:
   auto_size_text: ^2.1.0
   material_design_icons_flutter: ^4.0.5655
   package_info: ^2.0.0
+  flutter_svg: ^0.21.0+1
 
 dev_dependencies:
   test:
@@ -23,6 +24,7 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
+    - assets/
     - android/app/src/main/res/mipmap-mdpi/ic_launcher.png
   fonts:
     - family: Augusta

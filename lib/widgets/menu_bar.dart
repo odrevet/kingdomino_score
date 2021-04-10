@@ -157,7 +157,7 @@ class _MenuBarState extends State<MenuBar> {
             GiantsDetailsWidget(
               kingdom: _mainWidgetState.kingdom,
               scoreOfQuest: _mainWidgetState.scoreOfQuest,
-              quests: _mainWidgetState.quests,
+              quests: _mainWidgetState.selectedQuests,
               groupScore: _mainWidgetState.groupScore,
               score: _mainWidgetState.score
             ),

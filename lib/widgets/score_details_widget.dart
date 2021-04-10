@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import '../models/kingdom.dart';
 import 'kingdom_widget.dart';
 import 'main_widget.dart';
-import 'quest.dart';
 
 var _textStyle = TextStyle(color: Colors.black87);
 
@@ -100,7 +99,7 @@ class ScoreDetailsWidget extends StatelessWidget {
         tableCells.add(TableCell(
             child: Align(
                 alignment: Alignment.centerRight,
-                child: AutoSizeText(shield,
+                child: AutoSizeText('shield',
                     maxLines: 1, group: groupScore, style: _textStyle))));
 
         tableCells.add(TableCell(

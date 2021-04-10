@@ -1,5 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:kingdomino_score_count/models/quests/harmony.dart';
+import 'package:kingdomino_score_count/models/quests/middle_kingdom.dart';
 import 'package:package_info/package_info.dart';
 
 import '../models/age_of_giants.dart';
@@ -70,7 +72,7 @@ class MainWidgetState extends State<MainWidget> {
   Color color = Colors.white;
 
   bool aog = false; // Age of Giants extension
-  List<Quest> quests = []; //standard : 0, 1 or 2, aog : 2
+  List<QuestType> selectedQuests = [];
   List<Warning> warnings = [];
 
   PackageInfo _packageInfo;
@@ -163,8 +165,15 @@ class MainWidgetState extends State<MainWidget> {
   void updateScoreQuest() {
     var scoreQuest = 0;
 
-    for (var i = 0; i < quests.length; i++) {
-      scoreQuest += quests[i].getPoints(kingdom);
+    for (var i = 0; i < selectedQuests.length; i++) {
+      Quest quest;
+      if (selectedQuests[i] == QuestType.harmony) {
+        quest = Harmony();
+      } else if (selectedQuests[i] == QuestType.middleKingdom) {
+        quest = MiddleKingdom();
+      }
+
+      scoreQuest += quest.getPoints(kingdom);
     }
 
     setState(() {
@@ -206,7 +215,7 @@ class MainWidgetState extends State<MainWidget> {
             setState(() {
               aog = !aog;
 
-              quests.clear();
+              selectedQuests.clear();
 
               kingdom.getLands().expand((i) => i).toList().forEach((land) {
                 land.giants = 0;
@@ -326,7 +335,7 @@ I will not use or share your information with anyone : Kingdomino Score works of
                       ScoreDetailsWidget(
                           kingdom: this.kingdom,
                           groupScore: this.groupScore,
-                          quests: this.quests,
+                          quests: this.selectedQuests,
                           score: this.score,
                           scoreOfQuest: this.scoreOfQuest),
                       context),
@@ -339,7 +348,7 @@ I will not use or share your information with anyone : Kingdomino Score works of
               child: ScoreDetailsWidget(
                   kingdom: this.kingdom,
                   groupScore: this.groupScore,
-                  quests: this.quests,
+                  quests: this.selectedQuests,
                   score: this.score,
                   scoreOfQuest: this.scoreOfQuest)),
           KingdomWidget(

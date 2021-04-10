@@ -211,13 +211,22 @@ class ScoreDetailsWidget extends StatelessWidget {
 }
 
 class GiantsDetailsWidget extends StatelessWidget {
-  final MainWidgetState _mainWidgetState;
+  final Kingdom kingdom;
+  final groupScore;
+  final quests;
+  final scoreOfQuest;
+  final score;
 
-  GiantsDetailsWidget(this._mainWidgetState);
+  GiantsDetailsWidget(
+      {this.kingdom,
+      this.groupScore,
+      this.quests,
+      this.scoreOfQuest,
+      this.score});
 
   @override
   Widget build(BuildContext context) {
-    List<Property> properties = _mainWidgetState.kingdom
+    List<Property> properties = kingdom
         .getProperties()
         .where((property) => property.giantCount > 0)
         .toList();
@@ -244,53 +253,41 @@ class GiantsDetailsWidget extends StatelessWidget {
             child: Align(
           alignment: Alignment.centerRight,
           child: AutoSizeText('${property.landCount}',
-              maxLines: 1,
-              group: _mainWidgetState.groupScore,
-              style: _textStyle),
+              maxLines: 1, group: groupScore, style: _textStyle),
         )));
         tableCells.add(TableCell(
             child: Align(
           alignment: Alignment.centerRight,
           child: AutoSizeText(square,
               maxLines: 1,
-              group: _mainWidgetState.groupScore,
+              group: groupScore,
               style: TextStyle(color: getColorForLandType(property.landType))),
         )));
         tableCells.add(TableCell(
             child: Align(
                 alignment: Alignment.centerRight,
                 child: AutoSizeText('x',
-                    maxLines: 1,
-                    group: _mainWidgetState.groupScore,
-                    style: _textStyle))));
+                    maxLines: 1, group: groupScore, style: _textStyle))));
         tableCells.add(TableCell(
             child: Align(
                 alignment: Alignment.centerRight,
                 child: AutoSizeText(property.giantCount.toString(),
-                    maxLines: 1,
-                    group: _mainWidgetState.groupScore,
-                    style: _textStyle))));
+                    maxLines: 1, group: groupScore, style: _textStyle))));
         tableCells.add(TableCell(
             child: Align(
                 alignment: Alignment.centerRight,
                 child: AutoSizeText(giant,
-                    maxLines: 1,
-                    group: _mainWidgetState.groupScore,
-                    style: _textStyle))));
+                    maxLines: 1, group: groupScore, style: _textStyle))));
         tableCells.add(TableCell(
             child: Align(
                 alignment: Alignment.center,
                 child: AutoSizeText('=',
-                    maxLines: 1,
-                    group: _mainWidgetState.groupScore,
-                    style: _textStyle))));
+                    maxLines: 1, group: groupScore, style: _textStyle))));
         tableCells.add(TableCell(
             child: Align(
                 alignment: Alignment.centerRight,
                 child: AutoSizeText('- $rowScore',
-                    maxLines: 1,
-                    group: _mainWidgetState.groupScore,
-                    style: _textStyle))));
+                    maxLines: 1, group: groupScore, style: _textStyle))));
 
         var tableRow = TableRow(children: tableCells);
         tableRows.add(tableRow);
@@ -298,22 +295,21 @@ class GiantsDetailsWidget extends StatelessWidget {
 
       //quests points
       int scoreQuestWithoutGiants = 0;
-      if (_mainWidgetState.quests.isNotEmpty) {
+      if (quests.isNotEmpty) {
         //create a temporary kingdom without giants
-        for (var i = 0; i < _mainWidgetState.quests.length; i++) {
-          Kingdom kingdomWithoutGiants = Kingdom(_mainWidgetState.kingdom.size);
+        for (var i = 0; i < quests.length; i++) {
+          Kingdom kingdomWithoutGiants = Kingdom(kingdom.size);
 
-          for (var x = 0; x < _mainWidgetState.kingdom.size; x++) {
-            for (var y = 0; y < _mainWidgetState.kingdom.size; y++) {
+          for (var x = 0; x < kingdom.size; x++) {
+            for (var y = 0; y < kingdom.size; y++) {
               Land land = kingdomWithoutGiants.getLand(y, x);
               land.giants = 0;
-              land.crowns = _mainWidgetState.kingdom.getLand(y, x).crowns;
-              land.landType = _mainWidgetState.kingdom.getLand(y, x).landType;
+              land.crowns = kingdom.getLand(y, x).crowns;
+              land.landType = kingdom.getLand(y, x).landType;
             }
           }
 
-          scoreQuestWithoutGiants +=
-              _mainWidgetState.quests[i].getPoints(kingdomWithoutGiants);
+          scoreQuestWithoutGiants += quests[i].getPoints(kingdomWithoutGiants);
         }
 
         var tableCells = <TableCell>[];
@@ -327,26 +323,19 @@ class GiantsDetailsWidget extends StatelessWidget {
             child: Align(
                 alignment: Alignment.centerRight,
                 child: AutoSizeText(shield + giant,
-                    maxLines: 1,
-                    group: _mainWidgetState.groupScore,
-                    style: _textStyle))));
+                    maxLines: 1, group: groupScore, style: _textStyle))));
 
         tableCells.add(TableCell(
             child: Align(
                 alignment: Alignment.center,
                 child: AutoSizeText('=',
-                    maxLines: 1,
-                    group: _mainWidgetState.groupScore,
-                    style: _textStyle))));
+                    maxLines: 1, group: groupScore, style: _textStyle))));
 
         tableCells.add(TableCell(
             child: Align(
                 alignment: Alignment.centerRight,
-                child: AutoSizeText(
-                    '${_mainWidgetState.scoreOfQuest - scoreQuestWithoutGiants}',
-                    maxLines: 1,
-                    group: _mainWidgetState.groupScore,
-                    style: _textStyle))));
+                child: AutoSizeText('${scoreOfQuest - scoreQuestWithoutGiants}',
+                    maxLines: 1, group: groupScore, style: _textStyle))));
 
         var tableRow = TableRow(children: tableCells);
         tableRows.add(tableRow);
@@ -354,8 +343,7 @@ class GiantsDetailsWidget extends StatelessWidget {
 
       //SUM
       int totalGiantScore =
-          (_mainWidgetState.scoreOfQuest - scoreQuestWithoutGiants) -
-              totalCrownPointLoss;
+          (scoreOfQuest - scoreQuestWithoutGiants) - totalCrownPointLoss;
       var tableCells = <TableCell>[];
 
       tableCells.add(TableCell(child: AutoSizeText('')));
@@ -367,25 +355,19 @@ class GiantsDetailsWidget extends StatelessWidget {
           child: Align(
               alignment: Alignment.centerRight,
               child: AutoSizeText('Σ' + giant,
-                  maxLines: 1,
-                  group: _mainWidgetState.groupScore,
-                  style: _textStyle))));
+                  maxLines: 1, group: groupScore, style: _textStyle))));
 
       tableCells.add(TableCell(
           child: Align(
               alignment: Alignment.center,
               child: AutoSizeText('=',
-                  maxLines: 1,
-                  group: _mainWidgetState.groupScore,
-                  style: _textStyle))));
+                  maxLines: 1, group: groupScore, style: _textStyle))));
 
       tableCells.add(TableCell(
           child: Align(
               alignment: Alignment.centerRight,
               child: AutoSizeText('$totalGiantScore',
-                  maxLines: 1,
-                  group: _mainWidgetState.groupScore,
-                  style: _textStyle))));
+                  maxLines: 1, group: groupScore, style: _textStyle))));
 
       var tableRow = TableRow(children: tableCells);
       tableRows.add(tableRow);
@@ -402,25 +384,19 @@ class GiantsDetailsWidget extends StatelessWidget {
           child: Align(
               alignment: Alignment.centerRight,
               child: AutoSizeText('Σ',
-                  maxLines: 1,
-                  group: _mainWidgetState.groupScore,
-                  style: _textStyle))));
+                  maxLines: 1, group: groupScore, style: _textStyle))));
 
       tableCellsTotalWithoutGiants.add(TableCell(
           child: Align(
               alignment: Alignment.center,
               child: AutoSizeText('=',
-                  maxLines: 1,
-                  group: _mainWidgetState.groupScore,
-                  style: _textStyle))));
+                  maxLines: 1, group: groupScore, style: _textStyle))));
 
       tableCellsTotalWithoutGiants.add(TableCell(
           child: Align(
               alignment: Alignment.centerRight,
-              child: AutoSizeText('${_mainWidgetState.score - totalGiantScore}',
-                  maxLines: 1,
-                  group: _mainWidgetState.groupScore,
-                  style: _textStyle))));
+              child: AutoSizeText('${score - totalGiantScore}',
+                  maxLines: 1, group: groupScore, style: _textStyle))));
 
       var tableRowTotalWithoutGiants =
           TableRow(children: tableCellsTotalWithoutGiants);

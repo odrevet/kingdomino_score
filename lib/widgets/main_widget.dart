@@ -320,13 +320,26 @@ I will not use or share your information with anyone : Kingdomino Score works of
                 child: InkWell(
                   child: Text(score.toString(),
                       style: TextStyle(color: Colors.white)),
-                  onTap: () => runDialog(ScoreDetailsWidget(this), context),
+                  onTap: () => runDialog(
+                      ScoreDetailsWidget(
+                          kingdom: this.kingdom,
+                          groupScore: this.groupScore,
+                          quests: this.quests,
+                          score: this.score,
+                          scoreOfQuest: this.scoreOfQuest),
+                      context),
                 )),
           )
         ]);
       } else {
         return Row(children: <Widget>[
-          Expanded(child: ScoreDetailsWidget(this)),
+          Expanded(
+              child: ScoreDetailsWidget(
+                  kingdom: this.kingdom,
+                  groupScore: this.groupScore,
+                  quests: this.quests,
+                  score: this.score,
+                  scoreOfQuest: this.scoreOfQuest)),
           KingdomWidget(
               getSelectionMode: this.getSelectionMode,
               getSelectedLandType: this.getSelectedLandType,

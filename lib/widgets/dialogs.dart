@@ -11,15 +11,16 @@ import 'quest.dart';
 var _textStyle = TextStyle(color: Colors.black87);
 
 class WarningsWidget extends StatelessWidget {
-  final MainWidgetState _mainWidgetState;
+  final List<Warning> warnings;
+  final groupWarning;
 
-  WarningsWidget(this._mainWidgetState);
+  WarningsWidget({this.warnings, this.groupWarning});
 
   @override
   Widget build(BuildContext context) {
     var tableRows = <TableRow>[];
 
-    for (Warning warning in _mainWidgetState.warnings) {
+    for (Warning warning in warnings) {
       var tableCells = <TableCell>[];
 
       tableCells.add(TableCell(
@@ -27,7 +28,7 @@ class WarningsWidget extends StatelessWidget {
               alignment: Alignment.centerRight,
               child: AutoSizeText(warning.leftOperand.toString(),
                   maxLines: 1,
-                  group: _mainWidgetState.groupWarning,
+                  group: groupWarning,
                   style: _textStyle))));
 
       tableCells.add(TableCell(
@@ -35,7 +36,7 @@ class WarningsWidget extends StatelessWidget {
               alignment: Alignment.center,
               child: AutoSizeText(square,
                   maxLines: 1,
-                  group: _mainWidgetState.groupWarning,
+                  group: groupWarning,
                   style: TextStyle(
                       color: getColorForLandType(warning.landType))))));
 
@@ -44,7 +45,7 @@ class WarningsWidget extends StatelessWidget {
               alignment: Alignment.center,
               child: AutoSizeText(crown * warning.crown,
                   maxLines: 1,
-                  group: _mainWidgetState.groupWarning,
+                  group: groupWarning,
                   style: _textStyle))));
 
       tableCells.add(TableCell(
@@ -52,7 +53,7 @@ class WarningsWidget extends StatelessWidget {
               alignment: Alignment.center,
               child: AutoSizeText(warning.operator,
                   maxLines: 1,
-                  group: _mainWidgetState.groupWarning,
+                  group: groupWarning,
                   style: _textStyle))));
 
       tableCells.add(TableCell(
@@ -60,7 +61,7 @@ class WarningsWidget extends StatelessWidget {
               alignment: Alignment.centerRight,
               child: AutoSizeText(warning.rightOperand.toString(),
                   maxLines: 1,
-                  group: _mainWidgetState.groupWarning,
+                  group: groupWarning,
                   style: _textStyle))));
 
       TableRow tableRow = TableRow(children: tableCells);

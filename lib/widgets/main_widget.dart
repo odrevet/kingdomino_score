@@ -273,7 +273,11 @@ I will not use or share your information with anyone : Kingdomino Score works of
             children: <Widget>[
               IconButton(
                   icon: Icon(Icons.warning),
-                  onPressed: () => runDialog(WarningsWidget(this), context)),
+                  onPressed: () => runDialog(
+                      WarningsWidget(
+                          warnings: this.warnings,
+                          groupWarning: this.groupWarning),
+                      context)),
               Positioned(
                 right: 5,
                 top: 10,

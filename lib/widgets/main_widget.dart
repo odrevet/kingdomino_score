@@ -6,10 +6,11 @@ import '../models/age_of_giants.dart';
 import '../models/kingdom.dart';
 import '../models/quest.dart';
 import '../models/warning.dart';
-import 'dialogs.dart';
+import 'warning_widget.dart';
 import 'kingdom_widget.dart';
 import 'menu_bar.dart';
 import 'quest_dialog.dart';
+import 'score_details_widget.dart';
 
 const String crown = '\u{1F451}';
 const String castle = '\u{1F3F0}';

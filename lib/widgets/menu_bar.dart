@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../models/age_of_giants.dart';
 import '../models/kingdom.dart';
-import 'dialogs.dart';
+import 'giant_details_widget.dart';
 import 'kingdom_widget.dart';
 import 'main_widget.dart';
 

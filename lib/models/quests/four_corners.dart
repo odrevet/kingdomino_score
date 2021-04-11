@@ -2,11 +2,18 @@ import '../kingdom.dart';
 import '../quest.dart';
 
 class FourCorners extends Quest {
+  static final FourCorners _singleton = FourCorners._internal();
+
+  factory FourCorners(LandType landType) {
+    _singleton.landType = landType;
+    return _singleton;
+  }
+
+  FourCorners._internal();
+
   final int extraPoints = 5;
 
   LandType landType;
-
-  FourCorners(this.landType);
 
   int getPoints(Kingdom kingdom) {
     int count = 0;

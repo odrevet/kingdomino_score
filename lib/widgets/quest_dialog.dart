@@ -103,12 +103,12 @@ class _QuestDialogWidgetState extends State<QuestDialogWidget> {
           SvgPicture.asset('assets/template.svg'), _mainWidgetState));
       options.add(_QuestDialogOption(QuestType.lostCorner,
           SvgPicture.asset('assets/template.svg'), _mainWidgetState));
+      options.add(_QuestDialogOption(QuestType.folieDesGrandeurs,
+          SvgPicture.asset('assets/template.svg'), _mainWidgetState));
       options.add(Divider(
         height: 20,
         thickness: 5,
       ));
-      options.add(_QuestDialogOption(QuestType.folieDesGrandeurs,
-          SvgPicture.asset('assets/template.svg'), _mainWidgetState));
       options.add(_QuestDialogOption(QuestType.fourCornersWheat,
           SvgPicture.asset('assets/template.svg'), _mainWidgetState));
       options.add(_QuestDialogOption(QuestType.fourCornersLake,

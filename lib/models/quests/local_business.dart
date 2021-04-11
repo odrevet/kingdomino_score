@@ -2,11 +2,18 @@ import '../kingdom.dart';
 import '../quest.dart';
 
 class LocalBusiness extends Quest {
+  static final LocalBusiness _singleton = LocalBusiness._internal();
+
+  factory LocalBusiness(LandType landType) {
+    _singleton.landType = landType;
+    return _singleton;
+  }
+
+  LocalBusiness._internal();
+
   final int extraPoints = 5;
 
-  final LandType landType;
-
-  LocalBusiness(this.landType);
+  LandType landType;
 
   int getPoints(Kingdom kingdom) {
     int castleX = 0, castleY = 0;

@@ -36,9 +36,16 @@ class CrownAlignment {
 }
 
 class FolieDesGrandeurs extends Quest {
+  static final FolieDesGrandeurs _singleton = FolieDesGrandeurs._internal();
+
+  factory FolieDesGrandeurs() {
+    return _singleton;
+  }
+
+  FolieDesGrandeurs._internal();
+
   int extraPoints = 10;
 
-  FolieDesGrandeurs();
 
   ///check if land at coord is in bound and has at least a crown
   bool _checkLandBoundAndCrown(int y, int x, Kingdom kingdom) {

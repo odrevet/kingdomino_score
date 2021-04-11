@@ -1,11 +1,15 @@
 import 'dart:collection';
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:kingdomino_score_count/models/quests/harmony.dart';
-import 'package:kingdomino_score_count/models/quests/middle_kingdom.dart';
 import 'package:package_info/package_info.dart';
 
+import '../models/quests/bleakKing.dart';
+import '../models/quests/folie_des_grandeurs.dart';
+import '../models/quests/four_corners.dart';
+import '../models/quests/harmony.dart';
+import '../models/quests/local_business.dart';
+import '../models/quests/middle_kingdom.dart';
+import '../models/quests/lost_corner.dart';
 import '../models/age_of_giants.dart';
 import '../models/kingdom.dart';
 import '../models/quest.dart';
@@ -133,7 +137,7 @@ class MainWidgetState extends State<MainWidget> {
           .length;
       if (count > getGameSet()[landType]['count']) {
         Warning warning =
-        Warning(count, landType, 0, '>', getGameSet()[landType]['count']);
+            Warning(count, landType, 0, '>', getGameSet()[landType]['count']);
 
         setState(() {
           warnings.add(warning);
@@ -142,14 +146,14 @@ class MainWidgetState extends State<MainWidget> {
 
       //check for too many tile with given crowns
       for (var crownsCounter = 1;
-      crownsCounter <= getGameSet()[landType]['crowns']['max'];
-      crownsCounter++) {
+          crownsCounter <= getGameSet()[landType]['crowns']['max'];
+          crownsCounter++) {
         var count = kingdom
             .getLands()
             .expand((i) => i)
             .toList()
             .where((land) =>
-        land.landType == landType && land.crowns == crownsCounter)
+                land.landType == landType && land.crowns == crownsCounter)
             .length;
 
         if (count > getGameSet()[landType]['crowns'][crownsCounter]) {
@@ -165,19 +169,100 @@ class MainWidgetState extends State<MainWidget> {
   }
 
   void updateScoreQuest() {
-    var scoreQuest = 0;
+    int scoreQuest = 0;
 
     selectedQuests.forEach((selectedQuest) {
       Quest quest;
       switch (selectedQuest) {
-        case QuestType.harmony :
+        case QuestType.harmony:
           {
             scoreQuest += Harmony().getPoints(kingdom);
           }
           break;
-        case QuestType.middleKingdom :
+        case QuestType.middleKingdom:
           {
             scoreQuest += MiddleKingdom().getPoints(kingdom);
+          }
+          break;
+        case QuestType.bleakKing:
+          {
+            scoreQuest += BleakKing().getPoints(kingdom);
+          }
+          break;
+        case QuestType.folieDesGrandeurs:
+          {
+            scoreQuest += FolieDesGrandeurs().getPoints(kingdom);
+          }
+          break;
+        case QuestType.fourCornersWheat:
+          {
+            scoreQuest += FourCorners(LandType.wheat).getPoints(kingdom);
+          }
+          break;
+        case QuestType.fourCornersLake:
+          {
+            scoreQuest += FourCorners(LandType.lake).getPoints(kingdom);
+          }
+          break;
+        case QuestType.fourCornersForest:
+          {
+            scoreQuest += FourCorners(LandType.forest).getPoints(kingdom);
+          }
+          break;
+        case QuestType.fourCornersGrassLand:
+          {
+            scoreQuest += FourCorners(LandType.grassland).getPoints(kingdom);
+          }
+          break;
+        case QuestType.fourCornersSwamp:
+          {
+            scoreQuest += FourCorners(LandType.swamp).getPoints(kingdom);
+          }
+          break;
+        case QuestType.fourCornersMine:
+          {
+            scoreQuest += FourCorners(LandType.mine).getPoints(kingdom);
+          }
+          break;
+        case QuestType.localBusinessWheat:
+          {
+            scoreQuest += LocalBusiness(LandType.wheat).getPoints(kingdom);
+          }
+          break;
+        case QuestType.localBusinessLake:
+          {
+            scoreQuest += LocalBusiness(LandType.lake).getPoints(kingdom);
+          }
+          break;
+        case QuestType.localBusinessForest:
+          {
+            scoreQuest +=
+                LocalBusiness(LandType.forest).getPoints(kingdom);
+          }
+          break;
+        case QuestType.localBusinessGrassLand:
+          {
+            scoreQuest += LocalBusiness(LandType.grassland).getPoints(kingdom);
+          }
+          break;
+        case QuestType.localBusinessGrassLand:
+          {
+            scoreQuest += LocalBusiness(LandType.grassland).getPoints(kingdom);
+          }
+          break;
+        case QuestType.localBusinessSwamp:
+          {
+            scoreQuest += LocalBusiness(LandType.swamp).getPoints(kingdom);
+          }
+          break;
+        case QuestType.localBusinessMine:
+          {
+            scoreQuest += LocalBusiness(LandType.mine).getPoints(kingdom);
+          }
+          break;
+        case QuestType.lostCorner:
+          {
+            scoreQuest += LostCorner().getPoints(kingdom);
           }
           break;
       }
@@ -271,18 +356,17 @@ class MainWidgetState extends State<MainWidget> {
           }),
       IconButton(
           icon: Icon(Icons.help),
-          onPressed: () =>
-              showAboutDialog(
-                  context: context,
-                  applicationName: _packageInfo.appName,
-                  applicationVersion: _packageInfo.version,
-                  applicationLegalese:
+          onPressed: () => showAboutDialog(
+              context: context,
+              applicationName: _packageInfo.appName,
+              applicationVersion: _packageInfo.version,
+              applicationLegalese:
                   '''Drevet Olivier built the Kingdomino Score app under the GPL license Version 3. 
 This SERVICE is provided by Drevet Olivier at no cost and is intended for use as is.
 This page is used to inform visitors regarding the policy with the collection, use, and disclosure of Personal Information if anyone decided to use my Service.
 I will not use or share your information with anyone : Kingdomino Score works offline and does not send any information over a network. ''',
-                  applicationIcon: Image.asset(
-                      'android/app/src/main/res/mipmap-mdpi/ic_launcher.png')))
+              applicationIcon: Image.asset(
+                  'android/app/src/main/res/mipmap-mdpi/ic_launcher.png')))
     ];
 
     if (warnings.isNotEmpty) {
@@ -292,12 +376,11 @@ I will not use or share your information with anyone : Kingdomino Score works of
             children: <Widget>[
               IconButton(
                   icon: Icon(Icons.warning),
-                  onPressed: () =>
-                      runDialog(
-                          WarningsWidget(
-                              warnings: this.warnings,
-                              groupWarning: this.groupWarning),
-                          context)),
+                  onPressed: () => runDialog(
+                      WarningsWidget(
+                          warnings: this.warnings,
+                          groupWarning: this.groupWarning),
+                      context)),
               Positioned(
                 right: 5,
                 top: 10,
@@ -340,15 +423,14 @@ I will not use or share your information with anyone : Kingdomino Score works of
                 child: InkWell(
                   child: Text(score.toString(),
                       style: TextStyle(color: Colors.white)),
-                  onTap: () =>
-                      runDialog(
-                          ScoreDetailsWidget(
-                              kingdom: this.kingdom,
-                              groupScore: this.groupScore,
-                              quests: this.selectedQuests,
-                              score: this.score,
-                              scoreOfQuest: this.scoreOfQuest),
-                          context),
+                  onTap: () => runDialog(
+                      ScoreDetailsWidget(
+                          kingdom: this.kingdom,
+                          groupScore: this.groupScore,
+                          quests: this.selectedQuests,
+                          score: this.score,
+                          scoreOfQuest: this.scoreOfQuest),
+                      context),
                 )),
           )
         ]);
@@ -380,12 +462,10 @@ I will not use or share your information with anyone : Kingdomino Score works of
     return Scaffold(
         appBar: AppBar(
           title:
-          Row(mainAxisAlignment: MainAxisAlignment.end, children: actions),
+              Row(mainAxisAlignment: MainAxisAlignment.end, children: actions),
         ),
         bottomNavigationBar: BottomAppBar(
-            child: MenuBar(this), color: Theme
-            .of(context)
-            .primaryColor),
+            child: MenuBar(this), color: Theme.of(context).primaryColor),
         body: body);
   }
 

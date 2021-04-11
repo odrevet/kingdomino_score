@@ -2,9 +2,15 @@ import '../kingdom.dart';
 import '../quest.dart';
 
 class LostCorner extends Quest {
-  final int extraPoints = 20;
+  static final LostCorner _singleton = LostCorner._internal();
 
-  LostCorner();
+  factory LostCorner() {
+    return _singleton;
+  }
+
+  LostCorner._internal();
+
+  final int extraPoints = 20;
 
   int getPoints(Kingdom kingdom) {
     int size = kingdom.size - 1;

@@ -5,9 +5,15 @@ import '../quest.dart';
 /// properties must be `at least` of 5 lands, as stated in the french booklet
 /// see https://boardgamegeek.com/thread/2032948/bleak-king-aka-poor-mans-bonus-quest-confusion
 class BleakKing extends Quest {
-  int extraPoints = 10;
+  static final BleakKing _singleton = BleakKing._internal();
 
-  BleakKing();
+  factory BleakKing() {
+    return _singleton;
+  }
+
+  BleakKing._internal();
+
+  int extraPoints = 10;
 
   int getPoints(Kingdom kingdom) {
     var properties = kingdom.getProperties();

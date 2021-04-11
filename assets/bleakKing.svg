@@ -13,7 +13,7 @@
    version="1.1"
    id="svg8"
    inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
-   sodipodi:docname="wheat.svg">
+   sodipodi:docname="template.svg">
   <defs
      id="defs2" />
   <sodipodi:namedview
@@ -30,10 +30,10 @@
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
      showgrid="false"
-     inkscape:window-width="1920"
-     inkscape:window-height="1080"
-     inkscape:window-x="4480"
-     inkscape:window-y="179"
+     inkscape:window-width="2560"
+     inkscape:window-height="1413"
+     inkscape:window-x="1920"
+     inkscape:window-y="-10"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata5">
@@ -43,7 +43,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -54,9 +54,10 @@
      transform="translate(-15.761671,-6.7591696)">
     <g
        id="g31"
-       transform="matrix(1.4032544,0,0,2.041733,-41.712213,-146.08607)">
+       transform="matrix(1.4032544,0,0,2.041733,-41.712213,-146.08607)"
+       style="fill:#552200">
       <rect
-         style="fill:#ffff00;stroke-width:0.188082"
+         style="fill:#552200;stroke-width:0.188082"
          id="rect26"
          width="71.262917"
          height="24.489"

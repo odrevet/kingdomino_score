@@ -44,10 +44,8 @@ class _QuestDialogOptionState extends State<_QuestDialogOption> {
         ? Container(
             decoration: BoxDecoration(
                 border: Border(
-              right: BorderSide(width: 3, color: Colors.red.shade600),
-              top: BorderSide(width: 3, color: Colors.red.shade600),
-              left: BorderSide(width: 3, color: Colors.red.shade600),
-              bottom: BorderSide(width: 3, color: Colors.red.shade600),
+              top: BorderSide(width: 3, color: Colors.green.shade600),
+              bottom: BorderSide(width: 3, color: Colors.green.shade600),
             )),
             child: svg)
         : svg;

@@ -94,9 +94,52 @@ class _QuestDialogWidgetState extends State<QuestDialogWidget> {
     options.add(_QuestDialogOption(QuestType.harmony,
         SvgPicture.asset('assets/harmony.svg'), _mainWidgetState));
     options.add(_QuestDialogOption(QuestType.middleKingdom,
-        SvgPicture.asset('assets/middleKingdom.svg'), _mainWidgetState));
+        SvgPicture.asset('assets/template.svg'), _mainWidgetState));
 
-    if (_mainWidgetState.aog == true) {}
+    if (_mainWidgetState.aog == true) {
+      options.add(Divider(
+        height: 20,
+        thickness: 5,
+      ));
+      options.add(_QuestDialogOption(QuestType.bleakKing,
+          SvgPicture.asset('assets/template.svg'), _mainWidgetState));
+      options.add(_QuestDialogOption(QuestType.lostCorner,
+          SvgPicture.asset('assets/template.svg'), _mainWidgetState));
+      options.add(Divider(
+        height: 20,
+        thickness: 5,
+      ));
+      options.add(_QuestDialogOption(QuestType.folieDesGrandeurs,
+          SvgPicture.asset('assets/template.svg'), _mainWidgetState));
+      options.add(_QuestDialogOption(QuestType.fourCornersWheat,
+          SvgPicture.asset('assets/template.svg'), _mainWidgetState));
+      options.add(_QuestDialogOption(QuestType.fourCornersLake,
+          SvgPicture.asset('assets/template.svg'), _mainWidgetState));
+      options.add(_QuestDialogOption(QuestType.fourCornersForest,
+          SvgPicture.asset('assets/template.svg'), _mainWidgetState));
+      options.add(_QuestDialogOption(QuestType.fourCornersGrassLand,
+          SvgPicture.asset('assets/template.svg'), _mainWidgetState));
+      options.add(_QuestDialogOption(QuestType.fourCornersSwamp,
+          SvgPicture.asset('assets/template.svg'), _mainWidgetState));
+      options.add(_QuestDialogOption(QuestType.fourCornersMine,
+          SvgPicture.asset('assets/template.svg'), _mainWidgetState));
+      options.add(Divider(
+        height: 20,
+        thickness: 5,
+      ));
+      options.add(_QuestDialogOption(QuestType.localBusinessWheat,
+          SvgPicture.asset('assets/template.svg'), _mainWidgetState));
+      options.add(_QuestDialogOption(QuestType.localBusinessLake,
+          SvgPicture.asset('assets/template.svg'), _mainWidgetState));
+      options.add(_QuestDialogOption(QuestType.localBusinessForest,
+          SvgPicture.asset('assets/template.svg'), _mainWidgetState));
+      options.add(_QuestDialogOption(QuestType.localBusinessGrassLand,
+          SvgPicture.asset('assets/template.svg'), _mainWidgetState));
+      options.add(_QuestDialogOption(QuestType.localBusinessSwamp,
+          SvgPicture.asset('assets/template.svg'), _mainWidgetState));
+      options.add(_QuestDialogOption(QuestType.localBusinessMine,
+          SvgPicture.asset('assets/template.svg'), _mainWidgetState));
+    }
 
     SimpleDialog dialog = SimpleDialog(
       contentPadding: EdgeInsets.symmetric(

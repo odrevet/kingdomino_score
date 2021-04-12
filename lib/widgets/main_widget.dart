@@ -99,6 +99,10 @@ class MainWidgetState extends State<MainWidget> {
     super.initState();
   }
 
+  HashSet<QuestType> getSelectedQuests() => selectedQuests;
+
+  bool getAog() => aog;
+
   LandType getSelectedLandType() => selectedLandType;
 
   SelectionMode getSelectionMode() => selectionMode;

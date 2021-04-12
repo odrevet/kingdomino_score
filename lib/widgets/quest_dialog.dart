@@ -15,8 +15,8 @@ class _QuestDialogOption extends StatefulWidget {
       this.questType, this.svg, this.getSelectedQuests, this.updateScores);
 
   @override
-  _QuestDialogOptionState createState() =>
-      _QuestDialogOptionState(this.questType, this.svg, this.getSelectedQuests, this.updateScores);
+  _QuestDialogOptionState createState() => _QuestDialogOptionState(
+      this.questType, this.svg, this.getSelectedQuests, this.updateScores);
 }
 
 class _QuestDialogOptionState extends State<_QuestDialogOption> {
@@ -74,19 +74,24 @@ class _QuestDialogOptionState extends State<_QuestDialogOption> {
 }
 
 class QuestDialogWidget extends StatefulWidget {
-  final MainWidgetState _mainWidgetState;
+  final getSelectedQuests;
+  final updateScores;
+  final getAog;
 
-  QuestDialogWidget(this._mainWidgetState);
+  QuestDialogWidget(this.getSelectedQuests, this.updateScores, this.getAog);
 
   @override
-  _QuestDialogWidgetState createState() =>
-      _QuestDialogWidgetState(this._mainWidgetState);
+  _QuestDialogWidgetState createState() => _QuestDialogWidgetState(
+      this.getSelectedQuests, this.updateScores, this.getAog);
 }
 
 class _QuestDialogWidgetState extends State<QuestDialogWidget> {
-  MainWidgetState _mainWidgetState;
+  final getSelectedQuests;
+  final updateScores;
+  final getAog;
 
-  _QuestDialogWidgetState(this._mainWidgetState);
+  _QuestDialogWidgetState(
+      this.getSelectedQuests, this.updateScores, this.getAog);
 
   @override
   build(BuildContext context) {
@@ -95,15 +100,15 @@ class _QuestDialogWidgetState extends State<QuestDialogWidget> {
     options.add(_QuestDialogOption(
         QuestType.harmony,
         SvgPicture.asset('assets/harmony.svg'),
-        _mainWidgetState.getSelectedQuests,
-        _mainWidgetState.updateScores));
+        getSelectedQuests,
+        updateScores));
     options.add(_QuestDialogOption(
         QuestType.middleKingdom,
         SvgPicture.asset('assets/middleKingdom.svg'),
-        _mainWidgetState.getSelectedQuests,
-        _mainWidgetState.updateScores));
+        getSelectedQuests,
+        updateScores));
 
-    if (_mainWidgetState.aog == true) {
+    if (getAog() == true) {
       options.add(Divider(
         height: 20,
         thickness: 5,
@@ -111,18 +116,18 @@ class _QuestDialogWidgetState extends State<QuestDialogWidget> {
       options.add(_QuestDialogOption(
           QuestType.bleakKing,
           SvgPicture.asset('assets/bleakKing.svg'),
-          _mainWidgetState.getSelectedQuests,
-          _mainWidgetState.updateScores));
+          getSelectedQuests,
+          updateScores));
       options.add(_QuestDialogOption(
           QuestType.lostCorner,
           SvgPicture.asset('assets/lostCorner.svg'),
-          _mainWidgetState.getSelectedQuests,
-          _mainWidgetState.updateScores));
+          getSelectedQuests,
+          updateScores));
       options.add(_QuestDialogOption(
           QuestType.folieDesGrandeurs,
           SvgPicture.asset('assets/folieDesGrandeurs.svg'),
-          _mainWidgetState.getSelectedQuests,
-          _mainWidgetState.updateScores));
+          getSelectedQuests,
+          updateScores));
       options.add(Divider(
         height: 20,
         thickness: 5,
@@ -130,33 +135,33 @@ class _QuestDialogWidgetState extends State<QuestDialogWidget> {
       options.add(_QuestDialogOption(
           QuestType.fourCornersWheat,
           SvgPicture.asset('assets/fourCornersWheat.svg'),
-          _mainWidgetState.getSelectedQuests,
-          _mainWidgetState.updateScores));
+          getSelectedQuests,
+          updateScores));
       options.add(_QuestDialogOption(
           QuestType.fourCornersLake,
           SvgPicture.asset('assets/fourCornersLake.svg'),
-          _mainWidgetState.getSelectedQuests,
-          _mainWidgetState.updateScores));
+          getSelectedQuests,
+          updateScores));
       options.add(_QuestDialogOption(
           QuestType.fourCornersForest,
           SvgPicture.asset('assets/fourCornersForest.svg'),
-          _mainWidgetState.getSelectedQuests,
-          _mainWidgetState.updateScores));
+          getSelectedQuests,
+          updateScores));
       options.add(_QuestDialogOption(
           QuestType.fourCornersGrassLand,
           SvgPicture.asset('assets/fourCornersGrassLand.svg'),
-          _mainWidgetState.getSelectedQuests,
-          _mainWidgetState.updateScores));
+          getSelectedQuests,
+          updateScores));
       options.add(_QuestDialogOption(
           QuestType.fourCornersSwamp,
           SvgPicture.asset('assets/fourCornersSwamp.svg'),
-          _mainWidgetState.getSelectedQuests,
-          _mainWidgetState.updateScores));
+          getSelectedQuests,
+          updateScores));
       options.add(_QuestDialogOption(
           QuestType.fourCornersMine,
           SvgPicture.asset('assets/fourCornersMine.svg'),
-          _mainWidgetState.getSelectedQuests,
-          _mainWidgetState.updateScores));
+          getSelectedQuests,
+          updateScores));
       options.add(Divider(
         height: 20,
         thickness: 5,
@@ -164,33 +169,33 @@ class _QuestDialogWidgetState extends State<QuestDialogWidget> {
       options.add(_QuestDialogOption(
           QuestType.localBusinessWheat,
           SvgPicture.asset('assets/localBusinessWheat.svg'),
-          _mainWidgetState.getSelectedQuests,
-          _mainWidgetState.updateScores));
+          getSelectedQuests,
+          updateScores));
       options.add(_QuestDialogOption(
           QuestType.localBusinessLake,
           SvgPicture.asset('assets/localBusinessLake.svg'),
-          _mainWidgetState.getSelectedQuests,
-          _mainWidgetState.updateScores));
+          getSelectedQuests,
+          updateScores));
       options.add(_QuestDialogOption(
           QuestType.localBusinessForest,
           SvgPicture.asset('assets/localBusinessForest.svg'),
-          _mainWidgetState.getSelectedQuests,
-          _mainWidgetState.updateScores));
+          getSelectedQuests,
+          updateScores));
       options.add(_QuestDialogOption(
           QuestType.localBusinessGrassLand,
           SvgPicture.asset('assets/localBusinessGrassLand.svg'),
-          _mainWidgetState.getSelectedQuests,
-          _mainWidgetState.updateScores));
+          getSelectedQuests,
+          updateScores));
       options.add(_QuestDialogOption(
           QuestType.localBusinessSwamp,
           SvgPicture.asset('assets/localBusinessSwamp.svg'),
-          _mainWidgetState.getSelectedQuests,
-          _mainWidgetState.updateScores));
+          getSelectedQuests,
+          updateScores));
       options.add(_QuestDialogOption(
           QuestType.localBusinessMine,
           SvgPicture.asset('assets/localBusinessMine.svg'),
-          _mainWidgetState.getSelectedQuests,
-          _mainWidgetState.updateScores));
+          getSelectedQuests,
+          updateScores));
     }
 
     SimpleDialog dialog = SimpleDialog(
@@ -213,7 +218,7 @@ class _QuestDialogWidgetState extends State<QuestDialogWidget> {
               },
             ));
 
-    if (_mainWidgetState.selectedQuests.isEmpty)
+    if (getSelectedQuests().isEmpty)
       return button;
     else
       return Stack(
@@ -233,7 +238,7 @@ class _QuestDialogWidgetState extends State<QuestDialogWidget> {
                 minHeight: 12,
               ),
               child: Text(
-                '${_mainWidgetState.selectedQuests.length}',
+                '${getSelectedQuests().length}',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 10,

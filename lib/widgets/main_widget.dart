@@ -333,7 +333,7 @@ class MainWidgetState extends State<MainWidget> {
                       fontSize: 25.0,
                       fontFamily: 'Augusta',
                       color: aog ? Colors.red : Colors.white)))),
-      QuestDialogWidget(this),
+      QuestDialogWidget(this.getSelectedQuests, this.updateScores, this.getAog),
       IconButton(
           icon: Icon(kingdom.size == 5 ? Icons.filter_5 : Icons.filter_7),
           onPressed: () {

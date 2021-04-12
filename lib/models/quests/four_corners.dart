@@ -13,7 +13,7 @@ class FourCorners extends Quest {
 
   final int extraPoints = 5;
 
-  LandType landType;
+  LandType? landType;
 
   int getPoints(Kingdom kingdom) {
     int count = 0;

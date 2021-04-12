@@ -42,15 +42,15 @@ class _KingdomWidgetState extends State<KingdomWidget> {
       this.kingdom});
 
   void _onLandTap(int x, int y) {
-    Land land = kingdom.getLand(x, y);
+    Land? land = kingdom.getLand(x, y);
     setState(() {
       switch (getSelectionMode()) {
         case SelectionMode.land:
-          land.landType = getSelectedLandType();
+          land!.landType = getSelectedLandType();
           land.reset();
           break;
         case SelectionMode.crown:
-          if (land.landType == LandType.castle ||
+          if (land!.landType == LandType.castle ||
               land.landType == LandType.none) break;
           land.crowns++;
           if (land.crowns > getGameSet()[land.landType]['crowns']['max']) {
@@ -68,11 +68,11 @@ class _KingdomWidgetState extends State<KingdomWidget> {
             }
           }
 
-          land.landType = getSelectedLandType(); //should be castle
+          land!.landType = getSelectedLandType(); //should be castle
           land.reset();
           break;
         case SelectionMode.giant:
-          land.giants = (land.giants + 1) % (land.crowns + 1);
+          land!.giants = (land.giants + 1) % (land.crowns + 1);
           break;
       }
     });
@@ -151,7 +151,7 @@ class _KingdomWidgetState extends State<KingdomWidget> {
   }
 }
 
-Color getColorForLandType(LandType type) {
+Color getColorForLandType(LandType? type) {
   Color color;
   switch (type) {
     case LandType.none:

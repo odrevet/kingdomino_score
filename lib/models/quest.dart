@@ -21,7 +21,7 @@ enum QuestType {
 }
 
 abstract class Quest {
-  int extraPoints; //points awarded if quest is fulfilled
+  int? extraPoints; //points awarded if quest is fulfilled
 
-  int getPoints(Kingdom kingdom);
+  int? getPoints(Kingdom kingdom);
 }

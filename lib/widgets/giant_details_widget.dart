@@ -9,7 +9,7 @@ import 'main_widget.dart';
 var _textStyle = TextStyle(color: Colors.black87);
 
 class GiantsDetailsWidget extends StatelessWidget {
-  final Kingdom kingdom;
+  final Kingdom? kingdom;
   final groupScore;
   final quests;
   final scoreOfQuest;
@@ -24,7 +24,7 @@ class GiantsDetailsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Property> properties = kingdom
+    List<Property> properties = kingdom!
         .getProperties()
         .where((property) => property.giantCount > 0)
         .toList();
@@ -92,18 +92,18 @@ class GiantsDetailsWidget extends StatelessWidget {
       }
 
       //quests points
-      int scoreQuestWithoutGiants = 0;
+      num scoreQuestWithoutGiants = 0;
       if (quests.isNotEmpty) {
         //create a temporary kingdom without giants
         for (var i = 0; i < quests.length; i++) {
-          Kingdom kingdomWithoutGiants = Kingdom(kingdom.size);
+          Kingdom kingdomWithoutGiants = Kingdom(kingdom!.size);
 
-          for (var x = 0; x < kingdom.size; x++) {
-            for (var y = 0; y < kingdom.size; y++) {
+          for (var x = 0; x < kingdom!.size; x++) {
+            for (var y = 0; y < kingdom!.size; y++) {
               Land land = kingdomWithoutGiants.getLand(y, x);
               land.giants = 0;
-              land.crowns = kingdom.getLand(y, x).crowns;
-              land.landType = kingdom.getLand(y, x).landType;
+              land.crowns = kingdom!.getLand(y, x).crowns;
+              land.landType = kingdom!.getLand(y, x).landType;
             }
           }
 
@@ -140,7 +140,7 @@ class GiantsDetailsWidget extends StatelessWidget {
       }
 
       //SUM
-      int totalGiantScore =
+      int? totalGiantScore =
           (scoreOfQuest - scoreQuestWithoutGiants) - totalCrownPointLoss;
       var tableCells = <TableCell>[];
 

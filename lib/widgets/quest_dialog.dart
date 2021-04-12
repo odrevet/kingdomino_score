@@ -23,7 +23,7 @@ class _QuestDialogOptionState extends State<_QuestDialogOption> {
   final QuestType questType;
   final Widget svg;
 
-  bool _active;
+  bool? _active;
 
   @override
   initState() {
@@ -42,7 +42,7 @@ class _QuestDialogOptionState extends State<_QuestDialogOption> {
 
   @override
   Widget build(BuildContext context) {
-    Widget child = _active
+    Widget child = _active!
         ? Container(
             decoration: BoxDecoration(
                 border: Border(

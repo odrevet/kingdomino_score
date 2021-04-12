@@ -5,7 +5,7 @@ import '../quest.dart';
 
 ///`2 different alignments cannot share more than one square`
 ///see https://boardgamegeek.com/thread/2040636/tic-tac-toe-bonus-challenge-tile-clarification
-class CrownAlignment {
+class CrownAlignment{
   int x0, y0;
   int x1, y1;
   int x2, y2;
@@ -13,7 +13,7 @@ class CrownAlignment {
   CrownAlignment(this.y0, this.x0, this.y1, this.x1, this.y2, this.x2);
 
   @override
-  bool operator ==(other) =>
+  bool operator ==(dynamic other) =>
       ((this.x0 == other.x0 && this.y0 == other.y0) &&
           (this.x1 == other.x1 && this.y1 == other.y1) &&
           (this.x2 == other.x2 && this.y2 == other.y2));
@@ -44,7 +44,7 @@ class FolieDesGrandeurs extends Quest {
 
   FolieDesGrandeurs._internal();
 
-  int extraPoints = 10;
+  int? extraPoints = 10;
 
 
   ///check if land at coord is in bound and has at least a crown
@@ -274,6 +274,6 @@ class FolieDesGrandeurs extends Quest {
       ...alignmentHorizontal,
     ], kingdom));
 
-    return extraPoints * validAlignments.reduce(max);
+    return extraPoints! * validAlignments.reduce(max);
   }
 }

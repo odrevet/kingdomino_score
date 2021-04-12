@@ -65,7 +65,7 @@ class Kingdom {
     }
   }
 
-  Property _getAdjacentLand(int x, int y, Property property) {
+  Property? _getAdjacentLand(int x, int y, Property? property) {
     if (!isInBound(x, y)) return null;
 
     var land = getLand(x, y);
@@ -103,7 +103,7 @@ class Kingdom {
 }
 
 class Land {
-  LandType landType = LandType.none;
+  LandType? landType = LandType.none;
   int crowns = 0;
   bool isMarked = false; //to create properties
   int giants = 0; //AoG extension
@@ -123,7 +123,7 @@ class Land {
 }
 
 class Property {
-  LandType landType;
+  LandType? landType;
   int crownCount = 0;
   int landCount = 0;
   int giantCount = 0; //AoG

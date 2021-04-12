@@ -4,19 +4,19 @@ description: Calculate your Kingdomino score easly
 version: 2.0.8+14
 
 environment:
-  sdk: ">=2.11.0"
+  sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
 
-  auto_size_text: ^2.1.0
-  material_design_icons_flutter: ^4.0.5655
+  auto_size_text: ^3.0.0-nullsafety.0
+  material_design_icons_flutter: ^5.0.5955-rc.1
   package_info: ^2.0.0
   flutter_svg: ^0.21.0+1
 
 dev_dependencies:
-  test:
+  test: ^1.16.5
   flutter_test:
     sdk: flutter
 

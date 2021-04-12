@@ -58,7 +58,7 @@ const Map<LandType, Map<String, dynamic>> gameSet = {
 };
 
 class MainWidget extends StatefulWidget {
-  MainWidget({Key key}) : super(key: key);
+  MainWidget({Key? key}) : super(key: key);
 
   @override
   MainWidgetState createState() => MainWidgetState();
@@ -81,7 +81,7 @@ class MainWidgetState extends State<MainWidget> {
   HashSet<QuestType> selectedQuests = HashSet();
   List<Warning> warnings = [];
 
-  PackageInfo _packageInfo;
+  late PackageInfo _packageInfo;
 
   var outline = Border(
     right: BorderSide(width: 3.5, color: Colors.blueGrey.shade600),
@@ -139,9 +139,9 @@ class MainWidgetState extends State<MainWidget> {
           .toList()
           .where((land) => land.landType == landType)
           .length;
-      if (count > getGameSet()[landType]['count']) {
+      if (count > getGameSet()[landType]!['count']) {
         Warning warning =
-            Warning(count, landType, 0, '>', getGameSet()[landType]['count']);
+            Warning(count, landType, 0, '>', getGameSet()[landType]!['count']);
 
         setState(() {
           warnings.add(warning);
@@ -150,7 +150,7 @@ class MainWidgetState extends State<MainWidget> {
 
       //check for too many tile with given crowns
       for (var crownsCounter = 1;
-          crownsCounter <= getGameSet()[landType]['crowns']['max'];
+          crownsCounter <= getGameSet()[landType]!['crowns']['max'];
           crownsCounter++) {
         var count = kingdom
             .getLands()
@@ -160,9 +160,9 @@ class MainWidgetState extends State<MainWidget> {
                 land.landType == landType && land.crowns == crownsCounter)
             .length;
 
-        if (count > getGameSet()[landType]['crowns'][crownsCounter]) {
+        if (count > getGameSet()[landType]!['crowns'][crownsCounter]) {
           Warning warning = Warning(count, landType, crownsCounter, '>',
-              getGameSet()[landType]['crowns'][crownsCounter]);
+              getGameSet()[landType]!['crowns'][crownsCounter]);
 
           setState(() {
             warnings.add(warning);
@@ -176,11 +176,10 @@ class MainWidgetState extends State<MainWidget> {
     int scoreQuest = 0;
 
     selectedQuests.forEach((selectedQuest) {
-      Quest quest;
       switch (selectedQuest) {
         case QuestType.harmony:
           {
-            scoreQuest += Harmony().getPoints(kingdom);
+            scoreQuest += Harmony().getPoints(kingdom)!;
           }
           break;
         case QuestType.middleKingdom:

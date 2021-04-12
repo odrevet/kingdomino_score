@@ -8,7 +8,7 @@ import 'main_widget.dart';
 var _textStyle = TextStyle(color: Colors.black87);
 
 class WarningsWidget extends StatelessWidget {
-  final List<Warning> warnings;
+  final List<Warning>? warnings;
   final groupWarning;
 
   WarningsWidget({this.warnings, this.groupWarning});
@@ -17,7 +17,7 @@ class WarningsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     var tableRows = <TableRow>[];
 
-    for (Warning warning in warnings) {
+    for (Warning warning in warnings!) {
       var tableCells = <TableCell>[];
 
       tableCells.add(TableCell(

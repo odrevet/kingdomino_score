@@ -13,7 +13,7 @@ class BleakKing extends Quest {
 
   BleakKing._internal();
 
-  int extraPoints = 10;
+  int? extraPoints = 10;
 
   int getPoints(Kingdom kingdom) {
     var properties = kingdom.getProperties();
@@ -27,6 +27,6 @@ class BleakKing extends Quest {
             property.landCount >= 5)
         .length;
 
-    return extraPoints * count;
+    return extraPoints! * count;
   }
 }

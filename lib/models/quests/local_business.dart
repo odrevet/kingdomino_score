@@ -13,7 +13,7 @@ class LocalBusiness extends Quest {
 
   final int extraPoints = 5;
 
-  LandType landType;
+  LandType? landType;
 
   int getPoints(Kingdom kingdom) {
     int castleX = 0, castleY = 0;
@@ -28,10 +28,7 @@ class LocalBusiness extends Quest {
       }
     }
 
-    if (castleX == null) return 0;
-
     int count = 0;
-
     int x, y;
 
     x = castleX - 1;

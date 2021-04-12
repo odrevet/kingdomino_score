@@ -10,9 +10,9 @@ class Harmony extends Quest {
 
   Harmony._internal();
 
-  int extraPoints = 5;
+  int? extraPoints = 5;
 
-  int getPoints(Kingdom kingdom) {
+  int? getPoints(Kingdom kingdom) {
     return kingdom
             .getLands()
             .expand((i) => i)

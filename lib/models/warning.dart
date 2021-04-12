@@ -5,7 +5,7 @@ class Warning {
   LandType landType;
   int crown;
   String operator;
-  int rightOperand;
+  int? rightOperand;
 
   Warning(this.leftOperand, this.landType, this.crown, this.operator,
       this.rightOperand);

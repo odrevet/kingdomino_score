@@ -8,7 +8,7 @@ import 'main_widget.dart';
 var _textStyle = TextStyle(color: Colors.black87);
 
 class ScoreDetailsWidget extends StatelessWidget {
-  final Kingdom kingdom;
+  final Kingdom? kingdom;
   final groupScore;
   final quests;
   final score;
@@ -23,7 +23,7 @@ class ScoreDetailsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var properties = kingdom.getProperties();
+    var properties = kingdom!.getProperties();
 
     Widget content;
 

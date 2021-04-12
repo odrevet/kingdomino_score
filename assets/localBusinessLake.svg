@@ -13,7 +13,7 @@
    version="1.1"
    id="svg8"
    inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
-   sodipodi:docname="template.svg">
+   sodipodi:docname="localBusinessLake.svg">
   <defs
      id="defs2" />
   <sodipodi:namedview
@@ -24,16 +24,16 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.979899"
-     inkscape:cx="203.40249"
-     inkscape:cy="169.3609"
+     inkscape:cx="315.27688"
+     inkscape:cy="128.9548"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
      showgrid="false"
-     inkscape:window-width="2560"
-     inkscape:window-height="1413"
-     inkscape:window-x="1920"
-     inkscape:window-y="-10"
+     inkscape:window-width="1920"
+     inkscape:window-height="1080"
+     inkscape:window-x="0"
+     inkscape:window-y="197"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata5">
@@ -63,6 +63,275 @@
          height="24.489"
          x="40.957565"
          y="74.860542" />
+    </g>
+    <rect
+       style="fill:#00ffff;stroke-width:0.264583"
+       id="rect970"
+       width="30"
+       height="30"
+       x="29.690298"
+       y="22.281488" />
+    <g
+       id="g1223"
+       transform="matrix(0.05847065,0,0,0.05847065,32.248704,25.346989)" />
+    <g
+       id="g1221"
+       transform="matrix(0.05847065,0,0,0.05847065,32.248704,25.346989)" />
+    <g
+       id="g1219"
+       transform="matrix(0.05847065,0,0,0.05847065,32.248704,25.346989)" />
+    <g
+       id="g1217"
+       transform="matrix(0.05847065,0,0,0.05847065,32.248704,25.346989)" />
+    <g
+       id="g1215"
+       transform="matrix(0.05847065,0,0,0.05847065,32.248704,25.346989)" />
+    <g
+       id="g1213"
+       transform="matrix(0.05847065,0,0,0.05847065,32.248704,25.346989)" />
+    <g
+       id="g1211"
+       transform="matrix(0.05847065,0,0,0.05847065,32.248704,25.346989)" />
+    <g
+       id="g1209"
+       transform="matrix(0.05847065,0,0,0.05847065,32.248704,25.346989)" />
+    <g
+       id="g1207"
+       transform="matrix(0.05847065,0,0,0.05847065,32.248704,25.346989)" />
+    <g
+       id="g1205"
+       transform="matrix(0.05847065,0,0,0.05847065,32.248704,25.346989)" />
+    <g
+       id="g1203"
+       transform="matrix(0.05847065,0,0,0.05847065,32.248704,25.346989)" />
+    <g
+       id="g1201"
+       transform="matrix(0.05847065,0,0,0.05847065,32.248704,25.346989)" />
+    <g
+       id="g1199"
+       transform="matrix(0.05847065,0,0,0.05847065,32.248704,25.346989)" />
+    <g
+       id="g1197"
+       transform="matrix(0.05847065,0,0,0.05847065,32.248704,25.346989)" />
+    <g
+       id="g1195"
+       transform="matrix(0.05847065,0,0,0.05847065,32.248704,25.346989)" />
+    <g
+       id="g1516"
+       transform="translate(-1.0408283,-9.2504554)">
+      <g
+         id="g71"
+         transform="translate(1.0600249,4.2985176)">
+        <g
+           id="g419"
+           transform="matrix(0.04596369,0,0,0.04596369,16.863568,15.160801)">
+          <g
+             id="g417">
+            <path
+               d="m 256,458.1 c -5.9,-2 -188.4,-60.9 -202.4,-333 7,0.5 122.3,11.2 202.4,-63.7 78.9,73.8 195.4,64.1 202.4,63.7 -17.2,280.2 -196.5,331 -202.4,333 z M 479.7,81.3 C 437,87.8 340,92.3 269.6,16.9 262.3,9 249.8,9 242.5,16.9 172,92.3 75,87.8 32.3,81.3 20.9,79.5 10.7,88.5 11,100 c 9.9,350.5 245,401 245,401 0,0 235.1,-50.4 245,-401 0.3,-11.5 -9.9,-20.5 -21.3,-18.7 z"
+               id="path415" />
+          </g>
+        </g>
+        <path
+           style="fill:#ffffff;stroke-width:0.133635"
+           d="m 27.560731,35.667123 c -4.275416,-2.21353 -7.056389,-6.559341 -7.931555,-12.394586 -0.110234,-0.734992 -0.200779,-1.569374 -0.201212,-1.854183 -7.68e-4,-0.505169 0.0091,-0.515857 0.403459,-0.436985 0.640334,0.128067 3.157565,-0.176315 4.374457,-0.528956 1.341582,-0.388776 2.789378,-1.094092 3.744628,-1.824255 l 0.705699,-0.539414 0.296562,0.27196 c 1.593829,1.461609 4.86872,2.567771 7.613066,2.571469 1.509268,0.002 1.387583,-0.205537 1.108496,1.890864 -0.818764,6.150223 -3.610793,10.694252 -7.890461,12.841726 -1.109294,0.556628 -1.152491,0.556673 -2.223139,0.0024 z"
+           id="path476" />
+      </g>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+         x="26.348955"
+         y="35.21579"
+         id="text962"><tspan
+           sodipodi:role="line"
+           id="tspan960"
+           x="26.348955"
+           y="35.21579"
+           style="stroke-width:0.264583">5</tspan></text>
+    </g>
+    <rect
+       style="fill:#ffffff;stroke-width:0.258643"
+       id="rect964"
+       width="39.211601"
+       height="38.992615"
+       x="71.845116"
+       y="12.701221" />
+    <g
+       id="g1615"
+       transform="matrix(0.02004772,0,0,0.02004772,88.603597,34.64285)" />
+    <g
+       id="g1617"
+       transform="matrix(0.02004772,0,0,0.02004772,88.603597,34.64285)" />
+    <g
+       id="g1619"
+       transform="matrix(0.02004772,0,0,0.02004772,88.603597,34.64285)" />
+    <g
+       id="g1621"
+       transform="matrix(0.02004772,0,0,0.02004772,88.603597,34.64285)" />
+    <g
+       id="g1623"
+       transform="matrix(0.02004772,0,0,0.02004772,88.603597,34.64285)" />
+    <g
+       id="g1625"
+       transform="matrix(0.02004772,0,0,0.02004772,88.603597,34.64285)" />
+    <g
+       id="g1627"
+       transform="matrix(0.02004772,0,0,0.02004772,88.603597,34.64285)" />
+    <g
+       id="g1629"
+       transform="matrix(0.02004772,0,0,0.02004772,88.603597,34.64285)" />
+    <g
+       id="g1631"
+       transform="matrix(0.02004772,0,0,0.02004772,88.603597,34.64285)" />
+    <g
+       id="g1633"
+       transform="matrix(0.02004772,0,0,0.02004772,88.603597,34.64285)" />
+    <g
+       id="g1635"
+       transform="matrix(0.02004772,0,0,0.02004772,88.603597,34.64285)" />
+    <g
+       id="g1637"
+       transform="matrix(0.02004772,0,0,0.02004772,88.603597,34.64285)" />
+    <g
+       id="g1639"
+       transform="matrix(0.02004772,0,0,0.02004772,88.603597,34.64285)" />
+    <g
+       id="g1641"
+       transform="matrix(0.02004772,0,0,0.02004772,88.603597,34.64285)" />
+    <g
+       id="g1643"
+       transform="matrix(0.02004772,0,0,0.02004772,88.603597,34.64285)" />
+    <g
+       id="g645-5"
+       transform="matrix(1.168369,0,0,1.3041246,20.866363,-6.647761)">
+      <g
+         id="g4177">
+        <rect
+           style="fill:#ffffff;stroke:#000000;stroke-width:0.229451;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           id="rect321-6-0"
+           width="11.188445"
+           height="10"
+           x="43.632904"
+           y="34.768341" />
+        <g
+           id="g4169">
+          <g
+             id="g4163">
+            <g
+               id="g581-36"
+               style="fill:#00ff00"
+               transform="matrix(0.01905787,0,0,0.01905787,44.434521,34.899559)">
+              <g
+                 id="g579-1"
+                 style="fill:#00ff00">
+                <polygon
+                   points="405.584,43.295 176.428,272.452 89.84,185.865 0,275.706 86.588,362.293 176.428,452.131 266.266,362.293 495.426,133.133 "
+                   id="polygon577-0"
+                   style="fill:#00ff00" />
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+    <g
+       id="g645-5-4"
+       transform="matrix(1.168369,0,0,1.3041246,20.866363,-32.730253)">
+      <g
+         id="g4177-7">
+        <rect
+           style="fill:#ffffff;stroke:#000000;stroke-width:0.229451;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           id="rect321-6-0-6"
+           width="11.188445"
+           height="10"
+           x="43.632904"
+           y="34.768341" />
+        <g
+           id="g4169-31">
+          <g
+             id="g4163-7">
+            <g
+               id="g581-36-5"
+               style="fill:#00ff00"
+               transform="matrix(0.01905787,0,0,0.01905787,44.434521,34.899559)">
+              <g
+                 id="g579-1-9"
+                 style="fill:#00ff00">
+                <polygon
+                   points="86.588,362.293 176.428,452.131 266.266,362.293 495.426,133.133 405.584,43.295 176.428,272.452 89.84,185.865 0,275.706 "
+                   id="polygon577-0-6"
+                   style="fill:#00ff00" />
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+    <g
+       id="g645-5-4-8"
+       transform="matrix(1.168369,0,0,1.3041246,47.010831,-32.730253)">
+      <g
+         id="g4177-7-5">
+        <rect
+           style="fill:#ffffff;stroke:#000000;stroke-width:0.229451;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           id="rect321-6-0-6-9"
+           width="11.188445"
+           height="10"
+           x="43.632904"
+           y="34.768341" />
+        <g
+           id="g4169-31-7">
+          <g
+             id="g4163-7-53">
+            <g
+               id="g581-36-5-8"
+               style="fill:#00ff00"
+               transform="matrix(0.01905787,0,0,0.01905787,44.434521,34.899559)">
+              <g
+                 id="g579-1-9-8"
+                 style="fill:#00ff00">
+                <polygon
+                   points="89.84,185.865 0,275.706 86.588,362.293 176.428,452.131 266.266,362.293 495.426,133.133 405.584,43.295 176.428,272.452 "
+                   id="polygon577-0-6-3"
+                   style="fill:#00ff00" />
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
+    </g>
+    <g
+       id="g645-5-4-6"
+       transform="matrix(1.168369,0,0,1.3041246,47.005151,-6.6896587)">
+      <g
+         id="g4177-7-0">
+        <rect
+           style="fill:#ffffff;stroke:#000000;stroke-width:0.229451;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           id="rect321-6-0-6-4"
+           width="11.188445"
+           height="10"
+           x="43.632904"
+           y="34.768341" />
+        <g
+           id="g4169-31-88">
+          <g
+             id="g4163-7-8">
+            <g
+               id="g581-36-5-9"
+               style="fill:#00ff00"
+               transform="matrix(0.01905787,0,0,0.01905787,44.434521,34.899559)">
+              <g
+                 id="g579-1-9-7"
+                 style="fill:#00ff00">
+                <polygon
+                   points="176.428,272.452 89.84,185.865 0,275.706 86.588,362.293 176.428,452.131 266.266,362.293 495.426,133.133 405.584,43.295 "
+                   id="polygon577-0-6-7"
+                   style="fill:#00ff00" />
+              </g>
+            </g>
+          </g>
+        </g>
+      </g>
     </g>
   </g>
 </svg>

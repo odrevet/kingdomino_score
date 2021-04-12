@@ -71,3 +71,48 @@ sudo apt install fonts-emojione
 ```
 
 and then set emojione as the standard font in your web browser
+
+
+# Assets credits and licenses
+
+## Cross SVG Vector
+
+By SVG Repo under the CC0 License
+
+https://www.svgrepo.com/svg/36886/cross
+
+## Trash SVG Vector
+
+By SVG Repo under the CC0 License
+
+https://www.svgrepo.com/svg/120929/trash
+
+## Shield SVG Vector
+
+By SVG Repo under the CC0 License
+
+https://www.svgrepo.com/svg/50826/shield
+
+## Turn Right Arrow SVG Vector
+
+By SVG Repo under the CC0 License
+
+https://www.svgrepo.com/svg/165935/turn-right-arrow
+
+## Checkmark SVG Vector
+
+By SVG Repo under the CC0 License
+
+https://www.svgrepo.com/svg/9459/check
+
+## Crown SVG Vector
+
+By SVG Repo under the CC0 License
+
+https://www.svgrepo.com/svg/188702/crown
+
+## Castle SVG Vector
+
+By SVG Repo under the CC0 License
+
+https://www.svgrepo.com/svg/40220/castle

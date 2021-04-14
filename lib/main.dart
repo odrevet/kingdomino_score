@@ -12,10 +12,12 @@ class KingdominoScore extends StatelessWidget {
     return MaterialApp(
       title: 'Kingdomino Score',
       theme: ThemeData(
-          dialogBackgroundColor: Color.fromARGB(230, 100, 130, 160),
           primarySwatch: Colors.brown,
           canvasColor: Colors.blueGrey,
-          fontFamily: 'HammersmithOne'),
+          fontFamily: 'HammersmithOne',
+          dialogTheme: DialogTheme(
+              backgroundColor: Color.fromARGB(230, 100, 130, 160),
+              contentTextStyle: TextStyle(color: Colors.black))),
       home: MainWidget(),
     );
   }

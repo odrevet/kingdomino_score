@@ -5,8 +5,6 @@ import '../models/warning.dart';
 import 'kingdom_widget.dart';
 import 'main_widget.dart';
 
-var _textStyle = TextStyle(color: Colors.black87);
-
 class WarningsWidget extends StatelessWidget {
   final List<Warning>? warnings;
   final groupWarning;
@@ -24,7 +22,7 @@ class WarningsWidget extends StatelessWidget {
           child: Align(
               alignment: Alignment.centerRight,
               child: AutoSizeText(warning.leftOperand.toString(),
-                  maxLines: 1, group: groupWarning, style: _textStyle))));
+                  maxLines: 1, group: groupWarning))));
 
       tableCells.add(TableCell(
           child: Align(
@@ -39,19 +37,19 @@ class WarningsWidget extends StatelessWidget {
           child: Align(
               alignment: Alignment.center,
               child: AutoSizeText(crown * warning.crown,
-                  maxLines: 1, group: groupWarning, style: _textStyle))));
+                  maxLines: 1, group: groupWarning))));
 
       tableCells.add(TableCell(
           child: Align(
               alignment: Alignment.center,
               child: AutoSizeText(warning.operator,
-                  maxLines: 1, group: groupWarning, style: _textStyle))));
+                  maxLines: 1, group: groupWarning))));
 
       tableCells.add(TableCell(
           child: Align(
               alignment: Alignment.centerRight,
               child: AutoSizeText(warning.rightOperand.toString(),
-                  maxLines: 1, group: groupWarning, style: _textStyle))));
+                  maxLines: 1, group: groupWarning))));
 
       TableRow tableRow = TableRow(children: tableCells);
       tableRows.add(tableRow);

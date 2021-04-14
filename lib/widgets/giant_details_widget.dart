@@ -6,8 +6,6 @@ import '../models/kingdom.dart';
 import 'kingdom_widget.dart';
 import 'main_widget.dart';
 
-var _textStyle = TextStyle(color: Colors.black87);
-
 class GiantsDetailsWidget extends StatelessWidget {
   final Kingdom? kingdom;
   final groupScore;
@@ -51,7 +49,7 @@ class GiantsDetailsWidget extends StatelessWidget {
             child: Align(
           alignment: Alignment.centerRight,
           child: AutoSizeText('${property.landCount}',
-              maxLines: 1, group: groupScore, style: _textStyle),
+              maxLines: 1, group: groupScore),
         )));
         tableCells.add(TableCell(
             child: Align(
@@ -65,27 +63,27 @@ class GiantsDetailsWidget extends StatelessWidget {
             child: Align(
                 alignment: Alignment.centerRight,
                 child: AutoSizeText('x',
-                    maxLines: 1, group: groupScore, style: _textStyle))));
+                    maxLines: 1, group: groupScore))));
         tableCells.add(TableCell(
             child: Align(
                 alignment: Alignment.centerRight,
                 child: AutoSizeText(property.giantCount.toString(),
-                    maxLines: 1, group: groupScore, style: _textStyle))));
+                    maxLines: 1, group: groupScore))));
         tableCells.add(TableCell(
             child: Align(
                 alignment: Alignment.centerRight,
                 child: AutoSizeText(giant,
-                    maxLines: 1, group: groupScore, style: _textStyle))));
+                    maxLines: 1, group: groupScore))));
         tableCells.add(TableCell(
             child: Align(
                 alignment: Alignment.center,
                 child: AutoSizeText('=',
-                    maxLines: 1, group: groupScore, style: _textStyle))));
+                    maxLines: 1, group: groupScore))));
         tableCells.add(TableCell(
             child: Align(
                 alignment: Alignment.centerRight,
                 child: AutoSizeText('- $rowScore',
-                    maxLines: 1, group: groupScore, style: _textStyle))));
+                    maxLines: 1, group: groupScore))));
 
         var tableRow = TableRow(children: tableCells);
         tableRows.add(tableRow);
@@ -126,13 +124,13 @@ class GiantsDetailsWidget extends StatelessWidget {
             child: Align(
                 alignment: Alignment.center,
                 child: AutoSizeText('=',
-                    maxLines: 1, group: groupScore, style: _textStyle))));
+                    maxLines: 1, group: groupScore))));
 
         tableCells.add(TableCell(
             child: Align(
                 alignment: Alignment.centerRight,
                 child: AutoSizeText('${scoreOfQuest - scoreQuestWithoutGiants}',
-                    maxLines: 1, group: groupScore, style: _textStyle))));
+                    maxLines: 1, group: groupScore))));
 
         var tableRow = TableRow(children: tableCells);
         tableRows.add(tableRow);
@@ -152,19 +150,19 @@ class GiantsDetailsWidget extends StatelessWidget {
           child: Align(
               alignment: Alignment.centerRight,
               child: AutoSizeText('Σ' + giant,
-                  maxLines: 1, group: groupScore, style: _textStyle))));
+                  maxLines: 1, group: groupScore))));
 
       tableCells.add(TableCell(
           child: Align(
               alignment: Alignment.center,
               child: AutoSizeText('=',
-                  maxLines: 1, group: groupScore, style: _textStyle))));
+                  maxLines: 1, group: groupScore))));
 
       tableCells.add(TableCell(
           child: Align(
               alignment: Alignment.centerRight,
               child: AutoSizeText('$totalGiantScore',
-                  maxLines: 1, group: groupScore, style: _textStyle))));
+                  maxLines: 1, group: groupScore))));
 
       var tableRow = TableRow(children: tableCells);
       tableRows.add(tableRow);
@@ -181,19 +179,19 @@ class GiantsDetailsWidget extends StatelessWidget {
           child: Align(
               alignment: Alignment.centerRight,
               child: AutoSizeText('Σ',
-                  maxLines: 1, group: groupScore, style: _textStyle))));
+                  maxLines: 1, group: groupScore))));
 
       tableCellsTotalWithoutGiants.add(TableCell(
           child: Align(
               alignment: Alignment.center,
               child: AutoSizeText('=',
-                  maxLines: 1, group: groupScore, style: _textStyle))));
+                  maxLines: 1, group: groupScore))));
 
       tableCellsTotalWithoutGiants.add(TableCell(
           child: Align(
               alignment: Alignment.centerRight,
               child: AutoSizeText('${score - totalGiantScore}',
-                  maxLines: 1, group: groupScore, style: _textStyle))));
+                  maxLines: 1, group: groupScore))));
 
       var tableRowTotalWithoutGiants =
           TableRow(children: tableCellsTotalWithoutGiants);

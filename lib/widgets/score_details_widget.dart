@@ -99,8 +99,7 @@ class ScoreDetailsWidget extends StatelessWidget {
         tableCells.add(TableCell(
             child: Align(
                 alignment: Alignment.centerRight,
-                child: AutoSizeText('shield',
-                    maxLines: 1, group: groupScore, style: _textStyle))));
+                child: Icon(Icons.shield, color: Colors.white))));
 
         tableCells.add(TableCell(
             child: Align(

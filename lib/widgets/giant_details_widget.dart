@@ -5,7 +5,7 @@ import '../scoreQuest.dart';
 import '../models/age_of_giants.dart';
 import '../models/kingdom.dart';
 import 'kingdom_widget.dart';
-import 'main_widget.dart';
+import 'kingdomino_score_widget.dart';
 
 class GiantsDetailsWidget extends StatelessWidget {
   final Kingdom kingdom;

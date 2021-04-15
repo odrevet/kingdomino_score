@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../models/kingdom.dart';
 import 'kingdom_widget.dart';
-import 'main_widget.dart';
+import 'kingdomino_score_widget.dart';
 
 class ScoreDetailsWidget extends StatelessWidget {
   final Kingdom? kingdom;

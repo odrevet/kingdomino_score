@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'widgets/main_widget.dart';
+import 'widgets/kingdomino_score_widget.dart';
 
 void main() {
   runApp(KingdominoScore());
@@ -18,7 +18,7 @@ class KingdominoScore extends StatelessWidget {
           dialogTheme: DialogTheme(
               backgroundColor: Color.fromARGB(230, 100, 130, 160),
               contentTextStyle: TextStyle(color: Colors.black))),
-      home: MainWidget(),
+      home: KingdominoScoreWidget(),
     );
   }
 }

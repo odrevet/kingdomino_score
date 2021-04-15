@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../models/warning.dart';
 import 'kingdom_widget.dart';
-import 'main_widget.dart';
+import 'kingdomino_score_widget.dart';
 
 class WarningsWidget extends StatelessWidget {
   final List<Warning>? warnings;

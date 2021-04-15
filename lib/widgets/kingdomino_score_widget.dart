@@ -10,7 +10,7 @@ import '../models/warning.dart';
 import '../scoreQuest.dart';
 import 'warning_widget.dart';
 import 'kingdom_widget.dart';
-import 'menu_bar.dart';
+import 'bottom_bar.dart';
 import 'quest_dialog.dart';
 import 'score_details_widget.dart';
 
@@ -51,14 +51,14 @@ const Map<LandType, Map<String, dynamic>> gameSet = {
   }
 };
 
-class MainWidget extends StatefulWidget {
-  MainWidget({Key? key}) : super(key: key);
+class KingdominoScoreWidget extends StatefulWidget {
+  KingdominoScoreWidget({Key? key}) : super(key: key);
 
   @override
-  MainWidgetState createState() => MainWidgetState();
+  KingdominoScoreWidgetState createState() => KingdominoScoreWidgetState();
 }
 
-class MainWidgetState extends State<MainWidget> {
+class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
   LandType selectedLandType = LandType.none;
   SelectionMode selectionMode = SelectionMode.land;
   var groupScore = AutoSizeGroup();
@@ -360,7 +360,7 @@ I will not use or share your information with anyone : Kingdomino Score works of
               Row(mainAxisAlignment: MainAxisAlignment.end, children: actions),
         ),
         bottomNavigationBar: BottomAppBar(
-            child: MenuBar(this), color: Theme.of(context).primaryColor),
+            child: BottomBar(this), color: Theme.of(context).primaryColor),
         body: body);
   }
 

@@ -4,21 +4,21 @@ import '../models/age_of_giants.dart';
 import '../models/kingdom.dart';
 import 'giant_details_widget.dart';
 import 'kingdom_widget.dart';
-import 'main_widget.dart';
+import 'kingdomino_score_widget.dart';
 
-class MenuBar extends StatefulWidget {
-  final MainWidgetState _mainWidgetState;
+class BottomBar extends StatefulWidget {
+  final KingdominoScoreWidgetState _mainWidgetState;
 
-  MenuBar(this._mainWidgetState);
+  BottomBar(this._mainWidgetState);
 
   @override
-  _MenuBarState createState() => _MenuBarState(this._mainWidgetState);
+  _BottomBarState createState() => _BottomBarState(this._mainWidgetState);
 }
 
-class _MenuBarState extends State<MenuBar> {
-  MainWidgetState _mainWidgetState;
+class _BottomBarState extends State<BottomBar> {
+  KingdominoScoreWidgetState _mainWidgetState;
 
-  _MenuBarState(this._mainWidgetState);
+  _BottomBarState(this._mainWidgetState);
 
   final double _buttonSize = 40.0;
 

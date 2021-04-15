@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../models/age_of_giants.dart';
 import '../models/kingdom.dart';
-import 'main_widget.dart';
+import 'kingdomino_score_widget.dart';
 
 class KingdomWidget extends StatefulWidget {
   KingdomWidget(

@@ -7,9 +7,9 @@ import 'main_widget.dart';
 
 class WarningsWidget extends StatelessWidget {
   final List<Warning>? warnings;
-  final groupWarning;
+  final groupWarning = AutoSizeGroup();
 
-  WarningsWidget({this.warnings, this.groupWarning});
+  WarningsWidget({this.warnings});
 
   @override
   Widget build(BuildContext context) {

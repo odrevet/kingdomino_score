@@ -154,13 +154,11 @@ class _MenuBarState extends State<MenuBar> {
     return GestureDetector(
         onTap: () => _onSelectGiant(),
         onLongPress: () => _mainWidgetState.runDialog(
-            GiantsDetailsWidget(
-              kingdom: _mainWidgetState.kingdom,
-              scoreOfQuest: _mainWidgetState.scoreOfQuest,
-              quests: _mainWidgetState.selectedQuests,
-              groupScore: _mainWidgetState.groupScore,
-              score: _mainWidgetState.score
-            ),
+            GiantsDetailsWidget(_mainWidgetState.kingdom,
+                scoreOfQuest: _mainWidgetState.scoreOfQuest,
+                quests: _mainWidgetState.selectedQuests,
+                groupScore: _mainWidgetState.groupScore,
+                score: _mainWidgetState.score),
             context),
         child: Container(
           margin: EdgeInsets.all(5.0),

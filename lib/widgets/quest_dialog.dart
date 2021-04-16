@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:kingdomino_score_count/models/quest.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class _QuestDialogOption extends StatefulWidget {
   final getSelectedQuests;
@@ -94,105 +93,17 @@ class _QuestDialogWidgetState extends State<QuestDialogWidget> {
   build(BuildContext context) {
     var options = <Widget>[];
 
-    options.add(_QuestDialogOption(
-        QuestType.harmony,
-        SvgPicture.asset('assets/harmony.svg'),
-        getSelectedQuests,
-        updateScores));
-    options.add(_QuestDialogOption(
-        QuestType.middleKingdom,
-        SvgPicture.asset('assets/middleKingdom.svg'),
-        getSelectedQuests,
-        updateScores));
-
+    var questsToDisplay;
     if (getAog() == true) {
-      options.add(Divider(
-        height: 20,
-        thickness: 5,
-      ));
-      options.add(_QuestDialogOption(
-          QuestType.bleakKing,
-          SvgPicture.asset('assets/bleakKing.svg'),
-          getSelectedQuests,
-          updateScores));
-      options.add(_QuestDialogOption(
-          QuestType.lostCorner,
-          SvgPicture.asset('assets/lostCorner.svg'),
-          getSelectedQuests,
-          updateScores));
-      options.add(_QuestDialogOption(
-          QuestType.folieDesGrandeurs,
-          SvgPicture.asset('assets/folieDesGrandeurs.svg'),
-          getSelectedQuests,
-          updateScores));
-      options.add(Divider(
-        height: 20,
-        thickness: 5,
-      ));
-      options.add(_QuestDialogOption(
-          QuestType.fourCornersWheat,
-          SvgPicture.asset('assets/fourCornersWheat.svg'),
-          getSelectedQuests,
-          updateScores));
-      options.add(_QuestDialogOption(
-          QuestType.fourCornersLake,
-          SvgPicture.asset('assets/fourCornersLake.svg'),
-          getSelectedQuests,
-          updateScores));
-      options.add(_QuestDialogOption(
-          QuestType.fourCornersForest,
-          SvgPicture.asset('assets/fourCornersForest.svg'),
-          getSelectedQuests,
-          updateScores));
-      options.add(_QuestDialogOption(
-          QuestType.fourCornersGrassLand,
-          SvgPicture.asset('assets/fourCornersGrassLand.svg'),
-          getSelectedQuests,
-          updateScores));
-      options.add(_QuestDialogOption(
-          QuestType.fourCornersSwamp,
-          SvgPicture.asset('assets/fourCornersSwamp.svg'),
-          getSelectedQuests,
-          updateScores));
-      options.add(_QuestDialogOption(
-          QuestType.fourCornersMine,
-          SvgPicture.asset('assets/fourCornersMine.svg'),
-          getSelectedQuests,
-          updateScores));
-      options.add(Divider(
-        height: 20,
-        thickness: 5,
-      ));
-      options.add(_QuestDialogOption(
-          QuestType.localBusinessWheat,
-          SvgPicture.asset('assets/localBusinessWheat.svg'),
-          getSelectedQuests,
-          updateScores));
-      options.add(_QuestDialogOption(
-          QuestType.localBusinessLake,
-          SvgPicture.asset('assets/localBusinessLake.svg'),
-          getSelectedQuests,
-          updateScores));
-      options.add(_QuestDialogOption(
-          QuestType.localBusinessForest,
-          SvgPicture.asset('assets/localBusinessForest.svg'),
-          getSelectedQuests,
-          updateScores));
-      options.add(_QuestDialogOption(
-          QuestType.localBusinessGrassLand,
-          SvgPicture.asset('assets/localBusinessGrassLand.svg'),
-          getSelectedQuests,
-          updateScores));
-      options.add(_QuestDialogOption(
-          QuestType.localBusinessSwamp,
-          SvgPicture.asset('assets/localBusinessSwamp.svg'),
-          getSelectedQuests,
-          updateScores));
-      options.add(_QuestDialogOption(
-          QuestType.localBusinessMine,
-          SvgPicture.asset('assets/localBusinessMine.svg'),
-          getSelectedQuests,
-          updateScores));
+      questPicture.forEach((type, svg) {
+        options.add(
+            _QuestDialogOption(type, svg, getSelectedQuests, updateScores));
+      });
+    } else {
+      options
+          .add(_QuestDialogOption(QuestType.harmony, questPicture[QuestType.harmony]!, getSelectedQuests, updateScores));
+      options
+          .add(_QuestDialogOption(QuestType.middleKingdom, questPicture[QuestType.middleKingdom]!, getSelectedQuests, updateScores));
     }
 
     SimpleDialog dialog = SimpleDialog(

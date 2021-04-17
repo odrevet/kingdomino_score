@@ -269,8 +269,28 @@ I will not use or share your information with anyone : Kingdomino Score works of
             children: <Widget>[
               IconButton(
                   icon: Icon(Icons.warning),
-                  onPressed: () => runDialog(
-                      WarningsWidget(warnings: this.warnings), context)),
+                  onPressed: () => showDialog<void>(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20.0))),
+                            content: WarningsWidget(warnings: this.warnings),
+                            actions: <Widget>[
+                              TextButton(
+                                child: Icon(
+                                  Icons.done,
+                                  color: Colors.black87,
+                                ),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      )),
               Positioned(
                 right: 5,
                 top: 10,
@@ -311,17 +331,35 @@ I will not use or share your information with anyone : Kingdomino Score works of
             child: FittedBox(
                 fit: BoxFit.fitHeight,
                 child: InkWell(
-                  child: Text(score.toString(),
-                      style: TextStyle(color: Colors.white)),
-                  onTap: () => runDialog(
-                      ScoreDetailsWidget(
-                          kingdom: this.kingdom,
-                          groupScore: this.groupScore,
-                          quests: this.selectedQuests,
-                          score: this.score,
-                          scoreOfQuest: this.scoreOfQuest),
-                      context),
-                )),
+                    child: Text(score.toString(),
+                        style: TextStyle(color: Colors.white)),
+                    onTap: () => showDialog<void>(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20.0))),
+                              content: ScoreDetailsWidget(
+                                  kingdom: this.kingdom,
+                                  groupScore: this.groupScore,
+                                  quests: this.selectedQuests,
+                                  score: this.score,
+                                  scoreOfQuest: this.scoreOfQuest),
+                              actions: <Widget>[
+                                TextButton(
+                                  child: Icon(
+                                    Icons.done,
+                                    color: Colors.black87,
+                                  ),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        ))),
           )
         ]);
       } else {
@@ -355,31 +393,8 @@ I will not use or share your information with anyone : Kingdomino Score works of
               Row(mainAxisAlignment: MainAxisAlignment.end, children: actions),
         ),
         bottomNavigationBar: BottomAppBar(
-            child: BottomBar(this, getSelectionMode, getSelectedLandType), color: Theme.of(context).primaryColor),
+            child: BottomBar(this, getSelectionMode, getSelectedLandType),
+            color: Theme.of(context).primaryColor),
         body: body);
-  }
-
-  runDialog(Widget content, BuildContext context) {
-    showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(20.0))),
-          content: content,
-          actions: <Widget>[
-            TextButton(
-              child: Icon(
-                Icons.done,
-                color: Colors.black87,
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
   }
 }

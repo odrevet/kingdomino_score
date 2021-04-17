@@ -11,11 +11,12 @@ class BottomBar extends StatefulWidget {
   final getSelectionMode;
   final getSelectedLandType;
 
-  BottomBar(this._mainWidgetState, this.getSelectionMode, this.getSelectedLandType);
+  BottomBar(
+      this._mainWidgetState, this.getSelectionMode, this.getSelectedLandType);
 
   @override
-  _BottomBarState createState() =>
-      _BottomBarState(this._mainWidgetState, this.getSelectionMode, this.getSelectedLandType);
+  _BottomBarState createState() => _BottomBarState(
+      this._mainWidgetState, this.getSelectionMode, this.getSelectedLandType);
 }
 
 class _BottomBarState extends State<BottomBar> {
@@ -23,7 +24,8 @@ class _BottomBarState extends State<BottomBar> {
   final getSelectionMode;
   final getSelectedLandType;
 
-  _BottomBarState(this._mainWidgetState, this.getSelectionMode, this.getSelectedLandType);
+  _BottomBarState(
+      this._mainWidgetState, this.getSelectionMode, this.getSelectedLandType);
 
   final double _buttonSize = 40.0;
 
@@ -163,13 +165,31 @@ class _BottomBarState extends State<BottomBar> {
 
     return GestureDetector(
         onTap: () => _onSelectGiant(),
-        onLongPress: () => _mainWidgetState.runDialog(
-            GiantsDetailsWidget(_mainWidgetState.kingdom,
-                scoreOfQuest: _mainWidgetState.scoreOfQuest,
-                quests: _mainWidgetState.selectedQuests,
-                groupScore: _mainWidgetState.groupScore,
-                score: _mainWidgetState.score),
-            context),
+        onLongPress: () => showDialog<void>(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20.0))),
+                  content: GiantsDetailsWidget(_mainWidgetState.kingdom,
+                      scoreOfQuest: _mainWidgetState.scoreOfQuest,
+                      quests: _mainWidgetState.selectedQuests,
+                      groupScore: _mainWidgetState.groupScore,
+                      score: _mainWidgetState.score),
+                  actions: <Widget>[
+                    TextButton(
+                      child: Icon(
+                        Icons.done,
+                        color: Colors.black87,
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                );
+              },
+            ),
         child: Container(
           margin: EdgeInsets.all(5.0),
           height: _buttonSize,

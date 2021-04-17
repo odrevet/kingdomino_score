@@ -76,11 +76,6 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
 
   late PackageInfo _packageInfo;
 
-  var outline = Border(
-    right: BorderSide(width: 3.5, color: Colors.blueGrey.shade600),
-    bottom: BorderSide(width: 3.5, color: Colors.blueGrey.shade900),
-  );
-
   @override
   initState() {
     PackageInfo.fromPlatform().then((PackageInfo packageInfo) {

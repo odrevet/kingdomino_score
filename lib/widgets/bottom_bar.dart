@@ -27,6 +27,11 @@ class _BottomBarState extends State<BottomBar> {
 
   final double _buttonSize = 40.0;
 
+  var outline = Border(
+    right: BorderSide(width: 3.5, color: Colors.blueGrey.shade600),
+    bottom: BorderSide(width: 3.5, color: Colors.blueGrey.shade900),
+  );
+
   @override
   Widget build(BuildContext context) {
     var kingdomEditorWidgets = [
@@ -70,7 +75,7 @@ class _BottomBarState extends State<BottomBar> {
                     ? _selectedBorder
                     : landType == LandType.none
                         ? null
-                        : _mainWidgetState.outline),
+                        : this.outline),
             child: Container(
               color: getColorForLandType(landType),
               child: null,
@@ -133,7 +138,7 @@ class _BottomBarState extends State<BottomBar> {
           width: _buttonSize,
           decoration: BoxDecoration(
               color: Colors.white,
-              border: isSelected ? _selectedBorder : _mainWidgetState.outline),
+              border: isSelected ? _selectedBorder : this.outline),
           child: CastleWidget(KingColor.none),
         ));
   }
@@ -148,7 +153,7 @@ class _BottomBarState extends State<BottomBar> {
           height: _buttonSize,
           width: _buttonSize,
           decoration: BoxDecoration(
-              border: isSelected ? _selectedBorder : _mainWidgetState.outline),
+              border: isSelected ? _selectedBorder : this.outline),
           child: FittedBox(fit: BoxFit.fitHeight, child: Text(crown)),
         ));
   }
@@ -170,7 +175,7 @@ class _BottomBarState extends State<BottomBar> {
           height: _buttonSize,
           width: _buttonSize,
           decoration: BoxDecoration(
-              border: isSelected ? _selectedBorder : _mainWidgetState.outline),
+              border: isSelected ? _selectedBorder : this.outline),
           child: FittedBox(fit: BoxFit.fitHeight, child: Text(giant)),
         ));
   }

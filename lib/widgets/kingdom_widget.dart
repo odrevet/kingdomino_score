@@ -3,6 +3,22 @@ import 'package:flutter/material.dart';
 import '../models/age_of_giants.dart';
 import '../models/kingdom.dart';
 import 'kingdomino_score_widget.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
+enum KingColor { none, yellow, blue, green, pink, brown }
+
+class CastleWidget extends StatelessWidget {
+  KingColor kingColor;
+
+  CastleWidget(this.kingColor);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        color: Colors.white, //_mainWidgetState.color,
+        child: FittedBox(fit: BoxFit.fitWidth, child: Text(castle)));
+  }
+}
 
 class KingdomWidget extends StatefulWidget {
   KingdomWidget(
@@ -83,15 +99,13 @@ class _KingdomWidgetState extends State<KingdomWidget> {
   Widget _buildLand(int y, int x) {
     Land land = kingdom.getLand(x, y);
 
-    var container;
+    Widget child;
     if (land.landType == LandType.castle)
-      container = Container(
-          color: Colors.white, //_mainWidgetState.color,
-          child: FittedBox(fit: BoxFit.fitWidth, child: Text(castle)));
+      child = CastleWidget(KingColor.none);
     else {
       String text = crown * land.crowns;
       text += giant * land.giants;
-      container = Container(
+      child = Container(
         color: getColorForLandType(land.landType),
         child: LayoutBuilder(
             builder: (BuildContext context, BoxConstraints constraints) {
@@ -102,7 +116,7 @@ class _KingdomWidgetState extends State<KingdomWidget> {
     }
 
     return Container(
-        child: container,
+        child: child,
         decoration: BoxDecoration(
             border: land.landType == LandType.none
                 ? Border.all(

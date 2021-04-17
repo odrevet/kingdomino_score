@@ -68,7 +68,7 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
   int scoreOfQuest = 0;
   int score = 0;
 
-  Color color = Colors.white;
+  KingColor kingColor = KingColor.none;
 
   bool aog = false; // Age of Giants extension
   HashSet<QuestType> selectedQuests = HashSet();

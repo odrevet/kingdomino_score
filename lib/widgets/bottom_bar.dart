@@ -72,16 +72,16 @@ class _BottomBarState extends State<BottomBar> {
             )));
   }
 
-  _colorbutton(Color color) {
+  _colorbutton(KingColor kingcolor) {
     return GestureDetector(
         onTap: () => setState(() {
-              _mainWidgetState..color = color;
+              _mainWidgetState..kingColor = kingcolor;
             }),
         child: Container(
           margin: EdgeInsets.all(5.0),
           height: _buttonSize,
           width: _buttonSize,
-          decoration: BoxDecoration(color: color),
+          decoration: BoxDecoration(color: Colors.white),
           child: Container(),
         ));
   }
@@ -97,14 +97,14 @@ class _BottomBarState extends State<BottomBar> {
             }),
         onLongPress: () {
           var buttons = <Widget>[
-            _colorbutton(Colors.yellow),
-            _colorbutton(Colors.blue),
-            _colorbutton(Colors.green),
-            _colorbutton(Colors.pink)
+            _colorbutton(KingColor.yellow),
+            _colorbutton(KingColor.blue),
+            _colorbutton(KingColor.green),
+            _colorbutton(KingColor.pink)
           ];
 
           if (_mainWidgetState.aog == true) {
-            buttons.add(_colorbutton(Colors.brown));
+            buttons.add(_colorbutton(KingColor.brown));
           }
 
           showDialog(
@@ -127,9 +127,9 @@ class _BottomBarState extends State<BottomBar> {
           height: _buttonSize,
           width: _buttonSize,
           decoration: BoxDecoration(
-              color: _mainWidgetState.color,
+              color: Colors.white,
               border: isSelected ? _selectedBorder : _mainWidgetState.outline),
-          child: FittedBox(fit: BoxFit.fitHeight, child: Text(castle)),
+          child: CastleWidget(KingColor.none),
         ));
   }
 

@@ -141,7 +141,7 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
         });
       }
 
-      //check for too many tile with given crowns
+      //check if too many tile with given crowns
       for (var crownsCounter = 1;
           crownsCounter <= getGameSet()[landType]!['crowns']['max'];
           crownsCounter++) {
@@ -360,7 +360,7 @@ I will not use or share your information with anyone : Kingdomino Score works of
               Row(mainAxisAlignment: MainAxisAlignment.end, children: actions),
         ),
         bottomNavigationBar: BottomAppBar(
-            child: BottomBar(this), color: Theme.of(context).primaryColor),
+            child: BottomBar(this, getSelectionMode, getSelectedLandType), color: Theme.of(context).primaryColor),
         body: body);
   }
 

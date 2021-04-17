@@ -8,17 +8,22 @@ import 'kingdomino_score_widget.dart';
 
 class BottomBar extends StatefulWidget {
   final KingdominoScoreWidgetState _mainWidgetState;
+  final getSelectionMode;
+  final getSelectedLandType;
 
-  BottomBar(this._mainWidgetState);
+  BottomBar(this._mainWidgetState, this.getSelectionMode, this.getSelectedLandType);
 
   @override
-  _BottomBarState createState() => _BottomBarState(this._mainWidgetState);
+  _BottomBarState createState() =>
+      _BottomBarState(this._mainWidgetState, this.getSelectionMode, this.getSelectedLandType);
 }
 
 class _BottomBarState extends State<BottomBar> {
   KingdominoScoreWidgetState _mainWidgetState;
+  final getSelectionMode;
+  final getSelectedLandType;
 
-  _BottomBarState(this._mainWidgetState);
+  _BottomBarState(this._mainWidgetState, this.getSelectionMode, this.getSelectedLandType);
 
   final double _buttonSize = 40.0;
 
@@ -51,8 +56,8 @@ class _BottomBarState extends State<BottomBar> {
   );
 
   Widget landButton(LandType landType) {
-    var isSelected = _mainWidgetState.selectionMode == SelectionMode.land &&
-        _mainWidgetState.selectedLandType == landType;
+    var isSelected = this.getSelectionMode() == SelectionMode.land &&
+        _mainWidgetState.getSelectedLandType() == landType;
 
     return GestureDetector(
         onTap: () => _onSelectLandType(landType),
@@ -87,8 +92,8 @@ class _BottomBarState extends State<BottomBar> {
   }
 
   Widget castleButton() {
-    bool isSelected = _mainWidgetState.selectionMode == SelectionMode.castle &&
-        _mainWidgetState.selectedLandType == LandType.castle;
+    bool isSelected = this.getSelectionMode() == SelectionMode.castle &&
+        this.getSelectedLandType() == LandType.castle;
 
     return GestureDetector(
         onTap: () => setState(() {
@@ -134,7 +139,7 @@ class _BottomBarState extends State<BottomBar> {
   }
 
   Widget crownButton() {
-    var isSelected = _mainWidgetState.selectionMode == SelectionMode.crown;
+    var isSelected = this.getSelectionMode == SelectionMode.crown;
 
     return GestureDetector(
         onTap: () => _onSelectCrown(),
@@ -149,7 +154,7 @@ class _BottomBarState extends State<BottomBar> {
   }
 
   Widget giantButton() {
-    var isSelected = _mainWidgetState.selectionMode == SelectionMode.giant;
+    var isSelected = this.getSelectionMode() == SelectionMode.giant;
 
     return GestureDetector(
         onTap: () => _onSelectGiant(),

@@ -84,16 +84,16 @@ class _BottomBarState extends State<BottomBar> {
             )));
   }
 
-  _colorbutton(KingColor kingcolor) {
+  _colorbutton(Color kingcolor) {
     return GestureDetector(
         onTap: () => setState(() {
-              _mainWidgetState..kingColor = kingcolor;
+              _mainWidgetState.kingColor = kingcolor;
             }),
         child: Container(
           margin: EdgeInsets.all(5.0),
           height: _buttonSize,
           width: _buttonSize,
-          decoration: BoxDecoration(color: Colors.white),
+          decoration: BoxDecoration(color: kingcolor),
           child: Container(),
         ));
   }
@@ -107,16 +107,17 @@ class _BottomBarState extends State<BottomBar> {
               _mainWidgetState.selectionMode = SelectionMode.castle;
               _mainWidgetState.selectedLandType = LandType.castle;
             }),
-        onLongPress: () {
+        /*onLongPress: () {
           var buttons = <Widget>[
-            _colorbutton(KingColor.yellow),
-            _colorbutton(KingColor.blue),
-            _colorbutton(KingColor.green),
-            _colorbutton(KingColor.pink)
+            _colorbutton(KingColors.elementAt(0)),
+            _colorbutton(KingColors.elementAt(1)),
+            _colorbutton(KingColors.elementAt(2)),
+            _colorbutton(KingColors.elementAt(3)),
+            _colorbutton(KingColors.elementAt(4)),
           ];
 
           if (_mainWidgetState.aog == true) {
-            buttons.add(_colorbutton(KingColor.brown));
+            buttons.add(_colorbutton(KingColors.elementAt(5)));
           }
 
           showDialog(
@@ -133,7 +134,7 @@ class _BottomBarState extends State<BottomBar> {
               );
             },
           );
-        },
+        },*/
         child: Container(
           margin: EdgeInsets.all(5.0),
           height: _buttonSize,
@@ -141,7 +142,7 @@ class _BottomBarState extends State<BottomBar> {
           decoration: BoxDecoration(
               color: Colors.white,
               border: isSelected ? _selectedBorder : this.outline),
-          child: CastleWidget(KingColor.none),
+          child: CastleWidget(KingColors.elementAt(0)),
         ));
   }
 

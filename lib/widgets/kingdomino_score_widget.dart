@@ -68,7 +68,7 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
   int scoreOfQuest = 0;
   int score = 0;
 
-  KingColor kingColor = KingColor.none;
+  Color kingColor = KingColors.elementAt(0);
 
   bool aog = false; // Age of Giants extension
   HashSet<QuestType> selectedQuests = HashSet();
@@ -94,6 +94,8 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
   LandType getSelectedLandType() => selectedLandType;
 
   SelectionMode getSelectionMode() => selectionMode;
+
+  Color getKingColor() => kingColor;
 
   void calculateScore() {
     clearWarnings();
@@ -326,7 +328,8 @@ I will not use or share your information with anyone : Kingdomino Score works of
               getSelectedLandType: this.getSelectedLandType,
               getGameSet: this.getGameSet,
               calculateScore: this.calculateScore,
-              kingdom: this.kingdom),
+              kingdom: this.kingdom,
+              getKingColor: this.getKingColor),
           Expanded(
             child: FittedBox(
                 fit: BoxFit.fitHeight,
@@ -376,7 +379,8 @@ I will not use or share your information with anyone : Kingdomino Score works of
               getSelectedLandType: this.getSelectedLandType,
               getGameSet: this.getGameSet,
               calculateScore: this.calculateScore,
-              kingdom: this.kingdom),
+              kingdom: this.kingdom,
+              getKingColor: getKingColor),
           Expanded(
             child: FittedBox(
                 fit: BoxFit.fitHeight,

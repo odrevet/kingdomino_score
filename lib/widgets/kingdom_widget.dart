@@ -3,19 +3,25 @@ import 'package:flutter/material.dart';
 import '../models/age_of_giants.dart';
 import '../models/kingdom.dart';
 import 'kingdomino_score_widget.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
-enum KingColor { none, yellow, blue, green, pink, brown }
+Set<Color> KingColors = Set.from([
+  Colors.white, // default
+  Colors.yellow,
+  Colors.blue,
+  Colors.green,
+  Colors.pink,
+  Colors.brown // AoG only
+]);
 
 class CastleWidget extends StatelessWidget {
-  KingColor kingColor;
+  Color kingColor;
 
   CastleWidget(this.kingColor);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        color: Colors.white, //_mainWidgetState.color,
+        color: kingColor,
         child: FittedBox(fit: BoxFit.fitWidth, child: Text(castle)));
   }
 }
@@ -26,13 +32,15 @@ class KingdomWidget extends StatefulWidget {
       this.getSelectedLandType,
       this.getGameSet,
       this.calculateScore,
-      this.kingdom});
+      this.kingdom,
+      this.getKingColor});
 
   final getSelectionMode;
   final getSelectedLandType;
   final getGameSet;
   final calculateScore;
   final kingdom;
+  final getKingColor;
 
   @override
   _KingdomWidgetState createState() => _KingdomWidgetState(
@@ -40,7 +48,8 @@ class KingdomWidget extends StatefulWidget {
       getSelectedLandType: this.getSelectedLandType,
       getGameSet: this.getGameSet,
       calculateScore: this.calculateScore,
-      kingdom: this.kingdom);
+      kingdom: this.kingdom,
+      getKingColor: this.getKingColor);
 }
 
 class _KingdomWidgetState extends State<KingdomWidget> {
@@ -49,13 +58,15 @@ class _KingdomWidgetState extends State<KingdomWidget> {
   final getGameSet;
   final calculateScore;
   final kingdom;
+  final getKingColor;
 
   _KingdomWidgetState(
       {this.getSelectionMode,
       this.getSelectedLandType,
       this.getGameSet,
       this.calculateScore,
-      this.kingdom});
+      this.kingdom,
+      this.getKingColor});
 
   void _onLandTap(int x, int y) {
     Land? land = kingdom.getLand(x, y);
@@ -101,7 +112,7 @@ class _KingdomWidgetState extends State<KingdomWidget> {
 
     Widget child;
     if (land.landType == LandType.castle)
-      child = CastleWidget(KingColor.none);
+      child = CastleWidget(getKingColor());
     else {
       String text = crown * land.crowns;
       text += giant * land.giants;

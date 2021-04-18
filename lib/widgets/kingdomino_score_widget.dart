@@ -397,7 +397,15 @@ I will not use or share your information with anyone : Kingdomino Score works of
               Row(mainAxisAlignment: MainAxisAlignment.end, children: actions),
         ),
         bottomNavigationBar: BottomAppBar(
-            child: BottomBar(this, getSelectionMode, getSelectedLandType, getAog),
+            child: BottomBar(this,
+                getSelectionMode: getSelectionMode,
+                getSelectedLandType: getSelectedLandType,
+                getAog: getAog,
+                kingdom: kingdom,
+                scoreOfQuest: this.scoreOfQuest,
+                quests: this.selectedQuests,
+                groupScore: this.groupScore,
+                score: this.score),
             color: Theme.of(context).primaryColor),
         body: body);
   }

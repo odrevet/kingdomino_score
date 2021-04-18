@@ -11,23 +11,54 @@ class BottomBar extends StatefulWidget {
   final getSelectionMode;
   final getSelectedLandType;
   final getAog;
+  final Kingdom kingdom;
+  final groupScore;
+  final quests;
+  final scoreOfQuest;
+  final score;
 
-  BottomBar(
-      this._mainWidgetState, this.getSelectionMode, this.getSelectedLandType, this.getAog);
+  BottomBar(this._mainWidgetState,
+      {required this.getSelectionMode,
+      required this.getSelectedLandType,
+      required this.getAog,
+      required this.kingdom,
+      required this.quests,
+      required this.groupScore,
+      required this.scoreOfQuest,
+      required this.score});
 
   @override
-  _BottomBarState createState() => _BottomBarState(
-      this._mainWidgetState, this.getSelectionMode, this.getSelectedLandType, this.getAog);
+  _BottomBarState createState() => _BottomBarState(this._mainWidgetState,
+      getSelectionMode: this.getSelectionMode,
+      getSelectedLandType: this.getSelectedLandType,
+      getAog: this.getAog,
+      scoreOfQuest: this.scoreOfQuest,
+      quests: this.quests,
+      groupScore: this.groupScore,
+      score: this.score,
+      kingdom: kingdom);
 }
 
 class _BottomBarState extends State<BottomBar> {
-  KingdominoScoreWidgetState _mainWidgetState;
+  final KingdominoScoreWidgetState _mainWidgetState;
   final getSelectionMode;
   final getSelectedLandType;
   final getAog;
+  final Kingdom kingdom;
+  final groupScore;
+  final quests;
+  final scoreOfQuest;
+  final score;
 
-  _BottomBarState(
-      this._mainWidgetState, this.getSelectionMode, this.getSelectedLandType, this.getAog);
+  _BottomBarState(this._mainWidgetState,
+      {required this.getSelectionMode,
+      required this.getSelectedLandType,
+      required this.getAog,
+      required this.kingdom,
+      required this.quests,
+      required this.groupScore,
+      required this.scoreOfQuest,
+      required this.score});
 
   final double _buttonSize = 40.0;
 
@@ -175,10 +206,10 @@ class _BottomBarState extends State<BottomBar> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(20.0))),
                   content: GiantsDetailsWidget(_mainWidgetState.kingdom,
-                      scoreOfQuest: _mainWidgetState.scoreOfQuest,
-                      quests: _mainWidgetState.selectedQuests,
-                      groupScore: _mainWidgetState.groupScore,
-                      score: _mainWidgetState.score),
+                      scoreOfQuest: this.scoreOfQuest,
+                      quests: this.quests,
+                      groupScore: this.groupScore,
+                      score: this.score),
                   actions: <Widget>[
                     TextButton(
                       child: Icon(

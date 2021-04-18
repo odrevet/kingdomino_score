@@ -33,6 +33,7 @@ Map<QuestType, SvgPicture> questPicture = {
   QuestType.harmony: SvgPicture.asset('assets/harmony.svg'),
   QuestType.middleKingdom: SvgPicture.asset('assets/middleKingdom.svg'),
   QuestType.lostCorner: SvgPicture.asset('assets/lostCorner.svg'),
+  QuestType.bleakKing: SvgPicture.asset('assets/bleakKing.svg'),
   QuestType.folieDesGrandeurs: SvgPicture.asset('assets/folieDesGrandeurs.svg'),
   QuestType.fourCornersWheat: SvgPicture.asset('assets/fourCornersWheat.svg'),
   QuestType.fourCornersLake: SvgPicture.asset('assets/fourCornersLake.svg'),

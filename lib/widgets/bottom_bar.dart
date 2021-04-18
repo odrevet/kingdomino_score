@@ -10,22 +10,24 @@ class BottomBar extends StatefulWidget {
   final KingdominoScoreWidgetState _mainWidgetState;
   final getSelectionMode;
   final getSelectedLandType;
+  final getAog;
 
   BottomBar(
-      this._mainWidgetState, this.getSelectionMode, this.getSelectedLandType);
+      this._mainWidgetState, this.getSelectionMode, this.getSelectedLandType, this.getAog);
 
   @override
   _BottomBarState createState() => _BottomBarState(
-      this._mainWidgetState, this.getSelectionMode, this.getSelectedLandType);
+      this._mainWidgetState, this.getSelectionMode, this.getSelectedLandType, this.getAog);
 }
 
 class _BottomBarState extends State<BottomBar> {
   KingdominoScoreWidgetState _mainWidgetState;
   final getSelectionMode;
   final getSelectedLandType;
+  final getAog;
 
   _BottomBarState(
-      this._mainWidgetState, this.getSelectionMode, this.getSelectedLandType);
+      this._mainWidgetState, this.getSelectionMode, this.getSelectedLandType, this.getAog);
 
   final double _buttonSize = 40.0;
 
@@ -48,7 +50,7 @@ class _BottomBarState extends State<BottomBar> {
       crownButton(),
     ];
 
-    if (_mainWidgetState.aog) kingdomEditorWidgets.add(giantButton());
+    if (_mainWidgetState.getAog()) kingdomEditorWidgets.add(giantButton());
 
     return Wrap(
       children: kingdomEditorWidgets,
@@ -147,7 +149,7 @@ class _BottomBarState extends State<BottomBar> {
   }
 
   Widget crownButton() {
-    var isSelected = this.getSelectionMode == SelectionMode.crown;
+    var isSelected = this.getSelectionMode() == SelectionMode.crown;
 
     return GestureDetector(
         onTap: () => _onSelectCrown(),

@@ -397,7 +397,7 @@ I will not use or share your information with anyone : Kingdomino Score works of
               Row(mainAxisAlignment: MainAxisAlignment.end, children: actions),
         ),
         bottomNavigationBar: BottomAppBar(
-            child: BottomBar(this, getSelectionMode, getSelectedLandType),
+            child: BottomBar(this, getSelectionMode, getSelectedLandType, getAog),
             color: Theme.of(context).primaryColor),
         body: body);
   }

@@ -11,6 +11,7 @@ class BottomBar extends StatefulWidget {
   final setSelectionMode;
   final getSelectedLandType;
   final setSelectedLandType;
+  final setKingColor;
   final getAog;
   final Kingdom kingdom;
   final groupScore;
@@ -28,7 +29,8 @@ class BottomBar extends StatefulWidget {
       required this.quests,
       required this.groupScore,
       required this.scoreOfQuest,
-      required this.score});
+      required this.score,
+      required this.setKingColor});
 
   @override
   _BottomBarState createState() => _BottomBarState(
@@ -41,7 +43,8 @@ class BottomBar extends StatefulWidget {
       quests: this.quests,
       groupScore: this.groupScore,
       score: this.score,
-      kingdom: kingdom);
+      kingdom: kingdom,
+      setKingColor: this.setKingColor);
 }
 
 class _BottomBarState extends State<BottomBar> {
@@ -49,6 +52,7 @@ class _BottomBarState extends State<BottomBar> {
   final setSelectionMode;
   final getSelectedLandType;
   final setSelectedLandType;
+  final setKingColor;
   final getAog;
   final Kingdom kingdom;
   final groupScore;
@@ -66,7 +70,8 @@ class _BottomBarState extends State<BottomBar> {
       required this.quests,
       required this.groupScore,
       required this.scoreOfQuest,
-      required this.score});
+      required this.score,
+      required this.setKingColor});
 
   final double _buttonSize = 40.0;
 
@@ -125,11 +130,9 @@ class _BottomBarState extends State<BottomBar> {
             )));
   }
 
-  /*_colorbutton(Color kingcolor) {
+  _colorbutton(Color kingcolor) {
     return GestureDetector(
-        onTap: () => setState(() {
-              _mainWidgetState.kingColor = kingcolor;
-            }),
+        onTap: () => setKingColor(kingcolor),
         child: Container(
           margin: EdgeInsets.all(5.0),
           height: _buttonSize,
@@ -137,7 +140,7 @@ class _BottomBarState extends State<BottomBar> {
           decoration: BoxDecoration(color: kingcolor),
           child: Container(),
         ));
-  }*/
+  }
 
   Widget castleButton() {
     bool isSelected = this.getSelectionMode() == SelectionMode.castle &&
@@ -148,7 +151,7 @@ class _BottomBarState extends State<BottomBar> {
               this.setSelectionMode(SelectionMode.castle);
               this.setSelectedLandType(LandType.castle);
             }),
-        /*onLongPress: () {
+        onLongPress: () {
           var buttons = <Widget>[
             _colorbutton(KingColors.elementAt(0)),
             _colorbutton(KingColors.elementAt(1)),
@@ -157,7 +160,7 @@ class _BottomBarState extends State<BottomBar> {
             _colorbutton(KingColors.elementAt(4)),
           ];
 
-          if (_mainWidgetState.aog == true) {
+          if (this.getAog() == true) {
             buttons.add(_colorbutton(KingColors.elementAt(5)));
           }
 
@@ -175,7 +178,7 @@ class _BottomBarState extends State<BottomBar> {
               );
             },
           );
-        },*/
+        },
         child: Container(
           margin: EdgeInsets.all(5.0),
           height: _buttonSize,

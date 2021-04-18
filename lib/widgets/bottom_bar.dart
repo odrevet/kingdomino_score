@@ -11,6 +11,7 @@ class BottomBar extends StatefulWidget {
   final setSelectionMode;
   final getSelectedLandType;
   final setSelectedLandType;
+  final getKingColor;
   final setKingColor;
   final getAog;
   final Kingdom kingdom;
@@ -30,6 +31,7 @@ class BottomBar extends StatefulWidget {
       required this.groupScore,
       required this.scoreOfQuest,
       required this.score,
+      required this.getKingColor,
       required this.setKingColor});
 
   @override
@@ -44,6 +46,7 @@ class BottomBar extends StatefulWidget {
       groupScore: this.groupScore,
       score: this.score,
       kingdom: kingdom,
+      getKingColor: this.getKingColor,
       setKingColor: this.setKingColor);
 }
 
@@ -53,6 +56,7 @@ class _BottomBarState extends State<BottomBar> {
   final getSelectedLandType;
   final setSelectedLandType;
   final setKingColor;
+  final getKingColor;
   final getAog;
   final Kingdom kingdom;
   final groupScore;
@@ -71,6 +75,7 @@ class _BottomBarState extends State<BottomBar> {
       required this.groupScore,
       required this.scoreOfQuest,
       required this.score,
+      required this.getKingColor,
       required this.setKingColor});
 
   final double _buttonSize = 40.0;
@@ -130,14 +135,14 @@ class _BottomBarState extends State<BottomBar> {
             )));
   }
 
-  _colorbutton(Color kingcolor) {
+  _colorbutton(Color? kingcolor) {
     return GestureDetector(
         onTap: () => setKingColor(kingcolor),
         child: Container(
           margin: EdgeInsets.all(5.0),
           height: _buttonSize,
           width: _buttonSize,
-          decoration: BoxDecoration(color: kingcolor),
+          decoration: BoxDecoration(color: kingcolor ?? Colors.white),
           child: Container(),
         ));
   }
@@ -152,16 +157,21 @@ class _BottomBarState extends State<BottomBar> {
               this.setSelectedLandType(LandType.castle);
             }),
         onLongPress: () {
+          setState(() {
+            this.setSelectionMode(SelectionMode.castle);
+            this.setSelectedLandType(LandType.castle);
+          });
+          
           var buttons = <Widget>[
+            _colorbutton(null),
             _colorbutton(KingColors.elementAt(0)),
             _colorbutton(KingColors.elementAt(1)),
             _colorbutton(KingColors.elementAt(2)),
             _colorbutton(KingColors.elementAt(3)),
-            _colorbutton(KingColors.elementAt(4)),
           ];
 
           if (this.getAog() == true) {
-            buttons.add(_colorbutton(KingColors.elementAt(5)));
+            buttons.add(_colorbutton(KingColors.elementAt(4)));
           }
 
           showDialog(
@@ -186,7 +196,7 @@ class _BottomBarState extends State<BottomBar> {
           decoration: BoxDecoration(
               color: Colors.white,
               border: isSelected ? _selectedBorder : this.outline),
-          child: CastleWidget(KingColors.elementAt(0)),
+          child: CastleWidget(this.getKingColor()),
         ));
   }
 

@@ -5,16 +5,15 @@ import '../models/kingdom.dart';
 import 'kingdomino_score_widget.dart';
 
 Set<Color> KingColors = Set.from([
-  Colors.white, // default
-  Colors.yellow,
-  Colors.blue,
-  Colors.green,
-  Colors.pink,
-  Colors.brown // AoG only
+  Colors.yellow.shade800,
+  Colors.blue.shade800,
+  Colors.green.shade800,
+  Colors.pink.shade800,
+  Colors.brown.shade800 // AoG only
 ]);
 
 class CastleWidget extends StatelessWidget {
-  Color kingColor;
+  Color? kingColor;
 
   CastleWidget(this.kingColor);
 

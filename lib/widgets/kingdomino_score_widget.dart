@@ -52,10 +52,16 @@ const Map<LandType, Map<String, dynamic>> gameSet = {
 };
 
 class KingdominoScoreWidget extends StatefulWidget {
-  KingdominoScoreWidget({Key? key}) : super(key: key);
+  final Function setColor;
+
+  KingdominoScoreWidget(
+    this.setColor, {
+    Key? key,
+  }) : super(key: key);
 
   @override
-  KingdominoScoreWidgetState createState() => KingdominoScoreWidgetState();
+  KingdominoScoreWidgetState createState() =>
+      KingdominoScoreWidgetState(this.setColor);
 }
 
 class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
@@ -66,11 +72,14 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
   int scoreProperty = 0;
   int scoreOfQuest = 0;
   int score = 0;
-  Color kingColor = KingColors.elementAt(0);
+  Color? kingColor;
   bool aog = false; // Age of Giants extension
   HashSet<QuestType> selectedQuests = HashSet();
   List<Warning> warnings = [];
   late PackageInfo _packageInfo;
+  final Function setColor;
+
+  KingdominoScoreWidgetState(this.setColor);
 
   @override
   initState() {
@@ -103,11 +112,16 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
 
   SelectionMode getSelectionMode() => selectionMode;
 
-  Color getKingColor() => kingColor;
+  Color? getKingColor() => kingColor;
 
-  setKingColor(Color color) {
+  setKingColor(Color? color) {
+    this.setColor(color); // set App color to king color
+
+    if (color == null) {
+      color = Colors.white;
+    }
     setState(() {
-      this.kingColor = color;
+      this.kingColor = color!;
     });
   }
 
@@ -412,17 +426,19 @@ I will not use or share your information with anyone : Kingdomino Score works of
         ),
         bottomNavigationBar: BottomAppBar(
             child: BottomBar(
-                getSelectionMode: getSelectionMode,
-                setSelectionMode: setSelectionMode,
-                getSelectedLandType: getSelectedLandType,
-                setSelectedLandType: setSelectedLandType,
-                getAog: getAog,
-                kingdom: kingdom,
-                scoreOfQuest: this.scoreOfQuest,
-                quests: this.selectedQuests,
-                groupScore: this.groupScore,
-                score: this.score,
-                setKingColor: this.setKingColor),
+              getSelectionMode: getSelectionMode,
+              setSelectionMode: setSelectionMode,
+              getSelectedLandType: getSelectedLandType,
+              setSelectedLandType: setSelectedLandType,
+              getAog: getAog,
+              kingdom: kingdom,
+              scoreOfQuest: this.scoreOfQuest,
+              quests: this.selectedQuests,
+              groupScore: this.groupScore,
+              score: this.score,
+              setKingColor: this.setKingColor,
+              getKingColor: this.getKingColor,
+            ),
             color: Theme.of(context).primaryColor),
         body: body);
   }

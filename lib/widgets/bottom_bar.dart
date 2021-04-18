@@ -7,8 +7,8 @@ import 'kingdom_widget.dart';
 import 'kingdomino_score_widget.dart';
 
 class BottomBar extends StatefulWidget {
-  final KingdominoScoreWidgetState _mainWidgetState;
   final getSelectionMode;
+  final setSelectionMode;
   final getSelectedLandType;
   final setSelectedLandType;
   final getAog;
@@ -18,8 +18,9 @@ class BottomBar extends StatefulWidget {
   final scoreOfQuest;
   final score;
 
-  BottomBar(this._mainWidgetState,
+  BottomBar(
       {required this.getSelectionMode,
+      required this.setSelectionMode,
       required this.getSelectedLandType,
       required this.setSelectedLandType,
       required this.getAog,
@@ -30,8 +31,9 @@ class BottomBar extends StatefulWidget {
       required this.score});
 
   @override
-  _BottomBarState createState() => _BottomBarState(this._mainWidgetState,
+  _BottomBarState createState() => _BottomBarState(
       getSelectionMode: this.getSelectionMode,
+      setSelectionMode: this.setSelectionMode,
       getSelectedLandType: this.getSelectedLandType,
       setSelectedLandType: this.setSelectedLandType,
       getAog: this.getAog,
@@ -43,8 +45,8 @@ class BottomBar extends StatefulWidget {
 }
 
 class _BottomBarState extends State<BottomBar> {
-  final KingdominoScoreWidgetState _mainWidgetState;
   final getSelectionMode;
+  final setSelectionMode;
   final getSelectedLandType;
   final setSelectedLandType;
   final getAog;
@@ -54,8 +56,9 @@ class _BottomBarState extends State<BottomBar> {
   final scoreOfQuest;
   final score;
 
-  _BottomBarState(this._mainWidgetState,
+  _BottomBarState(
       {required this.getSelectionMode,
+      required this.setSelectionMode,
       required this.getSelectedLandType,
       required this.setSelectedLandType,
       required this.getAog,
@@ -142,8 +145,8 @@ class _BottomBarState extends State<BottomBar> {
 
     return GestureDetector(
         onTap: () => setState(() {
-              _mainWidgetState.selectionMode = SelectionMode.castle;
-              _mainWidgetState.selectedLandType = LandType.castle;
+              this.setSelectionMode(SelectionMode.castle);
+              this.setSelectedLandType(LandType.castle);
             }),
         /*onLongPress: () {
           var buttons = <Widget>[
@@ -246,26 +249,26 @@ class _BottomBarState extends State<BottomBar> {
     else
       setState(() {
         this.setSelectedLandType(selectedType);
-        _mainWidgetState.selectionMode = SelectionMode.land;
+        this.setSelectionMode(SelectionMode.land);
       });
   }
 
   void _onSelectCrown() {
     setState(() {
-      _mainWidgetState.selectionMode = SelectionMode.crown;
+      this.setSelectionMode(SelectionMode.crown);
     });
   }
 
   void _onSelectCastle() {
     setState(() {
       this.setSelectedLandType(LandType.castle);
-      _mainWidgetState.selectionMode = SelectionMode.castle;
+      this.setSelectionMode(SelectionMode.castle);
     });
   }
 
   void _onSelectGiant() {
     setState(() {
-      _mainWidgetState.selectionMode = SelectionMode.giant;
+      this.setSelectionMode(SelectionMode.giant);
     });
   }
 }

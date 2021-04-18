@@ -99,6 +99,12 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
     });
   }
 
+  setSelectionMode(SelectionMode selectionMode) {
+    setState(() {
+      this.selectionMode = selectionMode;
+    });
+  }
+
   SelectionMode getSelectionMode() => selectionMode;
 
   Color getKingColor() => kingColor;
@@ -403,8 +409,9 @@ I will not use or share your information with anyone : Kingdomino Score works of
               Row(mainAxisAlignment: MainAxisAlignment.end, children: actions),
         ),
         bottomNavigationBar: BottomAppBar(
-            child: BottomBar(this,
+            child: BottomBar(
                 getSelectionMode: getSelectionMode,
+                setSelectionMode: setSelectionMode,
                 getSelectedLandType: getSelectedLandType,
                 setSelectedLandType: setSelectedLandType,
                 getAog: getAog,

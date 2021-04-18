@@ -81,7 +81,7 @@ class _BottomBarState extends State<BottomBar> {
       crownButton(),
     ];
 
-    if (_mainWidgetState.getAog()) kingdomEditorWidgets.add(giantButton());
+    if (this.getAog()) kingdomEditorWidgets.add(giantButton());
 
     return Wrap(
       children: kingdomEditorWidgets,
@@ -97,7 +97,7 @@ class _BottomBarState extends State<BottomBar> {
 
   Widget landButton(LandType landType) {
     var isSelected = this.getSelectionMode() == SelectionMode.land &&
-        _mainWidgetState.getSelectedLandType() == landType;
+        this.getSelectedLandType() == landType;
 
     return GestureDetector(
         onTap: () => _onSelectLandType(landType),
@@ -117,7 +117,7 @@ class _BottomBarState extends State<BottomBar> {
             )));
   }
 
-  _colorbutton(Color kingcolor) {
+  /*_colorbutton(Color kingcolor) {
     return GestureDetector(
         onTap: () => setState(() {
               _mainWidgetState.kingColor = kingcolor;
@@ -129,7 +129,7 @@ class _BottomBarState extends State<BottomBar> {
           decoration: BoxDecoration(color: kingcolor),
           child: Container(),
         ));
-  }
+  }*/
 
   Widget castleButton() {
     bool isSelected = this.getSelectionMode() == SelectionMode.castle &&
@@ -205,7 +205,7 @@ class _BottomBarState extends State<BottomBar> {
                 return AlertDialog(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(20.0))),
-                  content: GiantsDetailsWidget(_mainWidgetState.kingdom,
+                  content: GiantsDetailsWidget(this.kingdom,
                       scoreOfQuest: this.scoreOfQuest,
                       quests: this.quests,
                       groupScore: this.groupScore,

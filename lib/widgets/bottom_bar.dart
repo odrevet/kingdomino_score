@@ -10,6 +10,7 @@ class BottomBar extends StatefulWidget {
   final KingdominoScoreWidgetState _mainWidgetState;
   final getSelectionMode;
   final getSelectedLandType;
+  final setSelectedLandType;
   final getAog;
   final Kingdom kingdom;
   final groupScore;
@@ -20,6 +21,7 @@ class BottomBar extends StatefulWidget {
   BottomBar(this._mainWidgetState,
       {required this.getSelectionMode,
       required this.getSelectedLandType,
+      required this.setSelectedLandType,
       required this.getAog,
       required this.kingdom,
       required this.quests,
@@ -31,6 +33,7 @@ class BottomBar extends StatefulWidget {
   _BottomBarState createState() => _BottomBarState(this._mainWidgetState,
       getSelectionMode: this.getSelectionMode,
       getSelectedLandType: this.getSelectedLandType,
+      setSelectedLandType: this.setSelectedLandType,
       getAog: this.getAog,
       scoreOfQuest: this.scoreOfQuest,
       quests: this.quests,
@@ -43,6 +46,7 @@ class _BottomBarState extends State<BottomBar> {
   final KingdominoScoreWidgetState _mainWidgetState;
   final getSelectionMode;
   final getSelectedLandType;
+  final setSelectedLandType;
   final getAog;
   final Kingdom kingdom;
   final groupScore;
@@ -53,6 +57,7 @@ class _BottomBarState extends State<BottomBar> {
   _BottomBarState(this._mainWidgetState,
       {required this.getSelectionMode,
       required this.getSelectedLandType,
+      required this.setSelectedLandType,
       required this.getAog,
       required this.kingdom,
       required this.quests,
@@ -240,7 +245,7 @@ class _BottomBarState extends State<BottomBar> {
       _onSelectCastle();
     else
       setState(() {
-        _mainWidgetState.selectedLandType = selectedType;
+        this.setSelectedLandType(selectedType);
         _mainWidgetState.selectionMode = SelectionMode.land;
       });
   }
@@ -253,7 +258,7 @@ class _BottomBarState extends State<BottomBar> {
 
   void _onSelectCastle() {
     setState(() {
-      _mainWidgetState.selectedLandType = LandType.castle;
+      this.setSelectedLandType(LandType.castle);
       _mainWidgetState.selectionMode = SelectionMode.castle;
     });
   }

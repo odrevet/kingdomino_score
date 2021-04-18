@@ -93,6 +93,12 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
 
   LandType getSelectedLandType() => selectedLandType;
 
+  setSelectedLandType(LandType landtype) {
+    setState(() {
+      this.selectedLandType = landtype;
+    });
+  }
+
   SelectionMode getSelectionMode() => selectionMode;
 
   Color getKingColor() => kingColor;
@@ -400,6 +406,7 @@ I will not use or share your information with anyone : Kingdomino Score works of
             child: BottomBar(this,
                 getSelectionMode: getSelectionMode,
                 getSelectedLandType: getSelectedLandType,
+                setSelectedLandType: setSelectedLandType,
                 getAog: getAog,
                 kingdom: kingdom,
                 scoreOfQuest: this.scoreOfQuest,

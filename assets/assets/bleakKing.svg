@@ -41,7 +41,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -107,28 +107,28 @@
       </g>
     </g>
     <rect
-       style="fill:#ffff00;stroke-width:0.264583"
+       style="fill:#fdd835;stroke-width:0.264583;fill-opacity:1"
        id="rect623"
        width="10"
        height="10"
        x="91.156982"
        y="17.358734" />
     <rect
-       style="fill:#008000;stroke-width:0.264583"
+       style="fill:#2e7d32;stroke-width:0.264583;fill-opacity:1"
        id="rect623-3"
        width="10"
        height="10"
        x="91.156982"
        y="27.358734" />
     <rect
-       style="fill:#00ff00;stroke-width:0.264583"
+       style="fill:#8bc34a;stroke-width:0.264583;fill-opacity:1"
        id="rect623-6"
        width="10"
        height="10"
        x="91.156982"
        y="37.358734" />
     <rect
-       style="fill:#00ffff;stroke-width:0.264583"
+       style="fill:#42a5f5;stroke-width:0.264583;fill-opacity:1"
        id="rect623-7"
        width="10"
        height="10"

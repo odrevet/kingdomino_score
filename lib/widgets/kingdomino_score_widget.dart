@@ -13,6 +13,7 @@ import 'kingdom_widget.dart';
 import 'bottom_bar.dart';
 import 'quest_dialog.dart';
 import 'score_details_widget.dart';
+import 'cameraPreview.dart';
 
 const String crown = '\u{1F451}';
 const String castle = '\u{1F3F0}';
@@ -53,15 +54,16 @@ const Map<LandType, Map<String, dynamic>> gameSet = {
 
 class KingdominoScoreWidget extends StatefulWidget {
   final Function setColor;
+  final camera;
 
   KingdominoScoreWidget(
-    this.setColor, {
+    this.setColor, this.camera, {
     Key? key,
   }) : super(key: key);
 
   @override
   KingdominoScoreWidgetState createState() =>
-      KingdominoScoreWidgetState(this.setColor);
+      KingdominoScoreWidgetState(this.setColor, this.camera);
 }
 
 class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
@@ -78,8 +80,10 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
   List<Warning> warnings = [];
   late PackageInfo _packageInfo;
   final Function setColor;
+  bool cameraMode = true; //false;
+  final camera;
 
-  KingdominoScoreWidgetState(this.setColor);
+  KingdominoScoreWidgetState(this.setColor, this.camera);
 
   @override
   initState() {
@@ -224,14 +228,19 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
   @override
   Widget build(BuildContext context) {
     var actions = <Widget>[
+      IconButton(
+          icon: Icon(Icons.camera_alt),
+          onPressed: () {
+            setState(() {
+              cameraMode = true;
+            });
+          }),
       MaterialButton(
           minWidth: 30,
           onPressed: () {
             setState(() {
               aog = !aog;
-
               selectedQuests.clear();
-
               kingdom.getLands().expand((i) => i).toList().forEach((land) {
                 land.giants = 0;
               });
@@ -351,13 +360,18 @@ I will not use or share your information with anyone : Kingdomino Score works of
     Widget body = OrientationBuilder(builder: (context, orientation) {
       if (orientation == Orientation.portrait) {
         return Column(children: <Widget>[
-          KingdomWidget(
-              getSelectionMode: this.getSelectionMode,
-              getSelectedLandType: this.getSelectedLandType,
-              getGameSet: this.getGameSet,
-              calculateScore: this.calculateScore,
-              kingdom: this.kingdom,
-              getKingColor: this.getKingColor),
+          cameraMode
+              ? TakePictureScreen(
+                  // Pass the appropriate camera to the TakePictureScreen widget.
+                  camera: camera,
+                )
+              : KingdomWidget(
+                  getSelectionMode: this.getSelectionMode,
+                  getSelectedLandType: this.getSelectedLandType,
+                  getGameSet: this.getGameSet,
+                  calculateScore: this.calculateScore,
+                  kingdom: this.kingdom,
+                  getKingColor: this.getKingColor),
           Expanded(
             child: FittedBox(
                 fit: BoxFit.fitHeight,
@@ -440,6 +454,9 @@ I will not use or share your information with anyone : Kingdomino Score works of
               getKingColor: this.getKingColor,
             ),
             color: Theme.of(context).primaryColor),
-        body: body);
+        body: TakePictureScreen(
+          // Pass the appropriate camera to the TakePictureScreen widget.
+          camera: camera,
+        ));
   }
 }

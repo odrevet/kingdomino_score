@@ -57,9 +57,9 @@ class KingdominoScoreWidget extends StatefulWidget {
   final camera;
 
   KingdominoScoreWidget(
-    this.setColor, this.camera, {
-    Key? key,
-  }) : super(key: key);
+      this.setColor, this.camera, {
+        Key? key,
+      }) : super(key: key);
 
   @override
   KingdominoScoreWidgetState createState() =>
@@ -80,7 +80,7 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
   List<Warning> warnings = [];
   late PackageInfo _packageInfo;
   final Function setColor;
-  bool cameraMode = true; //false;
+  bool cameraMode = false;
   final camera;
 
   KingdominoScoreWidgetState(this.setColor, this.camera);
@@ -163,7 +163,7 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
           .length;
       if (count > getGameSet()[landType]!['count']) {
         Warning warning =
-            Warning(count, landType, 0, '>', getGameSet()[landType]!['count']);
+        Warning(count, landType, 0, '>', getGameSet()[landType]!['count']);
 
         setState(() {
           warnings.add(warning);
@@ -172,14 +172,14 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
 
       //check if too many tile with given crowns
       for (var crownsCounter = 1;
-          crownsCounter <= getGameSet()[landType]!['crowns']['max'];
-          crownsCounter++) {
+      crownsCounter <= getGameSet()[landType]!['crowns']['max'];
+      crownsCounter++) {
         var count = kingdom
             .getLands()
             .expand((i) => i)
             .toList()
             .where((land) =>
-                land.landType == landType && land.crowns == crownsCounter)
+        land.landType == landType && land.crowns == crownsCounter)
             .length;
 
         if (count > getGameSet()[landType]!['crowns'][crownsCounter]) {
@@ -232,7 +232,7 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
           icon: Icon(Icons.camera_alt),
           onPressed: () {
             setState(() {
-              cameraMode = true;
+              cameraMode = !cameraMode;
             });
           }),
       MaterialButton(
@@ -293,7 +293,7 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
               applicationName: _packageInfo.appName,
               applicationVersion: _packageInfo.version,
               applicationLegalese:
-                  '''Drevet Olivier built the Kingdomino Score app under the GPL license Version 3. 
+              '''Drevet Olivier built the Kingdomino Score app under the GPL license Version 3. 
 This SERVICE is provided by Drevet Olivier at no cost and is intended for use as is.
 This page is used to inform visitors regarding the policy with the collection, use, and disclosure of Personal Information if anyone decided to use my Service.
 I will not use or share your information with anyone : Kingdomino Score works offline and does not send any information over a network. ''',
@@ -309,27 +309,27 @@ I will not use or share your information with anyone : Kingdomino Score works of
               IconButton(
                   icon: Icon(Icons.warning),
                   onPressed: () => showDialog<void>(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20.0))),
-                            content: WarningsWidget(warnings: this.warnings),
-                            actions: <Widget>[
-                              TextButton(
-                                child: Icon(
-                                  Icons.done,
-                                  color: Colors.black87,
-                                ),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                            ],
-                          );
-                        },
-                      )),
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        shape: RoundedRectangleBorder(
+                            borderRadius:
+                            BorderRadius.all(Radius.circular(20.0))),
+                        content: WarningsWidget(warnings: this.warnings),
+                        actions: <Widget>[
+                          TextButton(
+                            child: Icon(
+                              Icons.done,
+                              color: Colors.black87,
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  )),
               Positioned(
                 right: 5,
                 top: 10,
@@ -360,18 +360,21 @@ I will not use or share your information with anyone : Kingdomino Score works of
     Widget body = OrientationBuilder(builder: (context, orientation) {
       if (orientation == Orientation.portrait) {
         return Column(children: <Widget>[
-          cameraMode
-              ? TakePictureScreen(
-                  // Pass the appropriate camera to the TakePictureScreen widget.
-                  camera: camera,
-                )
+          cameraMode == true
+              ? AspectRatio(
+            aspectRatio: 1,
+            child: TakePictureScreen(
+              // Pass the appropriate camera to the TakePictureScreen widget.
+              camera: camera,
+            ),
+          )
               : KingdomWidget(
-                  getSelectionMode: this.getSelectionMode,
-                  getSelectedLandType: this.getSelectedLandType,
-                  getGameSet: this.getGameSet,
-                  calculateScore: this.calculateScore,
-                  kingdom: this.kingdom,
-                  getKingColor: this.getKingColor),
+              getSelectionMode: this.getSelectionMode,
+              getSelectedLandType: this.getSelectedLandType,
+              getGameSet: this.getGameSet,
+              calculateScore: this.calculateScore,
+              kingdom: this.kingdom,
+              getKingColor: this.getKingColor),
           Expanded(
             child: FittedBox(
                 fit: BoxFit.fitHeight,
@@ -379,32 +382,32 @@ I will not use or share your information with anyone : Kingdomino Score works of
                     child: Text(score.toString(),
                         style: TextStyle(color: Colors.white)),
                     onTap: () => showDialog<void>(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20.0))),
-                              content: ScoreDetailsWidget(
-                                  kingdom: this.kingdom,
-                                  groupScore: this.groupScore,
-                                  quests: this.selectedQuests,
-                                  score: this.score,
-                                  scoreOfQuest: this.scoreOfQuest),
-                              actions: <Widget>[
-                                TextButton(
-                                  child: Icon(
-                                    Icons.done,
-                                    color: Colors.black87,
-                                  ),
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                ),
-                              ],
-                            );
-                          },
-                        ))),
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(20.0))),
+                          content: ScoreDetailsWidget(
+                              kingdom: this.kingdom,
+                              groupScore: this.groupScore,
+                              quests: this.selectedQuests,
+                              score: this.score,
+                              scoreOfQuest: this.scoreOfQuest),
+                          actions: <Widget>[
+                            TextButton(
+                              child: Icon(
+                                Icons.done,
+                                color: Colors.black87,
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    ))),
           )
         ]);
       } else {
@@ -436,7 +439,7 @@ I will not use or share your information with anyone : Kingdomino Score works of
     return Scaffold(
         appBar: AppBar(
           title:
-              Row(mainAxisAlignment: MainAxisAlignment.end, children: actions),
+          Row(mainAxisAlignment: MainAxisAlignment.end, children: actions),
         ),
         bottomNavigationBar: BottomAppBar(
             child: BottomBar(
@@ -454,9 +457,6 @@ I will not use or share your information with anyone : Kingdomino Score works of
               getKingColor: this.getKingColor,
             ),
             color: Theme.of(context).primaryColor),
-        body: TakePictureScreen(
-          // Pass the appropriate camera to the TakePictureScreen widget.
-          camera: camera,
-        ));
+        body: body);
   }
 }

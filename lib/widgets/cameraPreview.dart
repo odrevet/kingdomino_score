@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:image/image.dart';
 
 class TakePictureScreen extends StatefulWidget {
   final CameraDescription? camera;
@@ -50,9 +52,8 @@ class TakePictureScreenState extends State<TakePictureScreen> {
         if (snapshot.connectionState == ConnectionState.done) {
           return GestureDetector(
             onTap: () async {
-              final image = await _controller!.takePicture();
-              print("TODO ANALYSE IMAGE LAND TYPE");
-              print(image);
+              final xfile = await _controller!.takePicture();
+              final image = decodeImage(File(xfile.path!).readAsBytesSync());
             },
             child: Container(
               width: size,
@@ -65,8 +66,8 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                     child: Container(
                       width: size,
                       height: size,
-                      child:
-                      CameraPreview(_controller!), // this is my CameraPreview
+                      child: CameraPreview(
+                          _controller!), // this is my CameraPreview
                     ),
                   ),
                 ),
@@ -80,4 +81,3 @@ class TakePictureScreenState extends State<TakePictureScreen> {
     );
   }
 }
-

@@ -13,8 +13,9 @@ dependencies:
   package_info: ^2.0.0
   flutter_svg: ^0.21.0+1
   camera: ^0.8.1
-  path_provider:
-  path:
+  path_provider: ^2.0.1
+  path: ^1.8.0
+  image: ^3.0.2
 
 
 dev_dependencies:

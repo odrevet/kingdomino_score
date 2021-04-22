@@ -49,19 +49,26 @@ class TakePictureScreenState extends State<TakePictureScreen> {
       future: _initializeControllerFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
-          return Container(
-            width: size,
-            height: size,
-            child: ClipRect(
-              child: OverflowBox(
-                alignment: Alignment.center,
-                child: FittedBox(
-                  fit: BoxFit.fitWidth,
-                  child: Container(
-                    width: size,
-                    height: size,
-                    child:
-                    CameraPreview(_controller!), // this is my CameraPreview
+          return GestureDetector(
+            onTap: () async {
+              final image = await _controller!.takePicture();
+              print("TODO ANALYSE IMAGE LAND TYPE");
+              print(image);
+            },
+            child: Container(
+              width: size,
+              height: size,
+              child: ClipRect(
+                child: OverflowBox(
+                  alignment: Alignment.center,
+                  child: FittedBox(
+                    fit: BoxFit.fitWidth,
+                    child: Container(
+                      width: size,
+                      height: size,
+                      child:
+                      CameraPreview(_controller!), // this is my CameraPreview
+                    ),
                   ),
                 ),
               ),
@@ -73,45 +80,6 @@ class TakePictureScreenState extends State<TakePictureScreen> {
         }
       },
     );
-    /*
-    return Scaffold(
-      appBar: AppBar(title: Text('Take a picture')),
-      // Wait until the controller is initialized before displaying the
-      // camera preview. Use a FutureBuilder to display a loading spinner
-      // until the controller has finished initializing.
-      body: ,
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.camera_alt),
-        // Provide an onPressed callback.
-        onPressed: () async {
-          // Take the Picture in a try / catch block. If anything goes wrong,
-          // catch the error.
-          try {
-            // Ensure that the camera is initialized.
-            await _initializeControllerFuture;
-
-            // Attempt to take a picture and get the file `image`
-            // where it was saved.
-            final image = await _controller!.takePicture();
-
-            // If the picture was taken, display it on a new screen.
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => DisplayPictureScreen(
-                  // Pass the automatically generated path to
-                  // the DisplayPictureScreen widget.
-                  imagePath: image.path,
-                ),
-              ),
-            );
-          } catch (e) {
-            // If an error occurs, log the error to the console.
-            print(e);
-          }
-        },
-      ),
-    );*/
   }
 }
 

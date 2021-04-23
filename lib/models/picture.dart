@@ -27,18 +27,10 @@ void readImagePixels(Image image)
 {
   double px = 0.0;
   double py = 0.0;
-  int? pixel32 = image?.getPixelSafe(px.toInt(), py.toInt());  //#AABBGGRR
-  int hex = abgrToArgb(pixel32!);
-  print(pixel32);
-  print(hex);
-  int r = (pixel32 >> 16) & 0xFF;
-  int b = pixel32 & 0xFF;
-  print("r $r b $b");
-
+  int? pixel32 = image.getPixelSafe(px.toInt(), py.toInt());  //#AABBGGRR
+  int b = (pixel32 >> 16) & 0xFF;
+  int g = 0;
+  int r = pixel32 & 0xFF;
+  print("RGB: $r $g $b");
 }
 
-int abgrToArgb(int argbColor) {
-  int r = (argbColor >> 16) & 0xFF;
-  int b = argbColor & 0xFF;
-  return (argbColor & 0xFF00FF00) | (b << 16) | r;
-}

@@ -29,7 +29,7 @@ void readImagePixels(Image image)
   double py = 0.0;
   int? pixel32 = image.getPixelSafe(px.toInt(), py.toInt());  //#AABBGGRR
   int b = (pixel32 >> 16) & 0xFF;
-  int g = 0;
+  int g = (pixel32 >> 8) & 0xFF;;
   int r = pixel32 & 0xFF;
   print("RGB: $r $g $b");
 }

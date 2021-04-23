@@ -24,7 +24,6 @@ class ImageProcessor {
 
 List<int> averageRGB(Image image) {
   List<int> rgb = [0, 0, 0];
-  int nbPixel = image.width * image.height;
 
   for (int x = 0; x < image.width; x++) {
     for (int y = 0; y < image.height; y++) {
@@ -35,6 +34,7 @@ List<int> averageRGB(Image image) {
     }
   }
 
+  int nbPixel = image.width * image.height;
   rgb[0] = (rgb[0] ~/ nbPixel);
   rgb[1] = (rgb[1] ~/ nbPixel);
   rgb[2] = (rgb[2] ~/ nbPixel);

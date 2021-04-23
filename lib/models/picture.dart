@@ -15,22 +15,19 @@ class ImageProcessor {
     int offsetX = (src.width - min(src.width, src.height)) ~/ 2;
     int offsetY = (src.height - min(src.width, src.height)) ~/ 2;
 
-    Image destImage =
-    copyCrop(src, offsetX, offsetY, cropSize, cropSize);
+    Image destImage = copyCrop(src, offsetX, offsetY, cropSize, cropSize);
 
     var jpg = encodeJpg(destImage);
     await File(destFilePath).writeAsBytes(jpg);
   }
 }
 
-void readImagePixels(Image image)
-{
+List<int> readImagePixels(Image image) {
   double px = 0.0;
   double py = 0.0;
-  int? pixel32 = image.getPixelSafe(px.toInt(), py.toInt());  //#AABBGGRR
+  int? pixel32 = image.getPixelSafe(px.toInt(), py.toInt()); //#AABBGGRR
   int b = (pixel32 >> 16) & 0xFF;
-  int g = (pixel32 >> 8) & 0xFF;;
+  int g = (pixel32 >> 8) & 0xFF;
   int r = pixel32 & 0xFF;
-  print("RGB: $r $g $b");
+  return [r, g, b];
 }
-

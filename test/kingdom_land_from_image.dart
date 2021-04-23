@@ -11,14 +11,14 @@ void main() {
   final Image? green = decodeImage(File('test/assets/green.jpg').readAsBytesSync());
   final Image? blue = decodeImage(File('test/assets/blue.jpg').readAsBytesSync());
 
+  List<int> rgb;
 
-  // read pixels colors
-  print('red');
-  readImagePixels(red!);
+  rgb = readImagePixels(red!);
+  print("Red RGB: $rgb");
+  
+  rgb = readImagePixels(green!);
+  print("Green RGB: $rgb");
 
-  print('green');
-  readImagePixels(green!);
-
-  print('blue');
-  readImagePixels(blue!);
+  rgb = readImagePixels(blue!);
+  print("Blue RGB: $rgb");
 }

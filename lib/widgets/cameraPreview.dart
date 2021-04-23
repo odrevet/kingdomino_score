@@ -3,15 +3,10 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:image/image.dart' as Image;
+import 'package:image/image.dart' as Img;
 
+import '../models/picture.dart';
 
-// image lib uses uses KML color format, convert #AABBGGRR to regular #AARRGGBB
-int abgrToArgb(int argbColor) {
-  int r = (argbColor >> 16) & 0xFF;
-  int b = argbColor & 0xFF;
-  return (argbColor & 0xFF00FF00) | (b << 16) | r;
-}
 
 class TakePictureScreen extends StatefulWidget {
   final CameraDescription? camera;
@@ -61,15 +56,20 @@ class TakePictureScreenState extends State<TakePictureScreen> {
           return GestureDetector(
             onTap: () async {
               final xfile = await _controller!.takePicture();
-              final Image.Image? image = Image.decodeImage(File(xfile.path).readAsBytesSync());
-              double px = 0.0;
-              double py = 0.0;
-              int? pixel32 = image?.getPixelSafe(px.toInt(), py.toInt());  //#AABBGGRR
-              int hex = abgrToArgb(pixel32!);
-              Color color = Color(hex);
-              print(color.red);
-              print(color.green);
-              print(color.blue);
+              ImageProcessor.cropSquare(xfile.path, xfile.path);
+              final Img.Image? image = Img.decodeImage(File(xfile.path).readAsBytesSync());
+
+              //DEBUG
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DisplayPictureScreen(
+                    // Pass the automatically generated path to
+                    // the DisplayPictureScreen widget.
+                    imagePath: xfile.path,
+                  ),
+                ),
+              );
             },
             child: Container(
               width: size,
@@ -94,6 +94,24 @@ class TakePictureScreenState extends State<TakePictureScreen> {
           return Center(child: CircularProgressIndicator());
         }
       },
+    );
+  }
+}
+
+
+// DEBUG
+class DisplayPictureScreen extends StatelessWidget {
+  final String? imagePath;
+
+  const DisplayPictureScreen({this.imagePath}) : super();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Display the Picture')),
+      // The image is stored as a file on the device. Use the `Image.file`
+      // constructor with the given path to display the image.
+      body: Image.file(File(imagePath!)),
     );
   }
 }

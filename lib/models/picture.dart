@@ -29,9 +29,9 @@ List<int> averageRGB(Image image) {
   for (int x = 0; x < image.width; x++) {
     for (int y = 0; y < image.height; y++) {
       int? pixel32 = image.getPixel(x, y);
-      rgb[0] += (pixel32 >> 16) & 0xFF;
+      rgb[0] += (pixel32 >> 0) & 0xFF;
       rgb[1] += (pixel32 >> 8) & 0xFF;
-      rgb[2] += (pixel32 >> 0) & 0xFF;
+      rgb[2] += (pixel32 >> 16) & 0xFF;
     }
   }
 

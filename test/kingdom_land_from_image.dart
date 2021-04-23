@@ -6,6 +6,18 @@ import 'package:image/image.dart';
 import 'package:kingdomino_score_count/models/kingdom.dart';
 import 'package:kingdomino_score_count/models/picture.dart';
 
+
+//TODO calculate average for each land type
+Map<LandType, List<int>> landRGB = {
+  LandType.swamp: [115, 115, 115],
+  LandType.lake: [20, 20, 200],
+  LandType.wheat: [250, 210, 20],       //OK
+  LandType.mine: [90, 100, 42],
+  LandType.forest: [200, 20, 20],
+  LandType.grassland: [200, 42, 42],
+};
+
+
 bool compareRGB(List<int> a, List<int> b, {tolerance = 25}) {
   return (a[0] >= b[0] - tolerance && a[0] <= b[0] + tolerance) &&
       (a[1] >= b[1] - tolerance && a[1] <= b[1] + tolerance) &&
@@ -20,6 +32,9 @@ void main() {
       decodeImage(File('test/assets/blue.jpg').readAsBytesSync());
   final Image? multi =
       decodeImage(File('test/assets/multi.jpg').readAsBytesSync());
+  final Image? imageWheat =
+  decodeImage(File('test/assets/wheat.jpg').readAsBytesSync());
+
 
   List<int> redRGB = averageRGB(red!);
   print("Red RGB: $redRGB");
@@ -33,25 +48,19 @@ void main() {
   List<int> multiRGB = averageRGB(multi!);
   print("Multi RGB: $multiRGB");
 
-  //TODO calculate average for each land type
-  List<int> swampRGB = [115, 115, 115];
-  List<int> lakeRGB = [20, 20, 200];
-  List<int> wheatRGB = [42, 42, 42];
-  List<int> mineRGB = [90, 100, 42];
-  List<int> forestRGB = [200, 20, 20];
-  List<int> grasslandRGB = [200, 42, 42];
+  List<int> wheatRGB = averageRGB(imageWheat!);
+  print("Wheat RGB: $wheatRGB");
 
-  Map<LandType, List<int>> landRGB = {
-    LandType.swamp: swampRGB,
-    LandType.lake: lakeRGB,
-    LandType.wheat: wheatRGB,
-    LandType.mine: mineRGB,
-    LandType.forest: forestRGB,
-    LandType.grassland: grasslandRGB,
-  };
-
+  print("Multi");
   landRGB.forEach((key, value) {
     if (compareRGB(multiRGB, value)) {
+      print(key);
+    }
+  });
+
+  print("Wheat");
+  landRGB.forEach((key, value) {
+    if (compareRGB(wheatRGB, value)) {
       print(key);
     }
   });

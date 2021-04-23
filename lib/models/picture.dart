@@ -22,12 +22,22 @@ class ImageProcessor {
   }
 }
 
-List<int> readImagePixels(Image image) {
-  double px = 0.0;
-  double py = 0.0;
-  int? pixel32 = image.getPixelSafe(px.toInt(), py.toInt()); //#AABBGGRR
-  int b = (pixel32 >> 16) & 0xFF;
-  int g = (pixel32 >> 8) & 0xFF;
-  int r = pixel32 & 0xFF;
-  return [r, g, b];
+List<int> averageRGB(Image image) {
+  List<int> rgb = [0, 0, 0];
+  int nbPixel = image.width * image.height;
+
+  for (int x = 0; x < image.width; x++) {
+    for (int y = 0; y < image.height; y++) {
+      int? pixel32 = image.getPixel(x, y);
+      rgb[0] += (pixel32 >> 16) & 0xFF;
+      rgb[1] += (pixel32 >> 8) & 0xFF;
+      rgb[2] += (pixel32 >> 0) & 0xFF;
+    }
+  }
+
+  rgb[0] = (rgb[0] ~/ nbPixel);
+  rgb[1] = (rgb[1] ~/ nbPixel);
+  rgb[2] = (rgb[2] ~/ nbPixel);
+
+  return rgb;
 }

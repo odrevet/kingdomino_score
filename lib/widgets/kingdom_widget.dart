@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/age_of_giants.dart';
-import '../models/kingdom.dart';
+import '../models/land.dart';
 import 'kingdomino_score_widget.dart';
 
 Set<Color> KingColors = Set.from([

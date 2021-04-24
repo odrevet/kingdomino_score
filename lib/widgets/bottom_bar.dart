@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../models/land.dart' show LandType;
 import '../models/age_of_giants.dart';
 import '../models/kingdom.dart';
 import 'giant_details_widget.dart';

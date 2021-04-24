@@ -1,4 +1,4 @@
-import 'kingdom.dart' show LandType;
+import 'land.dart' show LandType;
 
 class Warning {
   int leftOperand;

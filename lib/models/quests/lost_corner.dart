@@ -1,5 +1,6 @@
 import '../kingdom.dart';
 import '../quest.dart';
+import '../land.dart' show LandType;
 
 class LostCorner extends Quest {
   static final LostCorner _singleton = LostCorner._internal();

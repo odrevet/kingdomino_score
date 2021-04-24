@@ -7,6 +7,7 @@ import '../models/age_of_giants.dart';
 import '../models/kingdom.dart';
 import '../models/quest.dart';
 import '../models/warning.dart';
+import '../models/land.dart' show LandType;
 import '../scoreQuest.dart';
 import 'warning_widget.dart';
 import 'kingdom_widget.dart';

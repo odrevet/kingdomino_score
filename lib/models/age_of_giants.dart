@@ -1,4 +1,4 @@
-import 'kingdom.dart' show LandType;
+import 'land.dart' show LandType;
 
 const String giant = '\u{1F9D4}';
 

@@ -1,5 +1,6 @@
 import '../kingdom.dart';
 import '../quest.dart';
+import '../land.dart' show LandType;
 
 class Harmony extends Quest {
   static final Harmony _singleton = Harmony._internal();

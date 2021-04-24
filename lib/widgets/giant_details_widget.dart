@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 import '../scoreQuest.dart';
+import '../models/property.dart';
 import '../models/age_of_giants.dart';
 import '../models/kingdom.dart';
 import 'kingdom_widget.dart';

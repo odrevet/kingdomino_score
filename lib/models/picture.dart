@@ -41,3 +41,9 @@ List<int> averageRGB(Image image) {
 
   return rgb;
 }
+
+bool compareRGB(List<int> a, List<int> b, {tolerance = 25}) {
+  return (a[0] >= b[0] - tolerance && a[0] <= b[0] + tolerance) &&
+      (a[1] >= b[1] - tolerance && a[1] <= b[1] + tolerance) &&
+      (a[2] >= b[2] - tolerance && a[2] <= b[2] + tolerance);
+}

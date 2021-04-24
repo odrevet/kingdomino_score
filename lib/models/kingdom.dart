@@ -1,4 +1,5 @@
-enum LandType { none, wheat, grassland, forest, lake, swamp, mine, castle }
+import 'land.dart';
+import 'property.dart';
 
 class Kingdom {
   int size = 5;
@@ -102,31 +103,3 @@ class Kingdom {
   }
 }
 
-class Land {
-  LandType? landType = LandType.none;
-  int crowns = 0;
-  bool isMarked = false; //to create properties
-  int giants = 0; //AoG extension
-
-  ///set crowns to 0 and hasGiant to false
-  void reset() {
-    crowns = 0;
-    giants = 0;
-  }
-
-  /// count crowns minus the number of giants
-  int getCrowns() {
-    return crowns - giants;
-  }
-
-  Land(this.landType);
-}
-
-class Property {
-  LandType? landType;
-  int crownCount = 0;
-  int landCount = 0;
-  int giantCount = 0; //AoG
-
-  Property(this.landType);
-}

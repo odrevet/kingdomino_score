@@ -1,5 +1,6 @@
 import '../kingdom.dart';
 import '../quest.dart';
+import '../land.dart' show LandType;
 
 class LocalBusiness extends Quest {
   static final LocalBusiness _singleton = LocalBusiness._internal();

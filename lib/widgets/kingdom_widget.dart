@@ -175,6 +175,7 @@ class _KingdomWidgetState extends State<KingdomWidget> {
   }
 }
 
+// TODO use RGB from land model ?
 Color getColorForLandType(LandType? type) {
   Color color;
   switch (type) {

@@ -25,13 +25,13 @@ bool compareRGB(List<int> a, List<int> b, {tolerance = 25}) {
 }
 
 void main() {
-  final Image? red = decodeImage(File('test/assets/red.jpg').readAsBytesSync());
+  final Image? red = decodeImage(File('test/assets/red.png').readAsBytesSync());
   final Image? green =
-      decodeImage(File('test/assets/green.jpg').readAsBytesSync());
+      decodeImage(File('test/assets/green.png').readAsBytesSync());
   final Image? blue =
-      decodeImage(File('test/assets/blue.jpg').readAsBytesSync());
+      decodeImage(File('test/assets/blue.png').readAsBytesSync());
   final Image? multi =
-      decodeImage(File('test/assets/multi.jpg').readAsBytesSync());
+      decodeImage(File('test/assets/multi.png').readAsBytesSync());
   final Image? imageWheat =
   decodeImage(File('test/assets/wheat.jpg').readAsBytesSync());
 

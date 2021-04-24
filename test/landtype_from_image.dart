@@ -1,9 +1,9 @@
 import 'dart:io';
 
+import 'package:kingdomino_score_count/models/land.dart';
 import "package:test/test.dart";
 import 'package:image/image.dart';
 
-import 'package:kingdomino_score_count/models/kingdom.dart';
 import 'package:kingdomino_score_count/models/picture.dart';
 
 void main() {
@@ -31,14 +31,13 @@ void main() {
     final Image? multiImage =
     decodeImage(File('test/assets/multi.png').readAsBytesSync());
     List<int> multiRGB = averageRGB(multiImage!);
-    expect([0x88, 0x88, 0x88], multiImage);
+    expect([0x88, 0x88, 0x88], multiRGB);
   });
-
-
+  
   test('Wheat', (){
     final Image? imageWheat =
     decodeImage(File('test/assets/wheat.jpg').readAsBytesSync());
     List<int> wheatRGB = averageRGB(imageWheat!);
-    print("Wheat RGB: $wheatRGB");
+    expect(LandType.wheat, getLandtypeFromRGB(wheatRGB));
   });
 }

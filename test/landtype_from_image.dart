@@ -31,9 +31,9 @@ void main() {
     final Image? multiImage =
     decodeImage(File('test/assets/multi.png').readAsBytesSync());
     List<int> multiRGB = averageRGB(multiImage!);
-    expect([0x88, 0x88, 0x88], multiRGB);
+    expect([97, 97, 97], multiRGB);
   });
-  
+
   test('Wheat', (){
     final Image? imageWheat =
     decodeImage(File('test/assets/wheat.jpg').readAsBytesSync());

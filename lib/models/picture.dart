@@ -22,19 +22,21 @@ class ImageProcessor {
   }
 }
 
-List<int> averageRGB(Image image) {
+List<int> averageRGB(Image image, int fromX, int fromY, int toX, int toY) {
   List<int> rgb = [0, 0, 0];
 
-  for (int x = 0; x < image.width; x++) {
-    for (int y = 0; y < image.height; y++) {
-      int? pixel32 = image.getPixel(x, y);
+  int nbPixel = 0;
+
+  for (int x = fromX; x < toX; x++) {
+    for (int y = fromY; y < toY; y++) {
+      int? pixel32 = image.getPixelSafe(x, y);
       rgb[0] += (pixel32 >> 0) & 0xFF;
       rgb[1] += (pixel32 >> 8) & 0xFF;
       rgb[2] += (pixel32 >> 16) & 0xFF;
+      nbPixel++;
     }
   }
 
-  int nbPixel = image.width * image.height;
   rgb[0] = (rgb[0] ~/ nbPixel);
   rgb[1] = (rgb[1] ~/ nbPixel);
   rgb[2] = (rgb[2] ~/ nbPixel);

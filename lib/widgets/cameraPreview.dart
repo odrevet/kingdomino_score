@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:image/image.dart' as Img;
 
 import '../models/picture.dart';
+import '../models/land.dart';
 
 
 class TakePictureScreen extends StatefulWidget {
@@ -58,6 +59,13 @@ class TakePictureScreenState extends State<TakePictureScreen> {
               final xfile = await _controller!.takePicture();
               ImageProcessor.cropSquare(xfile.path, xfile.path);
               final Img.Image? image = Img.decodeImage(File(xfile.path).readAsBytesSync());
+              List<int> RGB = averageRGB(image!, 0, 0, image.width ~/ 5, image.height ~/ 5);
+              LandType? landtype = getLandtypeFromRGB(RGB);
+              print("********************************************************");
+              print(xfile.path);
+              print(" ${image.width}, ${image.height}");
+              print(RGB);
+              print(landtype);
 
               //DEBUG
               Navigator.push(

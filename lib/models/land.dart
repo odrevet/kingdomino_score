@@ -2,6 +2,16 @@ import 'picture.dart' show compareRGB;
 
 enum LandType { none, wheat, grassland, forest, lake, swamp, mine, castle }
 
+Map<LandType, List<int>> landRGB = {
+  LandType.none: [115, 115, 115],
+  LandType.swamp: [115, 115, 115],
+  LandType.lake: [20, 20, 200],
+  LandType.wheat: [250, 210, 20],       //OK
+  LandType.mine: [90, 100, 42],
+  LandType.forest: [200, 20, 20],
+  LandType.grassland: [200, 42, 42],
+};
+
 LandType? getLandtypeFromRGB(List<int> rgb)
 {
   LandType? res;
@@ -12,15 +22,6 @@ LandType? getLandtypeFromRGB(List<int> rgb)
   });
   return res;
 }
-
-Map<LandType, List<int>> landRGB = {
-  LandType.swamp: [115, 115, 115],
-  LandType.lake: [20, 20, 200],
-  LandType.wheat: [250, 210, 20],       //OK
-  LandType.mine: [90, 100, 42],
-  LandType.forest: [200, 20, 20],
-  LandType.grassland: [200, 42, 42],
-};
 
 class Land {
   LandType? landType = LandType.none;

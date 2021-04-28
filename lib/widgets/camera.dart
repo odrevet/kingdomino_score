@@ -70,7 +70,12 @@ class TakePictureScreenState extends State<TakePictureScreen> {
               List<Img.Image> tiles = [];
               for (int x = 0; x < widget.kingdom.size; x++) {
                 for (int y = 0; y < widget.kingdom.size; y++) {
-                  tiles.add(Img.copyCrop(image, 0, 0, tileWidth, tileHeight));
+                  tiles.add(Img.copyCrop(
+                      imageCropped,
+                      x * tileWidth,
+                      y * tileHeight,
+                      (x * tileWidth) + tileWidth,
+                      (y * tileHeight) + tileHeight));
                   List<int> rgb = averageRGB(
                       imageCropped,
                       x * tileWidth,
@@ -89,7 +94,6 @@ class TakePictureScreenState extends State<TakePictureScreen> {
               }
 
               widget.onTap();
-
             },
             child: CameraPreview(_controller!),
           );
@@ -100,4 +104,3 @@ class TakePictureScreenState extends State<TakePictureScreen> {
     );
   }
 }
-

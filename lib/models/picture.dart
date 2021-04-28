@@ -1,26 +1,4 @@
-import 'dart:async';
-import 'dart:io';
-import 'dart:math';
-
-import 'dart:ui';
-
 import 'package:image/image.dart';
-
-class ImageProcessor {
-  static Future cropSquare(String srcFilePath, String destFilePath) async {
-    var bytes = await File(srcFilePath).readAsBytes();
-    Image src = decodeImage(bytes)!;
-
-    final int cropSize = min(src.width, src.height);
-    int offsetX = (src.width - min(src.width, src.height)) ~/ 2;
-    int offsetY = (src.height - min(src.width, src.height)) ~/ 2;
-
-    Image destImage = copyCrop(src, offsetX, offsetY, cropSize, cropSize);
-
-    var jpg = encodeJpg(destImage);
-    await File(destFilePath).writeAsBytes(jpg);
-  }
-}
 
 List<int> averageRGB(Image image, int fromX, int fromY, int toX, int toY) {
   List<int> rgb = [0, 0, 0];

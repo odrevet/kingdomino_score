@@ -14,7 +14,7 @@ import 'kingdom_widget.dart';
 import 'bottom_bar.dart';
 import 'quest_dialog.dart';
 import 'score_details_widget.dart';
-import 'cameraPreview.dart';
+import 'camera.dart';
 
 const String crown = '\u{1F451}';
 const String castle = '\u{1F3F0}';
@@ -57,8 +57,8 @@ class KingdominoScoreWidget extends StatefulWidget {
   final Function setColor;
   final camera;
 
-  KingdominoScoreWidget(
-      this.setColor, this.camera, {
+  KingdominoScoreWidget(this.setColor,
+      this.camera, {
         Key? key,
       }) : super(key: key);
 
@@ -289,17 +289,18 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
           }),
       IconButton(
           icon: Icon(Icons.help),
-          onPressed: () => showAboutDialog(
-              context: context,
-              applicationName: _packageInfo.appName,
-              applicationVersion: _packageInfo.version,
-              applicationLegalese:
-              '''Drevet Olivier built the Kingdomino Score app under the GPL license Version 3. 
+          onPressed: () =>
+              showAboutDialog(
+                  context: context,
+                  applicationName: _packageInfo.appName,
+                  applicationVersion: _packageInfo.version,
+                  applicationLegalese:
+                  '''Drevet Olivier built the Kingdomino Score app under the GPL license Version 3. 
 This SERVICE is provided by Drevet Olivier at no cost and is intended for use as is.
 This page is used to inform visitors regarding the policy with the collection, use, and disclosure of Personal Information if anyone decided to use my Service.
 I will not use or share your information with anyone : Kingdomino Score works offline and does not send any information over a network. ''',
-              applicationIcon: Image.asset(
-                  'android/app/src/main/res/mipmap-mdpi/ic_launcher.png')))
+                  applicationIcon: Image.asset(
+                      'android/app/src/main/res/mipmap-mdpi/ic_launcher.png')))
     ];
 
     if (warnings.isNotEmpty) {
@@ -309,28 +310,29 @@ I will not use or share your information with anyone : Kingdomino Score works of
             children: <Widget>[
               IconButton(
                   icon: Icon(Icons.warning),
-                  onPressed: () => showDialog<void>(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        shape: RoundedRectangleBorder(
-                            borderRadius:
-                            BorderRadius.all(Radius.circular(20.0))),
-                        content: WarningsWidget(warnings: this.warnings),
-                        actions: <Widget>[
-                          TextButton(
-                            child: Icon(
-                              Icons.done,
-                              color: Colors.black87,
-                            ),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                          ),
-                        ],
-                      );
-                    },
-                  )),
+                  onPressed: () =>
+                      showDialog<void>(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            shape: RoundedRectangleBorder(
+                                borderRadius:
+                                BorderRadius.all(Radius.circular(20.0))),
+                            content: WarningsWidget(warnings: this.warnings),
+                            actions: <Widget>[
+                              TextButton(
+                                child: Icon(
+                                  Icons.done,
+                                  color: Colors.black87,
+                                ),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      )),
               Positioned(
                 right: 5,
                 top: 10,
@@ -362,13 +364,14 @@ I will not use or share your information with anyone : Kingdomino Score works of
       if (orientation == Orientation.portrait) {
         return Column(children: <Widget>[
           cameraMode == true
-              ? AspectRatio(
-            aspectRatio: 1,
-            child: TakePictureScreen(
-              // Pass the appropriate camera to the TakePictureScreen widget.
+              ? TakePictureScreen(
+            // Pass the appropriate camera to the TakePictureScreen widget.
               camera: camera,
-            ),
-          )
+              kingdom: kingdom,
+              onTap: () =>
+                  setState(() {
+                    cameraMode = false;
+                  }))
               : KingdomWidget(
               getSelectionMode: this.getSelectionMode,
               getSelectedLandType: this.getSelectedLandType,
@@ -382,33 +385,34 @@ I will not use or share your information with anyone : Kingdomino Score works of
                 child: InkWell(
                     child: Text(score.toString(),
                         style: TextStyle(color: Colors.white)),
-                    onTap: () => showDialog<void>(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          shape: RoundedRectangleBorder(
-                              borderRadius:
-                              BorderRadius.all(Radius.circular(20.0))),
-                          content: ScoreDetailsWidget(
-                              kingdom: this.kingdom,
-                              groupScore: this.groupScore,
-                              quests: this.selectedQuests,
-                              score: this.score,
-                              scoreOfQuest: this.scoreOfQuest),
-                          actions: <Widget>[
-                            TextButton(
-                              child: Icon(
-                                Icons.done,
-                                color: Colors.black87,
-                              ),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          ],
-                        );
-                      },
-                    ))),
+                    onTap: () =>
+                        showDialog<void>(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(20.0))),
+                              content: ScoreDetailsWidget(
+                                  kingdom: this.kingdom,
+                                  groupScore: this.groupScore,
+                                  quests: this.selectedQuests,
+                                  score: this.score,
+                                  scoreOfQuest: this.scoreOfQuest),
+                              actions: <Widget>[
+                                TextButton(
+                                  child: Icon(
+                                    Icons.done,
+                                    color: Colors.black87,
+                                  ),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        ))),
           )
         ]);
       } else {
@@ -457,7 +461,9 @@ I will not use or share your information with anyone : Kingdomino Score works of
               setKingColor: this.setKingColor,
               getKingColor: this.getKingColor,
             ),
-            color: Theme.of(context).primaryColor),
+            color: Theme
+                .of(context)
+                .primaryColor),
         body: body);
   }
 }

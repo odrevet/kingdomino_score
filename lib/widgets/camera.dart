@@ -1,13 +1,24 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:path_provider/path_provider.dart';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:image/image.dart' as Img;
+import 'package:image/image.dart' as img;
 import 'package:kingdomino_score_count/models/kingdom.dart';
 
 import '../models/picture.dart';
 import '../models/land.dart';
+
+void saveFile(img.Image image) async {
+  Directory appDocumentsDirectory = await getApplicationDocumentsDirectory();
+  String appDocumentsPath = appDocumentsDirectory.path;
+  String filePath = '$appDocumentsPath/out.png';
+  File file = File(filePath);
+  print(filePath);
+  file..writeAsBytesSync(img.encodePng(image));
+
+}
 
 class TakePictureScreen extends StatefulWidget {
   final CameraDescription camera;
@@ -33,7 +44,8 @@ class TakePictureScreenState extends State<TakePictureScreen> {
     super.initState();
     _controller = CameraController(
       widget.camera,
-      ResolutionPreset.medium,
+      ResolutionPreset.veryHigh,
+      enableAudio: false,
     );
 
     // Next, initialize the controller. This returns a Future.
@@ -56,20 +68,21 @@ class TakePictureScreenState extends State<TakePictureScreen> {
           return GestureDetector(
             onTap: () async {
               final xFile = await _controller!.takePicture();
-              final Img.Image image =
-                  Img.decodeImage(File(xFile.path).readAsBytesSync())!;
-              final Img.Image imageCropped =
-                  Img.copyCrop(image, 0, 0, image.height, image.height);
+              final img.Image image =
+                  img.decodeImage(File(xFile.path).readAsBytesSync())!;
+              final img.Image orientedImage = img.bakeOrientation(image);
+              final img.Image imageCropped =
+                  img.copyCrop(orientedImage, 0, 0, orientedImage.width, orientedImage.width);
 
               int tileSize = imageCropped.width ~/ widget.kingdom.size;
 
               print(
-                  '${image.width}:${image.height} -> ${imageCropped.width}:${imageCropped.height} $tileSize');
+                  '${orientedImage.width}:${orientedImage.height} -> ${imageCropped.width}:${imageCropped.height} $tileSize');
 
-              List<Img.Image> tiles = [];
+              List<img.Image> tiles = [];
               for (int x = 0; x < widget.kingdom.size; x++) {
                 for (int y = 0; y < widget.kingdom.size; y++) {
-                  Img.Image tile = Img.copyCrop(imageCropped, x * tileSize,
+                  img.Image tile = img.copyCrop(imageCropped, x * tileSize,
                       y * tileSize, tileSize, tileSize);
 
                   tiles.add(tile);
@@ -85,6 +98,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                 }
               }
 
+              saveFile(tiles[1]);  //DEBUG
               widget.onTap();
             },
             child: CameraPreview(_controller!),
@@ -96,3 +110,4 @@ class TakePictureScreenState extends State<TakePictureScreen> {
     );
   }
 }
+

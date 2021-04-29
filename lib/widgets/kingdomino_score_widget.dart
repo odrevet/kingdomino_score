@@ -362,17 +362,15 @@ I will not use or share your information with anyone : Kingdomino Score works of
 
     Widget body = OrientationBuilder(builder: (context, orientation) {
       if (orientation == Orientation.portrait) {
-        return Column(children: <Widget>[
-          cameraMode == true
-              ? TakePictureScreen(
-            // Pass the appropriate camera to the TakePictureScreen widget.
-              camera: camera,
-              kingdom: kingdom,
-              onTap: () =>
-                  setState(() {
-                    cameraMode = false;
-                  }))
-              : KingdomWidget(
+       return cameraMode == true ? TakePictureScreen(
+          // Pass the appropriate camera to the TakePictureScreen widget.
+            camera: camera,
+            kingdom: kingdom,
+            onTap: () =>
+                setState(() {
+                  cameraMode = false;
+                })) :
+        Column(children: <Widget>[KingdomWidget(
               getSelectionMode: this.getSelectionMode,
               getSelectedLandType: this.getSelectedLandType,
               getGameSet: this.getGameSet,

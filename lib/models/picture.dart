@@ -1,17 +1,15 @@
 import 'package:image/image.dart';
 
-List<int> averageRGB(Image image, int fromX, int fromY, int toX, int toY) {
+List<int> averageRGB(Image image) {
   List<int> rgb = [0, 0, 0];
+  int nbPixel = image.width * image.height;
 
-  int nbPixel = 0;
-
-  for (int x = fromX; x < toX; x++) {
-    for (int y = fromY; y < toY; y++) {
+  for (int x = 0; x < image.width; x++) {
+    for (int y = 0; y < image.height; y++) {
       int? pixel32 = image.getPixelSafe(x, y);
       rgb[0] += (pixel32 >> 0) & 0xFF;
       rgb[1] += (pixel32 >> 8) & 0xFF;
       rgb[2] += (pixel32 >> 16) & 0xFF;
-      nbPixel++;
     }
   }
 

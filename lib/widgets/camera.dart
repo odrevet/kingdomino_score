@@ -61,27 +61,19 @@ class TakePictureScreenState extends State<TakePictureScreen> {
               final Img.Image imageCropped =
                   Img.copyCrop(image, 0, 0, image.height, image.height);
 
-              int tileWidth = imageCropped.width ~/ widget.kingdom.size;
-              int tileHeight = imageCropped.height ~/ widget.kingdom.size;
+              int tileSize = imageCropped.width ~/ widget.kingdom.size;
 
               print(
-                  '${image.width}:${image.height} -> ${imageCropped.width}:${imageCropped.height} $tileWidth:$tileHeight');
+                  '${image.width}:${image.height} -> ${imageCropped.width}:${imageCropped.height} $tileSize');
 
               List<Img.Image> tiles = [];
               for (int x = 0; x < widget.kingdom.size; x++) {
                 for (int y = 0; y < widget.kingdom.size; y++) {
-                  tiles.add(Img.copyCrop(
-                      imageCropped,
-                      x * tileWidth,
-                      y * tileHeight,
-                      (x * tileWidth) + tileWidth,
-                      (y * tileHeight) + tileHeight));
-                  List<int> rgb = averageRGB(
-                      imageCropped,
-                      x * tileWidth,
-                      y * tileHeight,
-                      (x * tileWidth) + tileWidth,
-                      (y * tileHeight) + tileHeight);
+                  Img.Image tile = Img.copyCrop(imageCropped, x * tileSize,
+                      y * tileSize, tileSize, tileSize);
+
+                  tiles.add(tile);
+                  List<int> rgb = averageRGB(tile);
                   LandType? landType = getLandtypeFromRGB(rgb);
                   if (landType == null) {
                     widget.kingdom.getLand(x, y).landType = LandType.none;

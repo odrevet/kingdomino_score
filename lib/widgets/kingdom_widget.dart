@@ -121,6 +121,9 @@ class _KingdomWidgetState extends State<KingdomWidget> {
           land!.reset();
           land.courtierType = courtierType;
           break;
+        case SelectionMode.resource:
+          land!.hasResource = !land.hasResource;
+          break;
       }
     });
 

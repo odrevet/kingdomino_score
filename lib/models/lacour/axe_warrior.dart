@@ -5,14 +5,13 @@ class AxeWarrior extends Courtier {
   static final AxeWarrior _singleton = AxeWarrior._internal();
 
   factory AxeWarrior() {
-    Courtier.isWarrior = true;
     return _singleton;
   }
 
   AxeWarrior._internal();
 
   @override
-  int getPoints(Kingdom kingdom) {
-    return 0;
+  int getPoints(Kingdom kingdom, int x, int y) {
+    return 3;
   }
 }

@@ -32,9 +32,7 @@ Map<CourtierType, String> courtierPicture = {
 
 abstract class Courtier
 {
-  static bool? isWarrior;
-  CourtierType? courtierType;
-  int getPoints(Kingdom kingdom);
+  int getPoints(Kingdom kingdom, int x, int y);
 }
 
 

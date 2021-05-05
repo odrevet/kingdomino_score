@@ -119,6 +119,8 @@ class _BottomBarState extends State<BottomBar> {
     if (this.getAog()) kingdomEditorWidgets.add(giantButton());
 
     if (this.getLacour() == true) {
+      kingdomEditorWidgets.add(ResourceButton());
+
       CourtierType.values.forEach((element) {
         kingdomEditorWidgets.add(courtierButton(element));
       });
@@ -156,6 +158,19 @@ class _BottomBarState extends State<BottomBar> {
               color: getColorForLandType(landType),
               child: null,
             )));
+  }
+
+  Widget ResourceButton() {
+    var isSelected = this.getSelectionMode() == SelectionMode.resource;
+
+    return GestureDetector(
+        onTap: () => setSelectionMode(SelectionMode.resource),
+        child: Container(
+            margin: EdgeInsets.all(5.0),
+            height: _buttonSize,
+            width: _buttonSize,
+            decoration: BoxDecoration(border: isSelected ? null : this.outline),
+            child: Text("•")));
   }
 
   Widget courtierButton(CourtierType courtierType) {

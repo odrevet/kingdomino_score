@@ -1,7 +1,19 @@
 import 'dart:collection';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:kingdomino_score_count/models/lacour/farmer.dart';
 import 'package:kingdomino_score_count/models/lacour/lacour.dart';
+import 'package:kingdomino_score_count/models/lacour/lumberjack.dart';
+import 'package:kingdomino_score_count/models/lacour/axe_warrior.dart';
+import 'package:kingdomino_score_count/models/lacour/shepherdess.dart';
+import 'package:kingdomino_score_count/models/lacour/banker.dart';
+import 'package:kingdomino_score_count/models/lacour/fisherman.dart';
+import 'package:kingdomino_score_count/models/lacour/light_archery.dart';
+import 'package:kingdomino_score_count/models/lacour/queen.dart';
+import 'package:kingdomino_score_count/models/lacour/king.dart';
+import 'package:kingdomino_score_count/models/lacour/sword_warrior.dart';
+import 'package:kingdomino_score_count/models/lacour/captain.dart';
+import 'package:kingdomino_score_count/models/lacour/heavy_archery.dart';
 import 'package:package_info/package_info.dart';
 
 import '../models/age_of_giants.dart';
@@ -20,7 +32,7 @@ const String crown = '\u{1F451}';
 const String castle = '\u{1F3F0}';
 final String square = '\u{25A0}';
 
-enum SelectionMode { land, crown, castle, giant, courtier}
+enum SelectionMode { land, crown, castle, giant, courtier, resource }
 
 const Map<LandType, Map<String, dynamic>> gameSet = {
   LandType.castle: {
@@ -74,6 +86,7 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
   var kingdom = Kingdom(5);
   int scoreProperty = 0;
   int scoreOfQuest = 0;
+  int scoreOfLacour = 0;
   int score = 0;
   Color? kingColor;
   bool aog = false; // Age of Giants extension
@@ -210,9 +223,69 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
     });
   }
 
+  int calculateLacourScore() {
+    int scoreOfLacour = 0;
+    for (int y = 0; y < kingdom.size; y++) {
+      for (int x = 0; x < kingdom.size; x++) {
+        CourtierType? courtierType = kingdom.getLand(x, y).courtierType;
+        if (courtierType != null) {
+          switch (courtierType) {
+            case CourtierType.farmer:
+              scoreOfLacour += Farmer().getPoints(kingdom, x, y);
+              break;
+            case CourtierType.banker:
+              scoreOfLacour += Banker().getPoints(kingdom, x, y);
+              break;
+            case CourtierType.lumberjack:
+              scoreOfLacour += Lumberjack().getPoints(kingdom, x, y);
+              break;
+            case CourtierType.light_archery:
+              scoreOfLacour += LightArchery().getPoints(kingdom, x, y);
+              break;
+            case CourtierType.fisherman:
+              scoreOfLacour += Fisherman().getPoints(kingdom, x, y);
+              break;
+            case CourtierType.heavy_archery:
+              scoreOfLacour += HeavyArchery().getPoints(kingdom, x, y);
+              break;
+            case CourtierType.shepherdess:
+              scoreOfLacour += Shepherdess().getPoints(kingdom, x, y);
+              break;
+            case CourtierType.captain:
+              scoreOfLacour += Captain().getPoints(kingdom, x, y);
+              break;
+            case CourtierType.axe_warrior:
+              scoreOfLacour += AxeWarrior().getPoints(kingdom, x, y);
+              break;
+            case CourtierType.sword_warrior:
+              scoreOfLacour += SwordWarrior().getPoints(kingdom, x, y);
+              break;
+            case CourtierType.king:
+              scoreOfLacour += King().getPoints(kingdom, x, y);
+              break;
+            case CourtierType.queen:
+              scoreOfLacour += Queen().getPoints(kingdom, x, y);
+              break;
+          }
+        }
+      }
+    }
+
+    return scoreOfLacour;
+  }
+
+  void updateScoreLacour() {
+    setState(() {
+      scoreOfLacour = calculateLacourScore();
+    });
+  }
+
   void updateScores() {
     updateScoreProperty();
     updateScoreQuest();
+    if (this.lacour) {
+      updateScoreLacour();
+    }
     updateScore();
   }
 
@@ -226,12 +299,15 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
   void updateScore() {
     setState(() {
       score = scoreProperty + scoreOfQuest;
+      if (this.lacour) {
+        score += scoreOfLacour;
+      }
     });
   }
 
   void resetScores() {
     setState(() {
-      score = scoreProperty = scoreOfQuest = 0;
+      score = scoreProperty = scoreOfQuest = scoreOfLacour = 0;
     });
   }
 

@@ -1,18 +1,56 @@
 import '../kingdom.dart';
+import '../land.dart';
 import 'lacour.dart';
 
 class Banker extends Courtier {
   static final Banker _singleton = Banker._internal();
 
   factory Banker() {
-    Courtier.isWarrior = false;
     return _singleton;
   }
 
   Banker._internal();
 
+  bool _checkLand(Land land) {
+    return land.hasResource;
+  }
+
   @override
-  int getPoints(Kingdom kingdom) {
-    return 0;
+  int getPoints(Kingdom kingdom, int x, int y) {
+    int points = 2;
+
+    if (_checkLand(kingdom.getLand(x - 1, y - 1))) {
+      points += 2;
+    }
+
+    if (_checkLand(kingdom.getLand(x - 1, y))) {
+      points += 2;
+    }
+
+    if (_checkLand(kingdom.getLand(x - 1, y + 1))) {
+      points += 2;
+    }
+
+    if (_checkLand(kingdom.getLand(x, y - 1))) {
+      points += 2;
+    }
+
+    if (_checkLand(kingdom.getLand(x, y + 1))) {
+      points += 2;
+    }
+
+    if (_checkLand(kingdom.getLand(x + 1, y - 1))) {
+      points += 2;
+    }
+
+    if (_checkLand(kingdom.getLand(x + 1, y))) {
+      points += 2;
+    }
+
+    if (_checkLand(kingdom.getLand(x + 1, y + 1))) {
+      points += 2;
+    }
+
+    return points;
   }
 }

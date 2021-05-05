@@ -1,18 +1,55 @@
 import '../kingdom.dart';
+import '../land.dart';
 import 'lacour.dart';
-
 class King extends Courtier {
   static final King _singleton = King._internal();
 
   factory King() {
-    Courtier.isWarrior = false;
     return _singleton;
   }
 
   King._internal();
 
+  bool _checkLand(Land land) {
+    return land.crowns > 0;
+  }
+
   @override
-  int getPoints(Kingdom kingdom) {
-    return 0;
+  int getPoints(Kingdom kingdom, int x, int y) {
+    int points = 3;
+
+    if (_checkLand(kingdom.getLand(x - 1, y - 1))) {
+      points += 3;
+    }
+
+    if (_checkLand(kingdom.getLand(x - 1, y))) {
+      points += 3;
+    }
+
+    if (_checkLand(kingdom.getLand(x - 1, y + 1))) {
+      points += 3;
+    }
+
+    if (_checkLand(kingdom.getLand(x, y - 1))) {
+      points += 3;
+    }
+
+    if (_checkLand(kingdom.getLand(x, y + 1))) {
+      points += 3;
+    }
+
+    if (_checkLand(kingdom.getLand(x + 1, y - 1))) {
+      points += 3;
+    }
+
+    if (_checkLand(kingdom.getLand(x + 1, y))) {
+      points += 3;
+    }
+
+    if (_checkLand(kingdom.getLand(x + 1, y + 1))) {
+      points += 3;
+    }
+
+    return points;
   }
 }

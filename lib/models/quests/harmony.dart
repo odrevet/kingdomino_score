@@ -18,7 +18,7 @@ class Harmony extends Quest {
             .getLands()
             .expand((i) => i)
             .toList()
-            .where((land) => land.landType == LandType.none)
+            .where((land) => land.landType == null)
             .isEmpty
         ? extraPoints
         : 0;

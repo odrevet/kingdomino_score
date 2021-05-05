@@ -84,7 +84,7 @@ class _KingdomWidgetState extends State<KingdomWidget> {
           break;
         case SelectionMode.crown:
           if (land!.landType == LandType.castle ||
-              land.landType == LandType.none) break;
+              land.landType == null) break;
           land.crowns++;
           if (land.crowns > getGameSet()[land.landType]['crowns']['max']) {
             land.reset();
@@ -95,7 +95,7 @@ class _KingdomWidgetState extends State<KingdomWidget> {
           for (var cx = 0; cx < kingdom.size; cx++) {
             for (var cy = 0; cy < kingdom.size; cy++) {
               if (kingdom.getLand(cx, cy).landType == LandType.castle) {
-                kingdom.getLand(cx, cy).landType = LandType.none;
+                kingdom.getLand(cx, cy).landType = null;
                 kingdom.getLand(cx, cy).crowns = 0;
               }
             }
@@ -163,7 +163,7 @@ class _KingdomWidgetState extends State<KingdomWidget> {
     return Container(
         child: child,
         decoration: BoxDecoration(
-            border: land.landType == LandType.none
+            border: land.landType == null
                 ? Border.all(
                     width: 0.5,
                     color: Colors.blueGrey.shade900,
@@ -213,7 +213,7 @@ class _KingdomWidgetState extends State<KingdomWidget> {
 Color getColorForLandType(LandType? type) {
   Color color;
   switch (type) {
-    case LandType.none:
+    case null:
       color = Colors.blueGrey.shade400;
       break;
     case LandType.wheat:

@@ -18,7 +18,7 @@ class Kingdom {
 
   Kingdom(this.size) {
     for (var i = 0; i < size; i++) {
-      this._lands.add(List<Land>.generate(size, (_) => Land(LandType.none)));
+      this._lands.add(List<Land>.generate(size, (_) => Land()));
     }
   }
 
@@ -26,13 +26,13 @@ class Kingdom {
     this.size = size;
     this._lands = [];
     for (var i = 0; i < size; i++) {
-      this._lands.add(List<Land>.generate(size, (_) => Land(LandType.none)));
+      this._lands.add(List<Land>.generate(size, (_) => Land()));
     }
   }
 
   void clear() {
     _lands.expand((i) => i).toList().forEach((land) {
-      land.landType = LandType.none;
+      land.landType = null;
       land.crowns = 0;
       land.giants = 0;
     });
@@ -74,7 +74,7 @@ class Kingdom {
 
     Land? land = getLand(x, y);
     if (land == null || land.landType == LandType.castle ||
-        land.landType == LandType.none ||
+        land.landType == null ||
         land.isMarked == true) return null;
 
     if (property == null) {

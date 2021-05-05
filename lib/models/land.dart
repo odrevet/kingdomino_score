@@ -1,9 +1,9 @@
 import 'lacour/lacour.dart';
 
-enum LandType { none, wheat, grassland, forest, lake, swamp, mine, castle }
+enum LandType { wheat, grassland, forest, lake, swamp, mine, castle }
 
 class Land {
-  LandType? landType = LandType.none;
+  LandType? landType;
   int crowns = 0;
   bool isMarked = false; //to create properties
 
@@ -26,7 +26,7 @@ class Land {
     return crowns - giants;
   }
 
-  Land(this.landType);
+  Land([this.landType]);
 }
 
 class Property {

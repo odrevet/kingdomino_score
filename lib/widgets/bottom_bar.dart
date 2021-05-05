@@ -111,7 +111,7 @@ class _BottomBarState extends State<BottomBar> {
       landButton(LandType.lake),
       landButton(LandType.swamp),
       landButton(LandType.mine),
-      landButton(LandType.none),
+      landButton(null),
       castleButton(),
       crownButton(),
     ];
@@ -138,7 +138,7 @@ class _BottomBarState extends State<BottomBar> {
     bottom: BorderSide(width: 3.5, color: Colors.red.shade900),
   );
 
-  Widget landButton(LandType landType) {
+  Widget landButton(LandType? landType) {
     var isSelected = this.getSelectionMode() == SelectionMode.land &&
         this.getSelectedLandType() == landType;
 
@@ -151,7 +151,7 @@ class _BottomBarState extends State<BottomBar> {
             decoration: BoxDecoration(
                 border: isSelected
                     ? _selectedBorder
-                    : landType == LandType.none
+                    : landType == null
                     ? null
                     : this.outline),
             child: Container(
@@ -313,7 +313,7 @@ class _BottomBarState extends State<BottomBar> {
   }
 
   //CALLBACKS
-  void _onSelectLandType(LandType selectedType) {
+  void _onSelectLandType(LandType? selectedType) {
     if (selectedType == LandType.castle)
       _onSelectCastle();
     else

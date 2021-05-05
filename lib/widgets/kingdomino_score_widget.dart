@@ -79,7 +79,7 @@ class KingdominoScoreWidget extends StatefulWidget {
 }
 
 class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
-  LandType selectedLandType = LandType.none;
+  LandType? selectedLandType;
   CourtierType? selectedCourtierType;
   SelectionMode selectionMode = SelectionMode.land;
   var groupScore = AutoSizeGroup();
@@ -115,9 +115,9 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
 
   bool getLacour() => lacour;
 
-  LandType getSelectedLandType() => selectedLandType;
+  LandType? getSelectedLandType() => selectedLandType;
 
-  setSelectedLandType(LandType landtype) {
+  setSelectedLandType(LandType? landtype) {
     setState(() {
       this.selectedLandType = landtype;
     });
@@ -176,8 +176,6 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
   void checkKingdom() {
     //check if more tile in the kingdom than in the gameSet
     for (var landType in LandType.values) {
-      if (landType == LandType.none) continue;
-
       var count = kingdom
           .getLands()
           .expand((i) => i)

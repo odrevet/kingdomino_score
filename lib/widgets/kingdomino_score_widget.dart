@@ -1,11 +1,13 @@
 import 'dart:collection';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:kingdomino_score_count/models/lacour/lacour.dart';
 import 'package:package_info/package_info.dart';
 
 import '../models/age_of_giants.dart';
 import '../models/kingdom.dart';
-import '../models/quest.dart';
+import '../models/land.dart' show LandType;
+import '../models/quests/quest.dart';
 import '../models/warning.dart';
 import '../scoreQuest.dart';
 import 'warning_widget.dart';
@@ -18,7 +20,7 @@ const String crown = '\u{1F451}';
 const String castle = '\u{1F3F0}';
 final String square = '\u{25A0}';
 
-enum SelectionMode { land, crown, castle, giant }
+enum SelectionMode { land, crown, castle, giant, courtier}
 
 const Map<LandType, Map<String, dynamic>> gameSet = {
   LandType.castle: {
@@ -66,6 +68,7 @@ class KingdominoScoreWidget extends StatefulWidget {
 
 class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
   LandType selectedLandType = LandType.none;
+  CourtierType? selectedCourtierType;
   SelectionMode selectionMode = SelectionMode.land;
   var groupScore = AutoSizeGroup();
   var kingdom = Kingdom(5);
@@ -74,6 +77,7 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
   int score = 0;
   Color? kingColor;
   bool aog = false; // Age of Giants extension
+  bool lacour = false;
   HashSet<QuestType> selectedQuests = HashSet();
   List<Warning> warnings = [];
   late PackageInfo _packageInfo;
@@ -96,11 +100,21 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
 
   bool getAog() => aog;
 
+  bool getLacour() => lacour;
+
   LandType getSelectedLandType() => selectedLandType;
 
   setSelectedLandType(LandType landtype) {
     setState(() {
       this.selectedLandType = landtype;
+    });
+  }
+
+  CourtierType? getSelectedCourtierType() => selectedCourtierType;
+
+  setSelectedCourtierType(CourtierType courtiertype) {
+    setState(() {
+      this.selectedCourtierType = courtiertype;
     });
   }
 
@@ -252,6 +266,34 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
                       fontSize: 25.0,
                       fontFamily: 'Augusta',
                       color: aog ? Colors.red : Colors.white)))),
+      MaterialButton(
+          minWidth: 30,
+          onPressed: () {
+            setState(() {
+              lacour = !lacour;
+
+              selectedQuests.clear();
+
+              kingdom.getLands().expand((i) => i).toList().forEach((land) {
+                land.giants = 0;
+              });
+
+              clearWarnings();
+              checkKingdom();
+
+              updateScores();
+
+              if (selectionMode == SelectionMode.giant) {
+                selectionMode = SelectionMode.crown;
+              }
+            });
+          },
+          child: Container(
+              child: Text('LC',
+                  style: TextStyle(
+                      fontSize: 25.0,
+                      fontFamily: 'Augusta',
+                      color: lacour ? Colors.red : Colors.white)))),
       QuestDialogWidget(this.getSelectedQuests, this.updateScores, this.getAog),
       IconButton(
           icon: Icon(kingdom.size == 5 ? Icons.filter_5 : Icons.filter_7),
@@ -354,6 +396,7 @@ I will not use or share your information with anyone : Kingdomino Score works of
           KingdomWidget(
               getSelectionMode: this.getSelectionMode,
               getSelectedLandType: this.getSelectedLandType,
+              getSelectedCourtierType: this.getSelectedCourtierType,
               getGameSet: this.getGameSet,
               calculateScore: this.calculateScore,
               kingdom: this.kingdom,
@@ -430,7 +473,10 @@ I will not use or share your information with anyone : Kingdomino Score works of
               setSelectionMode: setSelectionMode,
               getSelectedLandType: getSelectedLandType,
               setSelectedLandType: setSelectedLandType,
+              getSelectedCourtierType: getSelectedCourtierType,
+              setSelectedCourtierType: setSelectedCourtierType,
               getAog: getAog,
+              getLacour: getLacour,
               kingdom: kingdom,
               scoreOfQuest: this.scoreOfQuest,
               quests: this.selectedQuests,

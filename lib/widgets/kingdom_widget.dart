@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
 import '../models/age_of_giants.dart';
-import '../models/kingdom.dart';
+import '../models/lacour/lacour.dart';
+import '../models/land.dart';
 import 'kingdomino_score_widget.dart';
 
-Set<Color> KingColors = Set.from([
+Set<Color> kingColors = Set.from([
   Colors.yellow.shade800,
   Colors.blue.shade800,
   Colors.green.shade800,
@@ -29,6 +30,7 @@ class KingdomWidget extends StatefulWidget {
   KingdomWidget(
       {this.getSelectionMode,
       this.getSelectedLandType,
+      this.getSelectedCourtierType,
       this.getGameSet,
       this.calculateScore,
       this.kingdom,
@@ -36,6 +38,7 @@ class KingdomWidget extends StatefulWidget {
 
   final getSelectionMode;
   final getSelectedLandType;
+  final getSelectedCourtierType;
   final getGameSet;
   final calculateScore;
   final kingdom;
@@ -45,6 +48,7 @@ class KingdomWidget extends StatefulWidget {
   _KingdomWidgetState createState() => _KingdomWidgetState(
       getSelectionMode: this.getSelectionMode,
       getSelectedLandType: this.getSelectedLandType,
+      getSelectedCourtierType: this.getSelectedCourtierType,
       getGameSet: this.getGameSet,
       calculateScore: this.calculateScore,
       kingdom: this.kingdom,
@@ -54,6 +58,7 @@ class KingdomWidget extends StatefulWidget {
 class _KingdomWidgetState extends State<KingdomWidget> {
   final getSelectionMode;
   final getSelectedLandType;
+  final getSelectedCourtierType;
   final getGameSet;
   final calculateScore;
   final kingdom;
@@ -62,6 +67,7 @@ class _KingdomWidgetState extends State<KingdomWidget> {
   _KingdomWidgetState(
       {this.getSelectionMode,
       this.getSelectedLandType,
+      this.getSelectedCourtierType,
       this.getGameSet,
       this.calculateScore,
       this.kingdom,
@@ -69,6 +75,7 @@ class _KingdomWidgetState extends State<KingdomWidget> {
 
   void _onLandTap(int x, int y) {
     Land? land = kingdom.getLand(x, y);
+
     setState(() {
       switch (getSelectionMode()) {
         case SelectionMode.land:
@@ -84,7 +91,7 @@ class _KingdomWidgetState extends State<KingdomWidget> {
           }
           break;
         case SelectionMode.castle:
-          //remove previous castle if any
+          //remove other castle, if any
           for (var cx = 0; cx < kingdom.size; cx++) {
             for (var cy = 0; cy < kingdom.size; cy++) {
               if (kingdom.getLand(cx, cy).landType == LandType.castle) {
@@ -100,6 +107,20 @@ class _KingdomWidgetState extends State<KingdomWidget> {
         case SelectionMode.giant:
           land!.giants = (land.giants + 1) % (land.crowns + 1);
           break;
+        case SelectionMode.courtier:
+          CourtierType courtierType = getSelectedCourtierType();
+          //remove same courtier type, if any
+          for (var cx = 0; cx < kingdom.size; cx++) {
+            for (var cy = 0; cy < kingdom.size; cy++) {
+              if (kingdom.getLand(cx, cy).courtierType == courtierType) {
+                kingdom.getLand(cx, cy).courtierType = null;
+              }
+            }
+          }
+
+          land!.reset();
+          land.courtierType = courtierType;
+          break;
       }
     });
 
@@ -110,11 +131,22 @@ class _KingdomWidgetState extends State<KingdomWidget> {
     Land land = kingdom.getLand(x, y);
 
     Widget child;
-    if (land.landType == LandType.castle)
+    if (land.landType == LandType.castle) {
       child = CastleWidget(getKingColor());
-    else {
-      String text = crown * land.crowns;
-      text += giant * land.giants;
+    } else if (land.courtierType != null) {
+      child = Image(
+          height: 50,
+          width: 50,
+          image: AssetImage(courtierPicture[land.courtierType]!));
+    } else {
+      String text = '';
+      if (land.crowns > 0) {
+        text = crown * land.crowns;
+        text += giant * land.giants;
+      } else if (land.hasResource) {
+        text = '•';
+      }
+
       child = Container(
         color: getColorForLandType(land.landType),
         child: LayoutBuilder(
@@ -197,7 +229,7 @@ Color getColorForLandType(LandType? type) {
       color = Colors.brown.shade800;
       break;
     case LandType.swamp:
-      color = Colors.grey.shade400; 
+      color = Colors.grey.shade400;
       break;
     case LandType.castle:
       color = Colors.white;

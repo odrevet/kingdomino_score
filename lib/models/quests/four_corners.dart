@@ -1,5 +1,6 @@
 import '../kingdom.dart';
-import '../quest.dart';
+import '../land.dart' show LandType;
+import 'quest.dart';
 
 class FourCorners extends Quest {
   static final FourCorners _singleton = FourCorners._internal();

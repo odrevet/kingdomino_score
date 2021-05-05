@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../scoreQuest.dart';
 import '../models/age_of_giants.dart';
 import '../models/kingdom.dart';
+import '../models/land.dart';
 import 'kingdom_widget.dart';
 import 'kingdomino_score_widget.dart';
 

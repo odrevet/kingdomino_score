@@ -1,5 +1,6 @@
 import '../kingdom.dart';
-import '../quest.dart';
+import '../land.dart' show LandType;
+import 'quest.dart';
 
 class MiddleKingdom extends Quest {
   static final MiddleKingdom _singleton = MiddleKingdom._internal();

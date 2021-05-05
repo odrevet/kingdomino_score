@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import '../kingdom.dart';
-import '../quest.dart';
+import 'quest.dart';
 
 ///`2 different alignments cannot share more than one square`
 ///see https://boardgamegeek.com/thread/2040636/tic-tac-toe-bonus-challenge-tile-clarification

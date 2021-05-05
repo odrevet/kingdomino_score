@@ -16,38 +16,38 @@ class King extends Courtier {
 
   @override
   int getPoints(Kingdom kingdom, int x, int y) {
-    int points = 3;
+    int points = 0;
 
-    if (_checkLand(kingdom.getLand(x - 1, y - 1))) {
-      points += 3;
+    if (kingdom.isInBound(x - 1, y - 1) && _checkLand(kingdom.getLand(x - 1, y - 1)!)) {
+      points += 1;
     }
 
-    if (_checkLand(kingdom.getLand(x - 1, y))) {
-      points += 3;
+    if (kingdom.isInBound(x - 1, y) && _checkLand(kingdom.getLand(x - 1, y)!)) {
+      points += 1;
     }
 
-    if (_checkLand(kingdom.getLand(x - 1, y + 1))) {
-      points += 3;
+    if (kingdom.isInBound(x - 1, y + 1) && _checkLand(kingdom.getLand(x - 1, y + 1)!)) {
+      points += 1;
     }
 
-    if (_checkLand(kingdom.getLand(x, y - 1))) {
-      points += 3;
+    if (kingdom.isInBound(x, y - 1) && _checkLand(kingdom.getLand(x, y - 1)!)) {
+      points += 1;
     }
 
-    if (_checkLand(kingdom.getLand(x, y + 1))) {
-      points += 3;
+    if (kingdom.isInBound(x, y + 1) && _checkLand(kingdom.getLand(x, y + 1)!)) {
+      points += 1;
     }
 
-    if (_checkLand(kingdom.getLand(x + 1, y - 1))) {
-      points += 3;
+    if (kingdom.isInBound(x + 1, y - 1) && _checkLand(kingdom.getLand(x + 1, y - 1)!)) {
+      points += 1;
     }
 
-    if (_checkLand(kingdom.getLand(x + 1, y))) {
-      points += 3;
+    if (kingdom.isInBound(x + 1, y) && _checkLand(kingdom.getLand(x + 1, y)!)) {
+      points += 1;
     }
 
-    if (_checkLand(kingdom.getLand(x + 1, y + 1))) {
-      points += 3;
+    if (kingdom.isInBound(x + 1, y + 1) && _checkLand(kingdom.getLand(x + 1, y + 1)!)) {
+      points += 1;
     }
 
     return points;

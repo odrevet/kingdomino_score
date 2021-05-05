@@ -227,7 +227,7 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
     int scoreOfLacour = 0;
     for (int y = 0; y < kingdom.size; y++) {
       for (int x = 0; x < kingdom.size; x++) {
-        CourtierType? courtierType = kingdom.getLand(x, y).courtierType;
+        CourtierType? courtierType = kingdom.getLand(x, y)?.courtierType;
         if (courtierType != null) {
           switch (courtierType) {
             case CourtierType.farmer:

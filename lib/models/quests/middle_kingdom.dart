@@ -22,7 +22,7 @@ class MiddleKingdom extends Quest {
       x = y = 3;
     }
 
-    if (kingdom.getLand(x, y).landType == LandType.castle)
+    if (kingdom.getLand(x, y)?.landType == LandType.castle)
       return extraPoints;
     else
       return 0;

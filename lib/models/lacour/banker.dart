@@ -19,35 +19,35 @@ class Banker extends Courtier {
   int getPoints(Kingdom kingdom, int x, int y) {
     int points = 2;
 
-    if (_checkLand(kingdom.getLand(x - 1, y - 1))) {
+    if (kingdom.isInBound(x - 1, y - 1) && _checkLand(kingdom.getLand(x - 1, y - 1)!)) {
       points += 2;
     }
 
-    if (_checkLand(kingdom.getLand(x - 1, y))) {
+    if (kingdom.isInBound(x - 1, y) && _checkLand(kingdom.getLand(x - 1, y)!)) {
       points += 2;
     }
 
-    if (_checkLand(kingdom.getLand(x - 1, y + 1))) {
+    if (kingdom.isInBound(x - 1, y + 1) && _checkLand(kingdom.getLand(x - 1, y + 1)!)) {
       points += 2;
     }
 
-    if (_checkLand(kingdom.getLand(x, y - 1))) {
+    if (kingdom.isInBound(x, y - 1) && _checkLand(kingdom.getLand(x, y - 1)!)) {
       points += 2;
     }
 
-    if (_checkLand(kingdom.getLand(x, y + 1))) {
+    if (kingdom.isInBound(x, y + 1) && _checkLand(kingdom.getLand(x, y + 1)!)) {
       points += 2;
     }
 
-    if (_checkLand(kingdom.getLand(x + 1, y - 1))) {
+    if (kingdom.isInBound(x + 1, y - 1) && _checkLand(kingdom.getLand(x + 1, y - 1)!)) {
       points += 2;
     }
 
-    if (_checkLand(kingdom.getLand(x + 1, y))) {
+    if (kingdom.isInBound(x + 1, y) && _checkLand(kingdom.getLand(x + 1, y)!)) {
       points += 2;
     }
 
-    if (_checkLand(kingdom.getLand(x + 1, y + 1))) {
+    if (kingdom.isInBound(x + 1, y + 1) && _checkLand(kingdom.getLand(x + 1, y + 1)!)) {
       points += 2;
     }
 

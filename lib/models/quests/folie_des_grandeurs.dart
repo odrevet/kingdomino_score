@@ -49,7 +49,7 @@ class FolieDesGrandeurs extends Quest {
 
   ///check if land at coord is in bound and has at least a crown
   bool _checkLandBoundAndCrown(int y, int x, Kingdom kingdom) {
-    return kingdom.isInBound(x, y) && kingdom.getLand(y, x).getCrowns() > 0;
+    return kingdom.isInBound(x, y) && kingdom.getLand(y, x) != null && kingdom.getLand(y, x)!.getCrowns() > 0;
   }
 
   // for every land listed has at least a crown

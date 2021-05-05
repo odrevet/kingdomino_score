@@ -21,7 +21,7 @@ class LocalBusiness extends Quest {
 
     for (var x = 0; x < kingdom.size; x++) {
       for (var y = 0; y < kingdom.size; y++) {
-        if (kingdom.getLand(x, y).landType == LandType.castle) {
+        if (kingdom.getLand(x, y)?.landType == LandType.castle) {
           castleX = x;
           castleY = y;
           break;
@@ -34,42 +34,42 @@ class LocalBusiness extends Quest {
 
     x = castleX - 1;
     y = castleY - 1;
-    if (kingdom.isInBound(x, y) && kingdom.getLand(x, y).landType == landType)
+    if (kingdom.isInBound(x, y) && kingdom.getLand(x, y)?.landType == landType)
       count++;
 
     x = castleX;
     y = castleY - 1;
-    if (kingdom.isInBound(x, y) && kingdom.getLand(x, y).landType == landType)
+    if (kingdom.isInBound(x, y) && kingdom.getLand(x, y)?.landType == landType)
       count++;
 
     x = castleX + 1;
     y = castleY - 1;
-    if (kingdom.isInBound(x, y) && kingdom.getLand(x, y).landType == landType)
+    if (kingdom.isInBound(x, y) && kingdom.getLand(x, y)?.landType == landType)
       count++;
 
     x = castleX - 1;
     y = castleY;
-    if (kingdom.isInBound(x, y) && kingdom.getLand(x, y).landType == landType)
+    if (kingdom.isInBound(x, y) && kingdom.getLand(x, y)?.landType == landType)
       count++;
 
     x = castleX + 1;
     y = castleY;
-    if (kingdom.isInBound(x, y) && kingdom.getLand(x, y).landType == landType)
+    if (kingdom.isInBound(x, y) && kingdom.getLand(x, y)?.landType == landType)
       count++;
 
     x = castleX - 1;
     y = castleY + 1;
-    if (kingdom.isInBound(x, y) && kingdom.getLand(x, y).landType == landType)
+    if (kingdom.isInBound(x, y) && kingdom.getLand(x, y)?.landType == landType)
       count++;
 
     x = castleX;
     y = castleY + 1;
-    if (kingdom.isInBound(x, y) && kingdom.getLand(x, y).landType == landType)
+    if (kingdom.isInBound(x, y) && kingdom.getLand(x, y)?.landType == landType)
       count++;
 
     x = castleX + 1;
     y = castleY + 1;
-    if (kingdom.isInBound(x, y) && kingdom.getLand(x, y).landType == landType)
+    if (kingdom.isInBound(x, y) && kingdom.getLand(x, y)?.landType == landType)
       count++;
 
     return extraPoints * count;

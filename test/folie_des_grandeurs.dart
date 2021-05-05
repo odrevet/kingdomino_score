@@ -15,7 +15,7 @@ import 'package:kingdomino_score_count/models/quests/folie_des_grandeurs.dart';
 _setCrowns(Kingdom kingdom, List<List<int>> crowns){
   for (var x = 0; x < kingdom.size; x++) {
     for (var y = 0; y < kingdom.size; y++) {
-      kingdom.getLand(y, x).crowns = crowns[y][x];
+      kingdom.getLand(y, x)?.crowns = crowns[y][x];
     }
   }
 }

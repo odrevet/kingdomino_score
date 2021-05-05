@@ -11,7 +11,9 @@ class Captain extends Courtier {
 
   Captain._internal();
 
-  bool _checkLand(Land land) {
+  bool _checkLand(Land? land) {
+    if(land == null)return false;
+
     return [
       CourtierType.axe_warrior,
       CourtierType.heavy_archery,
@@ -24,35 +26,35 @@ class Captain extends Courtier {
   int getPoints(Kingdom kingdom, int x, int y) {
     int points = 1;
 
-    if (_checkLand(kingdom.getLand(x - 1, y - 1))) {
+    if (kingdom.isInBound(x, y) && _checkLand(kingdom.getLand(x - 1, y - 1))) {
       points += 3;
     }
 
-    if (_checkLand(kingdom.getLand(x - 1, y))) {
+    if (kingdom.isInBound(x, y) && _checkLand(kingdom.getLand(x - 1, y))) {
       points += 3;
     }
 
-    if (_checkLand(kingdom.getLand(x - 1, y + 1))) {
+    if (kingdom.isInBound(x, y) && _checkLand(kingdom.getLand(x - 1, y + 1))) {
       points += 3;
     }
 
-    if (_checkLand(kingdom.getLand(x, y - 1))) {
+    if (kingdom.isInBound(x, y) && _checkLand(kingdom.getLand(x, y - 1))) {
       points += 3;
     }
 
-    if (_checkLand(kingdom.getLand(x, y + 1))) {
+    if (kingdom.isInBound(x, y) && _checkLand(kingdom.getLand(x, y + 1))) {
       points += 3;
     }
 
-    if (_checkLand(kingdom.getLand(x + 1, y - 1))) {
+    if (kingdom.isInBound(x, y) && _checkLand(kingdom.getLand(x + 1, y - 1))) {
       points += 3;
     }
 
-    if (_checkLand(kingdom.getLand(x + 1, y))) {
+    if (kingdom.isInBound(x, y) && _checkLand(kingdom.getLand(x + 1, y))) {
       points += 3;
     }
 
-    if (_checkLand(kingdom.getLand(x + 1, y + 1))) {
+    if (kingdom.isInBound(x, y) && _checkLand(kingdom.getLand(x + 1, y + 1))) {
       points += 3;
     }
 

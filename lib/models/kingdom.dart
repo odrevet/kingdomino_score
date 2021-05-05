@@ -8,7 +8,11 @@ class Kingdom {
     return _lands;
   }
 
-  Land getLand(int y, int x) {
+  Land? getLand(int y, int x) {
+    if(y < 0 || x < 0 || x > this.size || y > this.size){
+      return null;
+    }
+
     return _lands[x][y];
   }
 
@@ -55,8 +59,8 @@ class Kingdom {
   ///add land at x y to the property if it's landType is the same as land
   void _addLandToProperty(int x, int y, Land land, Property property) {
     if (isInBound(x, y)) {
-      Land landToAdd = getLand(x, y);
-      if (landToAdd.landType == land.landType && landToAdd.isMarked == false) {
+      Land? landToAdd = getLand(x, y);
+      if (landToAdd != null && landToAdd.landType == land.landType && landToAdd.isMarked == false) {
         property.landCount++;
         property.crownCount += landToAdd.getCrowns();
         property.giantCount += landToAdd.giants;
@@ -68,8 +72,8 @@ class Kingdom {
   Property? _getAdjacentLand(int x, int y, Property? property) {
     if (!isInBound(x, y)) return null;
 
-    var land = getLand(x, y);
-    if (land.landType == LandType.castle ||
+    Land? land = getLand(x, y);
+    if (land == null || land.landType == LandType.castle ||
         land.landType == LandType.none ||
         land.isMarked == true) return null;
 

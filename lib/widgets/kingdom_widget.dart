@@ -83,8 +83,7 @@ class _KingdomWidgetState extends State<KingdomWidget> {
           land.reset();
           break;
         case SelectionMode.crown:
-          if (land!.landType == LandType.castle ||
-              land.landType == null) break;
+          if (land!.landType == LandType.castle || land.landType == null) break;
           land.crowns++;
           if (land.crowns > getGameSet()[land.landType]['crowns']['max']) {
             land.reset();
@@ -108,21 +107,37 @@ class _KingdomWidgetState extends State<KingdomWidget> {
           land!.giants = (land.giants + 1) % (land.crowns + 1);
           break;
         case SelectionMode.courtier:
-          CourtierType courtierType = getSelectedCourtierType();
-          //remove same courtier type, if any
-          for (var cx = 0; cx < kingdom.size; cx++) {
-            for (var cy = 0; cy < kingdom.size; cy++) {
-              if (kingdom.getLand(cx, cy).courtierType == courtierType) {
-                kingdom.getLand(cx, cy).courtierType = null;
+          if ([
+            LandType.grassland,
+            LandType.lake,
+            LandType.wheat,
+            LandType.forest,
+            LandType.mine,
+            LandType.swamp
+          ].contains(land!.landType)) {
+            CourtierType courtierType = getSelectedCourtierType();
+            //remove same courtier type, if any
+            for (var cx = 0; cx < kingdom.size; cx++) {
+              for (var cy = 0; cy < kingdom.size; cy++) {
+                if (kingdom.getLand(cx, cy).courtierType == courtierType) {
+                  kingdom.getLand(cx, cy).courtierType = null;
+                }
               }
             }
-          }
 
-          land!.reset();
-          land.courtierType = courtierType;
+            land.reset();
+            land.courtierType = courtierType;
+          }
           break;
         case SelectionMode.resource:
-          land!.hasResource = !land.hasResource;
+          if ([
+            LandType.grassland,
+            LandType.lake,
+            LandType.wheat,
+            LandType.forest
+          ].contains(land!.landType)) {
+            land.hasResource = !land.hasResource;
+          }
           break;
       }
     });
@@ -147,7 +162,7 @@ class _KingdomWidgetState extends State<KingdomWidget> {
         text = crown * land.crowns;
         text += giant * land.giants;
       } else if (land.hasResource) {
-        text = '•';
+        text = '⬤';
       }
 
       child = Container(

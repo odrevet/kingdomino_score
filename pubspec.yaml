@@ -24,6 +24,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/
+    - assets/lacour/
     - android/app/src/main/res/mipmap-mdpi/ic_launcher.png
   fonts:
     - family: Augusta

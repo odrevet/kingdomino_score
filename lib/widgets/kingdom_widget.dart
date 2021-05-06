@@ -189,6 +189,11 @@ class _KingdomWidgetState extends State<KingdomWidget> {
               }),
         );
       }
+      else{
+        child = Container(
+          color: getColorForLandType(land.landType),
+        );
+      }
     }
 
     return Container(

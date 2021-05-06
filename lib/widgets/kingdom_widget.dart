@@ -152,10 +152,14 @@ class _KingdomWidgetState extends State<KingdomWidget> {
     if (land.landType == LandType.castle) {
       child = CastleWidget(getKingColor());
     } else if (land.courtierType != null) {
-      child = Image(
-          height: 50,
-          width: 50,
-          image: AssetImage(courtierPicture[land.courtierType]!));
+      child = Container(
+        padding: const EdgeInsets.all(10.0),
+        decoration: new BoxDecoration(
+            color: getColorForLandType(land.landType),
+        ),
+        child: Image(
+            image: AssetImage(courtierPicture[land.courtierType]!)),
+      );
     } else {
       String text = '';
       if (land.crowns > 0) {

@@ -85,6 +85,7 @@ class _KingdomWidgetState extends State<KingdomWidget> {
         case SelectionMode.crown:
           if (land!.landType == LandType.castle || land.landType == null) break;
           land.crowns++;
+          land.courtierType = null;
           if (land.crowns > getGameSet()[land.landType]['crowns']['max']) {
             land.reset();
           }

@@ -184,7 +184,7 @@ class _KingdomWidgetState extends State<KingdomWidget> {
               builder: (BuildContext context, BoxConstraints constraints) {
                 return Align(
                   child: Text('⬤',
-                      style: TextStyle(fontSize: constraints.maxWidth / 2)),
+                      style: TextStyle(fontSize: constraints.maxWidth / 2, color: getResourceColorForLandType(land.landType))),
                 );
               }),
         );

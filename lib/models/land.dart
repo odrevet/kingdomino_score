@@ -65,3 +65,25 @@ Color getColorForLandType(LandType? type) {
 
   return color;
 }
+
+Color getResourceColorForLandType(LandType? type) {
+  Color color;
+  switch (type) {
+    case LandType.wheat:
+      color = Colors.yellow.shade800;
+      break;
+    case LandType.grassland:
+      color = Colors.green;
+      break;
+    case LandType.forest:
+      color = Colors.green.shade900;
+      break;
+    case LandType.lake:
+      color = Colors.blue.shade600;
+      break;
+    default:
+      color = Colors.red;
+  }
+
+  return color;
+}

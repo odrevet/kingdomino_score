@@ -21,6 +21,7 @@ class Land {
     crowns = 0;
     giants = 0;
     hasResource = false;
+    courtierType = null;
   }
 
   /// count crowns minus the number of giants

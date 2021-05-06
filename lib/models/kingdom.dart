@@ -36,6 +36,8 @@ class Kingdom {
       land.landType = null;
       land.crowns = 0;
       land.giants = 0;
+      land.hasResource = false;
+      land.courtierType = null;
     });
   }
 

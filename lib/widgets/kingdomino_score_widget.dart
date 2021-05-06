@@ -350,7 +350,8 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
               selectedQuests.clear();
 
               kingdom.getLands().expand((i) => i).toList().forEach((land) {
-                land.giants = 0;
+                land.hasResource = false;
+                land.courtierType = null;
               });
 
               clearWarnings();

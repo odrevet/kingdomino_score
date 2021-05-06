@@ -153,7 +153,7 @@ class _KingdomWidgetState extends State<KingdomWidget> {
   Widget _buildLand(int y, int x) {
     Land land = kingdom.getLand(x, y);
 
-    Widget child;
+    Widget? child;
     if (land.landType == LandType.castle) {
       child = CastleWidget(getKingColor());
     } else if (land.courtierType != null) {
@@ -166,22 +166,29 @@ class _KingdomWidgetState extends State<KingdomWidget> {
             image: AssetImage(courtierPicture[land.courtierType]!)),
       );
     } else {
-      String text = '';
       if (land.crowns > 0) {
-        text = crown * land.crowns;
+        String text = (crown * land.crowns);
         text += giant * land.giants;
+        child = Container(
+          color: getColorForLandType(land.landType),
+          child: LayoutBuilder(
+              builder: (BuildContext context, BoxConstraints constraints) {
+                return Text(text,
+                    style: TextStyle(fontSize: constraints.maxWidth / 3));
+              }),
+        );
       } else if (land.hasResource) {
-        text = '⬤';
+        child = Container(
+          color: getColorForLandType(land.landType),
+          child: LayoutBuilder(
+              builder: (BuildContext context, BoxConstraints constraints) {
+                return Align(
+                  child: Text('⬤',
+                      style: TextStyle(fontSize: constraints.maxWidth / 2)),
+                );
+              }),
+        );
       }
-
-      child = Container(
-        color: getColorForLandType(land.landType),
-        child: LayoutBuilder(
-            builder: (BuildContext context, BoxConstraints constraints) {
-          return Text(text,
-              style: TextStyle(fontSize: constraints.maxWidth / 3));
-        }),
-      );
     }
 
     return Container(

@@ -10,44 +10,48 @@ class King extends Courtier {
 
   King._internal();
 
-  bool _checkLand(Land land) {
-    return land.crowns > 0;
-  }
-
   @override
   int getPoints(Kingdom kingdom, int x, int y) {
     int points = 0;
 
-    if (kingdom.isInBound(x - 1, y - 1) && _checkLand(kingdom.getLand(x - 1, y - 1)!)) {
-      points += 1;
+    if (kingdom.isInBound(x - 1, y - 1)) {
+      Land land = kingdom.getLand(x - 1, y - 1)!;
+      points += land.crowns;
     }
 
-    if (kingdom.isInBound(x - 1, y) && _checkLand(kingdom.getLand(x - 1, y)!)) {
-      points += 1;
+    if (kingdom.isInBound(x - 1, y)) {
+      Land land = kingdom.getLand(x - 1, y)!;
+      points += land.crowns;
     }
 
-    if (kingdom.isInBound(x - 1, y + 1) && _checkLand(kingdom.getLand(x - 1, y + 1)!)) {
-      points += 1;
+    if (kingdom.isInBound(x - 1, y + 1)) {
+      Land land = kingdom.getLand(x - 1, y + 1)!;
+      points += land.crowns;
     }
 
-    if (kingdom.isInBound(x, y - 1) && _checkLand(kingdom.getLand(x, y - 1)!)) {
-      points += 1;
+    if (kingdom.isInBound(x, y - 1)) {
+      Land land = kingdom.getLand(x, y - 1)!;
+      points += land.crowns;
     }
 
-    if (kingdom.isInBound(x, y + 1) && _checkLand(kingdom.getLand(x, y + 1)!)) {
-      points += 1;
+    if (kingdom.isInBound(x, y + 1)) {
+      Land land = kingdom.getLand(x, y + 1)!;
+      points += land.crowns;
     }
 
-    if (kingdom.isInBound(x + 1, y - 1) && _checkLand(kingdom.getLand(x + 1, y - 1)!)) {
-      points += 1;
+    if (kingdom.isInBound(x + 1, y - 1)) {
+      Land land = kingdom.getLand(x + 1, y - 1)!;
+      points += land.crowns;
     }
 
-    if (kingdom.isInBound(x + 1, y) && _checkLand(kingdom.getLand(x + 1, y)!)) {
-      points += 1;
+    if (kingdom.isInBound(x + 1, y )) {
+      Land land = kingdom.getLand(x + 1, y)!;
+      points += land.crowns;
     }
 
-    if (kingdom.isInBound(x + 1, y + 1) && _checkLand(kingdom.getLand(x + 1, y + 1)!)) {
-      points += 1;
+    if (kingdom.isInBound(x + 1, y + 1)) {
+      Land land = kingdom.getLand(x + 1, y + 1)!;
+      points += land.crowns;
     }
 
     return points;

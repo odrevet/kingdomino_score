@@ -143,6 +143,7 @@ class _KingdomWidgetState extends State<KingdomWidget> {
             LandType.forest
           ].contains(land!.landType)) {
             land.hasResource = !land.hasResource;
+            land.crowns = 0;
           }
           break;
       }

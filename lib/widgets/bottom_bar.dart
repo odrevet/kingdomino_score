@@ -169,7 +169,7 @@ class _BottomBarState extends State<BottomBar> {
             margin: EdgeInsets.all(5.0),
             height: _buttonSize,
             width: _buttonSize,
-            decoration: BoxDecoration(border: isSelected ? null : this.outline),
+            decoration: BoxDecoration(border: isSelected ? _selectedBorder : this.outline),
             child: Text("•")));
   }
 
@@ -183,7 +183,7 @@ class _BottomBarState extends State<BottomBar> {
             margin: EdgeInsets.all(5.0),
             height: _buttonSize,
             width: _buttonSize,
-            decoration: BoxDecoration(border: isSelected ? null : this.outline),
+            decoration: BoxDecoration(border: isSelected ? _selectedBorder : this.outline),
             child: Image(
                 height: 50,
                 width: 50,

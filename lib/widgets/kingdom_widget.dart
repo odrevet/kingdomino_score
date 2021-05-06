@@ -116,6 +116,11 @@ class _KingdomWidgetState extends State<KingdomWidget> {
             LandType.swamp
           ].contains(land!.landType)) {
             CourtierType courtierType = getSelectedCourtierType();
+            if(land.courtierType == courtierType){
+              land.courtierType = null;
+              break;
+            }
+
             //remove same courtier type, if any
             for (var cx = 0; cx < kingdom.size; cx++) {
               for (var cy = 0; cy < kingdom.size; cy++) {

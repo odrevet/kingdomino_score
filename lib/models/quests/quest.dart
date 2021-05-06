@@ -1,5 +1,6 @@
-import '../kingdom.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import '../kingdom.dart';
 
 enum QuestType {
   harmony,

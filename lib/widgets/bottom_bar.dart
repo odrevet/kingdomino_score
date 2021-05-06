@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../models/age_of_giants.dart';
-import '../models/lacour/lacour.dart';
 import '../models/kingdom.dart';
-import '../models/land.dart' show LandType;
+import '../models/lacour/lacour.dart';
+import '../models/land.dart';
 import 'giant_details_widget.dart';
 import 'kingdom_widget.dart';
 import 'kingdomino_score_widget.dart';
@@ -119,7 +119,7 @@ class _BottomBarState extends State<BottomBar> {
     if (this.getAog()) kingdomEditorWidgets.add(giantButton());
 
     if (this.getLacour() == true) {
-      kingdomEditorWidgets.add(ResourceButton());
+      kingdomEditorWidgets.add(resourceButton());
 
       CourtierType.values.forEach((element) {
         kingdomEditorWidgets.add(courtierButton(element));
@@ -160,7 +160,7 @@ class _BottomBarState extends State<BottomBar> {
             )));
   }
 
-  Widget ResourceButton() {
+  Widget resourceButton() {
     var isSelected = this.getSelectionMode() == SelectionMode.resource;
 
     return GestureDetector(

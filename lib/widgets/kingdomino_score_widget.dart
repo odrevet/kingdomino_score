@@ -1,19 +1,20 @@
 import 'dart:collection';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:kingdomino_score_count/models/lacour/farmer.dart';
-import 'package:kingdomino_score_count/models/lacour/lacour.dart';
-import 'package:kingdomino_score_count/models/lacour/lumberjack.dart';
 import 'package:kingdomino_score_count/models/lacour/axe_warrior.dart';
-import 'package:kingdomino_score_count/models/lacour/shepherdess.dart';
 import 'package:kingdomino_score_count/models/lacour/banker.dart';
-import 'package:kingdomino_score_count/models/lacour/fisherman.dart';
-import 'package:kingdomino_score_count/models/lacour/light_archery.dart';
-import 'package:kingdomino_score_count/models/lacour/queen.dart';
-import 'package:kingdomino_score_count/models/lacour/king.dart';
-import 'package:kingdomino_score_count/models/lacour/sword_warrior.dart';
 import 'package:kingdomino_score_count/models/lacour/captain.dart';
+import 'package:kingdomino_score_count/models/lacour/farmer.dart';
+import 'package:kingdomino_score_count/models/lacour/fisherman.dart';
 import 'package:kingdomino_score_count/models/lacour/heavy_archery.dart';
+import 'package:kingdomino_score_count/models/lacour/king.dart';
+import 'package:kingdomino_score_count/models/lacour/lacour.dart';
+import 'package:kingdomino_score_count/models/lacour/light_archery.dart';
+import 'package:kingdomino_score_count/models/lacour/lumberjack.dart';
+import 'package:kingdomino_score_count/models/lacour/queen.dart';
+import 'package:kingdomino_score_count/models/lacour/shepherdess.dart';
+import 'package:kingdomino_score_count/models/lacour/sword_warrior.dart';
 import 'package:package_info/package_info.dart';
 
 import '../models/age_of_giants.dart';
@@ -22,11 +23,11 @@ import '../models/land.dart' show LandType;
 import '../models/quests/quest.dart';
 import '../models/warning.dart';
 import '../scoreQuest.dart';
-import 'warning_widget.dart';
-import 'kingdom_widget.dart';
 import 'bottom_bar.dart';
+import 'kingdom_widget.dart';
 import 'quest_dialog.dart';
 import 'score_details_widget.dart';
+import 'warning_widget.dart';
 
 const String crown = '\u{1F451}';
 const String castle = '\u{1F3F0}';

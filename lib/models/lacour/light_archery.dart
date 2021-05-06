@@ -1,5 +1,4 @@
 import '../kingdom.dart';
-import '../land.dart';
 import 'lacour.dart';
 class LightArchery extends Courtier {
   static final LightArchery _singleton = LightArchery._internal();

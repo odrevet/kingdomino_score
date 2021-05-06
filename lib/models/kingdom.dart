@@ -1,4 +1,5 @@
 import 'land.dart';
+import 'property.dart';
 
 class Kingdom {
   int size = 5;

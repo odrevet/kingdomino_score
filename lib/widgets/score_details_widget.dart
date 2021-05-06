@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 import '../models/kingdom.dart';
-import 'kingdom_widget.dart';
+import '../models/land.dart';
 import 'kingdomino_score_widget.dart';
 
 class ScoreDetailsWidget extends StatelessWidget {

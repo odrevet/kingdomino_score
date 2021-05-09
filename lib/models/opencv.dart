@@ -4,11 +4,11 @@ import 'package:ffi/ffi.dart';
 
 // C function signatures
 typedef _version_func = ffi.Pointer<Utf8> Function();
-typedef _process_image_func = ffi.Void Function(ffi.Pointer<Utf8>, ffi.Pointer<Utf8>);
+typedef _process_image_func = ffi.Double Function(ffi.Pointer<Utf8>, ffi.Pointer<Utf8>);
 
 // Dart function signatures
 typedef _VersionFunc = ffi.Pointer<Utf8> Function();
-typedef _ProcessImageFunc = void Function(ffi.Pointer<Utf8>, ffi.Pointer<Utf8>);
+typedef _ProcessImageFunc = double Function(ffi.Pointer<Utf8>, ffi.Pointer<Utf8>);
 
 // Getting a library that holds needed symbols
 ffi.DynamicLibrary _lib = Platform.isAndroid
@@ -27,13 +27,13 @@ ffi.Pointer<Utf8> opencvVersion() {
   return _version();
 }
 
-void processImage(ProcessImageArguments args) {
-  //_processImage(Utf8.toUtf8(args.inputPath), Utf8.toUtf8(args.outputPath));
+double processImage(ProcessImageArguments args) {
+  return _processImage(args.input1.toNativeUtf8(), args.input2.toNativeUtf8());
 }
 
 class ProcessImageArguments {
-  final String inputPath;
-  final String outputPath;
+  final String input1;
+  final String input2;
 
-  ProcessImageArguments(this.inputPath, this.outputPath);
+  ProcessImageArguments(this.input1, this.input2);
 }

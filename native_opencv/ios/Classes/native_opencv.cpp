@@ -1,5 +1,7 @@
-#include <opencv2/opencv.hpp>
-#include <chrono>
+#include "opencv2/imgcodecs.hpp"
+#include "opencv2/highgui.hpp"
+#include "opencv2/imgproc.hpp"
+#include <iostream>
 
 #ifdef __ANDROID__
 #include <android/log.h>
@@ -34,24 +36,42 @@ extern "C" {
     }
 
     __attribute__((visibility("default"))) __attribute__((used))
-    void process_image(char* inputImagePath, char* outputImagePath) {
-        long long start = get_now();
-        
-        Mat input = imread(inputImagePath, IMREAD_GRAYSCALE);
-        Mat threshed, withContours;
+    double process_image(String path1, String path2) {
+        Mat src_base = imread( path1 );
+        Mat src_test1 = imread( path2 );
 
-        vector<vector<Point>> contours;
-        vector<Vec4i> hierarchy;
-        
-        adaptiveThreshold(input, threshed, 255, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY_INV, 77, 6);
-        findContours(threshed, contours, hierarchy, RETR_TREE, CHAIN_APPROX_TC89_L1);
-        
-        cvtColor(threshed, withContours, COLOR_GRAY2BGR);
-        drawContours(withContours, contours, -1, Scalar(0, 255, 0), 4);
-        
-        imwrite(outputImagePath, withContours);
-        
-        int evalInMillis = static_cast<int>(get_now() - start);
-        platform_log("Processing done in %dms\n", evalInMillis);
+        if( src_base.empty() || src_test1.empty() )
+        {
+            cout << "Could not open or find the images!\n" << endl;
+            return -1;
+        }
+
+        Mat hsv_base, hsv_test1;
+        cvtColor( src_base, hsv_base, COLOR_BGR2HSV );
+        cvtColor( src_test1, hsv_test1, COLOR_BGR2HSV );
+
+        int h_bins = 50, s_bins = 60;
+        int histSize[] = { h_bins, s_bins };
+        // hue varies from 0 to 179, saturation from 0 to 255
+        float h_ranges[] = { 0, 180 };
+        float s_ranges[] = { 0, 256 };
+        const float* ranges[] = { h_ranges, s_ranges };
+        // Use the 0-th and 1-st channels
+        int channels[] = { 0, 1 };
+
+        Mat hist_base, hist_half_down, hist_test1, hist_test2;
+        calcHist( &hsv_base, 1, channels, Mat(), hist_base, 2, histSize, ranges, true, false );
+        normalize( hist_base, hist_base, 0, 1, NORM_MINMAX, -1, Mat() );
+        calcHist( &hsv_test1, 1, channels, Mat(), hist_test1, 2, histSize, ranges, true, false );
+        normalize( hist_test1, hist_test1, 0, 1, NORM_MINMAX, -1, Mat() );
+
+        return compareHist( hist_base, hist_test1, 0 );
+
+        /*
+        double[4] score;
+        for( int compare_method = 0; compare_method < 4; compare_method++ )
+        {
+            score[compare_method] = compareHist( hist_base, hist_test1, compare_method );
+        }*/
     }
 }

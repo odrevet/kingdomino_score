@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
+import 'package:kingdomino_score_count/models/opencv.dart';
+import 'package:ffi/ffi.dart';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
@@ -77,6 +79,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
               print(
                   '${orientedImage.width}:${orientedImage.height} -> ${imageCropped.width}:${imageCropped.height} $tileSize');
+              print(opencvVersion().toDartString());
 
               List<img.Image> tiles = [];
               for (int x = 0; x < widget.kingdom.size; x++) {
@@ -85,7 +88,16 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                       y * tileSize, tileSize, tileSize);
 
                   tiles.add(tile);
+
+                  var processImageArguments = ProcessImageArguments('tiles/01.jpg', 'tiles/02.jpg');
+                  double score = processImage(processImageArguments);
+                  print("SCORE IS $score");
+
+
                   LandType? landType = null;  //TODO get land type from opencv
+
+
+
                   if (landType == null) {
                     widget.kingdom.getLand(x, y).landType = LandType.none;
                   } else {

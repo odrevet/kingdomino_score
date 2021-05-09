@@ -1,5 +1,4 @@
 import 'dart:collection';
-import 'package:ffi/ffi.dart';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +9,6 @@ import '../models/kingdom.dart';
 import '../models/quest.dart';
 import '../models/warning.dart';
 import '../models/land.dart' show LandType;
-import 'package:kingdomino_score_count/models/opencv.dart';
 import '../scoreQuest.dart';
 import 'warning_widget.dart';
 import 'kingdom_widget.dart';
@@ -97,9 +95,6 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
       });
     });
 
-
-    print('--------------------------------');
-    print(opencvVersion().toDartString());
     super.initState();
   }
 

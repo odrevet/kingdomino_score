@@ -11,15 +11,6 @@ import 'package:kingdomino_score_count/models/kingdom.dart';
 
 import '../models/land.dart';
 
-Future<String> saveFile(img.Image image) async {
-  Directory appDocumentsDirectory = await getApplicationDocumentsDirectory();
-  String appDocumentsPath = appDocumentsDirectory.path;
-  String filePath = '$appDocumentsPath/out.png';
-  File file = File(filePath);
-  file..writeAsBytesSync(img.encodePng(image));
-  return filePath;
-}
-
 class TakePictureScreen extends StatefulWidget {
   final CameraDescription camera;
   final Kingdom kingdom;
@@ -80,15 +71,21 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                   '${orientedImage.width}:${orientedImage.height} -> ${imageCropped.width}:${imageCropped.height} $tileSize');
               print(opencvVersion().toDartString());
 
+              Directory appDocumentsDirectory = await getApplicationDocumentsDirectory();
+              String appDocumentsPath = appDocumentsDirectory.path;
+
               for (int x = 0; x < widget.kingdom.size; x++) {
                 for (int y = 0; y < widget.kingdom.size; y++) {
                   img.Image tile = img.copyCrop(imageCropped, x * tileSize,
                       y * tileSize, tileSize, tileSize);
 
-                  String tilepath = await saveFile(tile);
-                  var processImageArguments = ProcessImageArguments(tilepath, tilepath);  //TODO compare with game set
+                  String filePath = '$appDocumentsPath/$x-$y.png';
+                  File file = File(filePath);
+                  file..writeAsBytesSync(img.encodePng(image));
+
+                  var processImageArguments = ProcessImageArguments(filePath, filePath);  //TODO compare with game set
                   double score = processImage(processImageArguments);
-                  print("SCORE IS $score");
+                  print("$filePath SCORE IS $score");
 
 
                   LandType? landType = null;  //TODO get land type from opencv

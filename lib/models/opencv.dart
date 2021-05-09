@@ -23,12 +23,12 @@ final _ProcessImageFunc _processImage = _lib
     .lookup<ffi.NativeFunction<_process_image_func>>('process_image')
     .asFunction();
 
-String opencvVersion() {
-  return Utf8.fromUtf8(_version());
+ffi.Pointer<Utf8> opencvVersion() {
+  return _version();
 }
 
 void processImage(ProcessImageArguments args) {
-  _processImage(Utf8.toUtf8(args.inputPath), Utf8.toUtf8(args.outputPath));
+  //_processImage(Utf8.toUtf8(args.inputPath), Utf8.toUtf8(args.outputPath));
 }
 
 class ProcessImageArguments {

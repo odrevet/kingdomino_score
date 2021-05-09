@@ -86,15 +86,12 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                       y * tileSize, tileSize, tileSize);
 
                   tiles.add(tile);
-                  List<int> rgb = averageRGB(tile);
-                  LandType? landType = getLandtypeFromRGB(rgb);
+                  LandType? landType = null;  //TODO get land type from opencv
                   if (landType == null) {
                     widget.kingdom.getLand(x, y).landType = LandType.none;
                   } else {
                     widget.kingdom.getLand(x, y).landType = landType;
                   }
-
-                  print('$x $y $rgb');
                 }
               }
 

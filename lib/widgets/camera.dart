@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:image/image.dart' as img;
 import 'package:kingdomino_score_count/models/kingdom.dart';
 
-import '../models/picture.dart';
 import '../models/land.dart';
 
 void saveFile(img.Image image) async {

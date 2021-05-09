@@ -16,7 +16,7 @@ dependencies:
   path_provider: any
   path: ^1.8.0
   image: ^3.0.2
-  ffi: ^0.1.3
+  ffi: ^1.0.0
   native_opencv:
     path: native_opencv
 

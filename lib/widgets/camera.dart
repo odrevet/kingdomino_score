@@ -11,14 +11,13 @@ import 'package:kingdomino_score_count/models/kingdom.dart';
 
 import '../models/land.dart';
 
-void saveFile(img.Image image) async {
+Future<String> saveFile(img.Image image) async {
   Directory appDocumentsDirectory = await getApplicationDocumentsDirectory();
   String appDocumentsPath = appDocumentsDirectory.path;
   String filePath = '$appDocumentsPath/out.png';
   File file = File(filePath);
-  print(filePath);
   file..writeAsBytesSync(img.encodePng(image));
-
+  return filePath;
 }
 
 class TakePictureScreen extends StatefulWidget {
@@ -81,15 +80,13 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                   '${orientedImage.width}:${orientedImage.height} -> ${imageCropped.width}:${imageCropped.height} $tileSize');
               print(opencvVersion().toDartString());
 
-              List<img.Image> tiles = [];
               for (int x = 0; x < widget.kingdom.size; x++) {
                 for (int y = 0; y < widget.kingdom.size; y++) {
                   img.Image tile = img.copyCrop(imageCropped, x * tileSize,
                       y * tileSize, tileSize, tileSize);
 
-                  tiles.add(tile);
-
-                  var processImageArguments = ProcessImageArguments('tiles/01.jpg', 'tiles/02.jpg');
+                  String tilepath = await saveFile(tile);
+                  var processImageArguments = ProcessImageArguments(tilepath, tilepath);  //TODO compare with game set
                   double score = processImage(processImageArguments);
                   print("SCORE IS $score");
 
@@ -106,7 +103,6 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                 }
               }
 
-              saveFile(tiles[1]);  //DEBUG
               widget.onTap();
             },
             child: CameraPreview(_controller!),

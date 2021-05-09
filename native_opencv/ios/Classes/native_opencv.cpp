@@ -36,7 +36,7 @@ extern "C" {
     }
 
     __attribute__((visibility("default"))) __attribute__((used))
-    double process_image(String path1, String path2) {
+    double process_image(char* path1, char* path2) {
         Mat src_base = imread( path1 );
         Mat src_test1 = imread( path2 );
 

@@ -1,10 +1,12 @@
-import 'land.dart' show LandType;
+import 'land.dart';
 
 class Property {
   LandType? landType;
   int crownCount = 0;
   int landCount = 0;
-  int giantCount = 0; //AoG
+
+  //AoG
+  int giantCount = 0;
 
   Property(this.landType);
 }

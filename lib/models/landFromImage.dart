@@ -35,12 +35,7 @@ landFromImage(kingdom, filepath) async {
       print("$filePath SCORE IS $score");
 
       LandType? landType = null; //TODO get land type from opencv
-
-      if (landType == null) {
-        kingdom.getLand(x, y).landType = LandType.none;
-      } else {
-        kingdom.getLand(x, y).landType = landType;
-      }
+      kingdom.getLand(x, y).landType = landType;
     }
   }
 }

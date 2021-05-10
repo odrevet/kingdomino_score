@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kingdomino_score_count/models/quest.dart';
+import 'package:kingdomino_score_count/models/quests/quest.dart';
 
 class _QuestDialogOption extends StatefulWidget {
   final getSelectedQuests;
@@ -93,7 +93,6 @@ class _QuestDialogWidgetState extends State<QuestDialogWidget> {
   build(BuildContext context) {
     var options = <Widget>[];
 
-    var questsToDisplay;
     if (getAog() == true) {
       questPicture.forEach((type, svg) {
         options.add(

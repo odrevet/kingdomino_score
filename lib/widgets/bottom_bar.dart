@@ -3,52 +3,64 @@ import 'package:flutter/material.dart';
 import '../models/land.dart' show LandType;
 import '../models/age_of_giants.dart';
 import '../models/kingdom.dart';
+import '../models/lacour/lacour.dart';
+import '../models/land.dart';
 import 'giant_details_widget.dart';
 import 'kingdom_widget.dart';
 import 'kingdomino_score_widget.dart';
+
 
 class BottomBar extends StatefulWidget {
   final getSelectionMode;
   final setSelectionMode;
   final getSelectedLandType;
   final setSelectedLandType;
+  final getSelectedCourtierType;
+  final setSelectedCourtierType;
   final getKingColor;
   final setKingColor;
   final getAog;
+  final getLacour;
   final Kingdom kingdom;
   final groupScore;
   final quests;
   final scoreOfQuest;
   final score;
 
-  BottomBar(
-      {required this.getSelectionMode,
-      required this.setSelectionMode,
-      required this.getSelectedLandType,
-      required this.setSelectedLandType,
-      required this.getAog,
-      required this.kingdom,
-      required this.quests,
-      required this.groupScore,
-      required this.scoreOfQuest,
-      required this.score,
-      required this.getKingColor,
-      required this.setKingColor});
+  BottomBar({required this.getSelectionMode,
+    required this.setSelectionMode,
+    required this.getSelectedLandType,
+    required this.setSelectedLandType,
+    required this.getSelectedCourtierType,
+    required this.setSelectedCourtierType,
+    required this.getAog,
+    required this.getLacour,
+    required this.kingdom,
+    required this.quests,
+    required this.groupScore,
+    required this.scoreOfQuest,
+    required this.score,
+    required this.getKingColor,
+    required this.setKingColor});
 
   @override
-  _BottomBarState createState() => _BottomBarState(
-      getSelectionMode: this.getSelectionMode,
-      setSelectionMode: this.setSelectionMode,
-      getSelectedLandType: this.getSelectedLandType,
-      setSelectedLandType: this.setSelectedLandType,
-      getAog: this.getAog,
-      scoreOfQuest: this.scoreOfQuest,
-      quests: this.quests,
-      groupScore: this.groupScore,
-      score: this.score,
-      kingdom: kingdom,
-      getKingColor: this.getKingColor,
-      setKingColor: this.setKingColor);
+  _BottomBarState createState() =>
+      _BottomBarState(
+          getSelectionMode: this.getSelectionMode,
+          setSelectionMode: this.setSelectionMode,
+          getSelectedLandType: this.getSelectedLandType,
+          setSelectedLandType: this.setSelectedLandType,
+          getSelectedCourtierType: this.getSelectedCourtierType,
+          setSelectedCourtierType: this.setSelectedCourtierType,
+          getAog: this.getAog,
+          getLacour: this.getLacour,
+          scoreOfQuest: this.scoreOfQuest,
+          quests: this.quests,
+          groupScore: this.groupScore,
+          score: this.score,
+          kingdom: kingdom,
+          getKingColor: this.getKingColor,
+          setKingColor: this.setKingColor);
 }
 
 class _BottomBarState extends State<BottomBar> {
@@ -56,28 +68,33 @@ class _BottomBarState extends State<BottomBar> {
   final setSelectionMode;
   final getSelectedLandType;
   final setSelectedLandType;
+  final getSelectedCourtierType;
+  final setSelectedCourtierType;
   final setKingColor;
   final getKingColor;
   final getAog;
+  final getLacour;
   final Kingdom kingdom;
   final groupScore;
   final quests;
   final scoreOfQuest;
   final score;
 
-  _BottomBarState(
-      {required this.getSelectionMode,
-      required this.setSelectionMode,
-      required this.getSelectedLandType,
-      required this.setSelectedLandType,
-      required this.getAog,
-      required this.kingdom,
-      required this.quests,
-      required this.groupScore,
-      required this.scoreOfQuest,
-      required this.score,
-      required this.getKingColor,
-      required this.setKingColor});
+  _BottomBarState({required this.getSelectionMode,
+    required this.setSelectionMode,
+    required this.getSelectedLandType,
+    required this.setSelectedLandType,
+    required this.getSelectedCourtierType,
+    required this.setSelectedCourtierType,
+    required this.getAog,
+    required this.getLacour,
+    required this.kingdom,
+    required this.quests,
+    required this.groupScore,
+    required this.scoreOfQuest,
+    required this.score,
+    required this.getKingColor,
+    required this.setKingColor});
 
   final double _buttonSize = 40.0;
 
@@ -95,12 +112,20 @@ class _BottomBarState extends State<BottomBar> {
       landButton(LandType.lake),
       landButton(LandType.swamp),
       landButton(LandType.mine),
-      landButton(LandType.none),
+      landButton(null),
       castleButton(),
       crownButton(),
     ];
 
     if (this.getAog()) kingdomEditorWidgets.add(giantButton());
+
+    if (this.getLacour() == true) {
+      kingdomEditorWidgets.add(resourceButton());
+
+      CourtierType.values.forEach((element) {
+        kingdomEditorWidgets.add(courtierButton(element));
+      });
+    }
 
     return Wrap(
       children: kingdomEditorWidgets,
@@ -114,7 +139,7 @@ class _BottomBarState extends State<BottomBar> {
     bottom: BorderSide(width: 3.5, color: Colors.red.shade900),
   );
 
-  Widget landButton(LandType landType) {
+  Widget landButton(LandType? landType) {
     var isSelected = this.getSelectionMode() == SelectionMode.land &&
         this.getSelectedLandType() == landType;
 
@@ -127,13 +152,43 @@ class _BottomBarState extends State<BottomBar> {
             decoration: BoxDecoration(
                 border: isSelected
                     ? _selectedBorder
-                    : landType == LandType.none
-                        ? null
-                        : this.outline),
+                    : landType == null
+                    ? null
+                    : this.outline),
             child: Container(
               color: getColorForLandType(landType),
               child: null,
             )));
+  }
+
+  Widget resourceButton() {
+    var isSelected = this.getSelectionMode() == SelectionMode.resource;
+
+    return GestureDetector(
+        onTap: () => setSelectionMode(SelectionMode.resource),
+        child: Container(
+            margin: EdgeInsets.all(5.0),
+            height: _buttonSize,
+            width: _buttonSize,
+            decoration: BoxDecoration(border: isSelected ? _selectedBorder : this.outline),
+            child: Align(alignment: Alignment.center, child: Text('⬤'))));
+  }
+
+  Widget courtierButton(CourtierType courtierType) {
+    var isSelected = this.getSelectionMode() == SelectionMode.courtier &&
+        this.getSelectedCourtierType() == courtierType;
+
+    return GestureDetector(
+        onTap: () => _onSelectCourtierType(courtierType),
+        child: Container(
+            margin: EdgeInsets.all(5.0),
+            height: _buttonSize,
+            width: _buttonSize,
+            decoration: BoxDecoration(border: isSelected ? _selectedBorder : this.outline),
+            child: Image(
+                height: 50,
+                width: 50,
+                image: AssetImage(courtierPicture[courtierType]!))));
   }
 
   _colorbutton(Color? kingcolor) {
@@ -153,7 +208,8 @@ class _BottomBarState extends State<BottomBar> {
         this.getSelectedLandType() == LandType.castle;
 
     return GestureDetector(
-        onTap: () => setState(() {
+        onTap: () =>
+            setState(() {
               this.setSelectionMode(SelectionMode.castle);
               this.setSelectedLandType(LandType.castle);
             }),
@@ -162,17 +218,17 @@ class _BottomBarState extends State<BottomBar> {
             this.setSelectionMode(SelectionMode.castle);
             this.setSelectedLandType(LandType.castle);
           });
-          
+
           var buttons = <Widget>[
             _colorbutton(null),
-            _colorbutton(KingColors.elementAt(0)),
-            _colorbutton(KingColors.elementAt(1)),
-            _colorbutton(KingColors.elementAt(2)),
-            _colorbutton(KingColors.elementAt(3)),
+            _colorbutton(kingColors.elementAt(0)),
+            _colorbutton(kingColors.elementAt(1)),
+            _colorbutton(kingColors.elementAt(2)),
+            _colorbutton(kingColors.elementAt(3)),
           ];
 
           if (this.getAog() == true) {
-            buttons.add(_colorbutton(KingColors.elementAt(4)));
+            buttons.add(_colorbutton(kingColors.elementAt(4)));
           }
 
           showDialog(
@@ -221,7 +277,8 @@ class _BottomBarState extends State<BottomBar> {
 
     return GestureDetector(
         onTap: () => _onSelectGiant(),
-        onLongPress: () => showDialog<void>(
+        onLongPress: () =>
+            showDialog<void>(
               context: context,
               builder: (BuildContext context) {
                 return AlertDialog(
@@ -257,7 +314,7 @@ class _BottomBarState extends State<BottomBar> {
   }
 
   //CALLBACKS
-  void _onSelectLandType(LandType selectedType) {
+  void _onSelectLandType(LandType? selectedType) {
     if (selectedType == LandType.castle)
       _onSelectCastle();
     else
@@ -265,6 +322,13 @@ class _BottomBarState extends State<BottomBar> {
         this.setSelectedLandType(selectedType);
         this.setSelectionMode(SelectionMode.land);
       });
+  }
+
+  void _onSelectCourtierType(CourtierType selectedType) {
+    setState(() {
+      this.setSelectedCourtierType(selectedType);
+      this.setSelectionMode(SelectionMode.courtier);
+    });
   }
 
   void _onSelectCrown() {

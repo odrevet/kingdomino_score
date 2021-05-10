@@ -1,6 +1,5 @@
 import '../kingdom.dart';
-import '../quest.dart';
-import '../land.dart' show LandType;
+import 'quest.dart';
 
 class Harmony extends Quest {
   static final Harmony _singleton = Harmony._internal();
@@ -18,7 +17,7 @@ class Harmony extends Quest {
             .getLands()
             .expand((i) => i)
             .toList()
-            .where((land) => land.landType == LandType.none)
+            .where((land) => land.landType == null)
             .isEmpty
         ? extraPoints
         : 0;

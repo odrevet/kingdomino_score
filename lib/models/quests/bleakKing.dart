@@ -1,6 +1,6 @@
 import '../kingdom.dart';
-import '../quest.dart';
 import '../land.dart' show LandType;
+import 'quest.dart';
 
 /// crown covered with giant count as no crown
 /// properties must be `at least` of 5 lands, as stated in the french booklet

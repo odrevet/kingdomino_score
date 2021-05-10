@@ -1,15 +1,15 @@
-import 'models/quest.dart';
 import 'dart:collection';
 
-import 'models/land.dart' show LandType;
 import 'models/kingdom.dart';
+import 'models/land.dart' show LandType;
 import 'models/quests/bleakKing.dart';
 import 'models/quests/folie_des_grandeurs.dart';
 import 'models/quests/four_corners.dart';
 import 'models/quests/harmony.dart';
 import 'models/quests/local_business.dart';
-import 'models/quests/middle_kingdom.dart';
 import 'models/quests/lost_corner.dart';
+import 'models/quests/middle_kingdom.dart';
+import 'models/quests/quest.dart';
 
 int calculateQuestScore(HashSet<QuestType> selectedQuests, Kingdom kingdom) {
   int scoreQuest = 0;

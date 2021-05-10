@@ -1,29 +1,42 @@
 import 'dart:collection';
 import 'dart:io';
 
-import 'package:image_cropper/image_cropper.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:kingdomino_score_count/models/lacour/axe_warrior.dart';
+import 'package:kingdomino_score_count/models/lacour/banker.dart';
+import 'package:kingdomino_score_count/models/lacour/captain.dart';
+import 'package:kingdomino_score_count/models/lacour/farmer.dart';
+import 'package:kingdomino_score_count/models/lacour/fisherman.dart';
+import 'package:kingdomino_score_count/models/lacour/heavy_archery.dart';
+import 'package:kingdomino_score_count/models/lacour/king.dart';
+import 'package:kingdomino_score_count/models/lacour/lacour.dart';
+import 'package:kingdomino_score_count/models/lacour/light_archery.dart';
+import 'package:kingdomino_score_count/models/lacour/lumberjack.dart';
+import 'package:kingdomino_score_count/models/lacour/queen.dart';
+import 'package:kingdomino_score_count/models/lacour/shepherdess.dart';
+import 'package:kingdomino_score_count/models/lacour/sword_warrior.dart';
 import 'package:package_info/package_info.dart';
 
 import '../models/age_of_giants.dart';
 import '../models/kingdom.dart';
-import '../models/quest.dart';
-import '../models/warning.dart';
 import '../models/land.dart' show LandType;
+import '../models/quests/quest.dart';
+import '../models/warning.dart';
 import '../scoreQuest.dart';
-import 'warning_widget.dart';
-import 'kingdom_widget.dart';
 import 'bottom_bar.dart';
+import 'camera.dart';
+import 'kingdom_widget.dart';
 import 'quest_dialog.dart';
 import 'score_details_widget.dart';
-import 'camera.dart';
+import 'warning_widget.dart';
 
 const String crown = '\u{1F451}';
 const String castle = '\u{1F3F0}';
 final String square = '\u{25A0}';
 
-enum SelectionMode { land, crown, castle, giant }
+enum SelectionMode { land, crown, castle, giant, courtier, resource }
 
 const Map<LandType, Map<String, dynamic>> gameSet = {
   LandType.castle: {
@@ -72,15 +85,18 @@ class KingdominoScoreWidget extends StatefulWidget {
 }
 
 class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
-  LandType selectedLandType = LandType.none;
+  LandType? selectedLandType;
+  CourtierType? selectedCourtierType;
   SelectionMode selectionMode = SelectionMode.land;
   var groupScore = AutoSizeGroup();
   var kingdom = Kingdom(5);
   int scoreProperty = 0;
   int scoreOfQuest = 0;
+  int scoreOfLacour = 0;
   int score = 0;
   Color? kingColor;
   bool aog = false; // Age of Giants extension
+  bool lacour = false;
   HashSet<QuestType> selectedQuests = HashSet();
   List<Warning> warnings = [];
   late PackageInfo _packageInfo;
@@ -106,11 +122,21 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
 
   bool getAog() => aog;
 
-  LandType getSelectedLandType() => selectedLandType;
+  bool getLacour() => lacour;
 
-  setSelectedLandType(LandType landtype) {
+  LandType? getSelectedLandType() => selectedLandType;
+
+  setSelectedLandType(LandType? landtype) {
     setState(() {
       this.selectedLandType = landtype;
+    });
+  }
+
+  CourtierType? getSelectedCourtierType() => selectedCourtierType;
+
+  setSelectedCourtierType(CourtierType courtiertype) {
+    setState(() {
+      this.selectedCourtierType = courtiertype;
     });
   }
 
@@ -159,8 +185,6 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
   void checkKingdom() {
     //check if more tile in the kingdom than in the gameSet
     for (var landType in LandType.values) {
-      if (landType == LandType.none) continue;
-
       var count = kingdom
           .getLands()
           .expand((i) => i)
@@ -206,9 +230,69 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
     });
   }
 
+  int calculateLacourScore() {
+    int scoreOfLacour = 0;
+    for (int y = 0; y < kingdom.size; y++) {
+      for (int x = 0; x < kingdom.size; x++) {
+        CourtierType? courtierType = kingdom.getLand(x, y)?.courtierType;
+        if (courtierType != null) {
+          switch (courtierType) {
+            case CourtierType.farmer:
+              scoreOfLacour += Farmer().getPoints(kingdom, x, y);
+              break;
+            case CourtierType.banker:
+              scoreOfLacour += Banker().getPoints(kingdom, x, y);
+              break;
+            case CourtierType.lumberjack:
+              scoreOfLacour += Lumberjack().getPoints(kingdom, x, y);
+              break;
+            case CourtierType.light_archery:
+              scoreOfLacour += LightArchery().getPoints(kingdom, x, y);
+              break;
+            case CourtierType.fisherman:
+              scoreOfLacour += Fisherman().getPoints(kingdom, x, y);
+              break;
+            case CourtierType.heavy_archery:
+              scoreOfLacour += HeavyArchery().getPoints(kingdom, x, y);
+              break;
+            case CourtierType.shepherdess:
+              scoreOfLacour += Shepherdess().getPoints(kingdom, x, y);
+              break;
+            case CourtierType.captain:
+              scoreOfLacour += Captain().getPoints(kingdom, x, y);
+              break;
+            case CourtierType.axe_warrior:
+              scoreOfLacour += AxeWarrior().getPoints(kingdom, x, y);
+              break;
+            case CourtierType.sword_warrior:
+              scoreOfLacour += SwordWarrior().getPoints(kingdom, x, y);
+              break;
+            case CourtierType.king:
+              scoreOfLacour += King().getPoints(kingdom, x, y);
+              break;
+            case CourtierType.queen:
+              scoreOfLacour += Queen().getPoints(kingdom, x, y);
+              break;
+          }
+        }
+      }
+    }
+
+    return scoreOfLacour;
+  }
+
+  void updateScoreLacour() {
+    setState(() {
+      scoreOfLacour = calculateLacourScore();
+    });
+  }
+
   void updateScores() {
     updateScoreProperty();
     updateScoreQuest();
+    if (this.lacour) {
+      updateScoreLacour();
+    }
     updateScore();
   }
 
@@ -222,12 +306,15 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
   void updateScore() {
     setState(() {
       score = scoreProperty + scoreOfQuest;
+      if (this.lacour) {
+        score += scoreOfLacour;
+      }
     });
   }
 
   void resetScores() {
     setState(() {
-      score = scoreProperty = scoreOfQuest = 0;
+      score = scoreProperty = scoreOfQuest = scoreOfLacour = 0;
     });
   }
 
@@ -267,6 +354,35 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
                       fontSize: 25.0,
                       fontFamily: 'Augusta',
                       color: aog ? Colors.red : Colors.white)))),
+      MaterialButton(
+          minWidth: 30,
+          onPressed: () {
+            setState(() {
+              lacour = !lacour;
+
+              selectedQuests.clear();
+
+              kingdom.getLands().expand((i) => i).toList().forEach((land) {
+                land.hasResource = false;
+                land.courtierType = null;
+              });
+
+              clearWarnings();
+              checkKingdom();
+
+              updateScores();
+
+              if (selectionMode == SelectionMode.giant) {
+                selectionMode = SelectionMode.crown;
+              }
+            });
+          },
+          child: Container(
+              child: Text('LC',
+                  style: TextStyle(
+                      fontSize: 25.0,
+                      fontFamily: 'Augusta',
+                      color: lacour ? Colors.red : Colors.white)))),
       QuestDialogWidget(this.getSelectedQuests, this.updateScores, this.getAog),
       IconButton(
           icon: Icon(kingdom.size == 5 ? Icons.filter_5 : Icons.filter_7),
@@ -395,6 +511,7 @@ I will not use or share your information with anyone : Kingdomino Score works of
           KingdomWidget(
               getSelectionMode: this.getSelectionMode,
               getSelectedLandType: this.getSelectedLandType,
+              getSelectedCourtierType: this.getSelectedCourtierType,
               getGameSet: this.getGameSet,
               calculateScore: this.calculateScore,
               kingdom: this.kingdom,
@@ -471,7 +588,10 @@ I will not use or share your information with anyone : Kingdomino Score works of
               setSelectionMode: setSelectionMode,
               getSelectedLandType: getSelectedLandType,
               setSelectedLandType: setSelectedLandType,
+              getSelectedCourtierType: getSelectedCourtierType,
+              setSelectedCourtierType: setSelectedCourtierType,
               getAog: getAog,
+              getLacour: getLacour,
               kingdom: kingdom,
               scoreOfQuest: this.scoreOfQuest,
               quests: this.selectedQuests,

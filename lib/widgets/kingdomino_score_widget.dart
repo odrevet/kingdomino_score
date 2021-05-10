@@ -374,12 +374,7 @@ I will not use or share your information with anyone : Kingdomino Score works of
         if (cameraMode == true) {
           return TakePictureScreen(
               camera: camera,
-              kingdom: kingdom,
               onTap: (xFile) async {
-                setState(() {
-                  this.cameraMode = false;
-                  //this.xFile = xFile;
-                });
                 File? croppedFile = await ImageCropper.cropImage(
                     sourcePath: xFile.path,
                     aspectRatioPresets: [
@@ -388,6 +383,11 @@ I will not use or share your information with anyone : Kingdomino Score works of
                     androidUiSettings: AndroidUiSettings(
                         cropGridRowCount: kingdom.size - 1,
                         cropGridColumnCount: kingdom.size - 1));
+
+                setState(() {
+                  this.cameraMode = false;
+                  this.xFile = croppedFile;
+                });
               });
         }
 

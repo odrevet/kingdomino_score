@@ -59,7 +59,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
           return GestureDetector(
             onTap: () async {
               final xFile = await _controller!.takePicture();
-              final img.Image image =
+              /*final img.Image image =
                   img.decodeImage(File(xFile.path).readAsBytesSync())!;
               final img.Image orientedImage = img.bakeOrientation(image);
               final img.Image imageCropped =
@@ -69,7 +69,6 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
               print(
                   '${orientedImage.width}:${orientedImage.height} -> ${imageCropped.width}:${imageCropped.height} $tileSize');
-              print(opencvVersion().toDartString());
 
               Directory appDocumentsDirectory = await getApplicationDocumentsDirectory();
               String appDocumentsPath = appDocumentsDirectory.path;
@@ -98,9 +97,9 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                     widget.kingdom.getLand(x, y).landType = landType;
                   }
                 }
-              }
+              }*/
 
-              widget.onTap();
+              widget.onTap(xFile);
             },
             child: CameraPreview(_controller!),
           );

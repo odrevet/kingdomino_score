@@ -1,5 +1,7 @@
 import 'dart:collection';
+import 'dart:io';
 
+import 'package:image_cropper/image_cropper.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info/package_info.dart';
@@ -58,10 +60,11 @@ class KingdominoScoreWidget extends StatefulWidget {
   final Function setColor;
   final camera;
 
-  KingdominoScoreWidget(this.setColor,
-      this.camera, {
-        Key? key,
-      }) : super(key: key);
+  KingdominoScoreWidget(
+    this.setColor,
+    this.camera, {
+    Key? key,
+  }) : super(key: key);
 
   @override
   KingdominoScoreWidgetState createState() =>
@@ -83,6 +86,7 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
   late PackageInfo _packageInfo;
   final Function setColor;
   bool cameraMode = false;
+  var xFile; // picture from camera to detect tile type from
   final camera;
 
   KingdominoScoreWidgetState(this.setColor, this.camera);
@@ -165,7 +169,7 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
           .length;
       if (count > getGameSet()[landType]!['count']) {
         Warning warning =
-        Warning(count, landType, 0, '>', getGameSet()[landType]!['count']);
+            Warning(count, landType, 0, '>', getGameSet()[landType]!['count']);
 
         setState(() {
           warnings.add(warning);
@@ -174,14 +178,14 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
 
       //check if too many tile with given crowns
       for (var crownsCounter = 1;
-      crownsCounter <= getGameSet()[landType]!['crowns']['max'];
-      crownsCounter++) {
+          crownsCounter <= getGameSet()[landType]!['crowns']['max'];
+          crownsCounter++) {
         var count = kingdom
             .getLands()
             .expand((i) => i)
             .toList()
             .where((land) =>
-        land.landType == landType && land.crowns == crownsCounter)
+                land.landType == landType && land.crowns == crownsCounter)
             .length;
 
         if (count > getGameSet()[landType]!['crowns'][crownsCounter]) {
@@ -290,18 +294,17 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
           }),
       IconButton(
           icon: Icon(Icons.help),
-          onPressed: () =>
-              showAboutDialog(
-                  context: context,
-                  applicationName: _packageInfo.appName,
-                  applicationVersion: _packageInfo.version,
-                  applicationLegalese:
+          onPressed: () => showAboutDialog(
+              context: context,
+              applicationName: _packageInfo.appName,
+              applicationVersion: _packageInfo.version,
+              applicationLegalese:
                   '''Drevet Olivier built the Kingdomino Score app under the GPL license Version 3. 
 This SERVICE is provided by Drevet Olivier at no cost and is intended for use as is.
 This page is used to inform visitors regarding the policy with the collection, use, and disclosure of Personal Information if anyone decided to use my Service.
 I will not use or share your information with anyone : Kingdomino Score works offline and does not send any information over a network. ''',
-                  applicationIcon: Image.asset(
-                      'android/app/src/main/res/mipmap-mdpi/ic_launcher.png')))
+              applicationIcon: Image.asset(
+                  'android/app/src/main/res/mipmap-mdpi/ic_launcher.png')))
     ];
 
     if (warnings.isNotEmpty) {
@@ -311,14 +314,13 @@ I will not use or share your information with anyone : Kingdomino Score works of
             children: <Widget>[
               IconButton(
                   icon: Icon(Icons.warning),
-                  onPressed: () =>
-                      showDialog<void>(
+                  onPressed: () => showDialog<void>(
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
                             shape: RoundedRectangleBorder(
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(20.0))),
+                                    BorderRadius.all(Radius.circular(20.0))),
                             content: WarningsWidget(warnings: this.warnings),
                             actions: <Widget>[
                               TextButton(
@@ -363,15 +365,34 @@ I will not use or share your information with anyone : Kingdomino Score works of
 
     Widget body = OrientationBuilder(builder: (context, orientation) {
       if (orientation == Orientation.portrait) {
-       return cameraMode == true ? TakePictureScreen(
-          // Pass the appropriate camera to the TakePictureScreen widget.
-            camera: camera,
-            kingdom: kingdom,
-            onTap: () =>
+        if (xFile != null) {
+          return Container(
+            child: Image.file(File(xFile.path)),
+          );
+        }
+
+        if (cameraMode == true) {
+          return TakePictureScreen(
+              camera: camera,
+              kingdom: kingdom,
+              onTap: (xFile) async {
                 setState(() {
-                  cameraMode = false;
-                })) :
-        Column(children: <Widget>[KingdomWidget(
+                  this.cameraMode = false;
+                  //this.xFile = xFile;
+                });
+                File? croppedFile = await ImageCropper.cropImage(
+                    sourcePath: xFile.path,
+                    aspectRatioPresets: [
+                      CropAspectRatioPreset.square,
+                    ],
+                    androidUiSettings: AndroidUiSettings(
+                        cropGridRowCount: kingdom.size - 1,
+                        cropGridColumnCount: kingdom.size - 1));
+              });
+        }
+
+        return Column(children: <Widget>[
+          KingdomWidget(
               getSelectionMode: this.getSelectionMode,
               getSelectedLandType: this.getSelectedLandType,
               getGameSet: this.getGameSet,
@@ -384,14 +405,13 @@ I will not use or share your information with anyone : Kingdomino Score works of
                 child: InkWell(
                     child: Text(score.toString(),
                         style: TextStyle(color: Colors.white)),
-                    onTap: () =>
-                        showDialog<void>(
+                    onTap: () => showDialog<void>(
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialog(
                               shape: RoundedRectangleBorder(
                                   borderRadius:
-                                  BorderRadius.all(Radius.circular(20.0))),
+                                      BorderRadius.all(Radius.circular(20.0))),
                               content: ScoreDetailsWidget(
                                   kingdom: this.kingdom,
                                   groupScore: this.groupScore,
@@ -443,7 +463,7 @@ I will not use or share your information with anyone : Kingdomino Score works of
     return Scaffold(
         appBar: AppBar(
           title:
-          Row(mainAxisAlignment: MainAxisAlignment.end, children: actions),
+              Row(mainAxisAlignment: MainAxisAlignment.end, children: actions),
         ),
         bottomNavigationBar: BottomAppBar(
             child: BottomBar(
@@ -460,9 +480,7 @@ I will not use or share your information with anyone : Kingdomino Score works of
               setKingColor: this.setKingColor,
               getKingColor: this.getKingColor,
             ),
-            color: Theme
-                .of(context)
-                .primaryColor),
+            color: Theme.of(context).primaryColor),
         body: body);
   }
 }

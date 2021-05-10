@@ -17,6 +17,7 @@ dependencies:
   path: ^1.8.0
   image: ^3.0.2
   ffi: ^1.0.0
+  image_cropper: ^1.4.0
   native_opencv:
     path: native_opencv
 

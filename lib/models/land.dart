@@ -29,7 +29,7 @@ class Land {
     return crowns - giants;
   }
 
-  Land([this.landType]);
+  Land([this.landType, this.crowns = 0]);
 }
 
 Color getColorForLandType(LandType? type) {

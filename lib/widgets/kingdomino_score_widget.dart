@@ -17,6 +17,7 @@ import 'package:kingdomino_score_count/models/lacour/lumberjack.dart';
 import 'package:kingdomino_score_count/models/lacour/queen.dart';
 import 'package:kingdomino_score_count/models/lacour/shepherdess.dart';
 import 'package:kingdomino_score_count/models/lacour/sword_warrior.dart';
+import 'package:kingdomino_score_count/models/landFromImage.dart';
 import 'package:package_info/package_info.dart';
 
 import '../models/age_of_giants.dart';
@@ -502,8 +503,9 @@ I will not use or share your information with anyone : Kingdomino Score works of
 
                 setState(() {
                   this.cameraMode = false;
-                  this.xFile = croppedFile;
+                  landFromImage(kingdom, croppedFile);
                 });
+
               });
         }
 

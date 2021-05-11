@@ -1,7 +1,7 @@
 #include "opencv2/imgcodecs.hpp"
-#include "opencv2/highgui.hpp"
 #include "opencv2/imgproc.hpp"
 #include <iostream>
+#include <string>
 
 #ifdef __ANDROID__
 #include <android/log.h>
@@ -36,20 +36,21 @@ extern "C" {
     }
 
     __attribute__((visibility("default"))) __attribute__((used))
-    double process_image(char* path1, char* path2) {
-        Mat src_base = imread( path1 );
-        Mat src_test1 = imread( path2 );
+    int process_image(char* path) {
 
-        if( src_base.empty() || src_test1.empty() )
+        Mat src_base = imread( path );
+
+        if( src_base.empty() )
         {
-            cout << "Could not open or find the images!\n" << endl;
+            cout << "Could not open or find the image\n" << endl;
             return -1;
         }
 
-        Mat hsv_base, hsv_test1;
+        // HSV Calculation
+        Mat hsv_base, hsv_tile;
         cvtColor( src_base, hsv_base, COLOR_BGR2HSV );
-        cvtColor( src_test1, hsv_test1, COLOR_BGR2HSV );
 
+        // Histogram parameters
         int h_bins = 50, s_bins = 60;
         int histSize[] = { h_bins, s_bins };
         // hue varies from 0 to 179, saturation from 0 to 255
@@ -59,19 +60,39 @@ extern "C" {
         // Use the 0-th and 1-st channels
         int channels[] = { 0, 1 };
 
-        Mat hist_base, hist_half_down, hist_test1, hist_test2;
+        // Histogram calculation
+        Mat hist_base;
         calcHist( &hsv_base, 1, channels, Mat(), hist_base, 2, histSize, ranges, true, false );
         normalize( hist_base, hist_base, 0, 1, NORM_MINMAX, -1, Mat() );
-        calcHist( &hsv_test1, 1, channels, Mat(), hist_test1, 2, histSize, ranges, true, false );
-        normalize( hist_test1, hist_test1, 0, 1, NORM_MINMAX, -1, Mat() );
 
-        return compareHist( hist_base, hist_test1, 0 );
-
-        /*
-        double[4] score;
-        for( int compare_method = 0; compare_method < 4; compare_method++ )
+        // Score computation
+        int score_max = 0;
+        int index_tile;
+        int index_tile_max_score = 0;
+        for(index_tile = 0; index_tile <= 97; index_tile++)
         {
-            score[compare_method] = compareHist( hist_base, hist_test1, compare_method );
-        }*/
+            //TODO pre-calculate hist to file
+            string tile_path = "assets/tiles/" + std::to_string(index_tile) + ".jpg";
+            Mat hist_tile;
+            Mat src_tile = imread( tile_path );
+
+            if( src_tile.empty() )
+            {
+                cout << "Could not open or find the image\n" << endl;
+                return 48;
+            }
+
+            cvtColor( src_tile, hsv_tile, COLOR_BGR2HSV );
+            calcHist( &hsv_tile, 1, channels, Mat(), hist_tile, 2, histSize, ranges, true, false );
+            normalize( hist_tile, hist_tile, 0, 1, NORM_MINMAX, -1, Mat() );
+            int score =  compareHist( hist_base, hist_tile, 0 );
+            if(score > score_max)
+            {
+                score_max = score;
+                index_tile_max_score = index_tile;
+            }
+        }
+
+         return index_tile_max_score;
     }
 }

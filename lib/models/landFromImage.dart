@@ -1,41 +1,132 @@
 import 'dart:io';
 
-import 'package:image/image.dart' as img;
+import 'package:image/image.dart';
 import 'package:kingdomino_score_count/models/opencv.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../models/land.dart';
 
-landFromImage(kingdom, filepath) async {
-  final img.Image image = img.decodeImage(File(filepath).readAsBytesSync())!;
-  final img.Image orientedImage = img.bakeOrientation(image);
-  final img.Image imageCropped = img.copyCrop(
-      orientedImage, 0, 0, orientedImage.width, orientedImage.width);
+List<Land> lands = [
+  Land(LandType.wheat),
+  Land(LandType.wheat),
+  Land(LandType.grassland),
+  Land(LandType.grassland),
+  Land(LandType.wheat, 1),
+  Land(LandType.grassland),
+  Land(LandType.lake, 1),
+  Land(LandType.wheat),
+  Land(LandType.wheat),
+  Land(LandType.grassland, 2),
+  Land(LandType.wheat),
+  Land(LandType.wheat),
+  Land(LandType.swamp),
+  Land(LandType.swamp),
+  Land(LandType.wheat, 1),
+  Land(LandType.swamp),
+  Land(LandType.lake, 1),
+  Land(LandType.forest),
+  Land(LandType.lake),
+  Land(LandType.grassland, 2),
+  Land(LandType.forest),
+  Land(LandType.forest),
+  Land(LandType.wheat),
+  Land(LandType.forest),
+  Land(LandType.wheat, 1),
+  Land(LandType.mine),
+  Land(LandType.lake, 1),
+  Land(LandType.forest),
+  Land(LandType.wheat),
+  Land(LandType.swamp, 2),
+  Land(LandType.forest),
+  Land(LandType.forest),
+  Land(LandType.wheat),
+  Land(LandType.lake),
+  Land(LandType.forest, 1),
+  Land(LandType.wheat),
+  Land(LandType.lake, 1),
+  Land(LandType.forest),
+  Land(LandType.grassland),
+  Land(LandType.swamp, 2),
+  Land(LandType.forest),
+  Land(LandType.forest),
+  Land(LandType.wheat),
+  Land(LandType.grassland),
+  Land(LandType.forest, 1),
+  Land(LandType.wheat),
+  Land(LandType.lake, 1),
+  Land(LandType.forest),
+  Land(LandType.mine, 2),
+  Land(LandType.wheat),
+  Land(LandType.forest),
+  Land(LandType.forest),
+  Land(LandType.wheat),
+  Land(LandType.swamp),
+  Land(LandType.forest, 1),
+  Land(LandType.wheat),
+  Land(LandType.wheat),
+  Land(LandType.grassland, 1),
+  Land(LandType.swamp),
+  Land(LandType.mine, 2),
+  Land(LandType.lake),
+  Land(LandType.lake),
+  Land(LandType.forest),
+  Land(LandType.lake),
+  Land(LandType.forest, 1),
+  Land(LandType.wheat),
+  Land(LandType.lake),
+  Land(LandType.grassland, 1),
+  Land(LandType.swamp),
+  Land(LandType.mine, 2),
+  Land(LandType.lake),
+  Land(LandType.lake),
+  Land(LandType.forest),
+  Land(LandType.grassland),
+  Land(LandType.forest, 1),
+  Land(LandType.lake),
+  Land(LandType.wheat),
+  Land(LandType.swamp, 1),
+  Land(LandType.wheat),
+  Land(LandType.mine, 3),
+  Land(LandType.lake),
+  Land(LandType.lake),
+  Land(LandType.wheat, 1),
+  Land(LandType.forest),
+  Land(LandType.forest, 1),
+  Land(LandType.grassland),
+  Land(LandType.grassland),
+  Land(LandType.swamp, 1),
+  Land(LandType.grassland),
+  Land(LandType.grassland),
+  Land(LandType.wheat, 1),
+  Land(LandType.lake),
+  Land(LandType.lake, 1),
+  Land(LandType.wheat),
+  Land(LandType.mine, 1),
+  Land(LandType.wheat),
+];
 
-  int tileSize = imageCropped.width ~/ kingdom.size;
-
-  print(
-      '${orientedImage.width}:${orientedImage.height} -> ${imageCropped.width}:${imageCropped.height} $tileSize');
-
+landFromImage(kingdom, file) async {
+  final Image image = decodeImage(file.readAsBytesSync())!;
+  final Image orientedImage = bakeOrientation(image);
+  int tileSize = orientedImage.width ~/ kingdom.size;
   Directory appDocumentsDirectory = await getApplicationDocumentsDirectory();
   String appDocumentsPath = appDocumentsDirectory.path;
 
   for (int x = 0; x < kingdom.size; x++) {
     for (int y = 0; y < kingdom.size; y++) {
-      img.Image tile = img.copyCrop(
-          imageCropped, x * tileSize, y * tileSize, tileSize, tileSize);
+      Image tile = copyCrop(
+          orientedImage, x * tileSize, y * tileSize, tileSize, tileSize);
 
       String filePath = '$appDocumentsPath/$x-$y.png';
       File file = File(filePath);
-      file..writeAsBytesSync(img.encodePng(image));
+      file..writeAsBytesSync(encodePng(tile));
 
-      var processImageArguments = ProcessImageArguments(
-          filePath, filePath); //TODO compare with game set
-      double score = processImage(processImageArguments);
-      print("$filePath SCORE IS $score");
+      print("PROCESS $filePath");
 
-      LandType? landType = null; //TODO get land type from opencv
-      kingdom.getLand(x, y).landType = landType;
+      int index = processImage(filePath);
+
+      print(index);
+      kingdom.setLand(x, y, lands[index]);
     }
   }
 }

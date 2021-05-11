@@ -17,6 +17,14 @@ class Kingdom {
     return _lands[x][y];
   }
 
+  void setLand(int y, int x, Land land) {
+    if(y < 0 || x < 0 || x > this.size || y > this.size){
+      return null;
+    }
+
+    _lands[x][y] = land;
+  }
+
   Kingdom(this.size) {
     for (var i = 0; i < size; i++) {
       this._lands.add(List<Land>.generate(size, (_) => Land()));

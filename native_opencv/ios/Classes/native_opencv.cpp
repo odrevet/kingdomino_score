@@ -69,10 +69,10 @@ extern "C" {
         int score_max = 0;
         int index_tile;
         int index_tile_max_score = 0;
-        for(index_tile = 0; index_tile <= 97; index_tile++)
+        for(index_tile = 0; index_tile <= 95; index_tile++)
         {
             //TODO pre-calculate hist to file
-            string tile_path = "assets/tiles/" + std::to_string(index_tile) + ".jpg";
+            string tile_path = "/data/data/fr.odrevet.kingdomino_score_count/app_flutter/" + std::to_string(index_tile) + ".jpg";
             Mat hist_tile;
             Mat src_tile = imread( tile_path );
 

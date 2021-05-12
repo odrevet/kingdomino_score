@@ -1,12 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 
+import 'package:path_provider/path_provider.dart';
+import 'dart:async' show Future;
+import 'dart:io';
+import 'package:flutter/services.dart' show rootBundle;
+
 import 'widgets/kingdomino_score_widget.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final cameras = await availableCameras();
   final firstCamera = cameras.first;
+
+  //Copy from assets to app doccument
+  /*for(int index = 0; index <= 95; index++){
+    final path = "assets/histograms/${index}.json";
+    final Directory docDir = await getApplicationDocumentsDirectory();
+    final String localPath = docDir.path;
+    File file = File('$localPath/${path.split('/').last}');
+    final imageBytes = await rootBundle.load(path);
+    final buffer = imageBytes.buffer;
+    await file.writeAsBytes(
+        buffer.asUint8List(imageBytes.offsetInBytes, imageBytes.lengthInBytes));
+  }*/
+
+  for(int index = 0; index <= 95; index++){
+    final path = "assets/tiles/${index}.jpg";
+    final Directory docDir = await getApplicationDocumentsDirectory();
+    final String localPath = docDir.path;
+    File file = File('$localPath/${path.split('/').last}');
+    final imageBytes = await rootBundle.load(path);
+    final buffer = imageBytes.buffer;
+    await file.writeAsBytes(
+        buffer.asUint8List(imageBytes.offsetInBytes, imageBytes.lengthInBytes));
+  }
 
   runApp(KingdominoScore(firstCamera));
 }

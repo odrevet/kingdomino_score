@@ -33,6 +33,7 @@ flutter:
   assets:
     - assets/
     - assets/lacour/
+    - assets/tiles/
     - assets/histograms/
     - android/app/src/main/res/mipmap-mdpi/ic_launcher.png
   fonts:

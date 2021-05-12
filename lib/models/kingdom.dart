@@ -22,7 +22,8 @@ class Kingdom {
       return null;
     }
 
-    _lands[x][y] = land;
+    _lands[x][y].landType = land.landType;
+    _lands[x][y].crowns = land.crowns;
   }
 
   Kingdom(this.size) {

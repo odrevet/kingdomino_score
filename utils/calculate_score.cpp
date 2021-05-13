@@ -69,5 +69,8 @@ std::vector<std::array<double, 4> > calculate_scores(string path) {
 int main(int argc, char* argv[])
 {
   std::vector<std::array<double, 4> > scores = calculate_scores(argv[1]);
-  printf("%lf %lf %lf %lf\n", scores.at(0)[0], scores.at(0)[1], scores.at(0)[2], scores.at(0)[3]);
+  for (std::vector<std::array<double, 4> >::iterator it = scores.begin() ; it != scores.end(); ++it)
+    {
+      printf("%lf \t %lf \t %lf \t %lf\n", (*it)[0], (*it)[1], (*it)[2], (*it)[3]);
+    }
 }

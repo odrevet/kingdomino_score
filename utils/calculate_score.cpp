@@ -110,8 +110,6 @@ int main(int argc, char* argv[])
   double best_scores[4] = {0, 0, 0, 0};
   for (std::vector<std::array<double, 4> >::iterator it = scores.begin() ; it != scores.end(); ++it)
     {
-      printf("%lf < %lf\n", (*it)[1], best_scores[1]);
-
       if((*it)[0] > best_scores[0])
 	{
 	  best_scores[0] = (*it)[0];
@@ -122,7 +120,6 @@ int main(int argc, char* argv[])
 	{
 	  best_scores[1] = (*it)[1];
 	  matched_index[1] = index;
-	  printf("ASSIGNED %d\n", index);
         }
 
 

@@ -69,8 +69,59 @@ std::vector<std::array<double, 4> > calculate_scores(string path) {
 int main(int argc, char* argv[])
 {
   std::vector<std::array<double, 4> > scores = calculate_scores(argv[1]);
+
+  int index = 0;
+
+  // print scores
   for (std::vector<std::array<double, 4> >::iterator it = scores.begin() ; it != scores.end(); ++it)
     {
-      printf("%lf \t %lf \t %lf \t %lf\n", (*it)[0], (*it)[1], (*it)[2], (*it)[3]);
+      printf("%.2d: %lf \t %lf \t %lf \t %lf\n", index, (*it)[0], (*it)[1], (*it)[2], (*it)[3]);
+      index++;
     }
+
+  // Get best score and match tiles
+  // https://docs.opencv.org/3.4/d8/dc8/tutorial_histogram_comparison.html
+  // For 0 and 2 higher is better
+  // For 1 and 3 lesser is better
+
+  index = 0;
+  int matched_index[4] = {-1, -1, -1, -1};
+  double best_scores[4] = {0, 0, 0, 0};
+  for (std::vector<std::array<double, 4> >::iterator it = scores.begin() ; it != scores.end(); ++it)
+    {
+      printf("%lf < %lf\n", (*it)[1], best_scores[1]);
+
+      if((*it)[0] > best_scores[0])
+	{
+	  best_scores[0] = (*it)[0];
+	  matched_index[0] = index;
+        }
+
+      if((*it)[1] <= best_scores[1])
+	{
+	  best_scores[1] = (*it)[1];
+	  matched_index[1] = index;
+	  printf("ASSIGNED %d\n", index);
+        }
+
+
+      if((*it)[2] > best_scores[2])
+	{
+	  best_scores[2] = (*it)[2];
+	  matched_index[2] = index;
+        }
+
+
+      if((*it)[3] <= best_scores[3])
+	{
+	  best_scores[3] = (*it)[3];
+	  matched_index[3] = index;
+        }
+
+      index++;
+    }
+
+
+  // Print matched index
+  printf("Matched tile index: %d %d %d %d\n", matched_index[0], matched_index[1], matched_index[2], matched_index[3]);
 }

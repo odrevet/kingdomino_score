@@ -126,7 +126,7 @@ landFromImage(kingdom, file) async {
       int index = processImage(filePath);
 
       print(index);
-      kingdom.setLand(x, y, lands[index]);
+      kingdom.setLand(y, x, lands[index]);
     }
   }
 }

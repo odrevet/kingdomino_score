@@ -6,19 +6,18 @@
 using namespace cv;
 using namespace std;
 
-std::vector<std::array<double, 4> > calculate_scores(string path) {
-
-  Mat src_base = imread( path );
-
-  if( src_base.empty() )
+Mat img_to_hist(string imgpath)
+{
+  Mat src = imread( imgpath.c_str() );
+  if( src.empty() )
     {
-      cout << "Could not open or find the base image " + path << "\n" << endl;
+      cout << "Could not open or find the image " + imgpath << "\n" << endl;
       exit(-1);
     }
 
   // HSV Calculation
-  Mat hsv_base, hsv_tile;
-  cvtColor( src_base, hsv_base, COLOR_BGR2HSV );
+  Mat hsv;
+  cvtColor( src, hsv, COLOR_BGR2HSV );
 
   // Histogram parameters
   int h_bins = 50, s_bins = 60;
@@ -31,28 +30,22 @@ std::vector<std::array<double, 4> > calculate_scores(string path) {
   int channels[] = { 0, 1 };
 
   // Histogram calculation
-  Mat hist_base;
-  calcHist( &hsv_base, 1, channels, Mat(), hist_base, 2, histSize, ranges, true, false );
-  normalize( hist_base, hist_base, 0, 1, NORM_MINMAX, -1, Mat() );
+  Mat hist;
+  calcHist( &hsv, 1, channels, Mat(), hist, 2, histSize, ranges, true, false );
+  normalize( hist, hist, 0, 1, NORM_MINMAX, -1, Mat() );
+
+  return hist;
+}
+
+std::vector<std::array<double, 4> > calculate_scores(string path_base) {
+  Mat hist_base = img_to_hist(path_base);
 
   // Score computation
   std::vector<std::array<double, 4> > vec_scores;
   for(int index_tile = 0; index_tile <= 95; index_tile++)
     {
       string tile_path = "tiles/" + std::to_string(index_tile) + ".jpg";
-
-      Mat hist_tile;
-      Mat src_tile = imread( tile_path );
-
-      if( src_tile.empty() )
-	{
-	  cout << "Could not open or find the tile image " + tile_path << "\n" << endl;
-	  exit(-1);
-	}
-
-      cvtColor( src_tile, hsv_tile, COLOR_BGR2HSV );
-      calcHist( &hsv_tile, 1, channels, Mat(), hist_tile, 2, histSize, ranges, true, false );
-      normalize( hist_tile, hist_tile, 0, 1, NORM_MINMAX, -1, Mat() );
+      Mat hist_tile = img_to_hist(tile_path);
 
       std::array<double, 4> methods_score;
       for( int compare_method = 0; compare_method < 4; compare_method++ )

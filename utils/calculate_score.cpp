@@ -58,6 +58,34 @@ std::vector<std::array<double, 4> > calculate_scores(string path_base) {
   return vec_scores;
 }
 
+int mostFrequent(int arr[], int n)
+{
+    // Sort the array
+    sort(arr, arr + n);
+
+    // find the max frequency using linear traversal
+    int max_count = 1, res = arr[0], curr_count = 1;
+    for (int i = 1; i < n; i++) {
+        if (arr[i] == arr[i - 1])
+            curr_count++;
+        else {
+            if (curr_count > max_count) {
+                max_count = curr_count;
+                res = arr[i - 1];
+            }
+            curr_count = 1;
+        }
+    }
+
+    // If last element is most frequent
+    if (curr_count > max_count)
+    {
+        max_count = curr_count;
+        res = arr[n - 1];
+    }
+
+    return res;
+}
 
 int main(int argc, char* argv[])
 {
@@ -117,4 +145,5 @@ int main(int argc, char* argv[])
 
   // Print matched index
   printf("Matched tile index: %d %d %d %d\n", matched_index[0], matched_index[1], matched_index[2], matched_index[3]);
+  cout << mostFrequent(matched_index, 4) << "\n";
 }

@@ -88,7 +88,7 @@ extern "C" {
             normalize( hist_tile, hist_tile, 0, 1, NORM_MINMAX, -1, Mat() );
 
             double score =  compareHist( hist_base, hist_tile, 0 );
-            platform_log("READ FILE: %s SCORE: %lf\n", tile_path.c_str());
+            platform_log("READ FILE: %s SCORE: %lf\n", tile_path.c_str(), score);
             if(score > score_max)
             {
                 score_max = score;

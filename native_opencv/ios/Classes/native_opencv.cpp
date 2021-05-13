@@ -66,26 +66,29 @@ extern "C" {
         normalize( hist_base, hist_base, 0, 1, NORM_MINMAX, -1, Mat() );
 
         // Score computation
-        int score_max = 0;
+        double score_max = 0;
         int index_tile;
         int index_tile_max_score = 0;
         for(index_tile = 0; index_tile <= 95; index_tile++)
         {
             //TODO pre-calculate hist to file
             string tile_path = "/data/data/fr.odrevet.kingdomino_score_count/app_flutter/" + std::to_string(index_tile) + ".jpg";
+
             Mat hist_tile;
             Mat src_tile = imread( tile_path );
 
             if( src_tile.empty() )
             {
                 cout << "Could not open or find the image\n" << endl;
-                return 48;
+                return -1;
             }
 
             cvtColor( src_tile, hsv_tile, COLOR_BGR2HSV );
             calcHist( &hsv_tile, 1, channels, Mat(), hist_tile, 2, histSize, ranges, true, false );
             normalize( hist_tile, hist_tile, 0, 1, NORM_MINMAX, -1, Mat() );
-            int score =  compareHist( hist_base, hist_tile, 0 );
+
+            double score =  compareHist( hist_base, hist_tile, 0 );
+            platform_log("READ FILE: %s SCORE: %lf\n", tile_path.c_str());
             if(score > score_max)
             {
                 score_max = score;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kingdomino_score_count/models/quests/quest.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class _QuestDialogOption extends StatefulWidget {
   final getSelectedQuests;
@@ -94,15 +95,26 @@ class _QuestDialogWidgetState extends State<QuestDialogWidget> {
     var options = <Widget>[];
 
     if (getAog() == true) {
-      questPicture.forEach((type, svg) {
-        options.add(
-            _QuestDialogOption(type, svg, getSelectedQuests, updateScores));
+      questPicture.forEach((type, picture) {
+        options.add(_QuestDialogOption(
+            type,
+            SvgPicture.asset('$assetsquestsLocation/$picture'),
+            getSelectedQuests,
+            updateScores));
       });
     } else {
-      options
-          .add(_QuestDialogOption(QuestType.harmony, questPicture[QuestType.harmony]!, getSelectedQuests, updateScores));
-      options
-          .add(_QuestDialogOption(QuestType.middleKingdom, questPicture[QuestType.middleKingdom]!, getSelectedQuests, updateScores));
+      options.add(_QuestDialogOption(
+          QuestType.harmony,
+          SvgPicture.asset(
+              '$assetsquestsLocation/${questPicture[QuestType.harmony]!}'),
+          getSelectedQuests,
+          updateScores));
+      options.add(_QuestDialogOption(
+          QuestType.middleKingdom,
+          SvgPicture.asset(
+              '$assetsquestsLocation/${questPicture[QuestType.middleKingdom]!}'),
+          getSelectedQuests,
+          updateScores));
     }
 
     SimpleDialog dialog = SimpleDialog(

@@ -2,6 +2,7 @@
 #include "opencv2/imgproc.hpp"
 #include <iostream>
 #include <string>
+#include <limits>
 
 using namespace cv;
 using namespace std;
@@ -106,8 +107,8 @@ int main(int argc, char* argv[])
   // For 1 and 3 lesser is better
 
   index = 0;
-  int matched_index[4] = {-1, -1, -1, -1};
-  double best_scores[4] = {0, 0, 0, 0};
+  int matched_index[4] = { -1, -1, -1, -1};
+  double best_scores[4] = { numeric_limits<double>::min(), numeric_limits<double>::max(), numeric_limits<double>::min(), numeric_limits<double>::max()};
   for (std::vector<std::array<double, 4> >::iterator it = scores.begin() ; it != scores.end(); ++it)
     {
       if((*it)[0] > best_scores[0])

@@ -69,8 +69,7 @@ const Map<LandType, Map<String, dynamic>> gameSet = {
 class KingdominoScoreWidget extends StatefulWidget {
   final Function setColor;
 
-  KingdominoScoreWidget(
-    this.setColor, {
+  KingdominoScoreWidget(this.setColor, {
     Key? key,
   }) : super(key: key);
 
@@ -185,7 +184,7 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
           .length;
       if (count > getGameSet()[landType]!['count']) {
         Warning warning =
-            Warning(count, landType, 0, '>', getGameSet()[landType]!['count']);
+        Warning(count, landType, 0, '>', getGameSet()[landType]!['count']);
 
         setState(() {
           warnings.add(warning);
@@ -194,14 +193,14 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
 
       //check if too many tile with given crowns
       for (var crownsCounter = 1;
-          crownsCounter <= getGameSet()[landType]!['crowns']['max'];
-          crownsCounter++) {
+      crownsCounter <= getGameSet()[landType]!['crowns']['max'];
+      crownsCounter++) {
         var count = kingdom
             .getLands()
             .expand((i) => i)
             .toList()
             .where((land) =>
-                land.landType == landType && land.crowns == crownsCounter)
+        land.landType == landType && land.crowns == crownsCounter)
             .length;
 
         if (count > getGameSet()[landType]!['crowns'][crownsCounter]) {
@@ -226,7 +225,9 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
     int scoreOfLacour = 0;
     for (int y = 0; y < kingdom.size; y++) {
       for (int x = 0; x < kingdom.size; x++) {
-        CourtierType? courtierType = kingdom.getLand(x, y)?.courtierType;
+        CourtierType? courtierType = kingdom
+            .getLand(x, y)
+            ?.courtierType;
         if (courtierType != null) {
           switch (courtierType) {
             case CourtierType.farmer:
@@ -310,66 +311,73 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
     });
   }
 
+  String dropdownValue = '';
+
   @override
   Widget build(BuildContext context) {
     var actions = <Widget>[
-      MaterialButton(
-          minWidth: 30,
-          onPressed: () {
-            setState(() {
-              aog = !aog;
+      DropdownButton<String>(
+        value: dropdownValue,
+        icon: const Icon(Icons.extension),
+        iconSize: 24,
+        elevation: 16,
+        iconEnabledColor: Colors.white,
+        iconDisabledColor: Colors.white,
+        style: TextStyle(
+            fontSize: 25.0,
+            fontFamily: 'Augusta',
+            color: Colors.white,
+            decorationColor: Colors.white),
+        underline: Container(
+          height: 3,
+        ),
+        onChanged: (String? newValue) {
+          setState(() {
+            dropdownValue = newValue!;
 
-              selectedQuests.clear();
-
-              kingdom.getLands().expand((i) => i).toList().forEach((land) {
-                land.giants = 0;
-              });
-
-              clearWarnings();
-              checkKingdom();
-
-              updateScores();
-
-              if (selectionMode == SelectionMode.giant) {
-                selectionMode = SelectionMode.crown;
-              }
+            kingdom.getLands().expand((i) => i).toList().forEach((land) {
+              land.hasResource = false;
+              land.courtierType = null;
             });
-          },
-          child: Container(
-              child: Text('AG',
-                  style: TextStyle(
-                      fontSize: 25.0,
-                      fontFamily: 'Augusta',
-                      color: aog ? Colors.red : Colors.white)))),
-      MaterialButton(
-          minWidth: 30,
-          onPressed: () {
-            setState(() {
-              lacour = !lacour;
 
-              selectedQuests.clear();
-
-              kingdom.getLands().expand((i) => i).toList().forEach((land) {
-                land.hasResource = false;
-                land.courtierType = null;
-              });
-
-              clearWarnings();
-              checkKingdom();
-
-              updateScores();
-
-              if (selectionMode == SelectionMode.giant) {
-                selectionMode = SelectionMode.crown;
-              }
+            kingdom.getLands().expand((i) => i).toList().forEach((land) {
+              land.giants = 0;
             });
-          },
-          child: Container(
-              child: Text('LC',
-                  style: TextStyle(
-                      fontSize: 25.0,
-                      fontFamily: 'Augusta',
-                      color: lacour ? Colors.red : Colors.white)))),
+
+            switch (newValue) {
+              case '':
+                aog = false;
+                lacour = false;
+                break;
+              case 'Giant':
+                aog = true;
+                if (selectionMode == SelectionMode.giant) {
+                  selectionMode = SelectionMode.crown;
+                }
+                break;
+              case 'Cour':
+                lacour = true;
+                if (selectionMode == SelectionMode.courtier ||
+                    selectionMode == SelectionMode.resource) {
+                  selectionMode = SelectionMode.crown;
+                }
+                break;
+            }
+
+            selectedQuests.clear();
+            clearWarnings();
+            checkKingdom();
+            updateScores();
+          });
+        },
+        items: <String>['', 'Giant', 'Cour']
+            .map<DropdownMenuItem<String>>((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(value),
+          );
+        }).toList(),
+      ),
       QuestDialogWidget(this.getSelectedQuests, this.updateScores, this.getAog),
       IconButton(
           icon: Icon(kingdom.size == 5 ? Icons.filter_5 : Icons.filter_7),
@@ -397,17 +405,18 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
           }),
       IconButton(
           icon: Icon(Icons.help),
-          onPressed: () => showAboutDialog(
-              context: context,
-              applicationName: _packageInfo.appName,
-              applicationVersion: _packageInfo.version,
-              applicationLegalese:
+          onPressed: () =>
+              showAboutDialog(
+                  context: context,
+                  applicationName: _packageInfo.appName,
+                  applicationVersion: _packageInfo.version,
+                  applicationLegalese:
                   '''Drevet Olivier built the Kingdomino Score app under the GPL license Version 3. 
 This SERVICE is provided by Drevet Olivier at no cost and is intended for use as is.
 This page is used to inform visitors regarding the policy with the collection, use, and disclosure of Personal Information if anyone decided to use my Service.
 I will not use or share your information with anyone : Kingdomino Score works offline and does not send any information over a network. ''',
-              applicationIcon: Image.asset(
-                  'android/app/src/main/res/mipmap-mdpi/ic_launcher.png')))
+                  applicationIcon: Image.asset(
+                      'android/app/src/main/res/mipmap-mdpi/ic_launcher.png')))
     ];
 
     if (warnings.isNotEmpty) {
@@ -417,13 +426,14 @@ I will not use or share your information with anyone : Kingdomino Score works of
             children: <Widget>[
               IconButton(
                   icon: Icon(Icons.warning),
-                  onPressed: () => showDialog<void>(
+                  onPressed: () =>
+                      showDialog<void>(
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
                             shape: RoundedRectangleBorder(
                                 borderRadius:
-                                    BorderRadius.all(Radius.circular(20.0))),
+                                BorderRadius.all(Radius.circular(20.0))),
                             content: WarningsWidget(warnings: this.warnings),
                             actions: <Widget>[
                               TextButton(
@@ -483,13 +493,14 @@ I will not use or share your information with anyone : Kingdomino Score works of
                 child: InkWell(
                     child: Text(score.toString(),
                         style: TextStyle(color: Colors.white)),
-                    onTap: () => showDialog<void>(
+                    onTap: () =>
+                        showDialog<void>(
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialog(
                               shape: RoundedRectangleBorder(
                                   borderRadius:
-                                      BorderRadius.all(Radius.circular(20.0))),
+                                  BorderRadius.all(Radius.circular(20.0))),
                               content: ScoreDetailsWidget(
                                   kingdom: this.kingdom,
                                   groupScore: this.groupScore,
@@ -541,7 +552,7 @@ I will not use or share your information with anyone : Kingdomino Score works of
     return Scaffold(
         appBar: AppBar(
           title:
-              Row(mainAxisAlignment: MainAxisAlignment.end, children: actions),
+          Row(mainAxisAlignment: MainAxisAlignment.end, children: actions),
         ),
         bottomNavigationBar: BottomAppBar(
             child: BottomBar(
@@ -561,7 +572,9 @@ I will not use or share your information with anyone : Kingdomino Score works of
               setKingColor: this.setKingColor,
               getKingColor: this.getKingColor,
             ),
-            color: Theme.of(context).primaryColor),
+            color: Theme
+                .of(context)
+                .primaryColor),
         body: body);
   }
 }

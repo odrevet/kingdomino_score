@@ -322,14 +322,14 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
         iconSize: 24,
         elevation: 16,
         iconEnabledColor: Colors.white,
-        iconDisabledColor: Colors.white,
         style: TextStyle(
             fontSize: 25.0,
             fontFamily: 'Augusta',
             color: Colors.white,
             decorationColor: Colors.white),
         underline: Container(
-          height: 3,
+          height: 1,
+          color: Colors.white
         ),
         onChanged: (String? newValue) {
           setState(() {
@@ -349,14 +349,16 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
                 aog = false;
                 lacour = false;
                 break;
-              case 'Giant':
+              case 'Giants':
                 aog = true;
+                lacour = false;
                 if (selectionMode == SelectionMode.giant) {
                   selectionMode = SelectionMode.crown;
                 }
                 break;
-              case 'Cour':
+              case 'LaCour':
                 lacour = true;
+                aog = false;
                 if (selectionMode == SelectionMode.courtier ||
                     selectionMode == SelectionMode.resource) {
                   selectionMode = SelectionMode.crown;
@@ -370,7 +372,7 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
             updateScores();
           });
         },
-        items: <String>['', 'Giant', 'Cour']
+        items: <String>['', 'Giants', 'LaCour']
             .map<DropdownMenuItem<String>>((String value) {
           return DropdownMenuItem<String>(
             value: value,

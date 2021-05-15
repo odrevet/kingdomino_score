@@ -170,7 +170,7 @@ class _BottomBarState extends State<BottomBar> {
             height: _buttonSize,
             width: _buttonSize,
             decoration: BoxDecoration(border: isSelected ? _selectedBorder : this.outline),
-            child: Align(alignment: Alignment.center, child: Text('⬤'))));
+            child: Image.asset('assets/lacour/resource.png')));
   }
 
   Widget courtierButton(CourtierType courtierType) {

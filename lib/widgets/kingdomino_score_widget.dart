@@ -353,11 +353,6 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
         iconSize: 24,
         elevation: 16,
         iconEnabledColor: Colors.white,
-        style: TextStyle(
-            fontSize: 25.0,
-            fontFamily: 'Augusta',
-            color: Colors.white,
-            decorationColor: Colors.white),
         underline: Container(height: 1, color: Colors.white),
         onChanged: (String? newValue) {
           setState(() {

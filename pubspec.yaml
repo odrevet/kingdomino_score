@@ -28,9 +28,6 @@ flutter:
     - assets/lacour/
     - android/app/src/main/res/mipmap-mdpi/ic_launcher.png
   fonts:
-    - family: Augusta
-      fonts:
-        - asset: fonts/Augusta.ttf
     - family: HammersmithOne
       fonts:
         - asset: fonts/HammersmithOne-Regular.ttf

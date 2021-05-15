@@ -323,8 +323,7 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
         iconSize: 24,
         elevation: 16,
         iconEnabledColor: Colors.white,
-        style: TextStyle(decorationColor: Colors.white),
-        underline: Container(height: 1, color: kingColor),
+        underline: Container(height: 1, color: Colors.white),
         onChanged: (Color? newValue) {
           setState(() {
             kingColor = newValue!;
@@ -336,7 +335,7 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
           return DropdownMenuItem<Color>(
             value: value,
             child: ColorFiltered(
-              colorFilter: ColorFilter.mode(value, BlendMode.srcIn),
+              colorFilter: ColorFilter.mode(value, BlendMode.hue),
               child: Image.asset(
                 'assets/king_pawn.png',
                 height: 25,
@@ -346,6 +345,7 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
           );
         }).toList(),
       ),
+      Text(' '),
       // Extension Selector
       DropdownButton<String>(
         value: dropdownValue,

@@ -317,6 +317,36 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
   @override
   Widget build(BuildContext context) {
     var actions = <Widget>[
+      // King Color selector
+      DropdownButton<Color>(
+        value: kingColor,
+        iconSize: 24,
+        elevation: 16,
+        iconEnabledColor: Colors.white,
+        style: TextStyle(decorationColor: Colors.white),
+        underline: Container(height: 1, color: kingColor),
+        onChanged: (Color? newValue) {
+          setState(() {
+            kingColor = newValue!;
+          });
+          setKingColor(kingColor);
+        },
+        items: kingColors
+            .map<DropdownMenuItem<Color>>((Color value) {
+          return DropdownMenuItem<Color>(
+            value: value,
+            child: ColorFiltered(
+              colorFilter: ColorFilter.mode(value, BlendMode.srcIn),
+              child: Image.asset(
+                'assets/king_pawn.png',
+                height: 25,
+                width: 25,
+              ),
+            ),
+          );
+        }).toList(),
+      ),
+      // Extension Selector
       DropdownButton<String>(
         value: dropdownValue,
         icon: const Icon(Icons.extension),

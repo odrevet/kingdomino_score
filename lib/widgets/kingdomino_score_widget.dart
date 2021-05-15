@@ -372,9 +372,22 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
         },
         items: <String>['', 'Giants', 'LaCour']
             .map<DropdownMenuItem<String>>((String value) {
+          Widget child;
+
+          if (value == 'Giants') {
+            child = Text(giant);
+          } else if (value == 'LaCour') {
+            child = Image.asset(
+              'assets/lacour/resource.png',
+              height: 25,
+              width: 25,
+            );
+          } else {
+            child = Text('');
+          }
           return DropdownMenuItem<String>(
             value: value,
-            child: Text(value),
+            child: child,
           );
         }).toList(),
       ),

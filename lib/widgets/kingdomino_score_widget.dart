@@ -516,7 +516,9 @@ I will not use or share your information with anyone : Kingdomino Score works of
                                   groupScore: this.groupScore,
                                   quests: this.selectedQuests,
                                   score: this.score,
-                                  scoreOfQuest: this.scoreOfQuest),
+                                  scoreOfQuest: this.scoreOfQuest,
+                                  scoreOfLacour: this.scoreOfLacour,
+                                  getLacour: this.getLacour),
                               actions: <Widget>[
                                 TextButton(
                                   child: Icon(

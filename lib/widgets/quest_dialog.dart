@@ -130,6 +130,7 @@ class _QuestDialogWidgetState extends State<QuestDialogWidget> {
     var button = IconButton(
         // Use the MdiIcons class for the IconData
         icon: Icon(Icons.shield),
+        color: Colors.white,
         onPressed: () => showDialog(
               context: context,
               builder: (BuildContext context) {

@@ -417,6 +417,7 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
       ),
       QuestDialogWidget(this.getSelectedQuests, this.updateScores, this.getAog),
       IconButton(
+          color: Colors.white,
           icon: Icon(kingdom.size == 5 ? Icons.filter_5 : Icons.filter_7),
           onPressed: () {
             setState(() {
@@ -431,6 +432,7 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
             });
           }),
       IconButton(
+          color: Colors.white,
           icon: Icon(Icons.delete),
           onPressed: () {
             setState(() {
@@ -441,6 +443,7 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
             });
           }),
       IconButton(
+          color: Colors.white,
           icon: Icon(Icons.help),
           onPressed: () => showAboutDialog(
               context: context,
@@ -461,6 +464,7 @@ I will not use or share your information with anyone : Kingdomino Score works of
           Stack(
             children: <Widget>[
               IconButton(
+                color: Colors.white,
                   icon: Icon(Icons.warning),
                   onPressed: () => showDialog<void>(
                         context: context,

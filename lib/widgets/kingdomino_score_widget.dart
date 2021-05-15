@@ -312,7 +312,7 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
     });
   }
 
-  String dropdownValue = '';
+  String dropdownSelectedExtension = '';
 
   @override
   Widget build(BuildContext context) {
@@ -320,8 +320,7 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
       // King Color selector
       DropdownButton<Color>(
         value: kingColor,
-        iconSize: 24,
-        elevation: 16,
+        iconSize: 25,
         iconEnabledColor: Colors.white,
         underline: Container(height: 1, color: Colors.white),
         onChanged: (Color? newValue) {
@@ -348,15 +347,15 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
       Text(' '),
       // Extension Selector
       DropdownButton<String>(
-        value: dropdownValue,
+        value: dropdownSelectedExtension,
         icon: const Icon(Icons.extension),
-        iconSize: 24,
+        iconSize: 25,
         elevation: 16,
         iconEnabledColor: Colors.white,
         underline: Container(height: 1, color: Colors.white),
         onChanged: (String? newValue) {
           setState(() {
-            dropdownValue = newValue!;
+            dropdownSelectedExtension = newValue!;
 
             kingdom.getLands().expand((i) => i).toList().forEach((land) {
               land.hasResource = false;
@@ -568,7 +567,9 @@ I will not use or share your information with anyone : Kingdomino Score works of
                   groupScore: this.groupScore,
                   quests: this.selectedQuests,
                   score: this.score,
-                  scoreOfQuest: this.scoreOfQuest)),
+                  scoreOfQuest: this.scoreOfQuest,
+                  scoreOfLacour: this.scoreOfLacour,
+                  getLacour: this.getLacour)),
           KingdomWidget(
               getSelectionMode: this.getSelectionMode,
               getSelectedLandType: this.getSelectedLandType,

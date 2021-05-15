@@ -169,8 +169,10 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
   }
 
   Map<LandType, Map<String, dynamic>> getGameSet() {
-    if (aog == false) {
-      return gameSet;
+    if (aog == true) {
+      return gameAogSet;
+    } else if (lacour == true) {
+      return laCourGameSet;
     } else {
       return gameAogSet;
     }
@@ -319,6 +321,8 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
     });
   }
 
+  String dropdownValue = '';
+
   @override
   Widget build(BuildContext context) {
     var actions = <Widget>[
@@ -329,61 +333,110 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
               cameraMode = !cameraMode;
             });
           }),
-      MaterialButton(
-          minWidth: 30,
-          onPressed: () {
-            setState(() {
-              aog = !aog;
-              selectedQuests.clear();
-              kingdom.getLands().expand((i) => i).toList().forEach((land) {
-                land.giants = 0;
-              });
+      // King Color selector
+      DropdownButton<Color>(
+        value: kingColor,
+        iconSize: 24,
+        elevation: 16,
+        iconEnabledColor: Colors.white,
+        underline: Container(height: 1, color: Colors.white),
+        onChanged: (Color? newValue) {
+          setState(() {
+            kingColor = newValue!;
+          });
+          setKingColor(kingColor);
+        },
+        items: kingColors
+            .map<DropdownMenuItem<Color>>((Color value) {
+          return DropdownMenuItem<Color>(
+            value: value,
+            child: ColorFiltered(
+              colorFilter: ColorFilter.mode(value, BlendMode.hue),
+              child: Image.asset(
+                'assets/king_pawn.png',
+                height: 25,
+                width: 25,
+              ),
+            ),
+          );
+        }).toList(),
+      ),
+      Text(' '),
+      // Extension Selector
+      DropdownButton<String>(
+        value: dropdownValue,
+        icon: const Icon(Icons.extension),
+        iconSize: 24,
+        elevation: 16,
+        iconEnabledColor: Colors.white,
+        style: TextStyle(
+            fontSize: 25.0,
+            fontFamily: 'Augusta',
+            color: Colors.white,
+            decorationColor: Colors.white),
+        underline: Container(height: 1, color: Colors.white),
+        onChanged: (String? newValue) {
+          setState(() {
+            dropdownValue = newValue!;
 
-              clearWarnings();
-              checkKingdom();
-
-              updateScores();
-
-              if (selectionMode == SelectionMode.giant) {
-                selectionMode = SelectionMode.crown;
-              }
+            kingdom.getLands().expand((i) => i).toList().forEach((land) {
+              land.hasResource = false;
+              land.courtierType = null;
             });
-          },
-          child: Container(
-              child: Text('AG',
-                  style: TextStyle(
-                      fontSize: 25.0,
-                      fontFamily: 'Augusta',
-                      color: aog ? Colors.red : Colors.white)))),
-      MaterialButton(
-          minWidth: 30,
-          onPressed: () {
-            setState(() {
-              lacour = !lacour;
 
-              selectedQuests.clear();
-
-              kingdom.getLands().expand((i) => i).toList().forEach((land) {
-                land.hasResource = false;
-                land.courtierType = null;
-              });
-
-              clearWarnings();
-              checkKingdom();
-
-              updateScores();
-
-              if (selectionMode == SelectionMode.giant) {
-                selectionMode = SelectionMode.crown;
-              }
+            kingdom.getLands().expand((i) => i).toList().forEach((land) {
+              land.giants = 0;
             });
-          },
-          child: Container(
-              child: Text('LC',
-                  style: TextStyle(
-                      fontSize: 25.0,
-                      fontFamily: 'Augusta',
-                      color: lacour ? Colors.red : Colors.white)))),
+
+            switch (newValue) {
+              case '':
+                aog = false;
+                lacour = false;
+                break;
+              case 'Giants':
+                aog = true;
+                lacour = false;
+                if (selectionMode == SelectionMode.giant) {
+                  selectionMode = SelectionMode.crown;
+                }
+                break;
+              case 'LaCour':
+                lacour = true;
+                aog = false;
+                if (selectionMode == SelectionMode.courtier ||
+                    selectionMode == SelectionMode.resource) {
+                  selectionMode = SelectionMode.crown;
+                }
+                break;
+            }
+
+            selectedQuests.clear();
+            clearWarnings();
+            checkKingdom();
+            updateScores();
+          });
+        },
+        items: <String>['', 'Giants', 'LaCour']
+            .map<DropdownMenuItem<String>>((String value) {
+          Widget child;
+
+          if (value == 'Giants') {
+            child = Text(giant);
+          } else if (value == 'LaCour') {
+            child = Image.asset(
+              'assets/lacour/resource.png',
+              height: 25,
+              width: 25,
+            );
+          } else {
+            child = Text('');
+          }
+          return DropdownMenuItem<String>(
+            value: value,
+            child: child,
+          );
+        }).toList(),
+      ),
       QuestDialogWidget(this.getSelectedQuests, this.updateScores, this.getAog),
       IconButton(
           icon: Icon(kingdom.size == 5 ? Icons.filter_5 : Icons.filter_7),
@@ -416,7 +469,7 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
               applicationName: _packageInfo.appName,
               applicationVersion: _packageInfo.version,
               applicationLegalese:
-                  '''Drevet Olivier built the Kingdomino Score app under the GPL license Version 3. 
+              '''Drevet Olivier built the Kingdomino Score app under the GPL license Version 3. 
 This SERVICE is provided by Drevet Olivier at no cost and is intended for use as is.
 This page is used to inform visitors regarding the policy with the collection, use, and disclosure of Personal Information if anyone decided to use my Service.
 I will not use or share your information with anyone : Kingdomino Score works offline and does not send any information over a network. ''',
@@ -536,7 +589,9 @@ I will not use or share your information with anyone : Kingdomino Score works of
                                   groupScore: this.groupScore,
                                   quests: this.selectedQuests,
                                   score: this.score,
-                                  scoreOfQuest: this.scoreOfQuest),
+                                  scoreOfQuest: this.scoreOfQuest,
+                                  scoreOfLacour: this.scoreOfLacour,
+                                  getLacour: this.getLacour),
                               actions: <Widget>[
                                 TextButton(
                                   child: Icon(

@@ -1,7 +1,7 @@
 name: kingdomino_score_count
 description: Calculate your Kingdomino score easly
 
-version: 2.1.0+15
+version: 2.2.0+16
 
 environment:
   sdk: '>=2.12.0 <3.0.0'
@@ -32,6 +32,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/
+    - assets/quests/
     - assets/lacour/
     - assets/tiles/
     - assets/histograms/

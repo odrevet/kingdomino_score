@@ -11,13 +11,17 @@ class ScoreDetailsWidget extends StatelessWidget {
   final quests;
   final score;
   final scoreOfQuest;
+  final scoreOfLacour;
+  final getLacour;
 
   ScoreDetailsWidget(
       {this.kingdom,
       this.groupScore,
       this.quests,
       this.score,
-      this.scoreOfQuest});
+      this.scoreOfQuest,
+      this.scoreOfLacour,
+      this.getLacour});
 
   @override
   Widget build(BuildContext context) {
@@ -104,6 +108,39 @@ class ScoreDetailsWidget extends StatelessWidget {
             child: Align(
                 alignment: Alignment.centerRight,
                 child: AutoSizeText(scoreOfQuest.toString(),
+                    maxLines: 1, group: groupScore))));
+
+        var tableRow = TableRow(children: tableCells);
+        tableRows.add(tableRow);
+      }
+
+      // lacour points
+      if (getLacour() == true) {
+        var tableCells = <TableCell>[];
+
+        tableCells.add(TableCell(child: AutoSizeText('')));
+        tableCells.add(TableCell(child: AutoSizeText('')));
+        tableCells.add(TableCell(child: AutoSizeText('')));
+        tableCells.add(TableCell(child: AutoSizeText('')));
+
+        tableCells.add(TableCell(
+            child: Align(
+                alignment: Alignment.centerRight,
+                child: Image.asset(
+                  'assets/lacour/resource.png',
+                  height: 25,
+                  width: 25,
+                ))));
+
+        tableCells.add(TableCell(
+            child: Align(
+                alignment: Alignment.center,
+                child: AutoSizeText('=', maxLines: 1, group: groupScore))));
+
+        tableCells.add(TableCell(
+            child: Align(
+                alignment: Alignment.centerRight,
+                child: AutoSizeText(scoreOfLacour.toString(),
                     maxLines: 1, group: groupScore))));
 
         var tableRow = TableRow(children: tableCells);

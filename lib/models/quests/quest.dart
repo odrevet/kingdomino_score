@@ -1,5 +1,3 @@
-import 'package:flutter_svg/flutter_svg.dart';
-
 import '../kingdom.dart';
 
 enum QuestType {
@@ -28,27 +26,24 @@ abstract class Quest {
   int? getPoints(Kingdom kingdom);
 }
 
-Map<QuestType, SvgPicture> questPicture = {
-  QuestType.harmony: SvgPicture.asset('assets/harmony.svg'),
-  QuestType.middleKingdom: SvgPicture.asset('assets/middleKingdom.svg'),
-  QuestType.lostCorner: SvgPicture.asset('assets/lostCorner.svg'),
-  QuestType.bleakKing: SvgPicture.asset('assets/bleakKing.svg'),
-  QuestType.folieDesGrandeurs: SvgPicture.asset('assets/folieDesGrandeurs.svg'),
-  QuestType.fourCornersWheat: SvgPicture.asset('assets/fourCornersWheat.svg'),
-  QuestType.fourCornersLake: SvgPicture.asset('assets/fourCornersLake.svg'),
-  QuestType.fourCornersForest: SvgPicture.asset('assets/fourCornersForest.svg'),
-  QuestType.fourCornersGrassLand:
-      SvgPicture.asset('assets/fourCornersGrassLand.svg'),
-  QuestType.fourCornersSwamp: SvgPicture.asset('assets/fourCornersSwamp.svg'),
-  QuestType.fourCornersMine: SvgPicture.asset('assets/fourCornersMine.svg'),
-  QuestType.localBusinessWheat:
-      SvgPicture.asset('assets/localBusinessWheat.svg'),
-  QuestType.localBusinessLake: SvgPicture.asset('assets/localBusinessLake.svg'),
-  QuestType.localBusinessForest:
-      SvgPicture.asset('assets/localBusinessForest.svg'),
-  QuestType.localBusinessGrassLand:
-      SvgPicture.asset('assets/localBusinessGrassLand.svg'),
-  QuestType.localBusinessSwamp:
-      SvgPicture.asset('assets/localBusinessSwamp.svg'),
-  QuestType.localBusinessMine: SvgPicture.asset('assets/localBusinessMine.svg'),
+String assetsquestsLocation = 'assets/quests';
+
+Map<QuestType, String> questPicture = {
+  QuestType.harmony: 'harmony.svg',
+  QuestType.middleKingdom: 'middleKingdom.svg',
+  QuestType.lostCorner: 'lostCorner.svg',
+  QuestType.bleakKing: 'bleakKing.svg',
+  QuestType.folieDesGrandeurs: 'folieDesGrandeurs.svg',
+  QuestType.fourCornersWheat: 'fourCornersWheat.svg',
+  QuestType.fourCornersLake: 'fourCornersLake.svg',
+  QuestType.fourCornersForest: 'fourCornersForest.svg',
+  QuestType.fourCornersGrassLand: 'fourCornersGrassLand.svg',
+  QuestType.fourCornersSwamp: 'fourCornersSwamp.svg',
+  QuestType.fourCornersMine: 'fourCornersMine.svg',
+  QuestType.localBusinessWheat: 'localBusinessWheat.svg',
+  QuestType.localBusinessLake: 'localBusinessLake.svg',
+  QuestType.localBusinessForest: 'localBusinessForest.svg',
+  QuestType.localBusinessGrassLand: 'localBusinessGrassLand.svg',
+  QuestType.localBusinessSwamp: 'localBusinessSwamp.svg',
+  QuestType.localBusinessMine: 'localBusinessMine.svg',
 };

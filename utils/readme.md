@@ -12,14 +12,21 @@ To preload the app the pre-calculated histogram
 ## Calculate score
 
 To test which method to use for histogram compare
+Will compare and print scores of base_image with every jpg from 0 to tile_nb in tile_directory
+Arguments : base_image tile_directory tile_nb
 
-
+* build
   g++ calculate_score.cpp `pkg-config --cflags --libs opencv4` -o calculate_score
-  ./calculate_score camera_01.jpg
 
+
+* usage example
+
+  ./calculate_score input/camera/30.jpg input/scan 23
 
 # Split to tiles
 
-A picture can be split into tiles using image magic
+Tiles are created from scan or phone camera as input for tests.
+
+A picture can be split into tiles using image magic convert:
 
   convert input/camera_0.jpg -crop 438x367 %02d.jpg

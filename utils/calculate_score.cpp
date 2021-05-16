@@ -38,14 +38,14 @@ Mat img_to_hist(string imgpath)
   return hist;
 }
 
-std::vector<std::array<double, 4> > calculate_scores(string path_base) {
-  Mat hist_base = img_to_hist(path_base);
+std::vector<std::array<double, 4> > calculate_scores(string img_base, string tile_directory, int tile_nb) {
+  Mat hist_base = img_to_hist(img_base);
 
   // Score computation
   std::vector<std::array<double, 4> > vec_scores;
-  for(int index_tile = 0; index_tile <= 95; index_tile++)
+  for(int index_tile = 0; index_tile <= tile_nb; index_tile++)
     {
-      string tile_path = "tiles/" + std::to_string(index_tile) + ".jpg";
+      string tile_path = tile_directory + "/" + std::to_string(index_tile) + ".jpg";
       Mat hist_tile = img_to_hist(tile_path);
 
       std::array<double, 4> methods_score;
@@ -90,7 +90,11 @@ int mostFrequent(int arr[], int n)
 
 int main(int argc, char* argv[])
 {
-  std::vector<std::array<double, 4> > scores = calculate_scores(argv[1]);
+  string img_base(argv[1]);
+  string tile_directory(argv[2]);
+  int tile_nb = atoi(argv[3]);
+
+  std::vector<std::array<double, 4> > scores = calculate_scores(img_base, tile_directory, tile_nb);
 
   int index = 0;
 

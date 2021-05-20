@@ -5,16 +5,8 @@ import '../models/lacour/lacour.dart';
 import '../models/land.dart';
 import 'kingdomino_score_widget.dart';
 
-Set<Color> kingColors = Set.from([
-  Colors.yellow.shade800,
-  Colors.blue.shade800,
-  Colors.green.shade800,
-  Colors.pink.shade800,
-  Colors.brown.shade800 // AoG only
-]);
-
 class CastleWidget extends StatelessWidget {
-  Color? kingColor;
+  Color kingColor;
 
   CastleWidget(this.kingColor);
 

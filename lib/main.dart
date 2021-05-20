@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'models/king_colors.dart';
 import 'widgets/kingdomino_score_widget.dart';
 
 void main() {
@@ -12,15 +13,11 @@ class KingdominoScore extends StatefulWidget {
 }
 
 class _KingdominoScoreState extends State<KingdominoScore> {
-  Color primaryColor = Colors.blueGrey;
+  Color primaryColor = kingColors.first;
 
-  setColor(Color? color) {
+  setColor(Color color) {
     setState(() {
-      if (color == null) {
-        this.primaryColor = Colors.blueGrey;
-      } else {
-        this.primaryColor = color;
-      }
+      this.primaryColor = color;
     });
   }
 

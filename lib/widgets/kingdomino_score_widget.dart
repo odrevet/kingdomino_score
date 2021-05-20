@@ -19,6 +19,7 @@ import 'package:package_info/package_info.dart';
 
 import '../models/age_of_giants.dart';
 import '../models/kingdom.dart';
+import '../models/king_colors.dart';
 import '../models/land.dart' show LandType;
 import '../models/quests/quest.dart';
 import '../models/warning.dart';
@@ -89,7 +90,7 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
   int scoreOfQuest = 0;
   int scoreOfLacour = 0;
   int score = 0;
-  Color? kingColor;
+  Color kingColor = kingColors.first;
   bool aog = false; // Age of Giants extension
   bool lacour = false;
   HashSet<QuestType> selectedQuests = HashSet();
@@ -140,16 +141,12 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
 
   SelectionMode getSelectionMode() => selectionMode;
 
-  Color? getKingColor() => kingColor;
+  Color getKingColor() => kingColor;
 
-  setKingColor(Color? color) {
+  setKingColor(Color color) {
     this.setColor(color); // set App color to king color
-
-    if (color == null) {
-      color = Colors.white;
-    }
     setState(() {
-      this.kingColor = color!;
+      this.kingColor = color;
     });
   }
 
@@ -329,8 +326,7 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
           });
           setKingColor(kingColor);
         },
-        items: kingColors
-            .map<DropdownMenuItem<Color>>((Color value) {
+        items: kingColors.map<DropdownMenuItem<Color>>((Color value) {
           return DropdownMenuItem<Color>(
             value: value,
             child: ColorFiltered(
@@ -370,6 +366,8 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
               case '':
                 aog = false;
                 lacour = false;
+                kingColors.remove(Colors.brown.shade800);
+                setKingColor(kingColors.first);
                 break;
               case 'Giants':
                 aog = true;
@@ -377,6 +375,8 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
                 if (selectionMode == SelectionMode.giant) {
                   selectionMode = SelectionMode.crown;
                 }
+
+                kingColors.add(Colors.brown.shade800);
                 break;
               case 'LaCour':
                 lacour = true;
@@ -385,6 +385,8 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
                     selectionMode == SelectionMode.resource) {
                   selectionMode = SelectionMode.crown;
                 }
+                kingColors.remove(Colors.brown.shade800);
+                setKingColor(kingColors.first);
                 break;
             }
 
@@ -464,7 +466,7 @@ I will not use or share your information with anyone : Kingdomino Score works of
           Stack(
             children: <Widget>[
               IconButton(
-                color: Colors.white,
+                  color: Colors.white,
                   icon: Icon(Icons.warning),
                   onPressed: () => showDialog<void>(
                         context: context,

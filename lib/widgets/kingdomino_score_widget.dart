@@ -367,7 +367,9 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
                 aog = false;
                 lacour = false;
                 kingColors.remove(Colors.brown.shade800);
-                setKingColor(kingColors.first);
+                if(kingColor == Colors.brown.shade800){
+                  setKingColor(kingColors.first);
+                }
                 break;
               case 'Giants':
                 aog = true;
@@ -386,7 +388,9 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
                   selectionMode = SelectionMode.crown;
                 }
                 kingColors.remove(Colors.brown.shade800);
-                setKingColor(kingColors.first);
+                if(kingColor == Colors.brown.shade800){
+                  setKingColor(kingColors.first);
+                }
                 break;
             }
 

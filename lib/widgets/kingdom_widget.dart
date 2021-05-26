@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../models/age_of_giants.dart';
 import '../models/lacour/lacour.dart';
 import '../models/land.dart';
+import '../models/kingdom.dart';
 import 'kingdomino_score_widget.dart';
 
 class CastleWidget extends StatelessWidget {
@@ -20,13 +21,13 @@ class CastleWidget extends StatelessWidget {
 
 class KingdomWidget extends StatefulWidget {
   KingdomWidget(
-      {this.getSelectionMode,
-      this.getSelectedLandType,
-      this.getSelectedCourtierType,
-      this.getGameSet,
-      this.calculateScore,
-      this.kingdom,
-      this.getKingColor});
+      {required Function this.getSelectionMode,
+      required Function this.getSelectedLandType,
+      required Function this.getSelectedCourtierType,
+      required Function this.getGameSet,
+      required Function this.calculateScore,
+      required Kingdom this.kingdom,
+      required Function this.getKingColor});
 
   final getSelectionMode;
   final getSelectedLandType;
@@ -57,13 +58,13 @@ class _KingdomWidgetState extends State<KingdomWidget> {
   final getKingColor;
 
   _KingdomWidgetState(
-      {this.getSelectionMode,
-      this.getSelectedLandType,
-      this.getSelectedCourtierType,
-      this.getGameSet,
-      this.calculateScore,
-      this.kingdom,
-      this.getKingColor});
+      {required Function this.getSelectionMode,
+      required Function this.getSelectedLandType,
+      required Function this.getSelectedCourtierType,
+      required Function this.getGameSet,
+      required Function this.calculateScore,
+      required Kingdom this.kingdom,
+      required Function this.getKingColor});
 
   void _onLandTap(int x, int y) {
     Land? land = kingdom.getLand(x, y);
@@ -109,7 +110,7 @@ class _KingdomWidgetState extends State<KingdomWidget> {
             LandType.swamp
           ].contains(land!.landType)) {
             CourtierType courtierType = getSelectedCourtierType();
-            if(land.courtierType == courtierType){
+            if (land.courtierType == courtierType) {
               land.courtierType = null;
               break;
             }
@@ -154,10 +155,9 @@ class _KingdomWidgetState extends State<KingdomWidget> {
       child = Container(
         padding: const EdgeInsets.all(10.0),
         decoration: new BoxDecoration(
-            color: getColorForLandType(land.landType),
+          color: getColorForLandType(land.landType),
         ),
-        child: Image(
-            image: AssetImage(courtierPicture[land.courtierType]!)),
+        child: Image(image: AssetImage(courtierPicture[land.courtierType]!)),
       );
     } else {
       if (land.crowns > 0) {
@@ -167,23 +167,24 @@ class _KingdomWidgetState extends State<KingdomWidget> {
           color: getColorForLandType(land.landType),
           child: LayoutBuilder(
               builder: (BuildContext context, BoxConstraints constraints) {
-                return Text(text,
-                    style: TextStyle(fontSize: constraints.maxWidth / 3));
-              }),
+            return Text(text,
+                style: TextStyle(fontSize: constraints.maxWidth / 3));
+          }),
         );
       } else if (land.hasResource) {
         child = Container(
           color: getColorForLandType(land.landType),
           child: LayoutBuilder(
               builder: (BuildContext context, BoxConstraints constraints) {
-                return Align(
-                  child: Text('⬤',
-                      style: TextStyle(fontSize: constraints.maxWidth / 2, color: getResourceColorForLandType(land.landType))),
-                );
-              }),
+            return Align(
+              child: Text('⬤',
+                  style: TextStyle(
+                      fontSize: constraints.maxWidth / 2,
+                      color: getResourceColorForLandType(land.landType))),
+            );
+          }),
         );
-      }
-      else{
+      } else {
         child = Container(
           color: getColorForLandType(land.landType),
         );

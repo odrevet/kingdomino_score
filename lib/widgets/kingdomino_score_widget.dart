@@ -315,32 +315,35 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
   @override
   Widget build(BuildContext context) {
     var actions = <Widget>[
-      // King Color selector
-      DropdownButton<Color>(
-        value: kingColor,
-        iconSize: 25,
-        iconEnabledColor: Colors.white,
-        underline: Container(height: 1, color: Colors.white),
-        onChanged: (Color? newValue) {
-          setState(() {
-            kingColor = newValue!;
-          });
-          setKingColor(kingColor);
-        },
-        items: kingColors.map<DropdownMenuItem<Color>>((Color value) {
-          return DropdownMenuItem<Color>(
-            value: value,
-            child: ColorFiltered(
-              colorFilter: ColorFilter.mode(value, BlendMode.hue),
-              child: Image.asset(
-                'assets/king_pawn.png',
-                height: 25,
-                width: 25,
-              ),
-            ),
-          );
-        }).toList(),
-      ),
+      !kIsWeb
+          ?
+          // King Color selector
+          DropdownButton<Color>(
+              value: kingColor,
+              iconSize: 25,
+              iconEnabledColor: Colors.white,
+              underline: Container(height: 1, color: Colors.white),
+              onChanged: (Color? newValue) {
+                setState(() {
+                  kingColor = newValue!;
+                });
+                setKingColor(kingColor);
+              },
+              items: kingColors.map<DropdownMenuItem<Color>>((Color value) {
+                return DropdownMenuItem<Color>(
+                  value: value,
+                  child: ColorFiltered(
+                    colorFilter: ColorFilter.mode(value, BlendMode.hue),
+                    child: Image.asset(
+                      'assets/king_pawn.png',
+                      height: 25,
+                      width: 25,
+                    ),
+                  ),
+                );
+              }).toList(),
+            )
+          : Text(''),
       Text(' '),
       // Extension Selector
       DropdownButton<String>(
@@ -368,7 +371,7 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
                 aog = false;
                 lacour = false;
                 kingColors.remove(Colors.brown.shade800);
-                if(kingColor == Colors.brown.shade800){
+                if (kingColor == Colors.brown.shade800) {
                   setKingColor(kingColors.first);
                 }
                 break;
@@ -389,7 +392,7 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
                   selectionMode = SelectionMode.crown;
                 }
                 kingColors.remove(Colors.brown.shade800);
-                if(kingColor == Colors.brown.shade800){
+                if (kingColor == Colors.brown.shade800) {
                   setKingColor(kingColors.first);
                 }
                 break;

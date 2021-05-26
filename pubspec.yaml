@@ -1,7 +1,7 @@
 name: kingdomino_score_count
 description: Calculate your Kingdomino score easly
 
-version: 2.2.0+16
+version: 2.2.1+17
 
 environment:
   sdk: '>=2.12.0 <3.0.0'

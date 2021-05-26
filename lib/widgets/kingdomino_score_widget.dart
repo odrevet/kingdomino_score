@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
@@ -453,8 +454,8 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
           icon: Icon(Icons.help),
           onPressed: () => showAboutDialog(
               context: context,
-              applicationName: _packageInfo.appName,
-              applicationVersion: _packageInfo.version,
+              applicationName: 'Kingdomino Score',
+              applicationVersion: kIsWeb ? 'Web Build' : _packageInfo.version,
               applicationLegalese:
                   '''Drevet Olivier built the Kingdomino Score app under the GPL license Version 3. 
 This SERVICE is provided by Drevet Olivier at no cost and is intended for use as is.

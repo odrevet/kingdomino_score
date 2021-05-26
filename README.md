@@ -41,8 +41,6 @@ Each land type has it's own color :
 
 The castle position may change the score when quests are activated.
 
-Long press the castle button opens the color select dialog (this is optional and never changes the score).
-
 * Crown : Place / remove crowns
 * Giant (when Aog is activated) : Place / remove giants.
 

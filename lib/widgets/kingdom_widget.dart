@@ -177,7 +177,7 @@ class _KingdomWidgetState extends State<KingdomWidget> {
           child: LayoutBuilder(
               builder: (BuildContext context, BoxConstraints constraints) {
             return Align(
-              child: Text('⬤',
+              child: Text('⚫',
                   style: TextStyle(
                       fontSize: constraints.maxWidth / 2,
                       color: getResourceColorForLandType(land.landType))),

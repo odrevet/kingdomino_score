@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 import '../models/age_of_giants.dart';
 import '../models/lacour/lacour.dart';
@@ -59,12 +60,12 @@ class _KingdomWidgetState extends State<KingdomWidget> {
 
   _KingdomWidgetState(
       {required Function this.getSelectionMode,
-      required Function this.getSelectedLandType,
-      required Function this.getSelectedCourtierType,
-      required Function this.getGameSet,
-      required Function this.calculateScore,
-      required Kingdom this.kingdom,
-      required Function this.getKingColor});
+        required Function this.getSelectedLandType,
+        required Function this.getSelectedCourtierType,
+        required Function this.getGameSet,
+        required Function this.calculateScore,
+        required Kingdom this.kingdom,
+        required Function this.getKingColor});
 
   void _onLandTap(int x, int y) {
     Land? land = kingdom.getLand(x, y);
@@ -177,7 +178,7 @@ class _KingdomWidgetState extends State<KingdomWidget> {
           child: LayoutBuilder(
               builder: (BuildContext context, BoxConstraints constraints) {
             return Align(
-              child: Text('⚫',
+              child: Text(kIsWeb ? '⚫' : '⬤',
                   style: TextStyle(
                       fontSize: constraints.maxWidth / 2,
                       color: getResourceColorForLandType(land.landType))),

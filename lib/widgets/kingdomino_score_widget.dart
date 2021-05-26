@@ -587,6 +587,7 @@ I will not use or share your information with anyone : Kingdomino Score works of
           KingdomWidget(
               getSelectionMode: this.getSelectionMode,
               getSelectedLandType: this.getSelectedLandType,
+              getSelectedCourtierType: this.getSelectedCourtierType,
               getGameSet: this.getGameSet,
               calculateScore: this.calculateScore,
               kingdom: this.kingdom,

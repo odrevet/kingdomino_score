@@ -1,5 +1,6 @@
 import 'dart:collection';
 import 'dart:io';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,7 @@ import 'package:package_info/package_info.dart';
 
 import '../models/age_of_giants.dart';
 import '../models/kingdom.dart';
+import '../models/king_colors.dart';
 import '../models/land.dart' show LandType;
 import '../models/quests/quest.dart';
 import '../models/warning.dart';
@@ -95,7 +97,7 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
   int scoreOfQuest = 0;
   int scoreOfLacour = 0;
   int score = 0;
-  Color? kingColor;
+  Color kingColor = kingColors.first;
   bool aog = false; // Age of Giants extension
   bool lacour = false;
   HashSet<QuestType> selectedQuests = HashSet();
@@ -149,16 +151,12 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
 
   SelectionMode getSelectionMode() => selectionMode;
 
-  Color? getKingColor() => kingColor;
+  Color getKingColor() => kingColor;
 
-  setKingColor(Color? color) {
+  setKingColor(Color color) {
     this.setColor(color); // set App color to king color
-
-    if (color == null) {
-      color = Colors.white;
-    }
     setState(() {
-      this.kingColor = color!;
+      this.kingColor = color;
     });
   }
 
@@ -333,33 +331,35 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
               cameraMode = !cameraMode;
             });
           }),
-      // King Color selector
-      DropdownButton<Color>(
-        value: kingColor,
-        iconSize: 25,
-        iconEnabledColor: Colors.white,
-        underline: Container(height: 1, color: Colors.white),
-        onChanged: (Color? newValue) {
-          setState(() {
-            kingColor = newValue!;
-          });
-          setKingColor(kingColor);
-        },
-        items: kingColors
-            .map<DropdownMenuItem<Color>>((Color value) {
-          return DropdownMenuItem<Color>(
-            value: value,
-            child: ColorFiltered(
-              colorFilter: ColorFilter.mode(value, BlendMode.hue),
-              child: Image.asset(
-                'assets/king_pawn.png',
-                height: 25,
-                width: 25,
-              ),
-            ),
-          );
-        }).toList(),
-      ),
+      !kIsWeb
+          ?
+          // King Color selector
+          DropdownButton<Color>(
+              value: kingColor,
+              iconSize: 25,
+              iconEnabledColor: Colors.white,
+              underline: Container(height: 1, color: Colors.white),
+              onChanged: (Color? newValue) {
+                setState(() {
+                  kingColor = newValue!;
+                });
+                setKingColor(kingColor);
+              },
+              items: kingColors.map<DropdownMenuItem<Color>>((Color value) {
+                return DropdownMenuItem<Color>(
+                  value: value,
+                  child: ColorFiltered(
+                    colorFilter: ColorFilter.mode(value, BlendMode.hue),
+                    child: Image.asset(
+                      'assets/king_pawn.png',
+                      height: 25,
+                      width: 25,
+                    ),
+                  ),
+                );
+              }).toList(),
+            )
+          : Text(''),
       Text(' '),
       // Extension Selector
       DropdownButton<String>(
@@ -386,6 +386,10 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
               case '':
                 aog = false;
                 lacour = false;
+                kingColors.remove(Colors.brown.shade800);
+                if (kingColor == Colors.brown.shade800) {
+                  setKingColor(kingColors.first);
+                }
                 break;
               case 'Giants':
                 aog = true;
@@ -393,6 +397,8 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
                 if (selectionMode == SelectionMode.giant) {
                   selectionMode = SelectionMode.crown;
                 }
+
+                kingColors.add(Colors.brown.shade800);
                 break;
               case 'LaCour':
                 lacour = true;
@@ -400,6 +406,10 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
                 if (selectionMode == SelectionMode.courtier ||
                     selectionMode == SelectionMode.resource) {
                   selectionMode = SelectionMode.crown;
+                }
+                kingColors.remove(Colors.brown.shade800);
+                if (kingColor == Colors.brown.shade800) {
+                  setKingColor(kingColors.first);
                 }
                 break;
             }
@@ -463,8 +473,8 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
           icon: Icon(Icons.help),
           onPressed: () => showAboutDialog(
               context: context,
-              applicationName: _packageInfo.appName,
-              applicationVersion: _packageInfo.version,
+              applicationName: 'Kingdomino Score',
+              applicationVersion: kIsWeb ? 'Web Build' : _packageInfo.version,
               applicationLegalese:
               '''Drevet Olivier built the Kingdomino Score app under the GPL license Version 3. 
 This SERVICE is provided by Drevet Olivier at no cost and is intended for use as is.
@@ -480,7 +490,7 @@ I will not use or share your information with anyone : Kingdomino Score works of
           Stack(
             children: <Widget>[
               IconButton(
-                color: Colors.white,
+                  color: Colors.white,
                   icon: Icon(Icons.warning),
                   onPressed: () => showDialog<void>(
                         context: context,
@@ -620,6 +630,7 @@ I will not use or share your information with anyone : Kingdomino Score works of
           KingdomWidget(
               getSelectionMode: this.getSelectionMode,
               getSelectedLandType: this.getSelectedLandType,
+              getSelectedCourtierType: this.getSelectedCourtierType,
               getGameSet: this.getGameSet,
               calculateScore: this.calculateScore,
               kingdom: this.kingdom,

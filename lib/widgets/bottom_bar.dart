@@ -191,70 +191,26 @@ class _BottomBarState extends State<BottomBar> {
                 image: AssetImage(courtierPicture[courtierType]!))));
   }
 
-  _colorbutton(Color? kingcolor) {
-    return GestureDetector(
-        onTap: () => setKingColor(kingcolor),
-        child: Container(
-          margin: EdgeInsets.all(5.0),
-          height: _buttonSize,
-          width: _buttonSize,
-          decoration: BoxDecoration(color: kingcolor ?? Colors.white),
-          child: Container(),
-        ));
-  }
-
   Widget castleButton() {
     bool isSelected = this.getSelectionMode() == SelectionMode.castle &&
         this.getSelectedLandType() == LandType.castle;
 
     return GestureDetector(
-        onTap: () =>
-            setState(() {
-              this.setSelectionMode(SelectionMode.castle);
-              this.setSelectedLandType(LandType.castle);
-            }),
-        onLongPress: () {
+      onTap: () =>
           setState(() {
             this.setSelectionMode(SelectionMode.castle);
             this.setSelectedLandType(LandType.castle);
-          });
-
-          var buttons = <Widget>[
-            _colorbutton(null),
-            _colorbutton(kingColors.elementAt(0)),
-            _colorbutton(kingColors.elementAt(1)),
-            _colorbutton(kingColors.elementAt(2)),
-            _colorbutton(kingColors.elementAt(3)),
-          ];
-
-          if (this.getAog() == true) {
-            buttons.add(_colorbutton(kingColors.elementAt(4)));
-          }
-
-          showDialog(
-            context: context,
-            builder: (context) {
-              return StatefulBuilder(
-                builder: (context, setState) {
-                  return AlertDialog(
-                    content: Wrap(
-                      children: buttons,
-                    ),
-                  );
-                },
-              );
-            },
-          );
-        },
-        child: Container(
-          margin: EdgeInsets.all(5.0),
-          height: _buttonSize,
-          width: _buttonSize,
-          decoration: BoxDecoration(
-              color: Colors.white,
-              border: isSelected ? _selectedBorder : this.outline),
-          child: CastleWidget(this.getKingColor()),
-        ));
+          }),
+      child: Container(
+        margin: EdgeInsets.all(5.0),
+        height: _buttonSize,
+        width: _buttonSize,
+        decoration: BoxDecoration(
+            color: Colors.white,
+            border: isSelected ? _selectedBorder : this.outline),
+        child: CastleWidget(this.getKingColor()),
+      ),
+    );
   }
 
   Widget crownButton() {

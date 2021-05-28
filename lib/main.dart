@@ -6,6 +6,7 @@ import 'dart:async' show Future;
 import 'dart:io';
 import 'package:flutter/services.dart' show rootBundle;
 
+import 'models/king_colors.dart';
 import 'widgets/kingdomino_score_widget.dart';
 
 Future<void> main() async {
@@ -49,18 +50,14 @@ class KingdominoScore extends StatefulWidget {
 }
 
 class _KingdominoScoreState extends State<KingdominoScore> {
-  Color primaryColor = Colors.blueGrey;
+  Color primaryColor = kingColors.first;
   final camera;
 
   _KingdominoScoreState(this.camera);
 
-  setColor(Color? color) {
+  setColor(Color color) {
     setState(() {
-      if (color == null) {
-        this.primaryColor = Colors.blueGrey;
-      } else {
-        this.primaryColor = color;
-      }
+      this.primaryColor = color;
     });
   }
 

@@ -4,7 +4,8 @@ Calculate your "Kingdomino" and "Kingdomino Age of Giants" score easily
 
 Available for :
 
-* [Android Google play store](https://play.google.com/store/apps/details?id=fr.odrevet.kingdomino_score_count)
+* [Android Google Play Store](https://play.google.com/store/apps/details?id=fr.odrevet.kingdomino_score_count)
+* [Android F-Droid Store](https://f-droid.org/packages/fr.odrevet.kingdomino_score_count/)
 * [Online with a web browser](https://odrevet.github.io/kingdomino_score)
 
 # Top menu buttons

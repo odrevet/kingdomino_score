@@ -1,0 +1,44 @@
+<b>Top menu buttons</b>
+<ul>
+    <li>Warnings (only displayed when at least on warning): check board for anomalities</li>
+    <li>AG : Activate / Deactivate the Age of Giants extension</li>
+    <li>Shield : Select / Unselect quests<ul>
+    <li>Two quests maximum can be selected at a time.</li>
+    <li>There are more queets when Age of Giants is activated</li>
+    <li>The number of quests activated are displayed in a red bubble</li>
+    </ul>
+    </li>
+    <li>5 / 7 : change the size of the board. Changing the size of the board reset all tiles</li>
+    <li>Trash : Reset the board</li>
+    <li>About : Display author and license</li>
+</ul>
+
+<b>Score</b>
+<p>The score is updated as each change on the board.</p>
+<p>In portrait mode, tapping the score display the calculation details. </p>
+<b id="bottom-menu-buttons">Bottom menu buttons</b>
+<p>Each land type has it&#39;s own color :</p>
+<ul>
+<li>Yellow : Wheat</li>
+<li>Light green : Grassland</li>
+<li>Dark green : Forest</li>
+<li>Water : Lake</li>
+<li>Grey : Swamp</li>
+<li>Brown : Mine</li>
+<li>Blue grey : Empty</li>
+<li>Castle : Place your castle.</li>
+</ul>
+<p>The castle position may change the score when quests are activated.</p>
+<p>Long press the castle button opens the color select dialog (this is optional and never changes the score).</p>
+<ul>
+<li>Crown : Place / remove crowns</li>
+<li>Giant (when Aog is activated) : Place / remove giants.</li>
+</ul>
+<p>Long press on the giant button displays the giant details :</p>
+<ul>
+<li>how many crowns points are lost per property</li>
+<li>how many quests points are lost (or gained in case of bleak king quest)</li>
+<li>total points lost due to giants</li>
+<li>the score you could had have without giants
+the score you could had have without giants</li>
+</ul>

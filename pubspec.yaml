@@ -1,5 +1,5 @@
 name: kingdomino_score_count
-description: Calculate your Kingdomino score easly
+description: Kingdomino board game score calculation
 
 version: 2.2.1+17
 
@@ -13,6 +13,7 @@ dependencies:
   auto_size_text: ^3.0.0
   package_info: ^2.0.2
   flutter_svg: ^0.23.0+1
+  badges: ^2.0.2
 
 dev_dependencies:
   test: ^1.16.5

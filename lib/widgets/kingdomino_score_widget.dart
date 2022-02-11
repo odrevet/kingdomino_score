@@ -1,5 +1,6 @@
 import 'dart:collection';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:badges/badges.dart';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
@@ -471,57 +472,34 @@ I will not use or share your information with anyone : Kingdomino Score works of
     if (warnings.isNotEmpty) {
       actions.insert(
           0,
-          Stack(
-            children: <Widget>[
-              IconButton(
-                  color: Colors.white,
-                  icon: Icon(Icons.warning),
-                  onPressed: () => showDialog<void>(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20.0))),
-                            content: WarningsWidget(warnings: this.warnings),
-                            actions: <Widget>[
-                              TextButton(
-                                child: Icon(
-                                  Icons.done,
-                                  color: Colors.black87,
-                                ),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                            ],
-                          );
-                        },
-                      )),
-              Positioned(
-                right: 5,
-                top: 10,
-                child: Container(
-                  padding: EdgeInsets.all(1),
-                  decoration: BoxDecoration(
-                    color: Colors.red,
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                  constraints: BoxConstraints(
-                    minWidth: 12,
-                    minHeight: 12,
-                  ),
-                  child: Text(
-                    '${warnings.length}',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 10,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              )
-            ],
+          Badge(
+            position: BadgePosition.topEnd(top: 1, end: 5),
+            badgeContent: Text(warnings.length.toString()),
+            child: IconButton(
+                color: Colors.white,
+                icon: Icon(Icons.warning),
+                onPressed: () => showDialog<void>(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      shape: RoundedRectangleBorder(
+                          borderRadius:
+                          BorderRadius.all(Radius.circular(20.0))),
+                      content: WarningsWidget(warnings: this.warnings),
+                      actions: <Widget>[
+                        TextButton(
+                          child: Icon(
+                            Icons.done,
+                            color: Colors.black87,
+                          ),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                )),
           ));
     }
 

@@ -25,7 +25,7 @@ import '../models/king_colors.dart';
 import '../models/land.dart' show LandType;
 import '../models/quests/quest.dart';
 import '../models/warning.dart';
-import '../scoreQuest.dart';
+import '../score_quest.dart';
 import 'bottom_bar.dart';
 import 'kingdom_widget.dart';
 import 'quest_dialog.dart';

@@ -5,7 +5,7 @@ import '../models/age_of_giants.dart';
 import '../models/kingdom.dart';
 import '../models/land.dart';
 import '../models/property.dart';
-import '../scoreQuest.dart';
+import '../score_quest.dart';
 import 'kingdomino_score_widget.dart';
 
 class GiantsDetailsWidget extends StatelessWidget {

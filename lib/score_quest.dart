@@ -2,7 +2,7 @@ import 'dart:collection';
 
 import 'models/kingdom.dart';
 import 'models/land.dart' show LandType;
-import 'models/quests/bleakKing.dart';
+import 'models/quests/bleak_king.dart';
 import 'models/quests/folie_des_grandeurs.dart';
 import 'models/quests/four_corners.dart';
 import 'models/quests/harmony.dart';

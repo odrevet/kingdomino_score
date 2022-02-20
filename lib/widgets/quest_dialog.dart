@@ -133,7 +133,6 @@ class _QuestDialogWidgetState extends State<QuestDialogWidget> {
         position: BadgePosition.topEnd(top: -1, end: -1),
         badgeContent: Text(getSelectedQuests().length.toString()),
         child: IconButton(
-            // Use the MdiIcons class for the IconData
             icon: Icon(Icons.shield),
             color: Colors.white,
             onPressed: () => showDialog(

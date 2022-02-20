@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="fr.odrevet.kingdomino_score">
+    package="fr.odrevet.kingdomino_score_count">
    <application
         android:label="kingdomino_score"
         android:name="${applicationName}"

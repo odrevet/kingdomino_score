@@ -19,7 +19,8 @@ class Banker extends Courtier {
   int getPoints(Kingdom kingdom, int x, int y) {
     int points = 2;
 
-    if (kingdom.isInBound(x - 1, y - 1) && _checkLand(kingdom.getLand(x - 1, y - 1)!)) {
+    if (kingdom.isInBound(x - 1, y - 1) &&
+        _checkLand(kingdom.getLand(x - 1, y - 1)!)) {
       points += 2;
     }
 
@@ -27,7 +28,8 @@ class Banker extends Courtier {
       points += 2;
     }
 
-    if (kingdom.isInBound(x - 1, y + 1) && _checkLand(kingdom.getLand(x - 1, y + 1)!)) {
+    if (kingdom.isInBound(x - 1, y + 1) &&
+        _checkLand(kingdom.getLand(x - 1, y + 1)!)) {
       points += 2;
     }
 
@@ -39,7 +41,8 @@ class Banker extends Courtier {
       points += 2;
     }
 
-    if (kingdom.isInBound(x + 1, y - 1) && _checkLand(kingdom.getLand(x + 1, y - 1)!)) {
+    if (kingdom.isInBound(x + 1, y - 1) &&
+        _checkLand(kingdom.getLand(x + 1, y - 1)!)) {
       points += 2;
     }
 
@@ -47,7 +50,8 @@ class Banker extends Courtier {
       points += 2;
     }
 
-    if (kingdom.isInBound(x + 1, y + 1) && _checkLand(kingdom.getLand(x + 1, y + 1)!)) {
+    if (kingdom.isInBound(x + 1, y + 1) &&
+        _checkLand(kingdom.getLand(x + 1, y + 1)!)) {
       points += 2;
     }
 

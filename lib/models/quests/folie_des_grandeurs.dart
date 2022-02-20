@@ -5,7 +5,7 @@ import 'quest.dart';
 
 ///`2 different alignments cannot share more than one square`
 ///see https://boardgamegeek.com/thread/2040636/tic-tac-toe-bonus-challenge-tile-clarification
-class CrownAlignment{
+class CrownAlignment {
   int x0, y0;
   int x1, y1;
   int x2, y2;
@@ -46,10 +46,11 @@ class FolieDesGrandeurs extends Quest {
 
   int? extraPoints = 10;
 
-
   ///check if land at coord is in bound and has at least a crown
   bool _checkLandBoundAndCrown(int y, int x, Kingdom kingdom) {
-    return kingdom.isInBound(x, y) && kingdom.getLand(y, x) != null && kingdom.getLand(y, x)!.getCrowns() > 0;
+    return kingdom.isInBound(x, y) &&
+        kingdom.getLand(y, x) != null &&
+        kingdom.getLand(y, x)!.getCrowns() > 0;
   }
 
   // for every land listed has at least a crown

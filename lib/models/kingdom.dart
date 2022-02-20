@@ -10,7 +10,7 @@ class Kingdom {
   }
 
   Land? getLand(int y, int x) {
-    if(y < 0 || x < 0 || x > this.size || y > this.size){
+    if (y < 0 || x < 0 || x > this.size || y > this.size) {
       return null;
     }
 
@@ -63,7 +63,9 @@ class Kingdom {
   void _addLandToProperty(int x, int y, Land land, Property property) {
     if (isInBound(x, y)) {
       Land? landToAdd = getLand(x, y);
-      if (landToAdd != null && landToAdd.landType == land.landType && landToAdd.isMarked == false) {
+      if (landToAdd != null &&
+          landToAdd.landType == land.landType &&
+          landToAdd.isMarked == false) {
         property.landCount++;
         property.crownCount += landToAdd.getCrowns();
         property.giantCount += landToAdd.giants;
@@ -76,7 +78,8 @@ class Kingdom {
     if (!isInBound(x, y)) return null;
 
     Land? land = getLand(x, y);
-    if (land == null || land.landType == LandType.castle ||
+    if (land == null ||
+        land.landType == LandType.castle ||
         land.landType == null ||
         land.isMarked == true) return null;
 
@@ -108,4 +111,3 @@ class Kingdom {
     return (x >= 0 && x < size && y >= 0 && y < size);
   }
 }
-

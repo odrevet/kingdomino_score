@@ -62,11 +62,6 @@ Map<CourtierType, String> courtierPicture = {
   CourtierType.queen: 'assets/lacour/queen.png',
 };
 
-abstract class Courtier
-{
+abstract class Courtier {
   int getPoints(Kingdom kingdom, int x, int y);
 }
-
-
-
-

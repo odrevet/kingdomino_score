@@ -32,4 +32,3 @@ const Map<LandType, Map<String, dynamic>> gameAogSet = {
     'crowns': {'max': 3, 1: 2, 2: 4, 3: 1}
   }
 };
-

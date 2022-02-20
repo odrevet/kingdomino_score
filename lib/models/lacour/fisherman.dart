@@ -19,7 +19,8 @@ class Fisherman extends Courtier {
   int getPoints(Kingdom kingdom, int x, int y) {
     int points = 3;
 
-    if (kingdom.isInBound(x - 1, y - 1) && _checkLand(kingdom.getLand(x - 1, y - 1)!)) {
+    if (kingdom.isInBound(x - 1, y - 1) &&
+        _checkLand(kingdom.getLand(x - 1, y - 1)!)) {
       points += 3;
     }
 
@@ -27,7 +28,8 @@ class Fisherman extends Courtier {
       points += 3;
     }
 
-    if (kingdom.isInBound(x - 1, y + 1) && _checkLand(kingdom.getLand(x - 1, y + 1)!)) {
+    if (kingdom.isInBound(x - 1, y + 1) &&
+        _checkLand(kingdom.getLand(x - 1, y + 1)!)) {
       points += 3;
     }
 
@@ -39,7 +41,8 @@ class Fisherman extends Courtier {
       points += 3;
     }
 
-    if (kingdom.isInBound(x + 1, y - 1) && _checkLand(kingdom.getLand(x + 1, y - 1)!)) {
+    if (kingdom.isInBound(x + 1, y - 1) &&
+        _checkLand(kingdom.getLand(x + 1, y - 1)!)) {
       points += 3;
     }
 
@@ -47,7 +50,8 @@ class Fisherman extends Courtier {
       points += 3;
     }
 
-    if (kingdom.isInBound(x + 1, y + 1) && _checkLand(kingdom.getLand(x + 1, y + 1)!)) {
+    if (kingdom.isInBound(x + 1, y + 1) &&
+        _checkLand(kingdom.getLand(x + 1, y + 1)!)) {
       points += 3;
     }
 

@@ -58,6 +58,3 @@ class WarningsWidget extends StatelessWidget {
     return SingleChildScrollView(child: Table(children: tableRows));
   }
 }
-
-
-

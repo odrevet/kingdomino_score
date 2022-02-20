@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter/material.dart';
 
 import '../models/age_of_giants.dart';
+import '../models/kingdom.dart';
 import '../models/lacour/lacour.dart';
 import '../models/land.dart';
-import '../models/kingdom.dart';
 import 'kingdomino_score_widget.dart';
 
 class CastleWidget extends StatelessWidget {
@@ -60,12 +60,12 @@ class _KingdomWidgetState extends State<KingdomWidget> {
 
   _KingdomWidgetState(
       {required Function this.getSelectionMode,
-        required Function this.getSelectedLandType,
-        required Function this.getSelectedCourtierType,
-        required Function this.getGameSet,
-        required Function this.calculateScore,
-        required Kingdom this.kingdom,
-        required Function this.getKingColor});
+      required Function this.getSelectedLandType,
+      required Function this.getSelectedCourtierType,
+      required Function this.getGameSet,
+      required Function this.calculateScore,
+      required Kingdom this.kingdom,
+      required Function this.getKingColor});
 
   void _onLandTap(int x, int y) {
     Land? land = kingdom.getLand(x, y);

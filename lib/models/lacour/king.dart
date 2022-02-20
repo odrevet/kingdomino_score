@@ -1,6 +1,7 @@
 import '../kingdom.dart';
 import '../land.dart';
 import 'lacour.dart';
+
 class King extends Courtier {
   static final King _singleton = King._internal();
 
@@ -44,7 +45,7 @@ class King extends Courtier {
       points += land.crowns;
     }
 
-    if (kingdom.isInBound(x + 1, y )) {
+    if (kingdom.isInBound(x + 1, y)) {
       Land land = kingdom.getLand(x + 1, y)!;
       points += land.crowns;
     }

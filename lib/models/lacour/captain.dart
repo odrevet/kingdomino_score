@@ -12,7 +12,7 @@ class Captain extends Courtier {
   Captain._internal();
 
   bool _checkLand(Land? land) {
-    if(land == null)return false;
+    if (land == null) return false;
 
     return [
       CourtierType.axe_warrior,

@@ -1,9 +1,8 @@
 import 'dart:collection';
-import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:badges/badges.dart';
 
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:badges/badges.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:kingdomino_score_count/models/lacour/axe_warrior.dart';
 import 'package:kingdomino_score_count/models/lacour/banker.dart';
@@ -18,10 +17,11 @@ import 'package:kingdomino_score_count/models/lacour/lumberjack.dart';
 import 'package:kingdomino_score_count/models/lacour/queen.dart';
 import 'package:kingdomino_score_count/models/lacour/shepherdess.dart';
 import 'package:kingdomino_score_count/models/lacour/sword_warrior.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 import '../models/age_of_giants.dart';
-import '../models/kingdom.dart';
 import '../models/king_colors.dart';
+import '../models/kingdom.dart';
 import '../models/land.dart' show LandType;
 import '../models/quests/quest.dart';
 import '../models/warning.dart';
@@ -479,27 +479,27 @@ I will not use or share your information with anyone : Kingdomino Score works of
                 color: Colors.white,
                 icon: Icon(Icons.warning),
                 onPressed: () => showDialog<void>(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      shape: RoundedRectangleBorder(
-                          borderRadius:
-                          BorderRadius.all(Radius.circular(20.0))),
-                      content: WarningsWidget(warnings: this.warnings),
-                      actions: <Widget>[
-                        TextButton(
-                          child: Icon(
-                            Icons.done,
-                            color: Colors.black87,
-                          ),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                      ],
-                    );
-                  },
-                )),
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20.0))),
+                          content: WarningsWidget(warnings: this.warnings),
+                          actions: <Widget>[
+                            TextButton(
+                              child: Icon(
+                                Icons.done,
+                                color: Colors.black87,
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    )),
           ));
     }
 

@@ -134,7 +134,6 @@ class _QuestDialogWidgetState extends State<QuestDialogWidget> {
         badgeContent: Text(getSelectedQuests().length.toString()),
         child: IconButton(
             icon: Icon(Icons.shield),
-            color: Colors.white,
             onPressed: () => showDialog(
                   context: context,
                   builder: (BuildContext context) {

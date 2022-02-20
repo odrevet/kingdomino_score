@@ -352,7 +352,6 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
         icon: const Icon(Icons.extension),
         iconSize: 25,
         elevation: 16,
-        iconEnabledColor: Colors.white,
         underline: Container(height: 1, color: Colors.white),
         onChanged: (String? newValue) {
           setState(() {
@@ -428,7 +427,6 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
       ),
       QuestDialogWidget(this.getSelectedQuests, this.updateScores, this.getAog),
       IconButton(
-          color: Colors.white,
           icon: Icon(kingdom.size == 5 ? Icons.filter_5 : Icons.filter_7),
           onPressed: () {
             setState(() {
@@ -443,7 +441,6 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
             });
           }),
       IconButton(
-          color: Colors.white,
           icon: Icon(Icons.delete),
           onPressed: () {
             setState(() {
@@ -454,7 +451,6 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
             });
           }),
       IconButton(
-          color: Colors.white,
           icon: Icon(Icons.help),
           onPressed: () => showAboutDialog(
               context: context,
@@ -476,7 +472,6 @@ I will not use or share your information with anyone : Kingdomino Score works of
             position: BadgePosition.topEnd(top: 1, end: 5),
             badgeContent: Text(warnings.length.toString()),
             child: IconButton(
-                color: Colors.white,
                 icon: Icon(Icons.warning),
                 onPressed: () => showDialog<void>(
                       context: context,

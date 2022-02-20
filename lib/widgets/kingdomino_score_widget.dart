@@ -2,6 +2,7 @@ import 'dart:collection';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:badges/badges.dart';
 
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:kingdomino_score_count/models/lacour/axe_warrior.dart';
@@ -17,7 +18,6 @@ import 'package:kingdomino_score_count/models/lacour/lumberjack.dart';
 import 'package:kingdomino_score_count/models/lacour/queen.dart';
 import 'package:kingdomino_score_count/models/lacour/shepherdess.dart';
 import 'package:kingdomino_score_count/models/lacour/sword_warrior.dart';
-import 'package:package_info/package_info.dart';
 
 import '../models/age_of_giants.dart';
 import '../models/kingdom.dart';

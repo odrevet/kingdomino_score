@@ -13,9 +13,9 @@ class KingdominoScore extends StatefulWidget {
 }
 
 class _KingdominoScoreState extends State<KingdominoScore> {
-  Color primaryColor = kingColors.first;
+  MaterialColor primaryColor = kingColors.first;
 
-  setColor(Color color) {
+  setColor(MaterialColor color) {
     setState(() {
       this.primaryColor = color;
     });
@@ -26,7 +26,7 @@ class _KingdominoScoreState extends State<KingdominoScore> {
     return MaterialApp(
       title: 'Kingdomino Score',
       theme: ThemeData(
-          primaryColor: this.primaryColor,
+          primarySwatch: this.primaryColor,
           canvasColor: Colors.blueGrey,
           fontFamily: 'HammersmithOne',
           dialogTheme: DialogTheme(

@@ -383,7 +383,7 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
                   selectionMode = SelectionMode.crown;
                 }
 
-                kingColors.add(Colors.brown.shade800);
+                kingColors.add(Colors.brown);
                 break;
               case 'LaCour':
                 lacour = true;

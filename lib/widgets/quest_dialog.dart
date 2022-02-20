@@ -1,6 +1,7 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
-import 'package:kingdomino_score_count/models/quests/quest.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:kingdomino_score_count/models/quests/quest.dart';
 
 class _QuestDialogOption extends StatefulWidget {
   final getSelectedQuests;
@@ -127,47 +128,19 @@ class _QuestDialogWidgetState extends State<QuestDialogWidget> {
       children: options,
     );
 
-    var button = IconButton(
-        // Use the MdiIcons class for the IconData
-        icon: Icon(Icons.shield),
-        color: Colors.white,
-        onPressed: () => showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return dialog;
-              },
-            ));
-
-    if (getSelectedQuests().isEmpty)
-      return button;
-    else
-      return Stack(
-        children: <Widget>[
-          button,
-          Positioned(
-            right: 5,
-            top: 10,
-            child: Container(
-              padding: EdgeInsets.all(1),
-              decoration: BoxDecoration(
-                color: Colors.red,
-                borderRadius: BorderRadius.circular(6),
-              ),
-              constraints: BoxConstraints(
-                minWidth: 12,
-                minHeight: 12,
-              ),
-              child: Text(
-                '${getSelectedQuests().length}',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 10,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ),
-          )
-        ],
-      );
+    return Badge(
+        showBadge: getSelectedQuests().length > 0,
+        position: BadgePosition.topEnd(top: -1, end: -1),
+        badgeContent: Text(getSelectedQuests().length.toString()),
+        child: IconButton(
+            // Use the MdiIcons class for the IconData
+            icon: Icon(Icons.shield),
+            color: Colors.white,
+            onPressed: () => showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return dialog;
+                  },
+                )));
   }
 }

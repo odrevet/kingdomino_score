@@ -12,7 +12,7 @@ class Shepherdess extends Courtier {
   Shepherdess._internal();
 
   bool _checkLand(Land land) {
-    return land.landType == LandType.wheat && land.hasResource;
+    return land.landType == LandType.grassland && land.hasResource;
   }
 
   @override

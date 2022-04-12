@@ -1,8 +1,6 @@
 import 'dart:collection';
 
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:badges/badges.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:kingdomino_score_count/models/lacour/axe_warrior.dart';
 import 'package:kingdomino_score_count/models/lacour/banker.dart';
@@ -17,6 +15,7 @@ import 'package:kingdomino_score_count/models/lacour/lumberjack.dart';
 import 'package:kingdomino_score_count/models/lacour/queen.dart';
 import 'package:kingdomino_score_count/models/lacour/shepherdess.dart';
 import 'package:kingdomino_score_count/models/lacour/sword_warrior.dart';
+import 'package:kingdomino_score_count/widgets/kingdomino_app_bar.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import '../models/age_of_giants.dart';
@@ -28,9 +27,7 @@ import '../models/warning.dart';
 import '../score_quest.dart';
 import 'bottom_bar.dart';
 import 'kingdom_widget.dart';
-import 'quest_dialog.dart';
 import 'score_details_widget.dart';
-import 'warning_widget.dart';
 
 const String crown = '\u{1F451}';
 const String castle = '\u{1F3F0}';
@@ -99,15 +96,14 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
   List<Warning> warnings = [];
   late PackageInfo _packageInfo;
   final Function setColor;
+  String dropdownSelectedExtension = '';
 
   KingdominoScoreWidgetState(this.setColor);
 
   @override
   initState() {
     PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
-      setState(() {
-        _packageInfo = packageInfo;
-      });
+      _packageInfo = packageInfo;
     });
 
     super.initState();
@@ -223,6 +219,15 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
     });
   }
 
+  void onSelectKingColor(Color? newValue) {
+    {
+      setState(() {
+        kingColor = newValue!;
+      });
+      setKingColor(kingColor);
+    }
+  }
+
   int calculateLacourScore() {
     int scoreOfLacour = 0;
     for (int y = 0; y < kingdom.size; y++) {
@@ -311,193 +316,76 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
     });
   }
 
-  String dropdownSelectedExtension = '';
+  void setKingdomSize() => setState(() {
+        if (kingdom.size == 5)
+          kingdom.reSize(7);
+        else
+          kingdom.reSize(5);
+
+        resetScores();
+        clearWarnings();
+        //_onSelectCastle();
+      });
+
+  void onKingdomClear() => setState(() {
+        kingdom.clear();
+        clearWarnings();
+        resetScores();
+        //_onSelectCastle();
+      });
+
+  void onExtensionSelect(newValue) => setState(() {
+        dropdownSelectedExtension = newValue!;
+
+        kingdom.getLands().expand((i) => i).toList().forEach((land) {
+          land.hasResource = false;
+          land.courtierType = null;
+        });
+
+        kingdom.getLands().expand((i) => i).toList().forEach((land) {
+          land.giants = 0;
+        });
+
+        switch (newValue) {
+          case '':
+            aog = false;
+            lacour = false;
+            kingColors.remove(Colors.brown.shade800);
+            if (kingColor == Colors.brown.shade800) {
+              setKingColor(kingColors.first);
+            }
+            break;
+          case 'Giants':
+            aog = true;
+            lacour = false;
+            if (selectionMode == SelectionMode.giant) {
+              selectionMode = SelectionMode.crown;
+            }
+
+            kingColors.add(Colors.brown);
+            break;
+          case 'LaCour':
+            lacour = true;
+            aog = false;
+            if (selectionMode == SelectionMode.courtier ||
+                selectionMode == SelectionMode.resource) {
+              selectionMode = SelectionMode.crown;
+            }
+            kingColors.remove(Colors.brown.shade800);
+            if (kingColor == Colors.brown.shade800) {
+              setKingColor(kingColors.first);
+            }
+            break;
+        }
+
+        selectedQuests.clear();
+        clearWarnings();
+        checkKingdom();
+        updateScores();
+      });
 
   @override
   Widget build(BuildContext context) {
-    var actions = <Widget>[
-      !kIsWeb
-          ?
-          // King Color selector
-          DropdownButton<Color>(
-              value: kingColor,
-              iconSize: 25,
-              iconEnabledColor: Colors.white,
-              underline: Container(height: 1, color: Colors.white),
-              onChanged: (Color? newValue) {
-                setState(() {
-                  kingColor = newValue!;
-                });
-                setKingColor(kingColor);
-              },
-              items: kingColors.map<DropdownMenuItem<Color>>((Color value) {
-                return DropdownMenuItem<Color>(
-                  value: value,
-                  child: ColorFiltered(
-                    colorFilter: ColorFilter.mode(value, BlendMode.hue),
-                    child: Image.asset(
-                      'assets/king_pawn.png',
-                      height: 25,
-                      width: 25,
-                    ),
-                  ),
-                );
-              }).toList(),
-            )
-          : Text(''),
-      Text(' '),
-      // Extension Selector
-      DropdownButton<String>(
-        value: dropdownSelectedExtension,
-        icon: const Icon(Icons.extension),
-        iconSize: 25,
-        elevation: 16,
-        underline: Container(height: 1, color: Colors.white),
-        onChanged: (String? newValue) {
-          setState(() {
-            dropdownSelectedExtension = newValue!;
-
-            kingdom.getLands().expand((i) => i).toList().forEach((land) {
-              land.hasResource = false;
-              land.courtierType = null;
-            });
-
-            kingdom.getLands().expand((i) => i).toList().forEach((land) {
-              land.giants = 0;
-            });
-
-            switch (newValue) {
-              case '':
-                aog = false;
-                lacour = false;
-                kingColors.remove(Colors.brown.shade800);
-                if (kingColor == Colors.brown.shade800) {
-                  setKingColor(kingColors.first);
-                }
-                break;
-              case 'Giants':
-                aog = true;
-                lacour = false;
-                if (selectionMode == SelectionMode.giant) {
-                  selectionMode = SelectionMode.crown;
-                }
-
-                kingColors.add(Colors.brown);
-                break;
-              case 'LaCour':
-                lacour = true;
-                aog = false;
-                if (selectionMode == SelectionMode.courtier ||
-                    selectionMode == SelectionMode.resource) {
-                  selectionMode = SelectionMode.crown;
-                }
-                kingColors.remove(Colors.brown.shade800);
-                if (kingColor == Colors.brown.shade800) {
-                  setKingColor(kingColors.first);
-                }
-                break;
-            }
-
-            selectedQuests.clear();
-            clearWarnings();
-            checkKingdom();
-            updateScores();
-          });
-        },
-        items: <String>['', 'Giants', 'LaCour']
-            .map<DropdownMenuItem<String>>((String value) {
-          Widget child;
-
-          if (value == 'Giants') {
-            child = Text(giant);
-          } else if (value == 'LaCour') {
-            child = Image.asset(
-              'assets/lacour/resource.png',
-              height: 25,
-              width: 25,
-            );
-          } else {
-            child = Text('');
-          }
-          return DropdownMenuItem<String>(
-            value: value,
-            child: child,
-          );
-        }).toList(),
-      ),
-      QuestDialogWidget(this.getSelectedQuests, this.updateScores, this.getAog),
-      IconButton(
-          icon: Icon(kingdom.size == 5 ? Icons.filter_5 : Icons.filter_7),
-          onPressed: () {
-            setState(() {
-              if (kingdom.size == 5)
-                kingdom.reSize(7);
-              else
-                kingdom.reSize(5);
-
-              resetScores();
-              clearWarnings();
-              //_onSelectCastle();
-            });
-          }),
-      IconButton(
-          icon: Icon(Icons.delete),
-          onPressed: () {
-            setState(() {
-              kingdom.clear();
-              clearWarnings();
-              resetScores();
-              //_onSelectCastle();
-            });
-          }),
-      IconButton(
-          icon: Icon(Icons.help),
-          onPressed: () => showAboutDialog(
-              context: context,
-              applicationName: 'Kingdomino Score',
-              applicationVersion: kIsWeb ? 'Web Build' : _packageInfo.version,
-              applicationLegalese:
-                  '''Drevet Olivier built the Kingdomino Score app under the GPL license Version 3. 
-This SERVICE is provided by Drevet Olivier at no cost and is intended for use as is.
-This page is used to inform visitors regarding the policy with the collection, use, and disclosure of Personal Information if anyone decided to use my Service.
-I will not use or share your information with anyone : Kingdomino Score works offline and does not send any information over a network. ''',
-              applicationIcon: Image.asset(
-                  'android/app/src/main/res/mipmap-mdpi/ic_launcher.png')))
-    ];
-
-    if (warnings.isNotEmpty) {
-      actions.insert(
-          0,
-          Badge(
-            position: BadgePosition.topEnd(top: 1, end: 5),
-            badgeContent: Text(warnings.length.toString()),
-            child: IconButton(
-                icon: Icon(Icons.warning),
-                onPressed: () => showDialog<void>(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20.0))),
-                          content: WarningsWidget(warnings: this.warnings),
-                          actions: <Widget>[
-                            TextButton(
-                              child: Icon(
-                                Icons.done,
-                                color: Colors.black87,
-                              ),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          ],
-                        );
-                      },
-                    )),
-          ));
-    }
-
     Widget body = OrientationBuilder(builder: (context, orientation) {
       if (orientation == Orientation.portrait) {
         return Column(children: <Widget>[
@@ -576,9 +464,19 @@ I will not use or share your information with anyone : Kingdomino Score works of
     });
 
     return Scaffold(
-        appBar: AppBar(
-          title:
-              Row(mainAxisAlignment: MainAxisAlignment.end, children: actions),
+        appBar: KingdominoAppBar(
+          kingColor: kingColor,
+          onExtensionSelect: onExtensionSelect,
+          getAog: getAog,
+          dropdownSelectedExtension: dropdownSelectedExtension,
+          onSelectKingColor: onSelectKingColor,
+          warnings: warnings,
+          setKingdomSize: setKingdomSize,
+          onKingdomClear: onKingdomClear,
+          getSelectedQuests: getSelectedQuests,
+          updateScores: updateScores,
+          kingdom: kingdom,
+          packageInfo: null,
         ),
         bottomNavigationBar: BottomAppBar(
             child: BottomBar(

@@ -12,8 +12,8 @@ dependencies:
 
   auto_size_text: ^3.0.0
   package_info_plus: ^1.4.0
-  flutter_svg: ^0.23.0+1
-  badges: ^2.0.2
+  flutter_svg: ^1.0.0
+  badges: ^2.0.0
 
 dev_dependencies:
   test: ^1.16.5

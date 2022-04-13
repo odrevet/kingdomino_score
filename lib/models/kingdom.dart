@@ -22,7 +22,6 @@ class Kingdom extends Equatable {
   }
 
   Kingdom copyWith({int? size}) {
-    lands.clear();
     return Kingdom(size: size ?? this.size);
   }
 

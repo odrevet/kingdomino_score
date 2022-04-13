@@ -111,8 +111,11 @@ class _BottomBarState extends State<BottomBar> {
       landButton(LandType.lake),
       landButton(LandType.swamp),
       landButton(LandType.mine),
+      VerticalDivider(),
       landButton(null),
+      VerticalDivider(),
       castleButton(),
+      VerticalDivider(),
       crownButton(),
     ];
 
@@ -127,6 +130,7 @@ class _BottomBarState extends State<BottomBar> {
     }
 
     return Wrap(
+      alignment: WrapAlignment.center,
       children: kingdomEditorWidgets,
     );
   }

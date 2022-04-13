@@ -1,6 +1,9 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kingdomino_score_count/kingdom_cubit.dart';
+import 'package:kingdomino_score_count/models/land.dart';
 import 'package:kingdomino_score_count/widgets/quest_dialog.dart';
 import 'package:kingdomino_score_count/widgets/warning_widget.dart';
 
@@ -10,6 +13,8 @@ import '../models/king_colors.dart';
 class KingdominoAppBar extends StatelessWidget with PreferredSizeWidget {
   @override
   final Size preferredSize;
+
+  final kingdom;
   final kingColor;
   final getAog;
   final String dropdownSelectedExtension;
@@ -19,12 +24,11 @@ class KingdominoAppBar extends StatelessWidget with PreferredSizeWidget {
   final packageInfo;
   final getSelectedQuests;
   final updateScores;
-  final kingdom;
-  final setKingdomSize;
   final onKingdomClear;
 
   const KingdominoAppBar({
     this.preferredSize = const Size.fromHeight(50.0),
+    required this.kingdom,
     required this.kingColor,
     required this.onExtensionSelect,
     required this.getAog,
@@ -34,8 +38,6 @@ class KingdominoAppBar extends StatelessWidget with PreferredSizeWidget {
     required this.packageInfo,
     required this.getSelectedQuests,
     required this.updateScores,
-    required this.kingdom,
-    required this.setKingdomSize,
     required this.onKingdomClear,
     Key? key,
   }) : super(key: key);
@@ -43,6 +45,17 @@ class KingdominoAppBar extends StatelessWidget with PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     var actions = <Widget>[
+      IconButton(
+          onPressed: context.read<KingdomCubit>().canUndo
+              ? context.read<KingdomCubit>().undo
+              : null,
+          icon: const Icon(Icons.undo)),
+      IconButton(
+          onPressed: context.read<KingdomCubit>().canRedo
+              ? context.read<KingdomCubit>().redo
+              : null,
+          icon: const Icon(Icons.redo)),
+      VerticalDivider(),
       !kIsWeb
           ?
           // King Color selector
@@ -67,7 +80,7 @@ class KingdominoAppBar extends StatelessWidget with PreferredSizeWidget {
               }).toList(),
             )
           : Text(''),
-      Text(' '),
+      VerticalDivider(),
       // Extension Selector
       DropdownButton<String>(
         value: dropdownSelectedExtension,
@@ -100,8 +113,11 @@ class KingdominoAppBar extends StatelessWidget with PreferredSizeWidget {
       QuestDialogWidget(this.getSelectedQuests, this.updateScores, this.getAog),
       IconButton(
           icon: Icon(kingdom.size == 5 ? Icons.filter_5 : Icons.filter_7),
-          onPressed: setKingdomSize),
+          onPressed: () =>
+              context.read<KingdomCubit>().resize(kingdom.size == 5 ? 7 : 5)),
+      VerticalDivider(),
       IconButton(icon: Icon(Icons.delete), onPressed: onKingdomClear),
+      VerticalDivider(),
       IconButton(
           icon: Icon(Icons.help),
           onPressed: () => showAboutDialog(

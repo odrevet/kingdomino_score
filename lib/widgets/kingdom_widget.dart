@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../kingdom_cubit.dart';
 import '../models/age_of_giants.dart';
 import '../models/kingdom.dart';
 import '../models/lacour/lacour.dart';
@@ -44,7 +46,6 @@ class KingdomWidget extends StatefulWidget {
       getSelectedCourtierType: this.getSelectedCourtierType,
       getGameSet: this.getGameSet,
       calculateScore: this.calculateScore,
-      kingdom: this.kingdom,
       getKingColor: this.getKingColor);
 }
 
@@ -54,7 +55,6 @@ class _KingdomWidgetState extends State<KingdomWidget> {
   final getSelectedCourtierType;
   final getGameSet;
   final calculateScore;
-  final kingdom;
   final getKingColor;
 
   _KingdomWidgetState(
@@ -63,11 +63,10 @@ class _KingdomWidgetState extends State<KingdomWidget> {
       required Function this.getSelectedCourtierType,
       required Function this.getGameSet,
       required Function this.calculateScore,
-      required Kingdom this.kingdom,
       required Function this.getKingColor});
 
   void _onLandTap(int x, int y) {
-    Land? land = kingdom.getLand(x, y);
+    Land? land = widget.kingdom.getLand(x, y);
 
     setState(() {
       switch (getSelectionMode()) {
@@ -85,11 +84,11 @@ class _KingdomWidgetState extends State<KingdomWidget> {
           break;
         case SelectionMode.castle:
           //remove other castle, if any
-          for (var cx = 0; cx < kingdom.size; cx++) {
-            for (var cy = 0; cy < kingdom.size; cy++) {
-              if (kingdom.getLand(cx, cy).landType == LandType.castle) {
-                kingdom.getLand(cx, cy).landType = null;
-                kingdom.getLand(cx, cy).crowns = 0;
+          for (var cx = 0; cx < widget.kingdom.size; cx++) {
+            for (var cy = 0; cy < widget.kingdom.size; cy++) {
+              if (widget.kingdom.getLand(cx, cy).landType == LandType.castle) {
+                widget.kingdom.getLand(cx, cy).landType = null;
+                widget.kingdom.getLand(cx, cy).crowns = 0;
               }
             }
           }
@@ -116,10 +115,11 @@ class _KingdomWidgetState extends State<KingdomWidget> {
             }
 
             //remove same courtier type, if any
-            for (var cx = 0; cx < kingdom.size; cx++) {
-              for (var cy = 0; cy < kingdom.size; cy++) {
-                if (kingdom.getLand(cx, cy).courtierType == courtierType) {
-                  kingdom.getLand(cx, cy).courtierType = null;
+            for (var cx = 0; cx < widget.kingdom.size; cx++) {
+              for (var cy = 0; cy < widget.kingdom.size; cy++) {
+                if (widget.kingdom.getLand(cx, cy).courtierType ==
+                    courtierType) {
+                  widget.kingdom.getLand(cx, cy).courtierType = null;
                 }
               }
             }
@@ -146,7 +146,13 @@ class _KingdomWidgetState extends State<KingdomWidget> {
   }
 
   Widget _buildLand(int y, int x) {
-    Land land = kingdom.getLand(x, y);
+    Land? land = widget.kingdom.getLand(x, y);
+
+    if (land == null) {
+      return Container(
+        child: Text('ERROR $x $y'),
+      );
+    }
 
     Widget? child;
     if (land.landType == LandType.castle) {
@@ -179,10 +185,10 @@ class _KingdomWidgetState extends State<KingdomWidget> {
             return Align(
                 child: Container(
               decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.black,
-                  ),
-                  borderRadius: BorderRadius.all(Radius.circular(30)),
+                border: Border.all(
+                  color: Colors.black,
+                ),
+                borderRadius: BorderRadius.all(Radius.circular(30)),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.grey.withOpacity(0.5),
@@ -190,7 +196,8 @@ class _KingdomWidgetState extends State<KingdomWidget> {
                     blurRadius: 7,
                     offset: Offset(0, 3), // changes position of shadow
                   ),
-                ],),
+                ],
+              ),
               child: Text(getResourceForLandType(land.landType),
                   style: TextStyle(
                       fontSize: constraints.maxWidth / 2,
@@ -222,12 +229,15 @@ class _KingdomWidgetState extends State<KingdomWidget> {
   }
 
   Widget _buildLands(BuildContext context, int index) {
-    int gridStateLength = kingdom.getLands().length;
+    int gridStateLength = widget.kingdom.getLands().length;
+
     int x, y = 0;
     x = (index / gridStateLength).floor();
     y = (index % gridStateLength);
     return GestureDetector(
-      onTap: () => _onLandTap(x, y),
+      onTap: () => context
+          .read<KingdomCubit>()
+          .setLand(x, y, getSelectedLandType()), //_onLandTap(x, y),  // WIP
       child: GridTile(
         child: Container(
           child: _buildLand(y, x),
@@ -238,7 +248,7 @@ class _KingdomWidgetState extends State<KingdomWidget> {
 
   @override
   Widget build(BuildContext context) {
-    int gridStateLength = kingdom.getLands().length;
+    int gridStateLength = widget.kingdom.getLands().length;
     return AspectRatio(
       aspectRatio: 1.0,
       child: Container(

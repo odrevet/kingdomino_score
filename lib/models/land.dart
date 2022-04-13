@@ -32,13 +32,16 @@ class Land {
   Land([this.landType]);
 }
 
-String getResourceForLandType(LandType? type){
-  switch(type)
-  {
-    case LandType.grassland: return '🐑';
-    case LandType.lake: return '🐟';
-    case LandType.wheat: return '🌾';
-    case LandType.forest: return '🪵';
+String getResourceForLandType(LandType? type) {
+  switch (type) {
+    case LandType.grassland:
+      return '🐑';
+    case LandType.lake:
+      return '🐟';
+    case LandType.wheat:
+      return '🌾';
+    case LandType.forest:
+      return '🪵';
   }
   return '?';
 }

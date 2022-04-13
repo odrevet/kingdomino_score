@@ -2,6 +2,8 @@ import 'dart:collection';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kingdomino_score_count/kingdom_cubit.dart';
 import 'package:kingdomino_score_count/models/lacour/axe_warrior.dart';
 import 'package:kingdomino_score_count/models/lacour/banker.dart';
 import 'package:kingdomino_score_count/models/lacour/captain.dart';
@@ -84,7 +86,6 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
   CourtierType? selectedCourtierType;
   SelectionMode selectionMode = SelectionMode.land;
   var groupScore = AutoSizeGroup();
-  var kingdom = Kingdom(5);
   int scoreProperty = 0;
   int scoreOfQuest = 0;
   int scoreOfLacour = 0;
@@ -173,7 +174,7 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
   ///check if the kingdom is conform, if not set warnings
   void checkKingdom() {
     //check if more tile in the kingdom than in the gameSet
-    for (var landType in LandType.values) {
+    /*for (var landType in LandType.values) {
       var count = kingdom
           .getLands()
           .expand((i) => i)
@@ -210,12 +211,12 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
           });
         }
       }
-    }
+    }*/
   }
 
   void updateScoreQuest() {
     setState(() {
-      scoreOfQuest = calculateQuestScore(selectedQuests, kingdom);
+      //scoreOfQuest = calculateQuestScore(selectedQuests, kingdom);
     });
   }
 
@@ -230,7 +231,7 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
 
   int calculateLacourScore() {
     int scoreOfLacour = 0;
-    for (int y = 0; y < kingdom.size; y++) {
+    /*for (int y = 0; y < kingdom.size; y++) {
       for (int x = 0; x < kingdom.size; x++) {
         CourtierType? courtierType = kingdom.getLand(x, y)?.courtierType;
         if (courtierType != null) {
@@ -275,7 +276,7 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
         }
       }
     }
-
+*/
     return scoreOfLacour;
   }
 
@@ -295,10 +296,10 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
   }
 
   void updateScoreProperty() {
-    var properties = kingdom.getProperties();
+    /*var properties = kingdom.getProperties();
     setState(() {
       scoreProperty = kingdom.calculateScoreFromProperties(properties);
-    });
+    });*/
   }
 
   void updateScore() {
@@ -316,19 +317,8 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
     });
   }
 
-  void setKingdomSize() => setState(() {
-        if (kingdom.size == 5)
-          kingdom.reSize(7);
-        else
-          kingdom.reSize(5);
-
-        resetScores();
-        clearWarnings();
-        //_onSelectCastle();
-      });
-
   void onKingdomClear() => setState(() {
-        kingdom.clear();
+        //kingdom.clear();
         clearWarnings();
         resetScores();
         //_onSelectCastle();
@@ -337,14 +327,14 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
   void onExtensionSelect(newValue) => setState(() {
         dropdownSelectedExtension = newValue!;
 
-        kingdom.getLands().expand((i) => i).toList().forEach((land) {
+        /*kingdom.getLands().expand((i) => i).toList().forEach((land) {
           land.hasResource = false;
           land.courtierType = null;
         });
 
         kingdom.getLands().expand((i) => i).toList().forEach((land) {
           land.giants = 0;
-        });
+        });*/
 
         switch (newValue) {
           case '':
@@ -386,117 +376,67 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
 
   @override
   Widget build(BuildContext context) {
-    Widget body = OrientationBuilder(builder: (context, orientation) {
-      if (orientation == Orientation.portrait) {
-        return Column(children: <Widget>[
-          KingdomWidget(
-              getSelectionMode: this.getSelectionMode,
-              getSelectedLandType: this.getSelectedLandType,
-              getSelectedCourtierType: this.getSelectedCourtierType,
-              getGameSet: this.getGameSet,
-              calculateScore: this.calculateScore,
-              kingdom: this.kingdom,
-              getKingColor: this.getKingColor),
-          Expanded(
-            child: FittedBox(
-                fit: BoxFit.fitHeight,
-                child: InkWell(
-                    child: Text(score.toString(),
-                        style: TextStyle(color: Colors.white)),
-                    onTap: () => showDialog<void>(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20.0))),
-                              content: ScoreDetailsWidget(
-                                  kingdom: this.kingdom,
-                                  groupScore: this.groupScore,
-                                  quests: this.selectedQuests,
-                                  score: this.score,
-                                  scoreOfQuest: this.scoreOfQuest,
-                                  scoreOfLacour: this.scoreOfLacour,
-                                  getLacour: this.getLacour),
-                              actions: <Widget>[
-                                TextButton(
-                                  child: Icon(
-                                    Icons.done,
-                                    color: Colors.black87,
-                                  ),
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                ),
-                              ],
-                            );
-                          },
-                        ))),
-          )
-        ]);
-      } else {
-        return Row(children: <Widget>[
-          Expanded(
-              child: ScoreDetailsWidget(
-                  kingdom: this.kingdom,
-                  groupScore: this.groupScore,
-                  quests: this.selectedQuests,
-                  score: this.score,
-                  scoreOfQuest: this.scoreOfQuest,
-                  scoreOfLacour: this.scoreOfLacour,
-                  getLacour: this.getLacour)),
-          KingdomWidget(
-              getSelectionMode: this.getSelectionMode,
-              getSelectedLandType: this.getSelectedLandType,
-              getSelectedCourtierType: this.getSelectedCourtierType,
-              getGameSet: this.getGameSet,
-              calculateScore: this.calculateScore,
-              kingdom: this.kingdom,
-              getKingColor: getKingColor),
-          Expanded(
-            child: FittedBox(
-                fit: BoxFit.fitHeight,
-                child: Text(score.toString(),
-                    style: TextStyle(color: Colors.white))),
-          )
-        ]);
-      }
-    });
-
-    return Scaffold(
-        appBar: KingdominoAppBar(
-          kingColor: kingColor,
-          onExtensionSelect: onExtensionSelect,
-          getAog: getAog,
-          dropdownSelectedExtension: dropdownSelectedExtension,
-          onSelectKingColor: onSelectKingColor,
-          warnings: warnings,
-          setKingdomSize: setKingdomSize,
-          onKingdomClear: onKingdomClear,
-          getSelectedQuests: getSelectedQuests,
-          updateScores: updateScores,
-          kingdom: kingdom,
-          packageInfo: null,
-        ),
-        bottomNavigationBar: BottomAppBar(
-            child: BottomBar(
-              getSelectionMode: getSelectionMode,
-              setSelectionMode: setSelectionMode,
-              getSelectedLandType: getSelectedLandType,
-              setSelectedLandType: setSelectedLandType,
-              getSelectedCourtierType: getSelectedCourtierType,
-              setSelectedCourtierType: setSelectedCourtierType,
+    return BlocBuilder<KingdomCubit, Kingdom>(
+      builder: (BuildContext context, kingdom) {
+        return Scaffold(
+            appBar: KingdominoAppBar(
+              kingColor: kingColor,
+              onExtensionSelect: onExtensionSelect,
               getAog: getAog,
-              getLacour: getLacour,
+              dropdownSelectedExtension: dropdownSelectedExtension,
+              onSelectKingColor: onSelectKingColor,
+              warnings: warnings,
+              onKingdomClear: onKingdomClear,
+              getSelectedQuests: getSelectedQuests,
+              updateScores: updateScores,
               kingdom: kingdom,
-              scoreOfQuest: this.scoreOfQuest,
-              quests: this.selectedQuests,
-              groupScore: this.groupScore,
-              score: this.score,
-              setKingColor: this.setKingColor,
-              getKingColor: this.getKingColor,
+              packageInfo: null,
             ),
-            color: Theme.of(context).primaryColor),
-        body: body);
+            bottomNavigationBar: BottomAppBar(
+                child: BottomBar(
+                  getSelectionMode: getSelectionMode,
+                  setSelectionMode: setSelectionMode,
+                  getSelectedLandType: getSelectedLandType,
+                  setSelectedLandType: setSelectedLandType,
+                  getSelectedCourtierType: getSelectedCourtierType,
+                  setSelectedCourtierType: setSelectedCourtierType,
+                  getAog: getAog,
+                  getLacour: getLacour,
+                  kingdom: kingdom,
+                  scoreOfQuest: this.scoreOfQuest,
+                  quests: this.selectedQuests,
+                  groupScore: this.groupScore,
+                  score: this.score,
+                  setKingColor: this.setKingColor,
+                  getKingColor: this.getKingColor,
+                ),
+                color: Theme.of(context).primaryColor),
+            body: Row(children: <Widget>[
+              Expanded(
+                  child: ScoreDetailsWidget(
+                      kingdom: kingdom,
+                      groupScore: this.groupScore,
+                      quests: this.selectedQuests,
+                      score: this.score,
+                      scoreOfQuest: this.scoreOfQuest,
+                      scoreOfLacour: this.scoreOfLacour,
+                      getLacour: this.getLacour)),
+              KingdomWidget(
+                  kingdom: kingdom,
+                  getSelectionMode: this.getSelectionMode,
+                  getSelectedLandType: this.getSelectedLandType,
+                  getSelectedCourtierType: this.getSelectedCourtierType,
+                  getGameSet: this.getGameSet,
+                  calculateScore: this.calculateScore,
+                  getKingColor: getKingColor),
+              Expanded(
+                child: FittedBox(
+                    fit: BoxFit.fitHeight,
+                    child: Text(score.toString(),
+                        style: TextStyle(color: Colors.white))),
+              )
+            ]));
+      },
+    );
   }
 }

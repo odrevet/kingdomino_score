@@ -1,12 +1,33 @@
+import 'package:equatable/equatable.dart';
+
 import 'land.dart';
 import 'property.dart';
 
-class Kingdom {
+class Kingdom extends Equatable {
   int size = 5;
-  List<List<Land>> _lands = [];
+  List<List<Land>> lands = [];
+
+  Kingdom({required this.size}) {
+    this.size = size;
+    this.lands = [];
+
+    for (var i = 0; i < size; i++) {
+      lands.add(List<Land>.generate(size, (_) => Land()));
+    }
+  }
+
+  @override
+  List<Object> get props {
+    return [size, lands];
+  }
+
+  Kingdom copyWith({int? size}) {
+    lands.clear();
+    return Kingdom(size: size ?? this.size);
+  }
 
   List<List<Land>> getLands() {
-    return _lands;
+    return lands;
   }
 
   Land? getLand(int y, int x) {
@@ -14,25 +35,19 @@ class Kingdom {
       return null;
     }
 
-    return _lands[x][y];
-  }
-
-  Kingdom(this.size) {
-    for (var i = 0; i < size; i++) {
-      this._lands.add(List<Land>.generate(size, (_) => Land()));
-    }
+    return lands[x][y];
   }
 
   void reSize(int size) {
     this.size = size;
-    this._lands = [];
+    this.lands = [];
     for (var i = 0; i < size; i++) {
-      this._lands.add(List<Land>.generate(size, (_) => Land()));
+      this.lands.add(List<Land>.generate(size, (_) => Land()));
     }
   }
 
   void clear() {
-    _lands.expand((i) => i).toList().forEach((land) {
+    lands.expand((i) => i).toList().forEach((land) {
       land.landType = null;
       land.crowns = 0;
       land.giants = 0;
@@ -54,7 +69,7 @@ class Kingdom {
     }
 
     //reset marked status
-    _lands.expand((i) => i).toList().forEach((land) => land.isMarked = false);
+    lands.expand((i) => i).toList().forEach((land) => land.isMarked = false);
 
     return properties;
   }

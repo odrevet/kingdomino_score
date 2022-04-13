@@ -126,9 +126,6 @@ class FolieDesGrandeurs extends Quest {
     int sharedSquareCount =
         _countSharedSquare(placedAlignments, crownAlignment);
 
-    /*print($crownAlignment);
-      print('shared square count $sharedSquareCount');*/
-
     if (sharedSquareCount == 0) {
       addAlignment = true;
     } else if (sharedSquareCount == 1) {
@@ -137,7 +134,6 @@ class FolieDesGrandeurs extends Quest {
         if (resultAlignment.cross(crownAlignment)) {
           sharedSquareCount +=
               _countSharedSquare(placedAlignments, resultAlignment);
-          //print('  * shared square count $sharedSquareCount');
         }
 
         if (sharedSquareCount >= 2) {
@@ -150,7 +146,6 @@ class FolieDesGrandeurs extends Quest {
     }
 
     if (addAlignment) {
-      //print('ADD');
       resultAlignments.add(crownAlignment);
     } else {
       placedAlignments[crownAlignment.x0][crownAlignment.y0]--;

@@ -65,86 +65,6 @@ class _KingdomWidgetState extends State<KingdomWidget> {
       required Function this.calculateScore,
       required Function this.getKingColor});
 
-  void _onLandTap(int x, int y) {
-    Land? land = widget.kingdom.getLand(x, y);
-
-    setState(() {
-      switch (getSelectionMode()) {
-        case SelectionMode.land:
-          land!.landType = getSelectedLandType();
-          land.reset();
-          break;
-        case SelectionMode.crown:
-          if (land!.landType == LandType.castle || land.landType == null) break;
-          land.crowns++;
-          land.courtierType = null;
-          if (land.crowns > getGameSet()[land.landType]['crowns']['max']) {
-            land.reset();
-          }
-          break;
-        case SelectionMode.castle:
-          //remove other castle, if any
-          for (var cx = 0; cx < widget.kingdom.size; cx++) {
-            for (var cy = 0; cy < widget.kingdom.size; cy++) {
-              if (widget.kingdom.getLand(cx, cy).landType == LandType.castle) {
-                widget.kingdom.getLand(cx, cy).landType = null;
-                widget.kingdom.getLand(cx, cy).crowns = 0;
-              }
-            }
-          }
-
-          land!.landType = getSelectedLandType(); //should be castle
-          land.reset();
-          break;
-        case SelectionMode.giant:
-          land!.giants = (land.giants + 1) % (land.crowns + 1);
-          break;
-        case SelectionMode.courtier:
-          if ([
-            LandType.grassland,
-            LandType.lake,
-            LandType.wheat,
-            LandType.forest,
-            LandType.mine,
-            LandType.swamp
-          ].contains(land!.landType)) {
-            CourtierType courtierType = getSelectedCourtierType();
-            if (land.courtierType == courtierType) {
-              land.courtierType = null;
-              break;
-            }
-
-            //remove same courtier type, if any
-            for (var cx = 0; cx < widget.kingdom.size; cx++) {
-              for (var cy = 0; cy < widget.kingdom.size; cy++) {
-                if (widget.kingdom.getLand(cx, cy).courtierType ==
-                    courtierType) {
-                  widget.kingdom.getLand(cx, cy).courtierType = null;
-                }
-              }
-            }
-
-            land.reset();
-            land.courtierType = courtierType;
-          }
-          break;
-        case SelectionMode.resource:
-          if ([
-            LandType.grassland,
-            LandType.lake,
-            LandType.wheat,
-            LandType.forest
-          ].contains(land!.landType)) {
-            land.hasResource = !land.hasResource;
-            land.crowns = 0;
-          }
-          break;
-      }
-    });
-
-    calculateScore();
-  }
-
   Widget _buildLand(int y, int x) {
     Land? land = widget.kingdom.getLand(x, y);
 
@@ -235,9 +155,11 @@ class _KingdomWidgetState extends State<KingdomWidget> {
     x = (index / gridStateLength).floor();
     y = (index % gridStateLength);
     return GestureDetector(
-      onTap: () => context
-          .read<KingdomCubit>()
-          .setLand(x, y, getSelectedLandType()), //_onLandTap(x, y),  // WIP
+      onTap: () {
+        context.read<KingdomCubit>().setLand(x, y, getSelectedLandType,
+            getSelectionMode, getGameSet, getSelectedCourtierType);
+        calculateScore();
+      },
       child: GridTile(
         child: Container(
           child: _buildLand(y, x),

@@ -150,8 +150,8 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
   }
 
   void calculateScore() {
-    clearWarnings();
-    checkKingdom();
+    //clearWarnings();
+    //checkKingdom();
     updateScores();
   }
 

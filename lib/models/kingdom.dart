@@ -5,14 +5,16 @@ import 'property.dart';
 
 class Kingdom extends Equatable {
   int size = 5;
-  List<List<Land>> lands = [];
+  late List<List<Land>> lands = [];
 
-  Kingdom({required this.size}) {
-    this.size = size;
-    this.lands = [];
-
-    for (var i = 0; i < size; i++) {
-      lands.add(List<Land>.generate(size, (_) => Land()));
+  Kingdom({required this.size, List<List<Land>>? lands}) {
+    if (lands != null) {
+      this.lands = lands;
+    } else {
+      this.lands = [];
+      for (var i = 0; i < size; i++) {
+        this.lands.add(List<Land>.generate(size, (_) => Land()));
+      }
     }
   }
 
@@ -21,8 +23,8 @@ class Kingdom extends Equatable {
     return [size, lands];
   }
 
-  Kingdom copyWith({int? size}) {
-    return Kingdom(size: size ?? this.size);
+  Kingdom copyWith({int? size, List<List<Land>>? lands}) {
+    return Kingdom(size: size ?? this.size, lands: lands ?? [...this.lands]);
   }
 
   List<List<Land>> getLands() {

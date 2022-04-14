@@ -285,8 +285,7 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
     });
   }
 
-  void onKingdomClear(Kingdom kingdom) => setState(() {
-        kingdom.clear();
+  void onKingdomClear() => setState(() {
         clearWarnings();
         resetScores();
       });

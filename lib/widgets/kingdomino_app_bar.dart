@@ -117,7 +117,11 @@ class KingdominoAppBar extends StatelessWidget with PreferredSizeWidget {
               context.read<KingdomCubit>().resize(kingdom.size == 5 ? 7 : 5)),
       VerticalDivider(),
       IconButton(
-          icon: Icon(Icons.delete), onPressed: () => onKingdomClear(kingdom)),
+          icon: Icon(Icons.delete),
+          onPressed: () {
+            context.read<KingdomCubit>().clear();
+            onKingdomClear();
+          }),
       VerticalDivider(),
       IconButton(
           icon: Icon(Icons.help),

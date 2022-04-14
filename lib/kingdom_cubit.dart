@@ -8,6 +8,8 @@ import 'models/lacour/lacour.dart';
 class KingdomCubit extends ReplayCubit<Kingdom> {
   KingdomCubit() : super(Kingdom(size: 5));
 
+  clear() => emit(Kingdom(size: state.size));
+
   resize(int size) => emit(Kingdom(size: size));
 
   setLand(int x, int y, getSelectedLandType, getSelectionMode, getGameSet,

@@ -346,6 +346,83 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
   Widget build(BuildContext context) {
     return BlocBuilder<KingdomCubit, Kingdom>(
       builder: (BuildContext context, kingdom) {
+        Widget body = OrientationBuilder(builder: (context, orientation) {
+          if (orientation == Orientation.portrait) {
+            return Column(children: <Widget>[
+              KingdomWidget(
+                  getSelectionMode: this.getSelectionMode,
+                  getSelectedLandType: this.getSelectedLandType,
+                  getSelectedCourtierType: this.getSelectedCourtierType,
+                  getGameSet: this.getGameSet,
+                  calculateScore: this.calculateScore,
+                  kingdom: kingdom,
+                  getKingColor: this.getKingColor),
+              Expanded(
+                child: FittedBox(
+                    fit: BoxFit.fitHeight,
+                    child: InkWell(
+                        child: Text(score.toString(),
+                            style: TextStyle(color: Colors.white)),
+                        onTap: () => showDialog<void>(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(20.0))),
+                                  content: ScoreDetailsWidget(
+                                      kingdom: kingdom,
+                                      groupScore: this.groupScore,
+                                      quests: this.selectedQuests,
+                                      score: this.score,
+                                      scoreOfQuest: this.scoreOfQuest,
+                                      scoreOfLacour: this.scoreOfLacour,
+                                      getLacour: this.getLacour),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      child: Icon(
+                                        Icons.done,
+                                        color: Colors.black87,
+                                      ),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                  ],
+                                );
+                              },
+                            ))),
+              )
+            ]);
+          } else {
+            return Row(children: <Widget>[
+              Expanded(
+                  child: ScoreDetailsWidget(
+                      kingdom: kingdom,
+                      groupScore: this.groupScore,
+                      quests: this.selectedQuests,
+                      score: this.score,
+                      scoreOfQuest: this.scoreOfQuest,
+                      scoreOfLacour: this.scoreOfLacour,
+                      getLacour: this.getLacour)),
+              KingdomWidget(
+                  getSelectionMode: this.getSelectionMode,
+                  getSelectedLandType: this.getSelectedLandType,
+                  getSelectedCourtierType: this.getSelectedCourtierType,
+                  getGameSet: this.getGameSet,
+                  calculateScore: this.calculateScore,
+                  kingdom: kingdom,
+                  getKingColor: getKingColor),
+              Expanded(
+                child: FittedBox(
+                    fit: BoxFit.fitHeight,
+                    child: Text(score.toString(),
+                        style: TextStyle(color: Colors.white))),
+              )
+            ]);
+          }
+        });
+
         return Scaffold(
             appBar: KingdominoAppBar(
               kingColor: kingColor,
@@ -379,31 +456,7 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
                   getKingColor: this.getKingColor,
                 ),
                 color: Theme.of(context).primaryColor),
-            body: Row(children: <Widget>[
-              Expanded(
-                  child: ScoreDetailsWidget(
-                      kingdom: kingdom,
-                      groupScore: this.groupScore,
-                      quests: this.selectedQuests,
-                      score: this.score,
-                      scoreOfQuest: this.scoreOfQuest,
-                      scoreOfLacour: this.scoreOfLacour,
-                      getLacour: this.getLacour)),
-              KingdomWidget(
-                  kingdom: kingdom,
-                  getSelectionMode: this.getSelectionMode,
-                  getSelectedLandType: this.getSelectedLandType,
-                  getSelectedCourtierType: this.getSelectedCourtierType,
-                  getGameSet: this.getGameSet,
-                  calculateScore: this.calculateScore,
-                  getKingColor: getKingColor),
-              Expanded(
-                child: FittedBox(
-                    fit: BoxFit.fitHeight,
-                    child: Text(score.toString(),
-                        style: TextStyle(color: Colors.white))),
-              )
-            ]));
+            body: body);
       },
     );
   }

@@ -6,20 +6,10 @@ import '../models/age_of_giants.dart';
 import '../models/kingdom.dart';
 import '../models/lacour/lacour.dart';
 import '../models/land.dart';
+import 'castle_widget.dart';
 import 'kingdomino_score_widget.dart';
 
-class CastleWidget extends StatelessWidget {
-  Color kingColor;
 
-  CastleWidget(this.kingColor);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        color: kingColor,
-        child: FittedBox(fit: BoxFit.fitWidth, child: Text(castle)));
-  }
-}
 
 class KingdomWidget extends StatefulWidget {
   KingdomWidget(

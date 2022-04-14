@@ -40,30 +40,11 @@ class KingdomWidget extends StatefulWidget {
   final getKingColor;
 
   @override
-  _KingdomWidgetState createState() => _KingdomWidgetState(
-      getSelectionMode: this.getSelectionMode,
-      getSelectedLandType: this.getSelectedLandType,
-      getSelectedCourtierType: this.getSelectedCourtierType,
-      getGameSet: this.getGameSet,
-      calculateScore: this.calculateScore,
-      getKingColor: this.getKingColor);
+  _KingdomWidgetState createState() => _KingdomWidgetState();
 }
 
 class _KingdomWidgetState extends State<KingdomWidget> {
-  final getSelectionMode;
-  final getSelectedLandType;
-  final getSelectedCourtierType;
-  final getGameSet;
-  final calculateScore;
-  final getKingColor;
-
-  _KingdomWidgetState(
-      {required Function this.getSelectionMode,
-      required Function this.getSelectedLandType,
-      required Function this.getSelectedCourtierType,
-      required Function this.getGameSet,
-      required Function this.calculateScore,
-      required Function this.getKingColor});
+  _KingdomWidgetState();
 
   Widget _buildLand(int y, int x) {
     Land? land = widget.kingdom.getLand(x, y);
@@ -76,7 +57,7 @@ class _KingdomWidgetState extends State<KingdomWidget> {
 
     Widget? child;
     if (land.landType == LandType.castle) {
-      child = CastleWidget(getKingColor());
+      child = CastleWidget(widget.getKingColor());
     } else if (land.courtierType != null) {
       child = Container(
         padding: const EdgeInsets.all(10.0),
@@ -156,9 +137,14 @@ class _KingdomWidgetState extends State<KingdomWidget> {
     y = (index % gridStateLength);
     return GestureDetector(
       onTap: () {
-        context.read<KingdomCubit>().setLand(x, y, getSelectedLandType,
-            getSelectionMode, getGameSet, getSelectedCourtierType);
-        calculateScore();
+        context.read<KingdomCubit>().setLand(
+            x,
+            y,
+            widget.getSelectedLandType,
+            widget.getSelectionMode,
+            widget.getGameSet,
+            widget.getSelectedCourtierType);
+        widget.calculateScore();
       },
       child: GridTile(
         child: Container(

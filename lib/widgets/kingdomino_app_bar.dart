@@ -56,31 +56,6 @@ class KingdominoAppBar extends StatelessWidget with PreferredSizeWidget {
               : null,
           icon: const Icon(Icons.redo)),
       VerticalDivider(),
-      !kIsWeb
-          ?
-          // King Color selector
-          DropdownButton<Color>(
-              value: kingColor,
-              iconSize: 25,
-              iconEnabledColor: Colors.white,
-              underline: Container(height: 1, color: Colors.white),
-              onChanged: onSelectKingColor,
-              items: kingColors.map<DropdownMenuItem<Color>>((Color value) {
-                return DropdownMenuItem<Color>(
-                  value: value,
-                  child: ColorFiltered(
-                    colorFilter: ColorFilter.mode(value, BlendMode.hue),
-                    child: Image.asset(
-                      'assets/king_pawn.png',
-                      height: 25,
-                      width: 25,
-                    ),
-                  ),
-                );
-              }).toList(),
-            )
-          : Text(''),
-      VerticalDivider(),
       // Extension Selector
       DropdownButton<String>(
         value: dropdownSelectedExtension,
@@ -172,6 +147,26 @@ I will not use or share your information with anyone : Kingdomino Score works of
     }
 
     return AppBar(
+      leading: DropdownButton<Color>(
+        value: kingColor,
+        iconSize: 25,
+        iconEnabledColor: Colors.white,
+        underline: Container(height: 1, color: Colors.white),
+        onChanged: onSelectKingColor,
+        items: kingColors.map<DropdownMenuItem<Color>>((Color value) {
+          return DropdownMenuItem<Color>(
+            value: value,
+            child: ColorFiltered(
+              colorFilter: ColorFilter.mode(value, BlendMode.color),
+              child: Image.asset(
+                'assets/king_pawn.png',
+                height: 25,
+                width: 25,
+              ),
+            ),
+          );
+        }).toList(),
+      ),
       actions: actions,
     );
   }

@@ -155,8 +155,8 @@ I will not use or share your information with anyone : Kingdomino Score works of
         items: kingColors.map<DropdownMenuItem<Color>>((Color value) {
           return DropdownMenuItem<Color>(
             value: value,
-            child: ColorFiltered(
-              colorFilter: ColorFilter.mode(value, BlendMode.color),
+            child: Container(
+              color: value,
               child: Image.asset(
                 'assets/king_pawn.png',
                 height: 25,

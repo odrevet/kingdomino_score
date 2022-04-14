@@ -3,7 +3,6 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kingdomino_score_count/kingdom_cubit.dart';
-import 'package:kingdomino_score_count/models/land.dart';
 import 'package:kingdomino_score_count/widgets/quest_dialog.dart';
 import 'package:kingdomino_score_count/widgets/warning_widget.dart';
 

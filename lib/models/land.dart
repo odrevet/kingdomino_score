@@ -42,8 +42,9 @@ String getResourceForLandType(LandType? type) {
       return '🌾';
     case LandType.forest:
       return '🪵';
+    default:
+      return '?';
   }
-  return '?';
 }
 
 Color getColorForLandType(LandType? type) {

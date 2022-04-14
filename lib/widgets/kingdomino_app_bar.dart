@@ -13,7 +13,6 @@ class KingdominoAppBar extends StatelessWidget with PreferredSizeWidget {
   @override
   final Size preferredSize;
 
-  final kingdom;
   final kingColor;
   final getAog;
   final String dropdownSelectedExtension;
@@ -27,7 +26,6 @@ class KingdominoAppBar extends StatelessWidget with PreferredSizeWidget {
 
   const KingdominoAppBar({
     this.preferredSize = const Size.fromHeight(50.0),
-    required this.kingdom,
     required this.kingColor,
     required this.onExtensionSelect,
     required this.getAog,
@@ -43,6 +41,8 @@ class KingdominoAppBar extends StatelessWidget with PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    var kingdom = context.read<KingdomCubit>().state;
+
     var actions = <Widget>[
       IconButton(
           onPressed: context.read<KingdomCubit>().canUndo

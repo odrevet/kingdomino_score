@@ -37,37 +37,6 @@ final String square = '\u{25A0}';
 
 enum SelectionMode { land, crown, castle, giant, courtier, resource }
 
-const Map<LandType, Map<String, dynamic>> gameSet = {
-  LandType.castle: {
-    'count': 1, //per player
-    'crowns': {'max': 0}
-  },
-  LandType.wheat: {
-    'count': 21 + 5,
-    'crowns': {'max': 1, 1: 5}
-  },
-  LandType.grassland: {
-    'count': 10 + 2 + 2,
-    'crowns': {'max': 2, 1: 2, 2: 2}
-  },
-  LandType.forest: {
-    'count': 16 + 6,
-    'crowns': {'max': 1, 1: 6}
-  },
-  LandType.lake: {
-    'count': 12 + 6,
-    'crowns': {'max': 1, 1: 6}
-  },
-  LandType.swamp: {
-    'count': 6 + 2 + 2,
-    'crowns': {'max': 2, 1: 2, 2: 2}
-  },
-  LandType.mine: {
-    'count': 1 + 1 + 3 + 1,
-    'crowns': {'max': 3, 1: 1, 2: 3, 3: 1}
-  }
-};
-
 class KingdominoScoreWidget extends StatefulWidget {
   final Function setColor;
 
@@ -149,10 +118,10 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
     });
   }
 
-  void calculateScore() {
-    //clearWarnings();
-    //checkKingdom();
-    updateScores();
+  void calculateScore(Kingdom kingdom) {
+    clearWarnings();
+    checkKingdom(kingdom);
+    updateScores(kingdom);
   }
 
   Map<LandType, Map<String, dynamic>> getGameSet() {
@@ -172,9 +141,9 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
   }
 
   ///check if the kingdom is conform, if not set warnings
-  void checkKingdom() {
+  void checkKingdom(Kingdom kingdom) {
     //check if more tile in the kingdom than in the gameSet
-    /*for (var landType in LandType.values) {
+    for (var landType in LandType.values) {
       var count = kingdom
           .getLands()
           .expand((i) => i)
@@ -211,7 +180,7 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
           });
         }
       }
-    }*/
+    }
   }
 
   void updateScoreQuest() {
@@ -229,9 +198,9 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
     }
   }
 
-  int calculateLacourScore() {
+  int calculateLacourScore(Kingdom kingdom) {
     int scoreOfLacour = 0;
-    /*for (int y = 0; y < kingdom.size; y++) {
+    for (int y = 0; y < kingdom.size; y++) {
       for (int x = 0; x < kingdom.size; x++) {
         CourtierType? courtierType = kingdom.getLand(x, y)?.courtierType;
         if (courtierType != null) {
@@ -276,30 +245,30 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
         }
       }
     }
-*/
+
     return scoreOfLacour;
   }
 
-  void updateScoreLacour() {
+  void updateScoreLacour(Kingdom kingdom) {
     setState(() {
-      scoreOfLacour = calculateLacourScore();
+      scoreOfLacour = calculateLacourScore(kingdom);
     });
   }
 
-  void updateScores() {
-    updateScoreProperty();
+  void updateScores(Kingdom kingdom) {
+    updateScoreProperty(kingdom);
     updateScoreQuest();
     if (this.lacour) {
-      updateScoreLacour();
+      updateScoreLacour(kingdom);
     }
     updateScore();
   }
 
-  void updateScoreProperty() {
-    /*var properties = kingdom.getProperties();
+  void updateScoreProperty(Kingdom kingdom) {
+    var properties = kingdom.getProperties();
     setState(() {
       scoreProperty = kingdom.calculateScoreFromProperties(properties);
-    });*/
+    });
   }
 
   void updateScore() {
@@ -317,24 +286,23 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
     });
   }
 
-  void onKingdomClear() => setState(() {
-        //kingdom.clear();
+  void onKingdomClear(Kingdom kingdom) => setState(() {
+        kingdom.clear();
         clearWarnings();
         resetScores();
-        //_onSelectCastle();
       });
 
-  void onExtensionSelect(newValue) => setState(() {
+  void onExtensionSelect(Kingdom kingdom, String? newValue) => setState(() {
         dropdownSelectedExtension = newValue!;
 
-        /*kingdom.getLands().expand((i) => i).toList().forEach((land) {
+        kingdom.getLands().expand((i) => i).toList().forEach((land) {
           land.hasResource = false;
           land.courtierType = null;
         });
 
         kingdom.getLands().expand((i) => i).toList().forEach((land) {
           land.giants = 0;
-        });*/
+        });
 
         switch (newValue) {
           case '':
@@ -370,8 +338,8 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
 
         selectedQuests.clear();
         clearWarnings();
-        checkKingdom();
-        updateScores();
+        checkKingdom(kingdom);
+        updateScores(kingdom);
       });
 
   @override

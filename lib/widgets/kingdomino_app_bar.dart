@@ -9,6 +9,7 @@ import 'package:kingdomino_score_count/widgets/warning_widget.dart';
 
 import '../models/age_of_giants.dart';
 import '../models/king_colors.dart';
+import '../models/kingdom.dart';
 
 class KingdominoAppBar extends StatelessWidget with PreferredSizeWidget {
   @override
@@ -18,8 +19,8 @@ class KingdominoAppBar extends StatelessWidget with PreferredSizeWidget {
   final kingColor;
   final getAog;
   final String dropdownSelectedExtension;
-  final void Function(String?)? onExtensionSelect;
-  final void Function(Color?)? onSelectKingColor;
+  final void Function(Kingdom, String?) onExtensionSelect;
+  final void Function(Color?) onSelectKingColor;
   final warnings;
   final packageInfo;
   final getSelectedQuests;
@@ -88,7 +89,7 @@ class KingdominoAppBar extends StatelessWidget with PreferredSizeWidget {
         iconSize: 25,
         elevation: 16,
         underline: Container(height: 1, color: Colors.white),
-        onChanged: onExtensionSelect,
+        onChanged: (value) => onExtensionSelect(kingdom, value),
         items: <String>['', 'Giants', 'LaCour']
             .map<DropdownMenuItem<String>>((String value) {
           Widget child;
@@ -116,7 +117,8 @@ class KingdominoAppBar extends StatelessWidget with PreferredSizeWidget {
           onPressed: () =>
               context.read<KingdomCubit>().resize(kingdom.size == 5 ? 7 : 5)),
       VerticalDivider(),
-      IconButton(icon: Icon(Icons.delete), onPressed: onKingdomClear),
+      IconButton(
+          icon: Icon(Icons.delete), onPressed: () => onKingdomClear(kingdom)),
       VerticalDivider(),
       IconButton(
           icon: Icon(Icons.help),
@@ -167,7 +169,7 @@ I will not use or share your information with anyone : Kingdomino Score works of
     }
 
     return AppBar(
-      title: Row(mainAxisAlignment: MainAxisAlignment.end, children: actions),
+      actions: actions,
     );
   }
 }

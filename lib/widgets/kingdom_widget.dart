@@ -9,8 +9,6 @@ import '../models/land.dart';
 import 'castle_widget.dart';
 import 'kingdomino_score_widget.dart';
 
-
-
 class KingdomWidget extends StatefulWidget {
   KingdomWidget(
       {required Function this.getSelectionMode,
@@ -134,7 +132,7 @@ class _KingdomWidgetState extends State<KingdomWidget> {
             widget.getSelectionMode,
             widget.getGameSet,
             widget.getSelectedCourtierType);
-        widget.calculateScore();
+        widget.calculateScore(widget.kingdom);
       },
       child: GridTile(
         child: Container(

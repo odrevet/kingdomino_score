@@ -64,7 +64,13 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
   bool lacour = false;
   HashSet<QuestType> selectedQuests = HashSet();
   List<Warning> warnings = [];
-  late PackageInfo _packageInfo;
+  PackageInfo _packageInfo = PackageInfo(
+    appName: 'Unknown',
+    packageName: 'Unknown',
+    version: 'Unknown',
+    buildNumber: 'Unknown',
+    buildSignature: 'Unknown',
+  );
   final Function setColor;
   String dropdownSelectedExtension = '';
 

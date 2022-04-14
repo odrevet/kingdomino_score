@@ -26,6 +26,7 @@ import '../models/kingdom.dart';
 import '../models/land.dart' show LandType;
 import '../models/quests/quest.dart';
 import '../models/warning.dart';
+import '../score_quest.dart';
 import 'bottom_bar.dart';
 import 'kingdom_widget.dart';
 import 'score_details_widget.dart';
@@ -182,9 +183,9 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
     }
   }
 
-  void updateScoreQuest() {
+  void updateScoreQuest(Kingdom kingdom) {
     setState(() {
-      //scoreOfQuest = calculateQuestScore(selectedQuests, kingdom);
+      scoreOfQuest = calculateQuestScore(selectedQuests, kingdom);
     });
   }
 
@@ -256,7 +257,7 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
 
   void updateScores(Kingdom kingdom) {
     updateScoreProperty(kingdom);
-    updateScoreQuest();
+    updateScoreQuest(kingdom);
     if (this.lacour) {
       updateScoreLacour(kingdom);
     }

@@ -25,7 +25,7 @@ class Kingdom {
   }*/
 
   Kingdom copyWith({int? size, List<List<Land>>? lands}) {
-    return Kingdom(size: size ?? this.size, lands: lands ?? [...this.lands]);
+    return Kingdom(size: size ?? this.size, lands: lands ?? this.lands);
   }
 
   List<List<Land>> getLands() {

@@ -434,7 +434,7 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
               getSelectedQuests: getSelectedQuests,
               updateScores: updateScores,
               kingdom: kingdom,
-              packageInfo: null,
+              packageInfo: _packageInfo,
             ),
             bottomNavigationBar: BottomAppBar(
                 child: BottomBar(

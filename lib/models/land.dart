@@ -16,6 +16,12 @@ class Land {
   CourtierType? courtierType;
   bool hasResource = false;
 
+  Land([this.landType]);
+
+  Land copyWith({LandType? landType}) {
+    return Land(landType ?? this.landType);
+  }
+
   ///set crowns to 0 and hasGiant to false
   void reset() {
     crowns = 0;
@@ -28,8 +34,6 @@ class Land {
   int getCrowns() {
     return crowns - giants;
   }
-
-  Land([this.landType]);
 }
 
 String getResourceForLandType(LandType? type) {

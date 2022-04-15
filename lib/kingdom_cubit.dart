@@ -12,11 +12,16 @@ class KingdomCubit extends ReplayCubit<Kingdom> {
 
   resize(int size) => emit(Kingdom(size: size));
 
-  setLand(int x, int y, getSelectedLandType, getSelectionMode, getGameSet,
+  setLand(int y, int x, getSelectedLandType, getSelectionMode, getGameSet,
       getSelectedCourtierType) {
-    var kingdom = state.copyWith();
+    var kingdom = Kingdom(size: state.size);
+    for (var x = 0; x < state.size; x++) {
+      for (var y = 0; y < state.size; y++) {
+        kingdom.lands[y][x] = state.getLand(x, y)!.copyWith();
+      }
+    }
 
-    Land? land = kingdom.getLand(x, y);
+    Land? land = kingdom.getLand(y, x);
 
     switch (getSelectionMode()) {
       case SelectionMode.land:

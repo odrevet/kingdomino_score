@@ -1,10 +1,7 @@
-//import 'package:equatable/equatable.dart';
-
 import 'land.dart';
 import 'property.dart';
 
 class Kingdom {
-  //}extends Equatable {
   int size = 5;
   late List<List<Land>> lands = [];
 
@@ -19,12 +16,19 @@ class Kingdom {
     }
   }
 
-  /*@override
+  @override
   List<Object> get props {
     return [size, lands];
-  }*/
+  }
 
   Kingdom copyWith({int? size, List<List<Land>>? lands}) {
+    if (lands == null) {
+      var landsCopy = [];
+      for (var i = 0; i < this.size; i++) {
+        landsCopy.add(List<Land>.generate(
+            this.size, (j) => this.getLand(j, i)!.copyWith()));
+      }
+    }
     return Kingdom(size: size ?? this.size, lands: lands ?? this.lands);
   }
 

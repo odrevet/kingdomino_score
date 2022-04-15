@@ -118,7 +118,8 @@ class _KingdomWidgetState extends State<KingdomWidget> {
   }
 
   Widget _buildLands(BuildContext context, int index) {
-    int gridStateLength = widget.kingdom.getLands().length;
+    var kingdom = context.read<KingdomCubit>().state;
+    int gridStateLength = kingdom.getLands().length;
 
     int x, y = 0;
     x = (index / gridStateLength).floor();
@@ -128,7 +129,7 @@ class _KingdomWidgetState extends State<KingdomWidget> {
         var selectionMode = widget.getSelectionMode();
         var selectedLandType = widget.getSelectedLandType();
         if (selectionMode != SelectionMode.land ||
-            selectedLandType != widget.kingdom.getLand(x, y).landType) {
+            selectedLandType != kingdom.getLand(x, y)!.landType) {
           context.read<KingdomCubit>().setLand(
               x,
               y,
@@ -136,7 +137,7 @@ class _KingdomWidgetState extends State<KingdomWidget> {
               widget.getSelectionMode,
               widget.getGameSet,
               widget.getSelectedCourtierType);
-          widget.calculateScore(widget.kingdom);
+          widget.calculateScore(context.read<KingdomCubit>().state);
         }
       },
       child: GridTile(

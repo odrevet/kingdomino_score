@@ -125,14 +125,17 @@ class _KingdomWidgetState extends State<KingdomWidget> {
     y = (index % gridStateLength);
     return GestureDetector(
       onTap: () {
-        context.read<KingdomCubit>().setLand(
-            x,
-            y,
-            widget.getSelectedLandType,
-            widget.getSelectionMode,
-            widget.getGameSet,
-            widget.getSelectedCourtierType);
-        widget.calculateScore(widget.kingdom);
+        var selectedLandType = widget.getSelectedLandType();
+        if (selectedLandType != widget.kingdom.getLand(x, y).landType) {
+          context.read<KingdomCubit>().setLand(
+              x,
+              y,
+              widget.getSelectedLandType,
+              widget.getSelectionMode,
+              widget.getGameSet,
+              widget.getSelectedCourtierType);
+          widget.calculateScore(widget.kingdom);
+        }
       },
       child: GridTile(
         child: Container(

@@ -12,7 +12,7 @@ class KingdomCubit extends ReplayCubit<Kingdom> {
 
   resize(int size) => emit(Kingdom(size: size));
 
-  setLand(int y, int x, getSelectedLandType, getSelectionMode, getGameSet,
+  setLand(int y, int x, selectedLandType, getSelectionMode, getGameSet,
       getSelectedCourtierType) {
     var kingdom = Kingdom(size: state.size);
     for (var x = 0; x < state.size; x++) {
@@ -25,7 +25,7 @@ class KingdomCubit extends ReplayCubit<Kingdom> {
 
     switch (getSelectionMode()) {
       case SelectionMode.land:
-        land!.landType = getSelectedLandType();
+        land!.landType = selectedLandType;
         land.reset();
         break;
       case SelectionMode.crown:
@@ -47,7 +47,7 @@ class KingdomCubit extends ReplayCubit<Kingdom> {
           }
         }
 
-        land!.landType = getSelectedLandType(); //should be castle
+        land!.landType = selectedLandType; //should be castle
         land.reset();
         break;
       case SelectionMode.giant:

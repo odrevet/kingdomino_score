@@ -82,6 +82,9 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
       _packageInfo = packageInfo;
     });
 
+    selectedLandType = LandType.castle;
+    selectionMode = SelectionMode.castle;
+
     super.initState();
   }
 

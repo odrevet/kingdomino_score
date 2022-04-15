@@ -430,6 +430,7 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
 
         return Scaffold(
             appBar: KingdominoAppBar(
+              score: this.score,
               kingColor: kingColor,
               onExtensionSelect: onExtensionSelect,
               getAog: getAog,

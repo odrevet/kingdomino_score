@@ -23,6 +23,7 @@ class KingdominoAppBar extends StatelessWidget with PreferredSizeWidget {
   final getSelectedQuests;
   final updateScores;
   final onKingdomClear;
+  final score;
 
   const KingdominoAppBar({
     this.preferredSize = const Size.fromHeight(50.0),
@@ -36,6 +37,7 @@ class KingdominoAppBar extends StatelessWidget with PreferredSizeWidget {
     required this.getSelectedQuests,
     required this.updateScores,
     required this.onKingdomClear,
+    required this.score,
     Key? key,
   }) : super(key: key);
 
@@ -146,27 +148,27 @@ I will not use or share your information with anyone : Kingdomino Score works of
     }
 
     return AppBar(
-      leading: DropdownButton<Color>(
-        value: kingColor,
-        iconSize: 25,
-        iconEnabledColor: Colors.white,
-        underline: Container(height: 1, color: Colors.white),
-        onChanged: onSelectKingColor,
-        items: kingColors.map<DropdownMenuItem<Color>>((Color value) {
-          return DropdownMenuItem<Color>(
-            value: value,
-            child: Container(
-              color: value,
-              child: Image.asset(
-                'assets/king_pawn.png',
-                height: 25,
-                width: 25,
+        leading: DropdownButton<Color>(
+          value: kingColor,
+          iconSize: 25,
+          iconEnabledColor: Colors.white,
+          underline: Container(height: 1, color: Colors.white),
+          onChanged: onSelectKingColor,
+          items: kingColors.map<DropdownMenuItem<Color>>((Color value) {
+            return DropdownMenuItem<Color>(
+              value: value,
+              child: Container(
+                color: value,
+                child: Image.asset(
+                  'assets/king_pawn.png',
+                  height: 25,
+                  width: 25,
+                ),
               ),
-            ),
-          );
-        }).toList(),
-      ),
-      actions: actions,
-    );
+            );
+          }).toList(),
+        ),
+        actions: actions,
+        title: Text(score.toString()));
   }
 }

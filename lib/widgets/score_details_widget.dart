@@ -29,125 +29,57 @@ class ScoreDetailsWidget extends StatelessWidget {
 
     Widget content;
 
-    if (properties.isEmpty) {
-      const String shrug = '\u{1F937}';
-      content = Text(shrug,
-          textAlign: TextAlign.center, style: TextStyle(fontSize: 50.0));
-    } else {
-      properties.sort((property, propertyToComp) =>
-          (property.crownCount * property.landCount)
-              .compareTo(propertyToComp.crownCount * propertyToComp.landCount));
+    properties.sort((property, propertyToComp) =>
+        (property.crownCount * property.landCount)
+            .compareTo(propertyToComp.crownCount * propertyToComp.landCount));
 
-      var tableRows = <TableRow>[];
-      for (var property in properties) {
-        var tableCells = <TableCell>[];
+    var tableRows = <TableRow>[];
+    for (var property in properties) {
+      var tableCells = <TableCell>[];
 
-        tableCells.add(TableCell(
-            child: Align(
-          alignment: Alignment.centerRight,
-          child: AutoSizeText('${property.landCount}',
-              maxLines: 1, group: groupScore),
-        )));
-        tableCells.add(TableCell(
-            child: Align(
-          alignment: Alignment.centerRight,
-          child: AutoSizeText(square,
-              maxLines: 1,
-              group: groupScore,
-              style: TextStyle(color: getColorForLandType(property.landType))),
-        )));
-        tableCells.add(TableCell(
-            child: Align(
-                alignment: Alignment.centerRight,
-                child: AutoSizeText('x', maxLines: 1, group: groupScore))));
-        tableCells.add(TableCell(
-            child: Align(
-                alignment: Alignment.centerRight,
-                child: AutoSizeText(property.crownCount.toString(),
-                    maxLines: 1, group: groupScore))));
-        tableCells.add(TableCell(
-            child: Align(
-                alignment: Alignment.centerRight,
-                child: AutoSizeText(crown, maxLines: 1, group: groupScore))));
-        tableCells.add(TableCell(
-            child: Align(
-                alignment: Alignment.center,
-                child: AutoSizeText('=', maxLines: 1, group: groupScore))));
-        tableCells.add(TableCell(
-            child: Align(
-                alignment: Alignment.centerRight,
-                child: AutoSizeText(
-                    '${property.landCount * property.crownCount}',
-                    maxLines: 1,
-                    group: groupScore))));
+      tableCells.add(TableCell(
+          child: Align(
+        alignment: Alignment.centerRight,
+        child: AutoSizeText('${property.landCount}',
+            maxLines: 1, group: groupScore),
+      )));
+      tableCells.add(TableCell(
+          child: Align(
+        alignment: Alignment.centerRight,
+        child: AutoSizeText(square,
+            maxLines: 1,
+            group: groupScore,
+            style: TextStyle(color: getColorForLandType(property.landType))),
+      )));
+      tableCells.add(TableCell(
+          child: Align(
+              alignment: Alignment.centerRight,
+              child: AutoSizeText('x', maxLines: 1, group: groupScore))));
+      tableCells.add(TableCell(
+          child: Align(
+              alignment: Alignment.centerRight,
+              child: AutoSizeText(property.crownCount.toString(),
+                  maxLines: 1, group: groupScore))));
+      tableCells.add(TableCell(
+          child: Align(
+              alignment: Alignment.centerRight,
+              child: AutoSizeText(crown, maxLines: 1, group: groupScore))));
+      tableCells.add(TableCell(
+          child: Align(
+              alignment: Alignment.center,
+              child: AutoSizeText('=', maxLines: 1, group: groupScore))));
+      tableCells.add(TableCell(
+          child: Align(
+              alignment: Alignment.centerRight,
+              child: AutoSizeText('${property.landCount * property.crownCount}',
+                  maxLines: 1, group: groupScore))));
 
-        var tableRow = TableRow(children: tableCells);
-        tableRows.add(tableRow);
-      }
+      var tableRow = TableRow(children: tableCells);
+      tableRows.add(tableRow);
+    }
 
-      //quests points
-      if (quests.isNotEmpty) {
-        var tableCells = <TableCell>[];
-
-        tableCells.add(TableCell(child: AutoSizeText('')));
-        tableCells.add(TableCell(child: AutoSizeText('')));
-        tableCells.add(TableCell(child: AutoSizeText('')));
-        tableCells.add(TableCell(child: AutoSizeText('')));
-
-        tableCells.add(TableCell(
-            child: Align(
-                alignment: Alignment.centerRight,
-                child: Icon(Icons.shield, color: Colors.white))));
-
-        tableCells.add(TableCell(
-            child: Align(
-                alignment: Alignment.center,
-                child: AutoSizeText('=', maxLines: 1, group: groupScore))));
-
-        tableCells.add(TableCell(
-            child: Align(
-                alignment: Alignment.centerRight,
-                child: AutoSizeText(scoreOfQuest.toString(),
-                    maxLines: 1, group: groupScore))));
-
-        var tableRow = TableRow(children: tableCells);
-        tableRows.add(tableRow);
-      }
-
-      // lacour points
-      if (getLacour() == true) {
-        var tableCells = <TableCell>[];
-
-        tableCells.add(TableCell(child: AutoSizeText('')));
-        tableCells.add(TableCell(child: AutoSizeText('')));
-        tableCells.add(TableCell(child: AutoSizeText('')));
-        tableCells.add(TableCell(child: AutoSizeText('')));
-
-        tableCells.add(TableCell(
-            child: Align(
-                alignment: Alignment.centerRight,
-                child: Image.asset(
-                  'assets/lacour/resource.png',
-                  height: 25,
-                  width: 25,
-                ))));
-
-        tableCells.add(TableCell(
-            child: Align(
-                alignment: Alignment.center,
-                child: AutoSizeText('=', maxLines: 1, group: groupScore))));
-
-        tableCells.add(TableCell(
-            child: Align(
-                alignment: Alignment.centerRight,
-                child: AutoSizeText(scoreOfLacour.toString(),
-                    maxLines: 1, group: groupScore))));
-
-        var tableRow = TableRow(children: tableCells);
-        tableRows.add(tableRow);
-      }
-
-      //SUM
+    //quests points
+    if (quests.isNotEmpty) {
       var tableCells = <TableCell>[];
 
       tableCells.add(TableCell(child: AutoSizeText('')));
@@ -158,7 +90,7 @@ class ScoreDetailsWidget extends StatelessWidget {
       tableCells.add(TableCell(
           child: Align(
               alignment: Alignment.centerRight,
-              child: AutoSizeText('Σ', maxLines: 1, group: groupScore))));
+              child: Icon(Icons.shield, color: Colors.white))));
 
       tableCells.add(TableCell(
           child: Align(
@@ -168,14 +100,75 @@ class ScoreDetailsWidget extends StatelessWidget {
       tableCells.add(TableCell(
           child: Align(
               alignment: Alignment.centerRight,
-              child: AutoSizeText(score.toString(),
+              child: AutoSizeText(scoreOfQuest.toString(),
                   maxLines: 1, group: groupScore))));
 
       var tableRow = TableRow(children: tableCells);
       tableRows.add(tableRow);
-
-      content = SingleChildScrollView(child: Table(children: tableRows));
     }
+
+    // lacour points
+    if (getLacour() == true) {
+      var tableCells = <TableCell>[];
+
+      tableCells.add(TableCell(child: AutoSizeText('')));
+      tableCells.add(TableCell(child: AutoSizeText('')));
+      tableCells.add(TableCell(child: AutoSizeText('')));
+      tableCells.add(TableCell(child: AutoSizeText('')));
+
+      tableCells.add(TableCell(
+          child: Align(
+              alignment: Alignment.centerRight,
+              child: Image.asset(
+                'assets/lacour/resource.png',
+                height: 25,
+                width: 25,
+              ))));
+
+      tableCells.add(TableCell(
+          child: Align(
+              alignment: Alignment.center,
+              child: AutoSizeText('=', maxLines: 1, group: groupScore))));
+
+      tableCells.add(TableCell(
+          child: Align(
+              alignment: Alignment.centerRight,
+              child: AutoSizeText(scoreOfLacour.toString(),
+                  maxLines: 1, group: groupScore))));
+
+      var tableRow = TableRow(children: tableCells);
+      tableRows.add(tableRow);
+    }
+
+    //SUM
+    var tableCells = <TableCell>[];
+
+    tableCells.add(TableCell(child: AutoSizeText('')));
+    tableCells.add(TableCell(child: AutoSizeText('')));
+    tableCells.add(TableCell(child: AutoSizeText('')));
+    tableCells.add(TableCell(child: AutoSizeText('')));
+
+    tableCells.add(TableCell(
+        child: Align(
+            alignment: Alignment.centerRight,
+            child: AutoSizeText('Σ', maxLines: 1, group: groupScore))));
+
+    tableCells.add(TableCell(
+        child: Align(
+            alignment: Alignment.center,
+            child: AutoSizeText('=', maxLines: 1, group: groupScore))));
+
+    tableCells.add(TableCell(
+        child: Align(
+            alignment: Alignment.centerRight,
+            child: AutoSizeText(score.toString(),
+                maxLines: 1, group: groupScore))));
+
+    var tableRow = TableRow(children: tableCells);
+    tableRows.add(tableRow);
+
+    content = SingleChildScrollView(child: Table(children: tableRows));
+
     return content;
   }
 }

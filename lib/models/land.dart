@@ -6,7 +6,7 @@ enum LandType { wheat, grassland, forest, lake, swamp, mine, castle }
 
 class Land {
   LandType? landType;
-  int crowns = 0;
+  int crowns;
   bool isMarked = false; //to create properties
 
   // AoG extension
@@ -16,10 +16,11 @@ class Land {
   CourtierType? courtierType;
   bool hasResource = false;
 
-  Land([this.landType]);
+  Land({this.landType, this.crowns = 0});
 
-  Land copyWith({LandType? landType}) {
-    return Land(landType ?? this.landType);
+  Land copyWith({LandType? landType, int? crowns}) {
+    return Land(
+        landType: landType ?? this.landType, crowns: crowns ?? this.crowns);
   }
 
   ///set crowns to 0 and hasGiant to false

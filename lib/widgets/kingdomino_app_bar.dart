@@ -18,7 +18,6 @@ class KingdominoAppBar extends StatelessWidget with PreferredSizeWidget {
   final getAog;
   final String dropdownSelectedExtension;
   final void Function(Kingdom, String?) onExtensionSelect;
-  final void Function(MaterialColor?) onSelectKingColor;
   final warnings;
   final packageInfo;
   final getSelectedQuests;
@@ -31,7 +30,6 @@ class KingdominoAppBar extends StatelessWidget with PreferredSizeWidget {
     required this.onExtensionSelect,
     required this.getAog,
     required this.dropdownSelectedExtension,
-    required this.onSelectKingColor,
     required this.warnings,
     required this.packageInfo,
     required this.getSelectedQuests,
@@ -153,7 +151,8 @@ I will not use or share your information with anyone : Kingdomino Score works of
           iconSize: 25,
           iconEnabledColor: Colors.white,
           underline: Container(height: 1, color: Colors.white),
-          onChanged: onSelectKingColor,
+          onChanged: (materialColor) =>
+              context.read<ThemeCubit>().updateTheme(materialColor!),
           items: kingColors
               .map<DropdownMenuItem<MaterialColor>>((MaterialColor value) {
             return DropdownMenuItem<MaterialColor>(

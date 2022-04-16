@@ -188,12 +188,6 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
     });
   }
 
-  void onSelectKingColor(MaterialColor? newValue) {
-    {
-      setKingColor(newValue!);
-    }
-  }
-
   int calculateLacourScore(Kingdom kingdom) {
     int scoreOfLacour = 0;
     for (int y = 0; y < kingdom.size; y++) {
@@ -420,7 +414,6 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
               onExtensionSelect: onExtensionSelect,
               getAog: getAog,
               dropdownSelectedExtension: dropdownSelectedExtension,
-              onSelectKingColor: onSelectKingColor,
               warnings: warnings,
               onKingdomClear: onKingdomClear,
               getSelectedQuests: getSelectedQuests,

@@ -41,51 +41,11 @@ class BottomBar extends StatefulWidget {
       required this.score});
 
   @override
-  _BottomBarState createState() => _BottomBarState(
-      getSelectionMode: this.getSelectionMode,
-      setSelectionMode: this.setSelectionMode,
-      getSelectedLandType: this.getSelectedLandType,
-      setSelectedLandType: this.setSelectedLandType,
-      getSelectedCourtierType: this.getSelectedCourtierType,
-      setSelectedCourtierType: this.setSelectedCourtierType,
-      getAog: this.getAog,
-      getLacour: this.getLacour,
-      scoreOfQuest: this.scoreOfQuest,
-      quests: this.quests,
-      groupScore: this.groupScore,
-      score: this.score,
-      kingdom: kingdom);
+  _BottomBarState createState() => _BottomBarState();
 }
 
 class _BottomBarState extends State<BottomBar> {
-  final getSelectionMode;
-  final setSelectionMode;
-  final getSelectedLandType;
-  final setSelectedLandType;
-  final getSelectedCourtierType;
-  final setSelectedCourtierType;
-  final getAog;
-  final getLacour;
-  final Kingdom kingdom;
-  final groupScore;
-  final quests;
-  final scoreOfQuest;
-  final score;
-
-  _BottomBarState(
-      {required this.getSelectionMode,
-      required this.setSelectionMode,
-      required this.getSelectedLandType,
-      required this.setSelectedLandType,
-      required this.getSelectedCourtierType,
-      required this.setSelectedCourtierType,
-      required this.getAog,
-      required this.getLacour,
-      required this.kingdom,
-      required this.quests,
-      required this.groupScore,
-      required this.scoreOfQuest,
-      required this.score});
+  _BottomBarState();
 
   final double _buttonSize = 40.0;
 
@@ -111,9 +71,9 @@ class _BottomBarState extends State<BottomBar> {
       crownButton(),
     ];
 
-    if (this.getAog()) kingdomEditorWidgets.add(giantButton());
+    if (widget.getAog()) kingdomEditorWidgets.add(giantButton());
 
-    if (this.getLacour() == true) {
+    if (widget.getLacour() == true) {
       kingdomEditorWidgets.add(resourceButton());
 
       CourtierType.values.forEach((element) {
@@ -135,8 +95,8 @@ class _BottomBarState extends State<BottomBar> {
   );
 
   Widget landButton(LandType? landType) {
-    var isSelected = this.getSelectionMode() == SelectionMode.land &&
-        this.getSelectedLandType() == landType;
+    var isSelected = widget.getSelectionMode() == SelectionMode.land &&
+        widget.getSelectedLandType() == landType;
 
     return GestureDetector(
         onTap: () => _onSelectLandType(landType),
@@ -157,10 +117,10 @@ class _BottomBarState extends State<BottomBar> {
   }
 
   Widget resourceButton() {
-    var isSelected = this.getSelectionMode() == SelectionMode.resource;
+    var isSelected = widget.getSelectionMode() == SelectionMode.resource;
 
     return GestureDetector(
-        onTap: () => setSelectionMode(SelectionMode.resource),
+        onTap: () => widget.setSelectionMode(SelectionMode.resource),
         child: Container(
             margin: EdgeInsets.all(5.0),
             height: _buttonSize,
@@ -171,8 +131,8 @@ class _BottomBarState extends State<BottomBar> {
   }
 
   Widget courtierButton(CourtierType courtierType) {
-    var isSelected = this.getSelectionMode() == SelectionMode.courtier &&
-        this.getSelectedCourtierType() == courtierType;
+    var isSelected = widget.getSelectionMode() == SelectionMode.courtier &&
+        widget.getSelectedCourtierType() == courtierType;
 
     return GestureDetector(
         onTap: () => _onSelectCourtierType(courtierType),
@@ -189,13 +149,13 @@ class _BottomBarState extends State<BottomBar> {
   }
 
   Widget castleButton() {
-    bool isSelected = this.getSelectionMode() == SelectionMode.castle &&
-        this.getSelectedLandType() == LandType.castle;
+    bool isSelected = widget.getSelectionMode() == SelectionMode.castle &&
+        widget.getSelectedLandType() == LandType.castle;
 
     return GestureDetector(
       onTap: () => setState(() {
-        this.setSelectionMode(SelectionMode.castle);
-        this.setSelectedLandType(LandType.castle);
+        widget.setSelectionMode(SelectionMode.castle);
+        widget.setSelectedLandType(LandType.castle);
       }),
       child: Container(
         margin: EdgeInsets.all(5.0),
@@ -210,7 +170,7 @@ class _BottomBarState extends State<BottomBar> {
   }
 
   Widget crownButton() {
-    var isSelected = this.getSelectionMode() == SelectionMode.crown;
+    var isSelected = widget.getSelectionMode() == SelectionMode.crown;
 
     return GestureDetector(
         onTap: () => _onSelectCrown(),
@@ -225,7 +185,7 @@ class _BottomBarState extends State<BottomBar> {
   }
 
   Widget giantButton() {
-    var isSelected = this.getSelectionMode() == SelectionMode.giant;
+    var isSelected = widget.getSelectionMode() == SelectionMode.giant;
 
     return GestureDetector(
         onTap: () => _onSelectGiant(),
@@ -235,11 +195,11 @@ class _BottomBarState extends State<BottomBar> {
                 return AlertDialog(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(20.0))),
-                  content: GiantsDetailsWidget(this.kingdom,
-                      scoreOfQuest: this.scoreOfQuest,
-                      quests: this.quests,
-                      groupScore: this.groupScore,
-                      score: this.score),
+                  content: GiantsDetailsWidget(widget.kingdom,
+                      scoreOfQuest: widget.scoreOfQuest,
+                      quests: widget.quests,
+                      groupScore: widget.groupScore,
+                      score: widget.score),
                   actions: <Widget>[
                     TextButton(
                       child: Icon(
@@ -270,34 +230,34 @@ class _BottomBarState extends State<BottomBar> {
       _onSelectCastle();
     else
       setState(() {
-        this.setSelectedLandType(selectedType);
-        this.setSelectionMode(SelectionMode.land);
+        widget.setSelectedLandType(selectedType);
+        widget.setSelectionMode(SelectionMode.land);
       });
   }
 
   void _onSelectCourtierType(CourtierType selectedType) {
     setState(() {
-      this.setSelectedCourtierType(selectedType);
-      this.setSelectionMode(SelectionMode.courtier);
+      widget.setSelectedCourtierType(selectedType);
+      widget.setSelectionMode(SelectionMode.courtier);
     });
   }
 
   void _onSelectCrown() {
     setState(() {
-      this.setSelectionMode(SelectionMode.crown);
+      widget.setSelectionMode(SelectionMode.crown);
     });
   }
 
   void _onSelectCastle() {
     setState(() {
-      this.setSelectedLandType(LandType.castle);
-      this.setSelectionMode(SelectionMode.castle);
+      widget.setSelectedLandType(LandType.castle);
+      widget.setSelectionMode(SelectionMode.castle);
     });
   }
 
   void _onSelectGiant() {
     setState(() {
-      this.setSelectionMode(SelectionMode.giant);
+      widget.setSelectionMode(SelectionMode.giant);
     });
   }
 }

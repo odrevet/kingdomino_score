@@ -1,26 +1,28 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../kingdom_cubit.dart';
 import '../models/age_of_giants.dart';
-import '../models/kingdom.dart';
 import '../models/land.dart';
 import '../models/property.dart';
 import '../score_quest.dart';
 import 'kingdomino_score_widget.dart';
 
 class GiantsDetailsWidget extends StatelessWidget {
-  final Kingdom kingdom;
   final groupScore;
   final quests;
   final scoreOfQuest;
   final score;
 
-  GiantsDetailsWidget(this.kingdom,
+  GiantsDetailsWidget(
       {this.groupScore, this.quests, this.scoreOfQuest, this.score});
 
   @override
   Widget build(BuildContext context) {
-    List<Property> properties = kingdom
+    List<Property> properties = context
+        .read<KingdomCubit>()
+        .state
         .getProperties()
         .where((property) => property.giantCount > 0)
         .toList();
@@ -87,7 +89,8 @@ class GiantsDetailsWidget extends StatelessWidget {
       //quests points
       int scoreQuestWithoutGiants = 0;
       if (quests.isNotEmpty) {
-        scoreQuestWithoutGiants = calculateQuestScore(quests, kingdom);
+        scoreQuestWithoutGiants =
+            calculateQuestScore(quests, context.read<KingdomCubit>().state);
         var tableCells = <TableCell>[];
 
         tableCells.add(TableCell(child: AutoSizeText('')));

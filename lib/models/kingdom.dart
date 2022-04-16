@@ -16,11 +16,6 @@ class Kingdom {
     }
   }
 
-  @override
-  List<Object> get props {
-    return [size, lands];
-  }
-
   Kingdom copyWith({int? size, List<List<Land>>? lands}) {
     if (lands == null) {
       var landsCopy = [];

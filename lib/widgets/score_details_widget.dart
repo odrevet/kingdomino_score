@@ -1,12 +1,12 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../models/kingdom.dart';
+import '../kingdom_cubit.dart';
 import '../models/land.dart';
 import 'kingdomino_score_widget.dart';
 
 class ScoreDetailsWidget extends StatelessWidget {
-  final Kingdom? kingdom;
   final groupScore;
   final quests;
   final score;
@@ -15,8 +15,7 @@ class ScoreDetailsWidget extends StatelessWidget {
   final getLacour;
 
   ScoreDetailsWidget(
-      {this.kingdom,
-      this.groupScore,
+      {this.groupScore,
       this.quests,
       this.score,
       this.scoreOfQuest,
@@ -25,7 +24,7 @@ class ScoreDetailsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var properties = kingdom!.getProperties();
+    var properties = context.read<KingdomCubit>().state.getProperties();
 
     Widget content;
 

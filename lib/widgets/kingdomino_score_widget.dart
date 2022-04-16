@@ -365,7 +365,6 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(20.0))),
                                   content: ScoreDetailsWidget(
-                                      kingdom: kingdom,
                                       groupScore: this.groupScore,
                                       quests: this.selectedQuests,
                                       score: this.score,
@@ -392,7 +391,6 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
             return Row(children: <Widget>[
               Expanded(
                   child: ScoreDetailsWidget(
-                      kingdom: kingdom,
                       groupScore: this.groupScore,
                       quests: this.selectedQuests,
                       score: this.score,
@@ -439,7 +437,6 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
                   setSelectedCourtierType: setSelectedCourtierType,
                   getAog: getAog,
                   getLacour: getLacour,
-                  kingdom: kingdom,
                   scoreOfQuest: this.scoreOfQuest,
                   quests: this.selectedQuests,
                   groupScore: this.groupScore,

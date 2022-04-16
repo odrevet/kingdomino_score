@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../models/age_of_giants.dart';
-import '../models/kingdom.dart';
 import '../models/lacour/lacour.dart';
 import '../models/land.dart';
 import '../theme_cubit.dart';
@@ -19,7 +18,6 @@ class BottomBar extends StatefulWidget {
   final setSelectedCourtierType;
   final getAog;
   final getLacour;
-  final Kingdom kingdom;
   final groupScore;
   final quests;
   final scoreOfQuest;
@@ -34,7 +32,6 @@ class BottomBar extends StatefulWidget {
       required this.setSelectedCourtierType,
       required this.getAog,
       required this.getLacour,
-      required this.kingdom,
       required this.quests,
       required this.groupScore,
       required this.scoreOfQuest,
@@ -195,7 +192,7 @@ class _BottomBarState extends State<BottomBar> {
                 return AlertDialog(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(20.0))),
-                  content: GiantsDetailsWidget(widget.kingdom,
+                  content: GiantsDetailsWidget(
                       scoreOfQuest: widget.scoreOfQuest,
                       quests: widget.quests,
                       groupScore: widget.groupScore,

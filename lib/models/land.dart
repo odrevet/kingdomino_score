@@ -10,17 +10,31 @@ class Land {
   bool isMarked = false; //to create properties
 
   // AoG extension
-  int giants = 0;
+  int giants;
 
   // La cour extension
   CourtierType? courtierType;
-  bool hasResource = false;
+  bool hasResource;
 
-  Land({this.landType, this.crowns = 0});
+  Land(
+      {this.landType,
+      this.crowns = 0,
+      this.courtierType,
+      this.hasResource = false,
+      this.giants = 0});
 
-  Land copyWith({LandType? landType, int? crowns}) {
+  Land copyWith(
+      {LandType? landType,
+      int? crowns,
+      CourtierType? courtierType,
+      bool? hasResource,
+      int? giants}) {
     return Land(
-        landType: landType ?? this.landType, crowns: crowns ?? this.crowns);
+        landType: landType ?? this.landType,
+        crowns: crowns ?? this.crowns,
+        courtierType: courtierType ?? this.courtierType,
+        hasResource: hasResource ?? this.hasResource,
+        giants: giants ?? this.giants);
   }
 
   ///set crowns to 0 and hasGiant to false

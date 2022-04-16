@@ -1,4 +1,5 @@
 import 'package:badges/badges.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kingdomino_score_count/kingdom_cubit.dart';
@@ -104,7 +105,7 @@ class KingdominoAppBar extends StatelessWidget with PreferredSizeWidget {
           onPressed: () => showAboutDialog(
               context: context,
               applicationName: 'Kingdomino Score',
-              applicationVersion: packageInfo.version,
+              applicationVersion: kIsWeb ? 'Web build ' : packageInfo.version,
               applicationLegalese:
                   '''Drevet Olivier built the Kingdomino Score app under the GPL license Version 3. 
 This SERVICE is provided by Drevet Olivier at no cost and is intended for use as is.

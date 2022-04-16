@@ -331,6 +331,7 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
             break;
         }
 
+        context.read<KingdomCubit>().clearHistory();
         selectedQuests.clear();
         clearWarnings();
         checkKingdom(kingdom);

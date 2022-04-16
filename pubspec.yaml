@@ -14,9 +14,8 @@ dependencies:
   package_info_plus: ^1.4.0
   flutter_svg: ^1.0.0
   badges: ^2.0.0
-  flutter_bloc: ^8.0.1
-  replay_bloc: ^0.2.1
-  equatable: ^2.0.3
+  flutter_bloc: ^8.0.0
+  replay_bloc: ^0.2.0
   
 dev_dependencies:
   test: ^1.16.5

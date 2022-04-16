@@ -17,6 +17,7 @@ import 'package:kingdomino_score_count/models/lacour/lumberjack.dart';
 import 'package:kingdomino_score_count/models/lacour/queen.dart';
 import 'package:kingdomino_score_count/models/lacour/shepherdess.dart';
 import 'package:kingdomino_score_count/models/lacour/sword_warrior.dart';
+import 'package:kingdomino_score_count/theme_cubit.dart';
 import 'package:kingdomino_score_count/widgets/kingdomino_app_bar.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
@@ -39,16 +40,12 @@ final String square = '\u{25A0}';
 enum SelectionMode { land, crown, castle, giant, courtier, resource }
 
 class KingdominoScoreWidget extends StatefulWidget {
-  final Function setColor;
-
-  KingdominoScoreWidget(
-    this.setColor, {
+  KingdominoScoreWidget({
     Key? key,
   }) : super(key: key);
 
   @override
-  KingdominoScoreWidgetState createState() =>
-      KingdominoScoreWidgetState(this.setColor);
+  KingdominoScoreWidgetState createState() => KingdominoScoreWidgetState();
 }
 
 class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
@@ -60,7 +57,6 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
   int scoreOfQuest = 0;
   int scoreOfLacour = 0;
   int score = 0;
-  Color kingColor = kingColors.first;
   bool aog = false; // Age of Giants extension
   bool lacour = false;
   HashSet<QuestType> selectedQuests = HashSet();
@@ -72,10 +68,12 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
     buildNumber: 'Unknown',
     buildSignature: 'Unknown',
   );
-  final Function setColor;
   String dropdownSelectedExtension = '';
 
-  KingdominoScoreWidgetState(this.setColor);
+  KingdominoScoreWidgetState();
+
+  setKingColor(MaterialColor materialColor) =>
+      context.read<ThemeCubit>().updateTheme(materialColor);
 
   @override
   initState() {
@@ -118,15 +116,6 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
   }
 
   SelectionMode getSelectionMode() => selectionMode;
-
-  Color getKingColor() => kingColor;
-
-  setKingColor(Color color) {
-    this.setColor(color); // set App color to king color
-    setState(() {
-      this.kingColor = color;
-    });
-  }
 
   void calculateScore(Kingdom kingdom) {
     clearWarnings();
@@ -199,12 +188,9 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
     });
   }
 
-  void onSelectKingColor(Color? newValue) {
+  void onSelectKingColor(MaterialColor? newValue) {
     {
-      setState(() {
-        kingColor = newValue!;
-      });
-      setKingColor(kingColor);
+      setKingColor(newValue!);
     }
   }
 
@@ -318,9 +304,9 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
             aog = false;
             lacour = false;
             kingColors.remove(Colors.brown.shade800);
-            if (kingColor == Colors.brown.shade800) {
-              setKingColor(kingColors.first);
-            }
+            //if (kingColor == Colors.brown.shade800) {
+            //  setKingColor(kingColors.first);
+            //}
             break;
           case 'Giants':
             aog = true;
@@ -339,9 +325,9 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
               selectionMode = SelectionMode.crown;
             }
             kingColors.remove(Colors.brown.shade800);
-            if (kingColor == Colors.brown.shade800) {
-              setKingColor(kingColors.first);
-            }
+            //if (kingColor == Colors.brown.shade800) {
+            //  setKingColor(kingColors.first);
+            //}
             break;
         }
 
@@ -364,8 +350,7 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
                   getSelectedCourtierType: this.getSelectedCourtierType,
                   getGameSet: this.getGameSet,
                   calculateScore: this.calculateScore,
-                  kingdom: kingdom,
-                  getKingColor: this.getKingColor),
+                  kingdom: kingdom),
               Expanded(
                 child: FittedBox(
                     fit: BoxFit.fitHeight,
@@ -420,8 +405,7 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
                   getSelectedCourtierType: this.getSelectedCourtierType,
                   getGameSet: this.getGameSet,
                   calculateScore: this.calculateScore,
-                  kingdom: kingdom,
-                  getKingColor: getKingColor),
+                  kingdom: kingdom),
               Expanded(
                 child: FittedBox(
                     fit: BoxFit.fitHeight,
@@ -435,7 +419,6 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
         return Scaffold(
             appBar: KingdominoAppBar(
               score: this.score,
-              kingColor: kingColor,
               onExtensionSelect: onExtensionSelect,
               getAog: getAog,
               dropdownSelectedExtension: dropdownSelectedExtension,
@@ -461,8 +444,6 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
                   quests: this.selectedQuests,
                   groupScore: this.groupScore,
                   score: this.score,
-                  setKingColor: this.setKingColor,
-                  getKingColor: this.getKingColor,
                 ),
                 color: Theme.of(context).primaryColor),
             body: body);

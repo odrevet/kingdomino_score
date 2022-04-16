@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../models/age_of_giants.dart';
 import '../models/kingdom.dart';
 import '../models/lacour/lacour.dart';
 import '../models/land.dart';
+import '../theme_cubit.dart';
 import 'castle_widget.dart';
 import 'giant_details_widget.dart';
 import 'kingdomino_score_widget.dart';
@@ -15,8 +17,6 @@ class BottomBar extends StatefulWidget {
   final setSelectedLandType;
   final getSelectedCourtierType;
   final setSelectedCourtierType;
-  final getKingColor;
-  final setKingColor;
   final getAog;
   final getLacour;
   final Kingdom kingdom;
@@ -38,9 +38,7 @@ class BottomBar extends StatefulWidget {
       required this.quests,
       required this.groupScore,
       required this.scoreOfQuest,
-      required this.score,
-      required this.getKingColor,
-      required this.setKingColor});
+      required this.score});
 
   @override
   _BottomBarState createState() => _BottomBarState(
@@ -56,9 +54,7 @@ class BottomBar extends StatefulWidget {
       quests: this.quests,
       groupScore: this.groupScore,
       score: this.score,
-      kingdom: kingdom,
-      getKingColor: this.getKingColor,
-      setKingColor: this.setKingColor);
+      kingdom: kingdom);
 }
 
 class _BottomBarState extends State<BottomBar> {
@@ -68,8 +64,6 @@ class _BottomBarState extends State<BottomBar> {
   final setSelectedLandType;
   final getSelectedCourtierType;
   final setSelectedCourtierType;
-  final setKingColor;
-  final getKingColor;
   final getAog;
   final getLacour;
   final Kingdom kingdom;
@@ -91,9 +85,7 @@ class _BottomBarState extends State<BottomBar> {
       required this.quests,
       required this.groupScore,
       required this.scoreOfQuest,
-      required this.score,
-      required this.getKingColor,
-      required this.setKingColor});
+      required this.score});
 
   final double _buttonSize = 40.0;
 
@@ -212,7 +204,7 @@ class _BottomBarState extends State<BottomBar> {
         decoration: BoxDecoration(
             color: Colors.white,
             border: isSelected ? _selectedBorder : this.outline),
-        child: CastleWidget(this.getKingColor()),
+        child: CastleWidget(context.read<ThemeCubit>().state),
       ),
     );
   }

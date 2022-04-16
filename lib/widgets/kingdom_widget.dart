@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kingdomino_score_count/theme_cubit.dart';
 
 import '../kingdom_cubit.dart';
 import '../models/age_of_giants.dart';
@@ -16,8 +17,7 @@ class KingdomWidget extends StatefulWidget {
       required Function this.getSelectedCourtierType,
       required Function this.getGameSet,
       required Function this.calculateScore,
-      required Kingdom this.kingdom,
-      required Function this.getKingColor});
+      required Kingdom this.kingdom});
 
   final getSelectionMode;
   final getSelectedLandType;
@@ -25,7 +25,6 @@ class KingdomWidget extends StatefulWidget {
   final getGameSet;
   final calculateScore;
   final kingdom;
-  final getKingColor;
 
   @override
   _KingdomWidgetState createState() => _KingdomWidgetState();
@@ -45,7 +44,7 @@ class _KingdomWidgetState extends State<KingdomWidget> {
 
     Widget? child;
     if (land.landType == LandType.castle) {
-      child = CastleWidget(widget.getKingColor());
+      child = CastleWidget(context.read<ThemeCubit>().state);
     } else if (land.courtierType != null) {
       child = Container(
         padding: const EdgeInsets.all(10.0),

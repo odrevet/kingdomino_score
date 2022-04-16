@@ -9,16 +9,16 @@ import 'package:kingdomino_score_count/widgets/warning_widget.dart';
 import '../models/age_of_giants.dart';
 import '../models/king_colors.dart';
 import '../models/kingdom.dart';
+import '../theme_cubit.dart';
 
 class KingdominoAppBar extends StatelessWidget with PreferredSizeWidget {
   @override
   final Size preferredSize;
 
-  final kingColor;
   final getAog;
   final String dropdownSelectedExtension;
   final void Function(Kingdom, String?) onExtensionSelect;
-  final void Function(Color?) onSelectKingColor;
+  final void Function(MaterialColor?) onSelectKingColor;
   final warnings;
   final packageInfo;
   final getSelectedQuests;
@@ -28,7 +28,6 @@ class KingdominoAppBar extends StatelessWidget with PreferredSizeWidget {
 
   const KingdominoAppBar({
     this.preferredSize = const Size.fromHeight(50.0),
-    required this.kingColor,
     required this.onExtensionSelect,
     required this.getAog,
     required this.dropdownSelectedExtension,
@@ -149,14 +148,15 @@ I will not use or share your information with anyone : Kingdomino Score works of
     }
 
     return AppBar(
-        leading: DropdownButton<Color>(
-          value: kingColor,
+        leading: DropdownButton<MaterialColor>(
+          value: context.read<ThemeCubit>().state,
           iconSize: 25,
           iconEnabledColor: Colors.white,
           underline: Container(height: 1, color: Colors.white),
           onChanged: onSelectKingColor,
-          items: kingColors.map<DropdownMenuItem<Color>>((Color value) {
-            return DropdownMenuItem<Color>(
+          items: kingColors
+              .map<DropdownMenuItem<MaterialColor>>((MaterialColor value) {
+            return DropdownMenuItem<MaterialColor>(
               value: value,
               child: Container(
                 color: value,

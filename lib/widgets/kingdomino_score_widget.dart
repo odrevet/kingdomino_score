@@ -303,17 +303,16 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
           case '':
             aog = false;
             lacour = false;
+            setSelectionMode(SelectionMode.land);
             kingColors.remove(Colors.brown.shade800);
-            //if (kingColor == Colors.brown.shade800) {
-            //  setKingColor(kingColors.first);
-            //}
+            if (context.read<ThemeCubit>().state == Colors.brown.shade800) {
+              setKingColor(kingColors.first);
+            }
             break;
           case 'Giants':
             aog = true;
             lacour = false;
-            if (selectionMode == SelectionMode.giant) {
-              selectionMode = SelectionMode.crown;
-            }
+            setSelectionMode(SelectionMode.land);
 
             kingColors.add(Colors.brown);
             break;
@@ -325,9 +324,9 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
               selectionMode = SelectionMode.crown;
             }
             kingColors.remove(Colors.brown.shade800);
-            //if (kingColor == Colors.brown.shade800) {
-            //  setKingColor(kingColors.first);
-            //}
+            if (context.read<ThemeCubit>().state == Colors.brown.shade800) {
+              setKingColor(kingColors.first);
+            }
             break;
         }
 

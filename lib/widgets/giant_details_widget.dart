@@ -7,7 +7,7 @@ import '../models/age_of_giants.dart';
 import '../models/land.dart';
 import '../models/property.dart';
 import '../models/score.dart';
-import 'kingdomino_score_widget.dart';
+import 'kingdomino_widget.dart';
 
 class GiantsDetailsWidget extends StatelessWidget {
   final groupScore;

@@ -1,4 +1,4 @@
-import 'models/land.dart';
+import 'land.dart';
 
 const Map<LandType, Map<String, dynamic>> gameSet = {
   LandType.castle: {

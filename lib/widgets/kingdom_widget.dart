@@ -8,7 +8,7 @@ import '../models/kingdom.dart';
 import '../models/lacour/lacour.dart';
 import '../models/land.dart';
 import 'castle_widget.dart';
-import 'kingdomino_score_widget.dart';
+import 'kingdomino_widget.dart';
 
 class KingdomWidget extends StatefulWidget {
   KingdomWidget(

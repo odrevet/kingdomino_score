@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../cubits/kingdom_cubit.dart';
 import '../models/land.dart';
 import '../cubits/score_cubit.dart';
-import 'kingdomino_score_widget.dart';
+import 'kingdomino_widget.dart';
 
 class ScoreDetailsWidget extends StatelessWidget {
   final groupScore;

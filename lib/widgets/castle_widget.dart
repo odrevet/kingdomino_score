@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'kingdomino_score_widget.dart';
+import 'kingdomino_widget.dart';
 
 class CastleWidget extends StatelessWidget {
   final Color kingColor;

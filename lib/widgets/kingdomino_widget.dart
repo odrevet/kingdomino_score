@@ -10,7 +10,7 @@ import 'package:kingdomino_score_count/cubits/theme_cubit.dart';
 import 'package:kingdomino_score_count/widgets/kingdomino_app_bar.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
-import '../game_set.dart';
+import '../models/game_set.dart';
 import '../models/age_of_giants.dart';
 import '../models/king_colors.dart';
 import '../models/kingdom.dart';
@@ -27,16 +27,16 @@ final String square = '\u{25A0}';
 
 enum SelectionMode { land, crown, castle, giant, courtier, resource }
 
-class KingdominoScoreWidget extends StatefulWidget {
-  KingdominoScoreWidget({
+class KingdominoWidget extends StatefulWidget {
+  KingdominoWidget({
     Key? key,
   }) : super(key: key);
 
   @override
-  KingdominoScoreWidgetState createState() => KingdominoScoreWidgetState();
+  KingdominoWidgetState createState() => KingdominoWidgetState();
 }
 
-class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
+class KingdominoWidgetState extends State<KingdominoWidget> {
   LandType? selectedLandType;
   CourtierType? selectedCourtierType;
   SelectionMode selectionMode = SelectionMode.land;
@@ -55,7 +55,7 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
   );
   String dropdownSelectedExtension = '';
 
-  KingdominoScoreWidgetState();
+  KingdominoWidgetState();
 
   setKingColor(MaterialColor materialColor) =>
       context.read<ThemeCubit>().updateTheme(materialColor);

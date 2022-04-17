@@ -7,7 +7,7 @@ import '../models/land.dart';
 import '../cubits/theme_cubit.dart';
 import 'castle_widget.dart';
 import 'giant_details_widget.dart';
-import 'kingdomino_score_widget.dart';
+import 'kingdomino_widget.dart';
 
 class BottomBar extends StatefulWidget {
   final getSelectionMode;

@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../models/age_of_giants.dart';
 import '../models/lacour/lacour.dart';
 import '../models/land.dart';
-import '../theme_cubit.dart';
+import '../cubits/theme_cubit.dart';
 import 'castle_widget.dart';
 import 'giant_details_widget.dart';
 import 'kingdomino_score_widget.dart';

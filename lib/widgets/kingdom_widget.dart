@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kingdomino_score_count/theme_cubit.dart';
+import 'package:kingdomino_score_count/cubits/theme_cubit.dart';
 
-import '../kingdom_cubit.dart';
+import '../cubits/kingdom_cubit.dart';
 import '../models/age_of_giants.dart';
 import '../models/kingdom.dart';
 import '../models/lacour/lacour.dart';

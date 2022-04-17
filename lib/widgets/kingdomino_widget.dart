@@ -226,7 +226,8 @@ class KingdominoWidgetState extends State<KingdominoWidget> {
   Widget build(BuildContext context) {
     return BlocBuilder<KingdomCubit, Kingdom>(
       builder: (BuildContext context, kingdom) {
-        Widget body = OrientationBuilder(builder: (context, orientation) {
+        Widget body = OrientationBuilder(
+            builder: (orientationBuilderContext, orientation) {
           if (orientation == Orientation.portrait) {
             return Column(children: <Widget>[
               KingdomWidget(
@@ -244,7 +245,7 @@ class KingdominoWidgetState extends State<KingdominoWidget> {
                             context.read<ScoreCubit>().state.score.toString()),
                         onTap: () => showDialog<void>(
                               context: context,
-                              builder: (BuildContext context) {
+                              builder: (BuildContext dialogContext) {
                                 return AlertDialog(
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.all(
@@ -255,12 +256,9 @@ class KingdominoWidgetState extends State<KingdominoWidget> {
                                       getLacour: this.getLacour),
                                   actions: <Widget>[
                                     TextButton(
-                                      child: Icon(
-                                        Icons.done,
-                                        color: Colors.black87,
-                                      ),
+                                      child: Icon(Icons.done),
                                       onPressed: () {
-                                        Navigator.of(context).pop();
+                                        Navigator.of(dialogContext).pop();
                                       },
                                     ),
                                   ],

@@ -20,8 +20,6 @@ class BottomBar extends StatefulWidget {
   final getLacour;
   final groupScore;
   final quests;
-  final scoreOfQuest;
-  final score;
 
   BottomBar(
       {required this.getSelectionMode,
@@ -33,9 +31,7 @@ class BottomBar extends StatefulWidget {
       required this.getAog,
       required this.getLacour,
       required this.quests,
-      required this.groupScore,
-      required this.scoreOfQuest,
-      required this.score});
+      required this.groupScore});
 
   @override
   _BottomBarState createState() => _BottomBarState();
@@ -193,10 +189,10 @@ class _BottomBarState extends State<BottomBar> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(20.0))),
                   content: GiantsDetailsWidget(
-                      scoreOfQuest: widget.scoreOfQuest,
+                      scoreOfQuest: 'widget.scoreOfQuest',
                       quests: widget.quests,
                       groupScore: widget.groupScore,
-                      score: widget.score),
+                      score: 'widget.score'),
                   actions: <Widget>[
                     TextButton(
                       child: Icon(

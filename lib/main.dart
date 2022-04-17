@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kingdomino_score_count/kingdom_cubit.dart';
+import 'package:kingdomino_score_count/score_cubit.dart';
 import 'package:kingdomino_score_count/theme_cubit.dart';
 
 import 'widgets/kingdomino_score_widget.dart';
@@ -16,17 +17,22 @@ class KingdominoScore extends StatelessWidget {
       create: (_) => ThemeCubit(),
       child: BlocBuilder<ThemeCubit, MaterialColor>(
         builder: (context, color) => MaterialApp(
-          title: 'Kingdomino Score',
-          theme: ThemeData(
-              primarySwatch: color,
-              canvasColor: Colors.blueGrey,
-              fontFamily: 'HammersmithOne',
-              dialogTheme: DialogTheme(
-                  backgroundColor: Color.fromARGB(230, 100, 130, 160),
-                  contentTextStyle: TextStyle(color: Colors.black))),
-          home: BlocProvider(
-              create: (_) => KingdomCubit(), child: KingdominoScoreWidget()),
-        ),
+            title: 'Kingdomino Score',
+            theme: ThemeData(
+                primarySwatch: color,
+                canvasColor: Colors.blueGrey,
+                fontFamily: 'HammersmithOne',
+                dialogTheme: DialogTheme(
+                    backgroundColor: Color.fromARGB(230, 100, 130, 160),
+                    contentTextStyle: TextStyle(color: Colors.black))),
+            home: MultiBlocProvider(providers: [
+              BlocProvider<ScoreCubit>(
+                create: (BuildContext context) => ScoreCubit(),
+              ),
+              BlocProvider<KingdomCubit>(
+                create: (BuildContext context) => KingdomCubit(),
+              ),
+            ], child: KingdominoScoreWidget())),
       ),
     );
   }

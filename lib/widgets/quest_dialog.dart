@@ -1,7 +1,11 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:kingdomino_score_count/kingdom_cubit.dart';
 import 'package:kingdomino_score_count/models/quests/quest.dart';
+
+import '../score_cubit.dart';
 
 class _QuestDialogOption extends StatefulWidget {
   final getSelectedQuests;
@@ -64,8 +68,9 @@ class _QuestDialogOptionState extends State<_QuestDialogOption> {
             getSelectedQuests().add(questType);
           }
         });
-
-        this.updateScores();
+        context.read<ScoreCubit>().calculate(context.read<KingdomCubit>().state,
+            false, getSelectedQuests()); //TODO lacour
+        //this.updateScores();
       },
     );
   }

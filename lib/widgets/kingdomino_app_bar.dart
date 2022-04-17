@@ -9,6 +9,7 @@ import 'package:kingdomino_score_count/widgets/warning_widget.dart';
 import '../models/age_of_giants.dart';
 import '../models/king_colors.dart';
 import '../models/kingdom.dart';
+import '../score_cubit.dart';
 import '../theme_cubit.dart';
 
 class KingdominoAppBar extends StatelessWidget with PreferredSizeWidget {
@@ -18,12 +19,11 @@ class KingdominoAppBar extends StatelessWidget with PreferredSizeWidget {
   final getAog;
   final String dropdownSelectedExtension;
   final void Function(Kingdom, String?) onExtensionSelect;
+  final void Function(Kingdom) calculateScore;
+  final getSelectedQuests;
+  final onKingdomClear;
   final warnings;
   final packageInfo;
-  final getSelectedQuests;
-  final updateScores;
-  final onKingdomClear;
-  final score;
 
   const KingdominoAppBar({
     this.preferredSize = const Size.fromHeight(50.0),
@@ -33,9 +33,8 @@ class KingdominoAppBar extends StatelessWidget with PreferredSizeWidget {
     required this.warnings,
     required this.packageInfo,
     required this.getSelectedQuests,
-    required this.updateScores,
     required this.onKingdomClear,
-    required this.score,
+    required this.calculateScore,
     Key? key,
   }) : super(key: key);
 
@@ -46,12 +45,18 @@ class KingdominoAppBar extends StatelessWidget with PreferredSizeWidget {
     var actions = <Widget>[
       IconButton(
           onPressed: context.read<KingdomCubit>().canUndo
-              ? context.read<KingdomCubit>().undo
+              ? () {
+                  context.read<KingdomCubit>().undo();
+                  calculateScore(context.read<KingdomCubit>().state);
+                }
               : null,
           icon: const Icon(Icons.undo)),
       IconButton(
           onPressed: context.read<KingdomCubit>().canRedo
-              ? context.read<KingdomCubit>().redo
+              ? () {
+                  context.read<KingdomCubit>().redo();
+                  calculateScore(context.read<KingdomCubit>().state);
+                }
               : null,
           icon: const Icon(Icons.redo)),
       VerticalDivider(),
@@ -84,7 +89,8 @@ class KingdominoAppBar extends StatelessWidget with PreferredSizeWidget {
           );
         }).toList(),
       ),
-      QuestDialogWidget(this.getSelectedQuests, this.updateScores, this.getAog),
+      QuestDialogWidget(
+          this.getSelectedQuests, this.calculateScore, this.getAog),
       IconButton(
           icon: Icon(kingdom.size == 5 ? Icons.filter_5 : Icons.filter_7),
           onPressed: () =>
@@ -169,6 +175,6 @@ I will not use or share your information with anyone : Kingdomino Score works of
           }).toList(),
         ),
         actions: actions,
-        title: Text(score.toString()));
+        title: Text(context.read<ScoreCubit>().state.score.toString()));
   }
 }

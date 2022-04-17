@@ -4,23 +4,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../kingdom_cubit.dart';
 import '../models/land.dart';
+import '../score_cubit.dart';
 import 'kingdomino_score_widget.dart';
 
 class ScoreDetailsWidget extends StatelessWidget {
   final groupScore;
   final quests;
-  final score;
-  final scoreOfQuest;
-  final scoreOfLacour;
   final getLacour;
 
-  ScoreDetailsWidget(
-      {this.groupScore,
-      this.quests,
-      this.score,
-      this.scoreOfQuest,
-      this.scoreOfLacour,
-      this.getLacour});
+  ScoreDetailsWidget({this.groupScore, this.quests, this.getLacour});
 
   @override
   Widget build(BuildContext context) {
@@ -99,8 +91,10 @@ class ScoreDetailsWidget extends StatelessWidget {
       tableCells.add(TableCell(
           child: Align(
               alignment: Alignment.centerRight,
-              child: AutoSizeText(scoreOfQuest.toString(),
-                  maxLines: 1, group: groupScore))));
+              child: AutoSizeText(
+                  context.read<ScoreCubit>().state.scoreOfQuest.toString(),
+                  maxLines: 1,
+                  group: groupScore))));
 
       var tableRow = TableRow(children: tableCells);
       tableRows.add(tableRow);
@@ -132,8 +126,10 @@ class ScoreDetailsWidget extends StatelessWidget {
       tableCells.add(TableCell(
           child: Align(
               alignment: Alignment.centerRight,
-              child: AutoSizeText(scoreOfLacour.toString(),
-                  maxLines: 1, group: groupScore))));
+              child: AutoSizeText(
+                  context.read<ScoreCubit>().state.scoreOfLacour.toString(),
+                  maxLines: 1,
+                  group: groupScore))));
 
       var tableRow = TableRow(children: tableCells);
       tableRows.add(tableRow);
@@ -160,8 +156,10 @@ class ScoreDetailsWidget extends StatelessWidget {
     tableCells.add(TableCell(
         child: Align(
             alignment: Alignment.centerRight,
-            child: AutoSizeText(score.toString(),
-                maxLines: 1, group: groupScore))));
+            child: AutoSizeText(
+                context.read<ScoreCubit>().state.score.toString(),
+                maxLines: 1,
+                group: groupScore))));
 
     var tableRow = TableRow(children: tableCells);
     tableRows.add(tableRow);

@@ -1,6 +1,19 @@
 import '../kingdom.dart';
 import '../land.dart';
 
+export 'axe_warrior.dart';
+export 'banker.dart';
+export 'captain.dart';
+export 'farmer.dart';
+export 'fisherman.dart';
+export 'heavy_archery.dart';
+export 'king.dart';
+export 'light_archery.dart';
+export 'lumberjack.dart';
+export 'queen.dart';
+export 'shepherdess.dart';
+export 'sword_warrior.dart';
+
 const Map<LandType, Map<String, dynamic>> laCourGameSet = {
   LandType.castle: {
     'count': 1, //per player

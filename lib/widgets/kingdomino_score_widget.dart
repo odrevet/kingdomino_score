@@ -4,19 +4,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kingdomino_score_count/kingdom_cubit.dart';
-import 'package:kingdomino_score_count/models/lacour/axe_warrior.dart';
-import 'package:kingdomino_score_count/models/lacour/banker.dart';
-import 'package:kingdomino_score_count/models/lacour/captain.dart';
-import 'package:kingdomino_score_count/models/lacour/farmer.dart';
-import 'package:kingdomino_score_count/models/lacour/fisherman.dart';
-import 'package:kingdomino_score_count/models/lacour/heavy_archery.dart';
-import 'package:kingdomino_score_count/models/lacour/king.dart';
 import 'package:kingdomino_score_count/models/lacour/lacour.dart';
-import 'package:kingdomino_score_count/models/lacour/light_archery.dart';
-import 'package:kingdomino_score_count/models/lacour/lumberjack.dart';
-import 'package:kingdomino_score_count/models/lacour/queen.dart';
-import 'package:kingdomino_score_count/models/lacour/shepherdess.dart';
-import 'package:kingdomino_score_count/models/lacour/sword_warrior.dart';
+import 'package:kingdomino_score_count/score_cubit.dart';
 import 'package:kingdomino_score_count/theme_cubit.dart';
 import 'package:kingdomino_score_count/widgets/kingdomino_app_bar.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -28,7 +17,6 @@ import '../models/kingdom.dart';
 import '../models/land.dart' show LandType;
 import '../models/quests/quest.dart';
 import '../models/warning.dart';
-import '../score_quest.dart';
 import 'bottom_bar.dart';
 import 'kingdom_widget.dart';
 import 'score_details_widget.dart';
@@ -53,10 +41,7 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
   CourtierType? selectedCourtierType;
   SelectionMode selectionMode = SelectionMode.land;
   var groupScore = AutoSizeGroup();
-  int scoreProperty = 0;
-  int scoreOfQuest = 0;
-  int scoreOfLacour = 0;
-  int score = 0;
+
   bool aog = false; // Age of Giants extension
   bool lacour = false;
   HashSet<QuestType> selectedQuests = HashSet();
@@ -120,7 +105,7 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
   void calculateScore(Kingdom kingdom) {
     clearWarnings();
     checkKingdom(kingdom);
-    updateScores(kingdom);
+    context.read<ScoreCubit>().calculate(kingdom, lacour, selectedQuests);
   }
 
   Map<LandType, Map<String, dynamic>> getGameSet() {
@@ -182,103 +167,9 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
     }
   }
 
-  void updateScoreQuest(Kingdom kingdom) {
-    setState(() {
-      scoreOfQuest = calculateQuestScore(selectedQuests, kingdom);
-    });
-  }
-
-  int calculateLacourScore(Kingdom kingdom) {
-    int scoreOfLacour = 0;
-    for (int y = 0; y < kingdom.size; y++) {
-      for (int x = 0; x < kingdom.size; x++) {
-        CourtierType? courtierType = kingdom.getLand(x, y)?.courtierType;
-        if (courtierType != null) {
-          switch (courtierType) {
-            case CourtierType.farmer:
-              scoreOfLacour += Farmer().getPoints(kingdom, x, y);
-              break;
-            case CourtierType.banker:
-              scoreOfLacour += Banker().getPoints(kingdom, x, y);
-              break;
-            case CourtierType.lumberjack:
-              scoreOfLacour += Lumberjack().getPoints(kingdom, x, y);
-              break;
-            case CourtierType.light_archery:
-              scoreOfLacour += LightArchery().getPoints(kingdom, x, y);
-              break;
-            case CourtierType.fisherman:
-              scoreOfLacour += Fisherman().getPoints(kingdom, x, y);
-              break;
-            case CourtierType.heavy_archery:
-              scoreOfLacour += HeavyArchery().getPoints(kingdom, x, y);
-              break;
-            case CourtierType.shepherdess:
-              scoreOfLacour += Shepherdess().getPoints(kingdom, x, y);
-              break;
-            case CourtierType.captain:
-              scoreOfLacour += Captain().getPoints(kingdom, x, y);
-              break;
-            case CourtierType.axe_warrior:
-              scoreOfLacour += AxeWarrior().getPoints(kingdom, x, y);
-              break;
-            case CourtierType.sword_warrior:
-              scoreOfLacour += SwordWarrior().getPoints(kingdom, x, y);
-              break;
-            case CourtierType.king:
-              scoreOfLacour += King().getPoints(kingdom, x, y);
-              break;
-            case CourtierType.queen:
-              scoreOfLacour += Queen().getPoints(kingdom, x, y);
-              break;
-          }
-        }
-      }
-    }
-
-    return scoreOfLacour;
-  }
-
-  void updateScoreLacour(Kingdom kingdom) {
-    setState(() {
-      scoreOfLacour = calculateLacourScore(kingdom);
-    });
-  }
-
-  void updateScores(Kingdom kingdom) {
-    updateScoreProperty(kingdom);
-    updateScoreQuest(kingdom);
-    if (this.lacour) {
-      updateScoreLacour(kingdom);
-    }
-    updateScore();
-  }
-
-  void updateScoreProperty(Kingdom kingdom) {
-    var properties = kingdom.getProperties();
-    setState(() {
-      scoreProperty = kingdom.calculateScoreFromProperties(properties);
-    });
-  }
-
-  void updateScore() {
-    setState(() {
-      score = scoreProperty + scoreOfQuest;
-      if (this.lacour) {
-        score += scoreOfLacour;
-      }
-    });
-  }
-
-  void resetScores() {
-    setState(() {
-      score = scoreProperty = scoreOfQuest = scoreOfLacour = 0;
-    });
-  }
-
   void onKingdomClear() => setState(() {
         clearWarnings();
-        resetScores();
+        context.read<ScoreCubit>().reset();
       });
 
   void onExtensionSelect(Kingdom kingdom, String? newValue) => setState(() {
@@ -328,7 +219,7 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
         selectedQuests.clear();
         clearWarnings();
         checkKingdom(kingdom);
-        updateScores(kingdom);
+        //updateScores(kingdom);
       });
 
   @override
@@ -349,7 +240,8 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
                 child: FittedBox(
                     fit: BoxFit.fitHeight,
                     child: InkWell(
-                        child: Text(score.toString(),
+                        child: Text(
+                            context.read<ScoreCubit>().state.score.toString(),
                             style: TextStyle(color: Colors.white)),
                         onTap: () => showDialog<void>(
                               context: context,
@@ -361,9 +253,6 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
                                   content: ScoreDetailsWidget(
                                       groupScore: this.groupScore,
                                       quests: this.selectedQuests,
-                                      score: this.score,
-                                      scoreOfQuest: this.scoreOfQuest,
-                                      scoreOfLacour: this.scoreOfLacour,
                                       getLacour: this.getLacour),
                                   actions: <Widget>[
                                     TextButton(
@@ -387,9 +276,6 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
                   child: ScoreDetailsWidget(
                       groupScore: this.groupScore,
                       quests: this.selectedQuests,
-                      score: this.score,
-                      scoreOfQuest: this.scoreOfQuest,
-                      scoreOfLacour: this.scoreOfLacour,
                       getLacour: this.getLacour)),
               KingdomWidget(
                   getSelectionMode: this.getSelectionMode,
@@ -401,7 +287,8 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
               Expanded(
                 child: FittedBox(
                     fit: BoxFit.fitHeight,
-                    child: Text(score.toString(),
+                    child: Text(
+                        context.read<ScoreCubit>().state.score.toString(),
                         style: TextStyle(color: Colors.white))),
               )
             ]);
@@ -410,15 +297,14 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
 
         return Scaffold(
             appBar: KingdominoAppBar(
-              score: this.score,
               onExtensionSelect: onExtensionSelect,
               getAog: getAog,
               dropdownSelectedExtension: dropdownSelectedExtension,
               warnings: warnings,
               onKingdomClear: onKingdomClear,
               getSelectedQuests: getSelectedQuests,
-              updateScores: updateScores,
               packageInfo: _packageInfo,
+              calculateScore: this.calculateScore,
             ),
             bottomNavigationBar: BottomAppBar(
                 child: BottomBar(
@@ -430,10 +316,8 @@ class KingdominoScoreWidgetState extends State<KingdominoScoreWidget> {
                   setSelectedCourtierType: setSelectedCourtierType,
                   getAog: getAog,
                   getLacour: getLacour,
-                  scoreOfQuest: this.scoreOfQuest,
                   quests: this.selectedQuests,
                   groupScore: this.groupScore,
-                  score: this.score,
                 ),
                 color: Theme.of(context).primaryColor),
             body: body);

@@ -6,7 +6,7 @@ import '../cubits/kingdom_cubit.dart';
 import '../models/age_of_giants.dart';
 import '../models/land.dart';
 import '../models/property.dart';
-import '../score_quest.dart';
+import '../models/score.dart';
 import 'kingdomino_score_widget.dart';
 
 class GiantsDetailsWidget extends StatelessWidget {
@@ -89,10 +89,11 @@ class GiantsDetailsWidget extends StatelessWidget {
       //quests points
       int scoreQuestWithoutGiants = 0;
       if (quests.isNotEmpty) {
-        scoreQuestWithoutGiants =
-            calculateQuestScore(quests, context.read<KingdomCubit>().state);
-        var tableCells = <TableCell>[];
+        var score = Score()
+          ..calculateQuestScore(quests, context.read<KingdomCubit>().state);
+        scoreQuestWithoutGiants = score.scoreOfQuest;
 
+        var tableCells = <TableCell>[];
         tableCells.add(TableCell(child: AutoSizeText('')));
         tableCells.add(TableCell(child: AutoSizeText('')));
         tableCells.add(TableCell(child: AutoSizeText('')));

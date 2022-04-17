@@ -1,6 +1,8 @@
+import 'dart:collection';
 import '../score_quest.dart';
 import 'kingdom.dart';
 import 'lacour/lacour.dart';
+import 'land.dart' show LandType;
 
 class Score {
   int scoreProperty = 0;
@@ -78,6 +80,105 @@ class Score {
     }
 
     return scoreOfLacour;
+  }
+
+  int calculateQuestScore(HashSet<QuestType> selectedQuests, Kingdom kingdom) {
+    int scoreQuest = 0;
+    selectedQuests.forEach((selectedQuest) {
+      switch (selectedQuest) {
+        case QuestType.harmony:
+          {
+            scoreQuest += Harmony().getPoints(kingdom)!;
+          }
+          break;
+        case QuestType.middleKingdom:
+          {
+            scoreQuest += MiddleKingdom().getPoints(kingdom);
+          }
+          break;
+        case QuestType.bleakKing:
+          {
+            scoreQuest += BleakKing().getPoints(kingdom);
+          }
+          break;
+        case QuestType.folieDesGrandeurs:
+          {
+            scoreQuest += FolieDesGrandeurs().getPoints(kingdom);
+          }
+          break;
+        case QuestType.fourCornersWheat:
+          {
+            scoreQuest += FourCorners(LandType.wheat).getPoints(kingdom);
+          }
+          break;
+        case QuestType.fourCornersLake:
+          {
+            scoreQuest += FourCorners(LandType.lake).getPoints(kingdom);
+          }
+          break;
+        case QuestType.fourCornersForest:
+          {
+            scoreQuest += FourCorners(LandType.forest).getPoints(kingdom);
+          }
+          break;
+        case QuestType.fourCornersGrassLand:
+          {
+            scoreQuest += FourCorners(LandType.grassland).getPoints(kingdom);
+          }
+          break;
+        case QuestType.fourCornersSwamp:
+          {
+            scoreQuest += FourCorners(LandType.swamp).getPoints(kingdom);
+          }
+          break;
+        case QuestType.fourCornersMine:
+          {
+            scoreQuest += FourCorners(LandType.mine).getPoints(kingdom);
+          }
+          break;
+        case QuestType.localBusinessWheat:
+          {
+            scoreQuest += LocalBusiness(LandType.wheat).getPoints(kingdom);
+          }
+          break;
+        case QuestType.localBusinessLake:
+          {
+            scoreQuest += LocalBusiness(LandType.lake).getPoints(kingdom);
+          }
+          break;
+        case QuestType.localBusinessForest:
+          {
+            scoreQuest += LocalBusiness(LandType.forest).getPoints(kingdom);
+          }
+          break;
+        case QuestType.localBusinessGrassLand:
+          {
+            scoreQuest += LocalBusiness(LandType.grassland).getPoints(kingdom);
+          }
+          break;
+        case QuestType.localBusinessGrassLand:
+          {
+            scoreQuest += LocalBusiness(LandType.grassland).getPoints(kingdom);
+          }
+          break;
+        case QuestType.localBusinessSwamp:
+          {
+            scoreQuest += LocalBusiness(LandType.swamp).getPoints(kingdom);
+          }
+          break;
+        case QuestType.localBusinessMine:
+          {
+            scoreQuest += LocalBusiness(LandType.mine).getPoints(kingdom);
+          }
+          break;
+        case QuestType.lostCorner:
+          {
+            scoreQuest += LostCorner().getPoints(kingdom);
+          }
+          break;
+      }
+    });
+    return scoreQuest;
   }
 
   void updateScoreLacour(Kingdom kingdom) {

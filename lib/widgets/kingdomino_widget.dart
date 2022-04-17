@@ -4,14 +4,14 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kingdomino_score_count/cubits/kingdom_cubit.dart';
-import 'package:kingdomino_score_count/models/lacour/lacour.dart';
 import 'package:kingdomino_score_count/cubits/score_cubit.dart';
 import 'package:kingdomino_score_count/cubits/theme_cubit.dart';
+import 'package:kingdomino_score_count/models/lacour/lacour.dart';
 import 'package:kingdomino_score_count/widgets/kingdomino_app_bar.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
-import '../models/game_set.dart';
 import '../models/age_of_giants.dart';
+import '../models/game_set.dart';
 import '../models/king_colors.dart';
 import '../models/kingdom.dart';
 import '../models/land.dart' show LandType;
@@ -241,8 +241,7 @@ class KingdominoWidgetState extends State<KingdominoWidget> {
                     fit: BoxFit.fitHeight,
                     child: InkWell(
                         child: Text(
-                            context.read<ScoreCubit>().state.score.toString(),
-                            style: TextStyle(color: Colors.white)),
+                            context.read<ScoreCubit>().state.score.toString()),
                         onTap: () => showDialog<void>(
                               context: context,
                               builder: (BuildContext context) {
@@ -288,8 +287,7 @@ class KingdominoWidgetState extends State<KingdominoWidget> {
                 child: FittedBox(
                     fit: BoxFit.fitHeight,
                     child: Text(
-                        context.read<ScoreCubit>().state.score.toString(),
-                        style: TextStyle(color: Colors.white))),
+                        context.read<ScoreCubit>().state.score.toString())),
               )
             ]);
           }

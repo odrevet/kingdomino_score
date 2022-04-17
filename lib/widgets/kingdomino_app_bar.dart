@@ -63,7 +63,7 @@ class KingdominoAppBar extends StatelessWidget with PreferredSizeWidget {
       // Extension Selector
       DropdownButton<String>(
         value: dropdownSelectedExtension,
-        icon: const Icon(Icons.extension),
+        icon: const Icon(Icons.extension, color: Colors.white),
         iconSize: 25,
         elevation: 16,
         underline: Container(height: 1, color: Colors.white),

@@ -16,10 +16,10 @@ class KingdominoApp extends StatelessWidget {
             title: 'Kingdomino Score',
             theme: ThemeData(
                 primarySwatch: color,
-                canvasColor: Colors.blueGrey,
+                canvasColor: color.shade100,
                 fontFamily: 'HammersmithOne',
                 dialogTheme: DialogTheme(
-                    backgroundColor: Color.fromARGB(230, 100, 130, 160),
+                    backgroundColor: color.shade100,
                     contentTextStyle: TextStyle(color: Colors.black))),
             home: MultiBlocProvider(providers: [
               BlocProvider<ScoreCubit>(

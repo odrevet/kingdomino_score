@@ -1,5 +1,6 @@
 import 'dart:collection';
 import '../score_quest.dart';
+import 'extension.dart';
 import 'kingdom.dart';
 import 'lacour/lacour.dart';
 import 'land.dart' show LandType;
@@ -185,13 +186,13 @@ class Score {
     scoreOfLacour = calculateLacourScore(kingdom);
   }
 
-  void updateScores(Kingdom kingdom, bool lacour, selectedQuests) {
+  void updateScores(Kingdom kingdom, Extension? extension, selectedQuests) {
     _updateScoreProperty(kingdom);
     updateScoreQuest(kingdom, selectedQuests);
-    if (lacour) {
+    if (extension == Extension.LaCour) {
       updateScoreLacour(kingdom);
     }
-    updateScore(lacour);
+    updateScore(extension);
   }
 
   void _updateScoreProperty(Kingdom kingdom) {
@@ -199,9 +200,9 @@ class Score {
     scoreProperty = kingdom.calculateScoreFromProperties(properties);
   }
 
-  void updateScore(bool lacour) {
+  void updateScore(Extension? extension) {
     score = scoreProperty + scoreOfQuest;
-    if (lacour) {
+    if (extension == Extension.LaCour) {
       score += scoreOfLacour;
     }
   }

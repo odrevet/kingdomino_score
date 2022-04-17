@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kingdomino_score_count/models/extension.dart';
 
+import '../cubits/theme_cubit.dart';
 import '../models/age_of_giants.dart';
 import '../models/lacour/lacour.dart';
 import '../models/land.dart';
-import '../cubits/theme_cubit.dart';
 import 'castle_widget.dart';
 import 'giant_details_widget.dart';
 import 'kingdomino_widget.dart';
@@ -16,8 +17,7 @@ class BottomBar extends StatefulWidget {
   final setSelectedLandType;
   final getSelectedCourtierType;
   final setSelectedCourtierType;
-  final getAog;
-  final getLacour;
+  final getExtension;
   final groupScore;
   final quests;
 
@@ -28,8 +28,7 @@ class BottomBar extends StatefulWidget {
       required this.setSelectedLandType,
       required this.getSelectedCourtierType,
       required this.setSelectedCourtierType,
-      required this.getAog,
-      required this.getLacour,
+      required this.getExtension,
       required this.quests,
       required this.groupScore});
 
@@ -64,9 +63,9 @@ class _BottomBarState extends State<BottomBar> {
       crownButton(),
     ];
 
-    if (widget.getAog()) kingdomEditorWidgets.add(giantButton());
-
-    if (widget.getLacour() == true) {
+    if (widget.getExtension() == Extension.AgeOfGiants) {
+      kingdomEditorWidgets.add(giantButton());
+    } else if (widget.getExtension() == Extension.LaCour) {
       kingdomEditorWidgets.add(resourceButton());
 
       CourtierType.values.forEach((element) {

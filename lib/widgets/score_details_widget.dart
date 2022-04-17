@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kingdomino_score_count/models/extension.dart';
 
 import '../cubits/kingdom_cubit.dart';
 import '../models/land.dart';
@@ -10,9 +11,9 @@ import 'kingdomino_widget.dart';
 class ScoreDetailsWidget extends StatelessWidget {
   final groupScore;
   final quests;
-  final getLacour;
+  final getExtension;
 
-  ScoreDetailsWidget({this.groupScore, this.quests, this.getLacour});
+  ScoreDetailsWidget({this.groupScore, this.quests, this.getExtension});
 
   @override
   Widget build(BuildContext context) {
@@ -100,8 +101,7 @@ class ScoreDetailsWidget extends StatelessWidget {
       tableRows.add(tableRow);
     }
 
-    // lacour points
-    if (getLacour() == true) {
+    if (getExtension() == Extension.LaCour) {
       var tableCells = <TableCell>[];
 
       tableCells.add(TableCell(child: AutoSizeText('')));

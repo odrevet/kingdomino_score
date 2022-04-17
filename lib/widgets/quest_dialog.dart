@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kingdomino_score_count/cubits/kingdom_cubit.dart';
+import 'package:kingdomino_score_count/models/extension.dart';
 import 'package:kingdomino_score_count/models/quests/quest.dart';
 
 import '../cubits/score_cubit.dart';
@@ -69,7 +70,7 @@ class _QuestDialogOptionState extends State<_QuestDialogOption> {
           }
         });
         context.read<ScoreCubit>().calculate(context.read<KingdomCubit>().state,
-            false, getSelectedQuests()); //TODO lacour
+            null, getSelectedQuests()); //TODO getExtension
         //this.updateScores();
       },
     );
@@ -79,48 +80,43 @@ class _QuestDialogOptionState extends State<_QuestDialogOption> {
 class QuestDialogWidget extends StatefulWidget {
   final getSelectedQuests;
   final updateScores;
-  final getAog;
+  final getExtension;
 
-  QuestDialogWidget(this.getSelectedQuests, this.updateScores, this.getAog);
+  QuestDialogWidget(
+      this.getSelectedQuests, this.updateScores, this.getExtension);
 
   @override
-  _QuestDialogWidgetState createState() => _QuestDialogWidgetState(
-      this.getSelectedQuests, this.updateScores, this.getAog);
+  _QuestDialogWidgetState createState() => _QuestDialogWidgetState();
 }
 
 class _QuestDialogWidgetState extends State<QuestDialogWidget> {
-  final getSelectedQuests;
-  final updateScores;
-  final getAog;
-
-  _QuestDialogWidgetState(
-      this.getSelectedQuests, this.updateScores, this.getAog);
+  _QuestDialogWidgetState();
 
   @override
   build(BuildContext context) {
     var options = <Widget>[];
 
-    if (getAog() == true) {
+    if (widget.getExtension() == Extension.AgeOfGiants) {
       questPicture.forEach((type, picture) {
         options.add(_QuestDialogOption(
             type,
             SvgPicture.asset('$assetsquestsLocation/$picture'),
-            getSelectedQuests,
-            updateScores));
+            widget.getSelectedQuests,
+            widget.updateScores));
       });
     } else {
       options.add(_QuestDialogOption(
           QuestType.harmony,
           SvgPicture.asset(
               '$assetsquestsLocation/${questPicture[QuestType.harmony]!}'),
-          getSelectedQuests,
-          updateScores));
+          widget.getSelectedQuests,
+          widget.updateScores));
       options.add(_QuestDialogOption(
           QuestType.middleKingdom,
           SvgPicture.asset(
               '$assetsquestsLocation/${questPicture[QuestType.middleKingdom]!}'),
-          getSelectedQuests,
-          updateScores));
+          widget.getSelectedQuests,
+          widget.updateScores));
     }
 
     SimpleDialog dialog = SimpleDialog(
@@ -134,9 +130,9 @@ class _QuestDialogWidgetState extends State<QuestDialogWidget> {
     );
 
     return Badge(
-        showBadge: getSelectedQuests().length > 0,
+        showBadge: widget.getSelectedQuests().length > 0,
         position: BadgePosition.topEnd(top: -1, end: -1),
-        badgeContent: Text(getSelectedQuests().length.toString()),
+        badgeContent: Text(widget.getSelectedQuests().length.toString()),
         child: IconButton(
             icon: Icon(Icons.shield),
             onPressed: () => showDialog(

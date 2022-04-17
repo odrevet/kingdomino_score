@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../models/extension.dart';
 import '../models/kingdom.dart';
 import '../models/score.dart';
 
@@ -8,8 +9,8 @@ class ScoreCubit extends Cubit<Score> {
 
   void reset() => emit(Score());
 
-  void calculate(Kingdom kingdom, bool lacour, selectedQuests) {
-    state.updateScores(kingdom, lacour, selectedQuests);
+  void calculate(Kingdom kingdom, Extension? extension, selectedQuests) {
+    state.updateScores(kingdom, extension, selectedQuests);
     emit(state.copyWith());
   }
 }

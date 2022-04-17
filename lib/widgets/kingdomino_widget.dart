@@ -11,6 +11,7 @@ import 'package:kingdomino_score_count/widgets/kingdomino_app_bar.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import '../models/age_of_giants.dart';
+import '../models/extension.dart';
 import '../models/game_set.dart';
 import '../models/king_colors.dart';
 import '../models/kingdom.dart';
@@ -42,8 +43,8 @@ class KingdominoWidgetState extends State<KingdominoWidget> {
   SelectionMode selectionMode = SelectionMode.land;
   var groupScore = AutoSizeGroup();
 
-  bool aog = false; // Age of Giants extension
-  bool lacour = false;
+  Extension? extension;
+
   HashSet<QuestType> selectedQuests = HashSet();
   List<Warning> warnings = [];
   PackageInfo _packageInfo = PackageInfo(
@@ -74,9 +75,7 @@ class KingdominoWidgetState extends State<KingdominoWidget> {
 
   HashSet<QuestType> getSelectedQuests() => selectedQuests;
 
-  bool getAog() => aog;
-
-  bool getLacour() => lacour;
+  Extension? getExtension() => extension;
 
   LandType? getSelectedLandType() => selectedLandType;
 
@@ -94,6 +93,12 @@ class KingdominoWidgetState extends State<KingdominoWidget> {
     });
   }
 
+  setExtension(Extension extension) {
+    setState(() {
+      this.extension = extension;
+    });
+  }
+
   setSelectionMode(SelectionMode selectionMode) {
     setState(() {
       this.selectionMode = selectionMode;
@@ -105,13 +110,13 @@ class KingdominoWidgetState extends State<KingdominoWidget> {
   void calculateScore(Kingdom kingdom) {
     clearWarnings();
     checkKingdom(kingdom);
-    context.read<ScoreCubit>().calculate(kingdom, lacour, selectedQuests);
+    context.read<ScoreCubit>().calculate(kingdom, extension, selectedQuests);
   }
 
   Map<LandType, Map<String, dynamic>> getGameSet() {
-    if (aog == true) {
+    if (extension == Extension.AgeOfGiants) {
       return gameAogSet;
-    } else if (lacour == true) {
+    } else if (extension == Extension.LaCour) {
       return laCourGameSet;
     } else {
       return gameSet;
@@ -186,8 +191,7 @@ class KingdominoWidgetState extends State<KingdominoWidget> {
 
         switch (newValue) {
           case '':
-            aog = false;
-            lacour = false;
+            extension = null;
             setSelectionMode(SelectionMode.land);
             kingColors.remove(Colors.brown.shade800);
             if (context.read<ThemeCubit>().state == Colors.brown.shade800) {
@@ -195,15 +199,13 @@ class KingdominoWidgetState extends State<KingdominoWidget> {
             }
             break;
           case 'Giants':
-            aog = true;
-            lacour = false;
+            setExtension(Extension.AgeOfGiants);
             setSelectionMode(SelectionMode.land);
 
             kingColors.add(Colors.brown);
             break;
           case 'LaCour':
-            lacour = true;
-            aog = false;
+            setExtension(Extension.LaCour);
             if (selectionMode == SelectionMode.courtier ||
                 selectionMode == SelectionMode.resource) {
               selectionMode = SelectionMode.crown;
@@ -253,7 +255,7 @@ class KingdominoWidgetState extends State<KingdominoWidget> {
                                   content: ScoreDetailsWidget(
                                       groupScore: this.groupScore,
                                       quests: this.selectedQuests,
-                                      getLacour: this.getLacour),
+                                      getExtension: this.getExtension),
                                   actions: <Widget>[
                                     TextButton(
                                       child: Icon(Icons.done),
@@ -273,7 +275,7 @@ class KingdominoWidgetState extends State<KingdominoWidget> {
                   child: ScoreDetailsWidget(
                       groupScore: this.groupScore,
                       quests: this.selectedQuests,
-                      getLacour: this.getLacour)),
+                      getExtension: this.getExtension)),
               KingdomWidget(
                   getSelectionMode: this.getSelectionMode,
                   getSelectedLandType: this.getSelectedLandType,
@@ -294,7 +296,7 @@ class KingdominoWidgetState extends State<KingdominoWidget> {
         return Scaffold(
             appBar: KingdominoAppBar(
               onExtensionSelect: onExtensionSelect,
-              getAog: getAog,
+              getExtension: getExtension,
               dropdownSelectedExtension: dropdownSelectedExtension,
               warnings: warnings,
               onKingdomClear: onKingdomClear,
@@ -310,8 +312,7 @@ class KingdominoWidgetState extends State<KingdominoWidget> {
                   setSelectedLandType: setSelectedLandType,
                   getSelectedCourtierType: getSelectedCourtierType,
                   setSelectedCourtierType: setSelectedCourtierType,
-                  getAog: getAog,
-                  getLacour: getLacour,
+                  getExtension: getExtension,
                   quests: this.selectedQuests,
                   groupScore: this.groupScore,
                 ),

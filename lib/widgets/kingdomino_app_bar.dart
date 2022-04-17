@@ -16,7 +16,7 @@ class KingdominoAppBar extends StatelessWidget with PreferredSizeWidget {
   @override
   final Size preferredSize;
 
-  final getAog;
+  final getExtension;
   final String dropdownSelectedExtension;
   final void Function(Kingdom, String?) onExtensionSelect;
   final void Function(Kingdom) calculateScore;
@@ -28,7 +28,7 @@ class KingdominoAppBar extends StatelessWidget with PreferredSizeWidget {
   const KingdominoAppBar({
     this.preferredSize = const Size.fromHeight(50.0),
     required this.onExtensionSelect,
-    required this.getAog,
+    required this.getExtension,
     required this.dropdownSelectedExtension,
     required this.warnings,
     required this.packageInfo,
@@ -90,7 +90,7 @@ class KingdominoAppBar extends StatelessWidget with PreferredSizeWidget {
         }).toList(),
       ),
       QuestDialogWidget(
-          this.getSelectedQuests, this.calculateScore, this.getAog),
+          this.getSelectedQuests, this.calculateScore, this.getExtension),
       IconButton(
           icon: Icon(kingdom.size == 5 ? Icons.filter_5 : Icons.filter_7),
           onPressed: () =>

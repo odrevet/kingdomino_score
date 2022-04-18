@@ -24,7 +24,7 @@ abstract class Quest {
   int reward; //points awarded if quest is fulfilled
 
   Quest({required this.reward});
-  
+
   int? getPoints(Kingdom kingdom);
 }
 

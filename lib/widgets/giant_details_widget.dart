@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,18 +8,19 @@ import '../cubits/kingdom_cubit.dart';
 import '../models/age_of_giants.dart';
 import '../models/land.dart';
 import '../models/property.dart';
+import '../models/quests/quest.dart';
 import '../models/score.dart';
 import 'kingdomino_widget.dart';
 
 class GiantsDetailsWidget extends StatelessWidget {
-  final groupScore;
-  final quests;
-  final scoreOfQuest;
-  final score;
+  final AutoSizeGroup groupScore;
+  final HashSet<QuestType> quests;
+  final int scoreOfQuest;
+  final int score;
 
   const GiantsDetailsWidget(
-      {this.groupScore,
-      this.quests,
+      {required this.groupScore,
+      required this.quests,
       required this.scoreOfQuest,
       required this.score,
       Key? key})

@@ -1,11 +1,16 @@
+import 'dart:collection';
+
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kingdomino_score_count/models/extension.dart';
 
+import '../cubits/score_cubit.dart';
 import '../cubits/theme_cubit.dart';
 import '../models/age_of_giants.dart';
 import '../models/lacour/lacour.dart';
 import '../models/land.dart';
+import '../models/quests/quest.dart';
 import '../models/selection_mode.dart';
 import 'castle_tile.dart';
 import 'giant_details_widget.dart';
@@ -19,8 +24,8 @@ class BottomBar extends StatefulWidget {
   final Function getSelectedCourtierType;
   final Function setSelectedCourtierType;
   final Function getExtension;
-  final groupScore;
-  final quests;
+  final AutoSizeGroup groupScore;
+  final HashSet<QuestType> quests;
 
   const BottomBar(
       {required this.getSelectionMode,
@@ -191,10 +196,11 @@ class _BottomBarState extends State<BottomBar> {
                   shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(20.0))),
                   content: GiantsDetailsWidget(
-                      scoreOfQuest: 'widget.scoreOfQuest',
+                      scoreOfQuest:
+                          context.read<ScoreCubit>().state.scoreOfQuest,
                       quests: widget.quests,
                       groupScore: widget.groupScore,
-                      score: 'widget.score'),
+                      score: context.read<ScoreCubit>().state.score),
                   actions: <Widget>[
                     TextButton(
                       child: const Icon(

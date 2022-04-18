@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,11 +8,12 @@ import 'package:kingdomino_score_count/models/extension.dart';
 import '../cubits/kingdom_cubit.dart';
 import '../cubits/score_cubit.dart';
 import '../models/land.dart';
+import '../models/quests/quest.dart';
 import 'kingdomino_widget.dart';
 
 class ScoreDetailsWidget extends StatelessWidget {
-  final groupScore;
-  final quests;
+  final AutoSizeGroup groupScore;
+  final HashSet<QuestType> quests;
   final Function getExtension;
 
   const ScoreDetailsWidget(

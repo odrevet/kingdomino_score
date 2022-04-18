@@ -10,12 +10,11 @@ class FourCorners extends Quest {
     return _singleton;
   }
 
-  FourCorners._internal();
-
-  final int extraPoints = 5;
+  FourCorners._internal() : super(reward: 5);
 
   LandType? landType;
 
+  @override
   int getPoints(Kingdom kingdom) {
     int count = 0;
     int size = kingdom.size - 1;
@@ -24,6 +23,6 @@ class FourCorners extends Quest {
     if (kingdom.getLand(0, size)?.landType == landType) count++;
     if (kingdom.getLand(size, size)?.landType == landType) count++;
 
-    return extraPoints * count;
+    return reward * count;
   }
 }

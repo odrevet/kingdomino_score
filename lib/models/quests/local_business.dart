@@ -10,12 +10,11 @@ class LocalBusiness extends Quest {
     return _singleton;
   }
 
-  LocalBusiness._internal();
-
-  final int extraPoints = 5;
+  LocalBusiness._internal() : super(reward: 5);
 
   LandType? landType;
 
+  @override
   int getPoints(Kingdom kingdom) {
     int castleX = 0, castleY = 0;
 
@@ -88,6 +87,6 @@ class LocalBusiness extends Quest {
       count++;
     }
 
-    return extraPoints * count;
+    return reward * count;
   }
 }

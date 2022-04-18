@@ -8,10 +8,9 @@ class Harmony extends Quest {
     return _singleton;
   }
 
-  Harmony._internal();
+  Harmony._internal() : super(reward: 5);
 
-  int? extraPoints = 5;
-
+  @override
   int? getPoints(Kingdom kingdom) {
     return kingdom
             .getLands()
@@ -19,7 +18,7 @@ class Harmony extends Quest {
             .toList()
             .where((land) => land.landType == null)
             .isEmpty
-        ? extraPoints
+        ? reward
         : 0;
   }
 }

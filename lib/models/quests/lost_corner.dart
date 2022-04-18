@@ -9,9 +9,7 @@ class LostCorner extends Quest {
     return _singleton;
   }
 
-  LostCorner._internal();
-
-  final int extraPoints = 20;
+  LostCorner._internal() : super(reward: 20);
 
   @override
   int getPoints(Kingdom kingdom) {
@@ -20,7 +18,7 @@ class LostCorner extends Quest {
             kingdom.getLand(size, 0)?.landType == LandType.castle ||
             kingdom.getLand(0, size)?.landType == LandType.castle ||
             kingdom.getLand(size, size)?.landType == LandType.castle
-        ? extraPoints
+        ? reward
         : 0;
   }
 }

@@ -9,9 +9,7 @@ class MiddleKingdom extends Quest {
     return _singleton;
   }
 
-  MiddleKingdom._internal();
-
-  final int extraPoints = 10;
+  MiddleKingdom._internal() : super(reward: 10);
 
   @override
   int getPoints(Kingdom kingdom) {
@@ -24,7 +22,7 @@ class MiddleKingdom extends Quest {
     }
 
     if (kingdom.getLand(x, y)?.landType == LandType.castle) {
-      return extraPoints;
+      return reward;
     } else {
       return 0;
     }

@@ -40,9 +40,7 @@ class FolieDesGrandeurs extends Quest {
     return _singleton;
   }
 
-  FolieDesGrandeurs._internal();
-
-  int? extraPoints = 10;
+  FolieDesGrandeurs._internal() : super(reward: 10);
 
   ///check if land at coord is in bound and has at least a crown
   bool _checkLandBoundAndCrown(int y, int x, Kingdom kingdom) {
@@ -181,6 +179,7 @@ class FolieDesGrandeurs extends Quest {
     return resultAlignments.length;
   }
 
+  @override
   int getPoints(Kingdom kingdom) {
     int size = kingdom.size;
 
@@ -275,6 +274,6 @@ class FolieDesGrandeurs extends Quest {
       ...alignmentHorizontal,
     ], kingdom));
 
-    return extraPoints! * validAlignments.reduce(max);
+    return reward * validAlignments.reduce(max);
   }
 }

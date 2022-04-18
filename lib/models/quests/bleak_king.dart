@@ -12,9 +12,7 @@ class BleakKing extends Quest {
     return _singleton;
   }
 
-  BleakKing._internal();
-
-  int? extraPoints = 10;
+  BleakKing._internal() : super(reward: 10);
 
   @override
   int getPoints(Kingdom kingdom) {
@@ -29,6 +27,6 @@ class BleakKing extends Quest {
             property.landCount >= 5)
         .length;
 
-    return extraPoints! * count;
+    return reward * count;
   }
 }

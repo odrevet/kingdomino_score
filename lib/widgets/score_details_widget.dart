@@ -54,7 +54,7 @@ class ScoreDetailsWidget extends StatelessWidget {
       tableCells.add(TableCell(
           child: Align(
               alignment: Alignment.centerRight,
-              child: AutoSizeText('x', maxLines: 1, group: groupScore))));
+              child: AutoSizeText('×', maxLines: 1, group: groupScore))));
       tableCells.add(TableCell(
           child: Align(
               alignment: Alignment.centerRight,

@@ -61,7 +61,6 @@ class KingdominoAppBar extends StatelessWidget with PreferredSizeWidget {
                 }
               : null,
           icon: const Icon(Icons.redo)),
-      const VerticalDivider(),
       // Extension Selector
       DropdownButton<String>(
         value: dropdownSelectedExtension,
@@ -96,14 +95,12 @@ class KingdominoAppBar extends StatelessWidget with PreferredSizeWidget {
           icon: Icon(kingdom.size == 5 ? Icons.filter_5 : Icons.filter_7),
           onPressed: () =>
               context.read<KingdomCubit>().resize(kingdom.size == 5 ? 7 : 5)),
-      const VerticalDivider(),
       IconButton(
           icon: const Icon(Icons.delete),
           onPressed: () {
             context.read<KingdomCubit>().clear();
             onKingdomClear();
           }),
-      const VerticalDivider(),
       IconButton(
           icon: const Icon(Icons.help),
           onPressed: () => showAboutDialog(
@@ -175,7 +172,6 @@ I will not use or share your information with anyone : Kingdomino Score works of
             );
           }).toList(),
         ),
-        actions: actions,
-        title: Text(context.read<ScoreCubit>().state.score.toString()));
+        actions: actions);
   }
 }

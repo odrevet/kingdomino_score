@@ -92,12 +92,6 @@ class KingdominoWidgetState extends State<KingdominoWidget> {
     });
   }
 
-  setExtension(Extension? extension) {
-    setState(() {
-      extension = extension;
-    });
-  }
-
   setSelectionMode(SelectionMode selectionMode) {
     setState(() {
       this.selectionMode = selectionMode;
@@ -190,7 +184,7 @@ class KingdominoWidgetState extends State<KingdominoWidget> {
 
         switch (newValue) {
           case '':
-            setExtension(null);
+            extension = null;
             setSelectionMode(SelectionMode.land);
             kingColors.remove(Colors.brown.shade800);
             if (context.read<ThemeCubit>().state == Colors.brown.shade800) {
@@ -198,13 +192,13 @@ class KingdominoWidgetState extends State<KingdominoWidget> {
             }
             break;
           case 'Giants':
-            setExtension(Extension.ageOfGiants);
+            extension = Extension.ageOfGiants;
             setSelectionMode(SelectionMode.land);
 
             kingColors.add(Colors.brown);
             break;
           case 'LaCour':
-            setExtension(Extension.laCour);
+            extension = Extension.laCour;
             if (selectionMode == SelectionMode.courtier ||
                 selectionMode == SelectionMode.resource) {
               selectionMode = SelectionMode.crown;

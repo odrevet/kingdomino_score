@@ -38,15 +38,17 @@ class _QuestDialogOptionState extends State<_QuestDialogOption> {
     });
   }
 
+  final BoxShadow _selectedBoxShadow = const BoxShadow(
+    color: Colors.yellowAccent,
+    spreadRadius: 5,
+    blurRadius: 3,
+  );
+
   @override
   Widget build(BuildContext context) {
     Widget child = _active!
         ? Container(
-            decoration: BoxDecoration(
-                border: Border(
-              left: BorderSide(width: 3, color: Colors.green.shade600),
-              right: BorderSide(width: 3, color: Colors.green.shade600),
-            )),
+            decoration: BoxDecoration(boxShadow: [_selectedBoxShadow]),
             child: widget.svg)
         : widget.svg;
 

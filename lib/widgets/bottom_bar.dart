@@ -7,7 +7,7 @@ import '../models/age_of_giants.dart';
 import '../models/lacour/lacour.dart';
 import '../models/land.dart';
 import '../models/selection_mode.dart';
-import 'castle_widget.dart';
+import 'castle_tile.dart';
 import 'giant_details_widget.dart';
 import 'kingdomino_widget.dart';
 
@@ -159,7 +159,7 @@ class _BottomBarState extends State<BottomBar> {
         decoration: BoxDecoration(
             color: Colors.white,
             border: isSelected ? _selectedBorder : outline),
-        child: CastleWidget(context.read<ThemeCubit>().state),
+        child: CastleTile(context.read<ThemeCubit>().state),
       ),
     );
   }

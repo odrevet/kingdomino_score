@@ -8,7 +8,7 @@ import '../models/kingdom.dart';
 import '../models/lacour/lacour.dart';
 import '../models/land.dart';
 import '../models/selection_mode.dart';
-import 'castle_widget.dart';
+import 'castle_tile.dart';
 import 'kingdomino_widget.dart';
 
 class KingdomWidget extends StatefulWidget {
@@ -45,7 +45,7 @@ class _KingdomWidgetState extends State<KingdomWidget> {
 
     Widget? child;
     if (land.landType == LandType.castle) {
-      child = CastleWidget(context.read<ThemeCubit>().state);
+      child = CastleTile(context.read<ThemeCubit>().state);
     } else if (land.courtierType != null) {
       child = Container(
         padding: const EdgeInsets.all(10.0),

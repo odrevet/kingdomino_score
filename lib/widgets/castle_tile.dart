@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'kingdomino_widget.dart';
 
-class CastleWidget extends StatelessWidget {
+class CastleTile extends StatelessWidget {
   final Color kingColor;
 
-  const CastleWidget(this.kingColor, {Key? key}) : super(key: key);
+  const CastleTile(this.kingColor, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

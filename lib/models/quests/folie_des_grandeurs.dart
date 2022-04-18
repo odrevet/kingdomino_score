@@ -8,11 +8,11 @@ import 'quest.dart';
 ///`2 different alignments cannot share more than one square`
 ///see https://boardgamegeek.com/thread/2040636/tic-tac-toe-bonus-challenge-tile-clarification
 class CrownAlignment extends Equatable {
-  int x0, y0;
-  int x1, y1;
-  int x2, y2;
+  final int x0, y0;
+  final int x1, y1;
+  final int x2, y2;
 
-  CrownAlignment(this.y0, this.x0, this.y1, this.x1, this.y2, this.x2);
+  const CrownAlignment(this.y0, this.x0, this.y1, this.x1, this.y2, this.x2);
 
   bool cross(CrownAlignment other) => ((x0 == other.x0 && y0 == other.y0) ||
       (x1 == other.x0 && y1 == other.y0) ||

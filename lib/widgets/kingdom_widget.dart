@@ -18,7 +18,9 @@ class KingdomWidget extends StatefulWidget {
       required Function this.getSelectedCourtierType,
       required Function this.getGameSet,
       required Function this.calculateScore,
-      required Kingdom this.kingdom});
+      required Kingdom this.kingdom,
+      Key? key})
+      : super(key: key);
 
   final getSelectionMode;
   final getSelectedLandType;

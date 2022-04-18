@@ -88,10 +88,10 @@ class _BottomBarState extends State<BottomBar> {
   }
 
   final Border _selectedBorder = Border(
-    right: BorderSide(width: 3.5, color: Colors.red.shade600),
-    top: BorderSide(width: 3.5, color: Colors.red.shade600),
-    left: BorderSide(width: 3.5, color: Colors.red.shade600),
-    bottom: BorderSide(width: 3.5, color: Colors.red.shade900),
+    right: BorderSide(width: 1.5, color: Colors.red.shade600),
+    top: BorderSide(width: 1.5, color: Colors.red.shade600),
+    left: BorderSide(width: 1.5, color: Colors.red.shade600),
+    bottom: BorderSide(width: 1.5, color: Colors.red.shade900),
   );
 
   Widget landButton(LandType? landType) {
@@ -126,7 +126,7 @@ class _BottomBarState extends State<BottomBar> {
             height: _buttonSize,
             width: _buttonSize,
             decoration:
-                BoxDecoration(border: isSelected ? _selectedBorder : outline),
+                BoxDecoration(border: isSelected ? _selectedBorder : null),
             child: Image.asset('assets/lacour/resource.png')));
   }
 
@@ -141,7 +141,7 @@ class _BottomBarState extends State<BottomBar> {
             height: _buttonSize,
             width: _buttonSize,
             decoration:
-                BoxDecoration(border: isSelected ? _selectedBorder : outline),
+                BoxDecoration(border: isSelected ? _selectedBorder : null),
             child: Image(
                 height: 50,
                 width: 50,
@@ -179,7 +179,7 @@ class _BottomBarState extends State<BottomBar> {
           height: _buttonSize,
           width: _buttonSize,
           decoration:
-              BoxDecoration(border: isSelected ? _selectedBorder : outline),
+              BoxDecoration(border: isSelected ? _selectedBorder : null),
           child: const FittedBox(fit: BoxFit.fitHeight, child: Text(crown)),
         ));
   }
@@ -220,7 +220,7 @@ class _BottomBarState extends State<BottomBar> {
           height: _buttonSize,
           width: _buttonSize,
           decoration:
-              BoxDecoration(border: isSelected ? _selectedBorder : outline),
+              BoxDecoration(border: isSelected ? _selectedBorder : null),
           child: const FittedBox(fit: BoxFit.fitHeight, child: Text(giant)),
         ));
   }

@@ -208,6 +208,8 @@ class KingdominoWidgetState extends State<KingdominoWidget> {
           case '':
             extension = null;
             setSelectionMode(SelectionMode.land);
+            setSelectedLandType(null);
+
             kingColors.remove(Colors.brown.shade800);
             if (context.read<ThemeCubit>().state == Colors.brown.shade800) {
               setKingColor(kingColors.first);
@@ -216,11 +218,16 @@ class KingdominoWidgetState extends State<KingdominoWidget> {
           case 'Giants':
             extension = Extension.ageOfGiants;
             setSelectionMode(SelectionMode.land);
+            setSelectedLandType(null);
 
             kingColors.add(Colors.brown);
             break;
           case 'LaCour':
             extension = Extension.laCour;
+
+            setSelectionMode(SelectionMode.land);
+            setSelectedLandType(null);
+
             if (selectionMode == SelectionMode.courtier ||
                 selectionMode == SelectionMode.resource) {
               selectionMode = SelectionMode.crown;

@@ -77,20 +77,18 @@ class _KingdomWidgetState extends State<KingdomWidget> {
                 border: Border.all(
                   color: Colors.black,
                 ),
-                borderRadius: const BorderRadius.all(Radius.circular(30)),
+                borderRadius: const BorderRadius.all(Radius.circular(50)),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.grey.withOpacity(0.5),
-                    spreadRadius: 5,
-                    blurRadius: 7,
+                    spreadRadius: 1,
+                    blurRadius: 2,
                     offset: const Offset(0, 3), // changes position of shadow
                   ),
                 ],
               ),
               child: Text(getResourceForLandType(land.landType),
-                  style: TextStyle(
-                      fontSize: constraints.maxWidth / 2,
-                      color: getResourceColorForLandType(land.landType))),
+                  style: TextStyle(fontSize: constraints.maxWidth / 2)),
             ));
           }),
         );

@@ -4,6 +4,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kingdomino_score_count/models/extension.dart';
+import 'package:kingdomino_score_count/widgets/land_tile.dart';
 
 import '../cubits/theme_cubit.dart';
 import '../models/age_of_giants.dart';
@@ -103,11 +104,8 @@ class _BottomBarState extends State<BottomBar> {
             width: _buttonSize,
             decoration: BoxDecoration(
                 boxShadow: isSelected ? [_selectedBoxShadow] : null,
-                border: outline),
-            child: Container(
-              color: getColorForLandType(landType),
-              child: null,
-            )));
+                border: landType == null ? null : outline),
+            child: LandTile(landType: landType)));
   }
 
   Widget resourceButton() {

@@ -10,6 +10,7 @@ import '../models/land.dart';
 import '../models/selection_mode.dart';
 import 'castle_tile.dart';
 import 'kingdomino_widget.dart';
+import 'land_tile.dart';
 
 class KingdomWidget extends StatefulWidget {
   final Function getSelectionMode;
@@ -47,13 +48,13 @@ class _KingdomWidgetState extends State<KingdomWidget> {
     if (land.landType == LandType.castle) {
       child = CastleTile(context.read<ThemeCubit>().state);
     } else if (land.courtierType != null) {
-      child = Container(
-        padding: const EdgeInsets.all(10.0),
-        decoration: BoxDecoration(
-          color: getColorForLandType(land.landType),
-        ),
-        child: Image(image: AssetImage(courtierPicture[land.courtierType]!)),
-      );
+      child = LandTile(
+          landType: land.landType,
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child:
+                Image(image: AssetImage(courtierPicture[land.courtierType]!)),
+          ));
     } else {
       if (land.crowns > 0) {
         String text = (crown * land.crowns);

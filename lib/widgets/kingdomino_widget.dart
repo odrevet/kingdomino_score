@@ -9,6 +9,7 @@ import 'package:kingdomino_score_count/cubits/theme_cubit.dart';
 import 'package:kingdomino_score_count/models/lacour/lacour.dart';
 import 'package:kingdomino_score_count/widgets/kingdomino_app_bar.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:provider/provider.dart';
 
 import '../models/age_of_giants.dart';
 import '../models/extension.dart';
@@ -240,25 +241,32 @@ class KingdominoWidgetState extends State<KingdominoWidget> {
                             context.read<ScoreCubit>().state.score.toString()),
                         onTap: () => showDialog<void>(
                               context: context,
-                              builder: (BuildContext dialogContext) {
-                                return AlertDialog(
-                                  shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(20.0))),
-                                  content: ScoreDetailsWidget(
-                                      groupScore: groupScore,
-                                      quests: selectedQuests,
-                                      getExtension: getExtension),
-                                  actions: <Widget>[
-                                    TextButton(
-                                      child: const Icon(Icons.done),
-                                      onPressed: () {
-                                        Navigator.of(dialogContext).pop();
-                                      },
-                                    ),
-                                  ],
-                                );
-                              },
+                              builder: (BuildContext dialogContext) =>
+                                  Provider.value(
+                                      value: Provider.of<ScoreCubit>(context,
+                                          listen: false),
+                                      child: Provider.value(
+                                          value: Provider.of<KingdomCubit>(
+                                              context,
+                                              listen: false),
+                                          child: AlertDialog(
+                                            shape: const RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(20.0))),
+                                            content: ScoreDetailsWidget(
+                                                groupScore: groupScore,
+                                                quests: selectedQuests,
+                                                getExtension: getExtension),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                child: const Icon(Icons.done),
+                                                onPressed: () {
+                                                  Navigator.of(dialogContext)
+                                                      .pop();
+                                                },
+                                              ),
+                                            ],
+                                          ))),
                             ))),
               )
             ]);

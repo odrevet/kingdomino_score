@@ -189,7 +189,7 @@ class _BottomBarState extends State<BottomBar> {
 
     return GestureDetector(
         onTap: () => _onSelectGiant(),
-        onLongPress: () => showDialog<void>(
+        /*onLongPress: () => showDialog<void>(
               context: context,
               builder: (BuildContext context) {
                 return AlertDialog(
@@ -214,7 +214,7 @@ class _BottomBarState extends State<BottomBar> {
                   ],
                 );
               },
-            ),
+            ),*/
         child: Container(
           margin: const EdgeInsets.all(5.0),
           height: _buttonSize,

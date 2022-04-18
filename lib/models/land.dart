@@ -13,26 +13,26 @@ class Land {
   int giants;
 
   // La cour extension
-  CourtierType? courtierType;
+  Courtier? courtier;
   bool hasResource;
 
   Land(
       {this.landType,
       this.crowns = 0,
-      this.courtierType,
+      this.courtier,
       this.hasResource = false,
       this.giants = 0});
 
   Land copyWith(
       {LandType? landType,
       int? crowns,
-      CourtierType? courtierType,
+      Courtier? courtier,
       bool? hasResource,
       int? giants}) {
     return Land(
         landType: landType ?? this.landType,
         crowns: crowns ?? this.crowns,
-        courtierType: courtierType ?? this.courtierType,
+        courtier: courtier ?? this.courtier,
         hasResource: hasResource ?? this.hasResource,
         giants: giants ?? this.giants);
   }
@@ -42,7 +42,7 @@ class Land {
     crowns = 0;
     giants = 0;
     hasResource = false;
-    courtierType = null;
+    courtier = null;
   }
 
   /// count crowns minus the number of giants

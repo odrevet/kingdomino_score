@@ -15,7 +15,7 @@ import 'land_tile.dart';
 class KingdomWidget extends StatefulWidget {
   final Function getSelectionMode;
   final Function getSelectedLandType;
-  final Function getSelectedCourtierType;
+  final Function getSelectedcourtier;
   final Function getGameSet;
   final Function calculateScore;
   final Kingdom kingdom;
@@ -23,7 +23,7 @@ class KingdomWidget extends StatefulWidget {
   const KingdomWidget(
       {required this.getSelectionMode,
       required this.getSelectedLandType,
-      required this.getSelectedCourtierType,
+      required this.getSelectedcourtier,
       required this.getGameSet,
       required this.calculateScore,
       required this.kingdom,
@@ -47,13 +47,13 @@ class _KingdomWidgetState extends State<KingdomWidget> {
     Widget? child;
     if (land.landType == LandType.castle) {
       child = CastleTile(context.read<ThemeCubit>().state);
-    } else if (land.courtierType != null) {
+    } else if (land.courtier != null) {
       child = LandTile(
           landType: land.landType,
           child: Padding(
             padding: const EdgeInsets.all(10.0),
-            child:
-                Image(image: AssetImage(courtierPicture[land.courtierType]!)),
+            child: Image(
+                image: AssetImage(courtierPicture[land.courtier.runtimeType]!)),
           ));
     } else {
       if (land.crowns > 0) {
@@ -122,7 +122,7 @@ class _KingdomWidgetState extends State<KingdomWidget> {
               selectedLandType,
               widget.getSelectionMode,
               widget.getGameSet,
-              widget.getSelectedCourtierType);
+              widget.getSelectedcourtier);
           widget.calculateScore(context.read<KingdomCubit>().state);
         }
       },

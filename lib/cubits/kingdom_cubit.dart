@@ -2,7 +2,6 @@ import 'package:kingdomino_score_count/models/land.dart';
 import 'package:replay_bloc/replay_bloc.dart';
 
 import '../models/kingdom.dart';
-import '../models/lacour/lacour.dart';
 import '../models/selection_mode.dart';
 
 class KingdomCubit extends ReplayCubit<Kingdom> {
@@ -13,7 +12,7 @@ class KingdomCubit extends ReplayCubit<Kingdom> {
   resize(int size) => emit(Kingdom(size: size));
 
   setLand(int y, int x, selectedLandType, getSelectionMode, getGameSet,
-      getSelectedCourtierType) {
+      getSelectedcourtier) {
     var kingdom = Kingdom(size: state.size);
     for (var x = 0; x < state.size; x++) {
       for (var y = 0; y < state.size; y++) {
@@ -31,7 +30,7 @@ class KingdomCubit extends ReplayCubit<Kingdom> {
       case SelectionMode.crown:
         if (land!.landType == LandType.castle || land.landType == null) break;
         land.crowns++;
-        land.courtierType = null;
+        land.courtier = null;
         if (land.crowns > getGameSet()[land.landType]['crowns']['max']) {
           land.reset();
         }
@@ -62,23 +61,23 @@ class KingdomCubit extends ReplayCubit<Kingdom> {
           LandType.mine,
           LandType.swamp
         ].contains(land!.landType)) {
-          CourtierType courtierType = getSelectedCourtierType();
-          if (land.courtierType == courtierType) {
-            land.courtierType = null;
+          var courtier = getSelectedcourtier();
+          if (land.courtier == courtier) {
+            land.courtier = null;
             break;
           }
 
           //remove same courtier type, if any
           for (var cx = 0; cx < kingdom.size; cx++) {
             for (var cy = 0; cy < kingdom.size; cy++) {
-              if (kingdom.getLand(cx, cy)?.courtierType == courtierType) {
-                kingdom.getLand(cx, cy)?.courtierType = null;
+              if (kingdom.getLand(cx, cy)?.courtier == courtier) {
+                kingdom.getLand(cx, cy)?.courtier = null;
               }
             }
           }
 
           land.reset();
-          land.courtierType = courtierType;
+          land.courtier = courtier;
         }
         break;
       case SelectionMode.resource:

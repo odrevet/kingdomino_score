@@ -14,12 +14,8 @@ class Captain extends Courtier {
   bool _checkLand(Land? land) {
     if (land == null) return false;
 
-    return [
-      CourtierType.axeWarrior,
-      CourtierType.heavyArchery,
-      CourtierType.lightArchery,
-      CourtierType.swordWarrior
-    ].contains(land.courtierType);
+    return [AxeWarrior(), HeavyArchery(), LightArchery(), SwordWarrior()]
+        .contains(land.courtier);
   }
 
   @override

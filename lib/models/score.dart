@@ -37,46 +37,9 @@ class Score {
     int scoreOfLacour = 0;
     for (int y = 0; y < kingdom.size; y++) {
       for (int x = 0; x < kingdom.size; x++) {
-        CourtierType? courtierType = kingdom.getLand(x, y)?.courtierType;
-        if (courtierType != null) {
-          switch (courtierType) {
-            case CourtierType.farmer:
-              scoreOfLacour += Farmer().getPoints(kingdom, x, y);
-              break;
-            case CourtierType.banker:
-              scoreOfLacour += Banker().getPoints(kingdom, x, y);
-              break;
-            case CourtierType.lumberjack:
-              scoreOfLacour += Lumberjack().getPoints(kingdom, x, y);
-              break;
-            case CourtierType.lightArchery:
-              scoreOfLacour += LightArchery().getPoints(kingdom, x, y);
-              break;
-            case CourtierType.fisherman:
-              scoreOfLacour += Fisherman().getPoints(kingdom, x, y);
-              break;
-            case CourtierType.heavyArchery:
-              scoreOfLacour += HeavyArchery().getPoints(kingdom, x, y);
-              break;
-            case CourtierType.shepherdess:
-              scoreOfLacour += Shepherdess().getPoints(kingdom, x, y);
-              break;
-            case CourtierType.captain:
-              scoreOfLacour += Captain().getPoints(kingdom, x, y);
-              break;
-            case CourtierType.axeWarrior:
-              scoreOfLacour += AxeWarrior().getPoints(kingdom, x, y);
-              break;
-            case CourtierType.swordWarrior:
-              scoreOfLacour += SwordWarrior().getPoints(kingdom, x, y);
-              break;
-            case CourtierType.king:
-              scoreOfLacour += King().getPoints(kingdom, x, y);
-              break;
-            case CourtierType.queen:
-              scoreOfLacour += Queen().getPoints(kingdom, x, y);
-              break;
-          }
+        Courtier? courtier = kingdom.getLand(x, y)?.courtier;
+        if (courtier != null) {
+          scoreOfLacour += courtier.getPoints(kingdom, x, y);
         }
       }
     }

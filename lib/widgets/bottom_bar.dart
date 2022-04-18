@@ -20,8 +20,8 @@ class BottomBar extends StatefulWidget {
   final Function setSelectionMode;
   final Function getSelectedLandType;
   final Function setSelectedLandType;
-  final Function getSelectedCourtierType;
-  final Function setSelectedCourtierType;
+  final Function getSelectedcourtier;
+  final Function setSelectedcourtier;
   final Function getExtension;
   final AutoSizeGroup groupScore;
   final HashSet<QuestType> quests;
@@ -31,8 +31,8 @@ class BottomBar extends StatefulWidget {
       required this.setSelectionMode,
       required this.getSelectedLandType,
       required this.setSelectedLandType,
-      required this.getSelectedCourtierType,
-      required this.setSelectedCourtierType,
+      required this.getSelectedcourtier,
+      required this.setSelectedcourtier,
       required this.getExtension,
       required this.quests,
       required this.groupScore,
@@ -75,7 +75,20 @@ class _BottomBarState extends State<BottomBar> {
     } else if (widget.getExtension() == Extension.laCour) {
       kingdomEditorWidgets.add(resourceButton());
 
-      for (var element in CourtierType.values) {
+      for (var element in [
+        Farmer(),
+        Banker(),
+        AxeWarrior(),
+        Captain(),
+        Fisherman(),
+        HeavyArchery(),
+        King(),
+        LightArchery(),
+        Lumberjack(),
+        Queen(),
+        Shepherdess(),
+        SwordWarrior()
+      ]) {
         kingdomEditorWidgets.add(courtierButton(element));
       }
     }
@@ -121,12 +134,12 @@ class _BottomBarState extends State<BottomBar> {
             child: Image.asset('assets/lacour/resource.png')));
   }
 
-  Widget courtierButton(CourtierType courtierType) {
+  Widget courtierButton(Courtier courtier) {
     var isSelected = widget.getSelectionMode() == SelectionMode.courtier &&
-        widget.getSelectedCourtierType() == courtierType;
+        widget.getSelectedcourtier() == courtier;
 
     return GestureDetector(
-        onTap: () => _onSelectCourtierType(courtierType),
+        onTap: () => _onSelectcourtier(courtier),
         child: Container(
             margin: const EdgeInsets.all(5.0),
             height: _buttonSize,
@@ -136,7 +149,7 @@ class _BottomBarState extends State<BottomBar> {
             child: Image(
                 height: 50,
                 width: 50,
-                image: AssetImage(courtierPicture[courtierType]!))));
+                image: AssetImage(courtierPicture[courtier.runtimeType]!))));
   }
 
   Widget castleButton() {
@@ -228,9 +241,9 @@ class _BottomBarState extends State<BottomBar> {
     }
   }
 
-  void _onSelectCourtierType(CourtierType selectedType) {
+  void _onSelectcourtier(Courtier courtier) {
     setState(() {
-      widget.setSelectedCourtierType(selectedType);
+      widget.setSelectedcourtier(courtier);
       widget.setSelectionMode(SelectionMode.courtier);
     });
   }

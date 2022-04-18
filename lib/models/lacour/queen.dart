@@ -12,7 +12,7 @@ class Queen extends Courtier {
   Queen._internal();
 
   bool _checkLand(Land land) {
-    return land.courtierType != null;
+    return land.courtier != null;
   }
 
   @override

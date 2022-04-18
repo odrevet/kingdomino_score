@@ -39,7 +39,7 @@ class KingdominoWidget extends StatefulWidget {
 
 class KingdominoWidgetState extends State<KingdominoWidget> {
   LandType? selectedLandType;
-  CourtierType? selectedCourtierType;
+  Courtier? selectedcourtier;
   SelectionMode selectionMode = SelectionMode.land;
   var groupScore = AutoSizeGroup();
 
@@ -85,11 +85,11 @@ class KingdominoWidgetState extends State<KingdominoWidget> {
     });
   }
 
-  CourtierType? getSelectedCourtierType() => selectedCourtierType;
+  Courtier? getSelectedcourtier() => selectedcourtier;
 
-  setSelectedCourtierType(CourtierType courtiertype) {
+  setSelectedcourtier(Courtier courtier) {
     setState(() {
-      selectedCourtierType = courtiertype;
+      selectedcourtier = courtier;
     });
   }
 
@@ -197,7 +197,7 @@ class KingdominoWidgetState extends State<KingdominoWidget> {
 
         kingdom.getLands().expand((i) => i).toList().forEach((land) {
           land.hasResource = false;
-          land.courtierType = null;
+          land.courtier = null;
         });
 
         kingdom.getLands().expand((i) => i).toList().forEach((land) {
@@ -250,7 +250,7 @@ class KingdominoWidgetState extends State<KingdominoWidget> {
               KingdomWidget(
                   getSelectionMode: getSelectionMode,
                   getSelectedLandType: getSelectedLandType,
-                  getSelectedCourtierType: getSelectedCourtierType,
+                  getSelectedcourtier: getSelectedcourtier,
                   getGameSet: getGameSet,
                   calculateScore: calculateScore,
                   kingdom: kingdom),
@@ -301,7 +301,7 @@ class KingdominoWidgetState extends State<KingdominoWidget> {
               KingdomWidget(
                   getSelectionMode: getSelectionMode,
                   getSelectedLandType: getSelectedLandType,
-                  getSelectedCourtierType: getSelectedCourtierType,
+                  getSelectedcourtier: getSelectedcourtier,
                   getGameSet: getGameSet,
                   calculateScore: calculateScore,
                   kingdom: kingdom),
@@ -332,8 +332,8 @@ class KingdominoWidgetState extends State<KingdominoWidget> {
                   setSelectionMode: setSelectionMode,
                   getSelectedLandType: getSelectedLandType,
                   setSelectedLandType: setSelectedLandType,
-                  getSelectedCourtierType: getSelectedCourtierType,
-                  setSelectedCourtierType: setSelectedCourtierType,
+                  getSelectedcourtier: getSelectedcourtier,
+                  setSelectedcourtier: setSelectedcourtier,
                   getExtension: getExtension,
                   quests: selectedQuests,
                   groupScore: groupScore,

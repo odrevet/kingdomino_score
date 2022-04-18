@@ -1,3 +1,16 @@
+import 'package:kingdomino_score_count/models/lacour/axe_warrior.dart';
+import 'package:kingdomino_score_count/models/lacour/banker.dart';
+import 'package:kingdomino_score_count/models/lacour/captain.dart';
+import 'package:kingdomino_score_count/models/lacour/farmer.dart';
+import 'package:kingdomino_score_count/models/lacour/fisherman.dart';
+import 'package:kingdomino_score_count/models/lacour/heavy_archery.dart';
+import 'package:kingdomino_score_count/models/lacour/king.dart';
+import 'package:kingdomino_score_count/models/lacour/light_archery.dart';
+import 'package:kingdomino_score_count/models/lacour/lumberjack.dart';
+import 'package:kingdomino_score_count/models/lacour/queen.dart';
+import 'package:kingdomino_score_count/models/lacour/shepherdess.dart';
+import 'package:kingdomino_score_count/models/lacour/sword_warrior.dart';
+
 import '../kingdom.dart';
 import '../land.dart';
 
@@ -45,34 +58,19 @@ const Map<LandType, Map<String, dynamic>> laCourGameSet = {
   }
 };
 
-enum CourtierType {
-  farmer,
-  banker,
-  lumberjack,
-  lightArchery,
-  fisherman,
-  heavyArchery,
-  shepherdess,
-  captain,
-  axeWarrior,
-  swordWarrior,
-  king,
-  queen
-}
-
-Map<CourtierType, String> courtierPicture = {
-  CourtierType.farmer: 'assets/lacour/farmer.png',
-  CourtierType.banker: 'assets/lacour/banker.png',
-  CourtierType.lumberjack: 'assets/lacour/lumberjack.png',
-  CourtierType.lightArchery: 'assets/lacour/light_archery.png',
-  CourtierType.fisherman: 'assets/lacour/fisherman.png',
-  CourtierType.heavyArchery: 'assets/lacour/heavy_archery.png',
-  CourtierType.shepherdess: 'assets/lacour/shepherdess.png',
-  CourtierType.captain: 'assets/lacour/captain.png',
-  CourtierType.axeWarrior: 'assets/lacour/axe_warrior.png',
-  CourtierType.swordWarrior: 'assets/lacour/sword_warrior.png',
-  CourtierType.king: 'assets/lacour/king.png',
-  CourtierType.queen: 'assets/lacour/queen.png',
+Map<Type, String> courtierPicture = {
+  Farmer: 'assets/lacour/farmer.png',
+  Banker: 'assets/lacour/banker.png',
+  Lumberjack: 'assets/lacour/lumberjack.png',
+  LightArchery: 'assets/lacour/light_archery.png',
+  Fisherman: 'assets/lacour/fisherman.png',
+  HeavyArchery: 'assets/lacour/heavy_archery.png',
+  Shepherdess: 'assets/lacour/shepherdess.png',
+  Captain: 'assets/lacour/captain.png',
+  AxeWarrior: 'assets/lacour/axe_warrior.png',
+  SwordWarrior: 'assets/lacour/sword_warrior.png',
+  King: 'assets/lacour/king.png',
+  Queen: 'assets/lacour/queen.png',
 };
 
 abstract class Courtier {

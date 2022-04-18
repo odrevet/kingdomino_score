@@ -17,6 +17,7 @@ import '../models/king_colors.dart';
 import '../models/kingdom.dart';
 import '../models/land.dart' show LandType;
 import '../models/quests/quest.dart';
+import '../models/selectionMode.dart';
 import '../models/warning.dart';
 import 'bottom_bar.dart';
 import 'kingdom_widget.dart';
@@ -25,8 +26,6 @@ import 'score_details_widget.dart';
 const String crown = '\u{1F451}';
 const String castle = '\u{1F3F0}';
 final String square = '\u{25A0}';
-
-enum SelectionMode { land, crown, castle, giant, courtier, resource }
 
 class KingdominoWidget extends StatefulWidget {
   KingdominoWidget({

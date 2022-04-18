@@ -7,6 +7,7 @@ import '../models/age_of_giants.dart';
 import '../models/kingdom.dart';
 import '../models/lacour/lacour.dart';
 import '../models/land.dart';
+import '../models/selectionMode.dart';
 import 'castle_widget.dart';
 import 'kingdomino_widget.dart';
 

@@ -24,14 +24,20 @@ class WarningsWidget extends StatelessWidget {
               child: AutoSizeText(warning.leftOperand.toString(),
                   maxLines: 1, group: groupWarning))));
 
-      tableCells.add(TableCell(
-          child: Align(
-              alignment: Alignment.center,
-              child: AutoSizeText(square,
-                  maxLines: 1,
-                  group: groupWarning,
-                  style: TextStyle(
-                      color: getColorForLandType(warning.landType))))));
+      tableCells.add(warning.landType == LandType.castle
+          ? TableCell(
+              child: Align(
+                  alignment: Alignment.center,
+                  child:
+                      AutoSizeText(castle, maxLines: 1, group: groupWarning)))
+          : TableCell(
+              child: Align(
+                  alignment: Alignment.center,
+                  child: AutoSizeText(square,
+                      maxLines: 1,
+                      group: groupWarning,
+                      style: TextStyle(
+                          color: getColorForLandType(warning.landType))))));
 
       tableCells.add(TableCell(
           child: Align(

@@ -16,12 +16,12 @@ class KingdominoAppBar extends StatelessWidget with PreferredSizeWidget {
   @override
   final Size preferredSize;
 
-  final getExtension;
+  final Function getExtension;
   final String dropdownSelectedExtension;
   final void Function(Kingdom, String?) onExtensionSelect;
   final void Function(Kingdom) calculateScore;
-  final getSelectedQuests;
-  final onKingdomClear;
+  final Function getSelectedQuests;
+  final Function onKingdomClear;
   final warnings;
   final packageInfo;
 

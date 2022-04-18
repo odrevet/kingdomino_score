@@ -20,7 +20,7 @@ import '../models/quests/quest.dart';
 import '../models/selection_mode.dart';
 import '../models/warning.dart';
 import 'bottom_bar.dart';
-import 'kingdom_widget.dart';
+import 'kingdom_tile.dart';
 import 'score_details_widget.dart';
 
 const String crown = '\u{1F451}';
@@ -92,7 +92,7 @@ class KingdominoWidgetState extends State<KingdominoWidget> {
     });
   }
 
-  setExtension(Extension extension) {
+  setExtension(Extension? extension) {
     setState(() {
       extension = extension;
     });
@@ -190,7 +190,7 @@ class KingdominoWidgetState extends State<KingdominoWidget> {
 
         switch (newValue) {
           case '':
-            extension = null;
+            setExtension(null);
             setSelectionMode(SelectionMode.land);
             kingColors.remove(Colors.brown.shade800);
             if (context.read<ThemeCubit>().state == Colors.brown.shade800) {
@@ -231,7 +231,7 @@ class KingdominoWidgetState extends State<KingdominoWidget> {
             builder: (orientationBuilderContext, orientation) {
           if (orientation == Orientation.portrait) {
             return Column(children: <Widget>[
-              KingdomWidget(
+              KingdomTile(
                   getSelectionMode: getSelectionMode,
                   getSelectedLandType: getSelectedLandType,
                   getSelectedCourtierType: getSelectedCourtierType,
@@ -275,7 +275,7 @@ class KingdominoWidgetState extends State<KingdominoWidget> {
                       groupScore: groupScore,
                       quests: selectedQuests,
                       getExtension: getExtension)),
-              KingdomWidget(
+              KingdomTile(
                   getSelectionMode: getSelectionMode,
                   getSelectedLandType: getSelectedLandType,
                   getSelectedCourtierType: getSelectedCourtierType,

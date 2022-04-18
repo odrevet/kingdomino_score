@@ -11,7 +11,7 @@ import '../models/selection_mode.dart';
 import 'castle_widget.dart';
 import 'kingdomino_widget.dart';
 
-class KingdomWidget extends StatefulWidget {
+class KingdomTile extends StatefulWidget {
   final Function getSelectionMode;
   final Function getSelectedLandType;
   final Function getSelectedCourtierType;
@@ -19,7 +19,7 @@ class KingdomWidget extends StatefulWidget {
   final Function calculateScore;
   final Kingdom kingdom;
 
-  const KingdomWidget(
+  const KingdomTile(
       {required this.getSelectionMode,
       required this.getSelectedLandType,
       required this.getSelectedCourtierType,
@@ -30,11 +30,11 @@ class KingdomWidget extends StatefulWidget {
       : super(key: key);
 
   @override
-  _KingdomWidgetState createState() => _KingdomWidgetState();
+  _KingdomTileState createState() => _KingdomTileState();
 }
 
-class _KingdomWidgetState extends State<KingdomWidget> {
-  _KingdomWidgetState();
+class _KingdomTileState extends State<KingdomTile> {
+  _KingdomTileState();
 
   Widget _buildLand(int y, int x) {
     Land? land = widget.kingdom.getLand(x, y);

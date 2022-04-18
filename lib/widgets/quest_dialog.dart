@@ -64,7 +64,6 @@ class _QuestDialogOptionState extends State<_QuestDialogOption> {
         });
         context.read<ScoreCubit>().calculate(context.read<KingdomCubit>().state,
             null, widget.getSelectedQuests()); //TODO getExtension
-        //this.updateScores();
       },
     );
   }
@@ -90,6 +89,8 @@ class _QuestDialogWidgetState extends State<QuestDialogWidget> {
   @override
   build(BuildContext context) {
     var options = <Widget>[];
+
+    print(widget.getExtension());
 
     if (widget.getExtension() == Extension.ageOfGiants) {
       questPicture.forEach((type, picture) {

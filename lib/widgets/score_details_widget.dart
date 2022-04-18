@@ -13,7 +13,9 @@ class ScoreDetailsWidget extends StatelessWidget {
   final quests;
   final getExtension;
 
-  ScoreDetailsWidget({this.groupScore, this.quests, this.getExtension});
+  const ScoreDetailsWidget(
+      {this.groupScore, this.quests, this.getExtension, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

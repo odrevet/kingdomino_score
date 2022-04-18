@@ -14,7 +14,7 @@ class _QuestDialogOption extends StatefulWidget {
   final QuestType questType;
   final Widget svg;
 
-  _QuestDialogOption(
+  const _QuestDialogOption(
       this.questType, this.svg, this.getSelectedQuests, this.updateScores);
 
   @override
@@ -76,7 +76,9 @@ class QuestDialogWidget extends StatefulWidget {
   final getExtension;
 
   const QuestDialogWidget(
-      this.getSelectedQuests, this.updateScores, this.getExtension);
+      this.getSelectedQuests, this.updateScores, this.getExtension,
+      {Key? key})
+      : super(key: key);
 
   @override
   _QuestDialogWidgetState createState() => _QuestDialogWidgetState();

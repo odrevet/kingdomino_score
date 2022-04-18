@@ -9,7 +9,7 @@ class WarningsWidget extends StatelessWidget {
   final List<Warning>? warnings;
   final groupWarning = AutoSizeGroup();
 
-  WarningsWidget({this.warnings});
+  WarningsWidget({this.warnings, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

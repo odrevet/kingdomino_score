@@ -3,7 +3,7 @@ import 'package:replay_bloc/replay_bloc.dart';
 
 import '../models/kingdom.dart';
 import '../models/lacour/lacour.dart';
-import '../models/selectionMode.dart';
+import '../models/selection_mode.dart';
 
 class KingdomCubit extends ReplayCubit<Kingdom> {
   KingdomCubit() : super(Kingdom(size: 5));

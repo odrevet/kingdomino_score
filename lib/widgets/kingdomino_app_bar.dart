@@ -124,7 +124,7 @@ I will not use or share your information with anyone : Kingdomino Score works of
             position: BadgePosition.topEnd(top: 1, end: 5),
             badgeContent: Text(warnings.length.toString()),
             child: IconButton(
-                icon: Icon(Icons.warning),
+                icon: const Icon(Icons.warning),
                 onPressed: () => showDialog<void>(
                       context: context,
                       builder: (BuildContext context) {
@@ -132,7 +132,7 @@ I will not use or share your information with anyone : Kingdomino Score works of
                           shape: const RoundedRectangleBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(20.0))),
-                          content: WarningsWidget(warnings: this.warnings),
+                          content: WarningsWidget(warnings: warnings),
                           actions: <Widget>[
                             TextButton(
                               child: const Icon(

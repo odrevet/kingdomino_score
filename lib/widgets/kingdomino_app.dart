@@ -7,6 +7,8 @@ import 'package:kingdomino_score_count/cubits/theme_cubit.dart';
 import 'kingdomino_widget.dart';
 
 class KingdominoApp extends StatelessWidget {
+  const KingdominoApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -20,7 +22,7 @@ class KingdominoApp extends StatelessWidget {
                 fontFamily: 'HammersmithOne',
                 dialogTheme: DialogTheme(
                     backgroundColor: color.shade100,
-                    contentTextStyle: TextStyle(color: Colors.black))),
+                    contentTextStyle: const TextStyle(color: Colors.black))),
             home: MultiBlocProvider(providers: [
               BlocProvider<ScoreCubit>(
                 create: (BuildContext context) => ScoreCubit(),
@@ -28,7 +30,7 @@ class KingdominoApp extends StatelessWidget {
               BlocProvider<KingdomCubit>(
                 create: (BuildContext context) => KingdomCubit(),
               ),
-            ], child: KingdominoWidget())),
+            ], child: const KingdominoWidget())),
       ),
     );
   }

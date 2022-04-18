@@ -7,7 +7,7 @@ import '../models/age_of_giants.dart';
 import '../models/kingdom.dart';
 import '../models/lacour/lacour.dart';
 import '../models/land.dart';
-import '../models/selectionMode.dart';
+import '../models/selection_mode.dart';
 import 'castle_widget.dart';
 import 'kingdomino_widget.dart';
 
@@ -38,9 +38,7 @@ class _KingdomWidgetState extends State<KingdomWidget> {
     Land? land = widget.kingdom.getLand(x, y);
 
     if (land == null) {
-      return Container(
-        child: Text('ERROR $x $y'),
-      );
+      return Text('ERROR $x $y');
     }
 
     Widget? child;
@@ -49,7 +47,7 @@ class _KingdomWidgetState extends State<KingdomWidget> {
     } else if (land.courtierType != null) {
       child = Container(
         padding: const EdgeInsets.all(10.0),
-        decoration: new BoxDecoration(
+        decoration: BoxDecoration(
           color: getColorForLandType(land.landType),
         ),
         child: Image(image: AssetImage(courtierPicture[land.courtierType]!)),

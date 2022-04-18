@@ -86,7 +86,7 @@ class Score {
 
   int calculateQuestScore(HashSet<QuestType> selectedQuests, Kingdom kingdom) {
     int scoreQuest = 0;
-    selectedQuests.forEach((selectedQuest) {
+    for (var selectedQuest in selectedQuests) {
       switch (selectedQuest) {
         case QuestType.harmony:
           {
@@ -158,11 +158,6 @@ class Score {
             scoreQuest += LocalBusiness(LandType.grassland).getPoints(kingdom);
           }
           break;
-        case QuestType.localBusinessGrassLand:
-          {
-            scoreQuest += LocalBusiness(LandType.grassland).getPoints(kingdom);
-          }
-          break;
         case QuestType.localBusinessSwamp:
           {
             scoreQuest += LocalBusiness(LandType.swamp).getPoints(kingdom);
@@ -179,7 +174,7 @@ class Score {
           }
           break;
       }
-    });
+    }
     return scoreQuest;
   }
 

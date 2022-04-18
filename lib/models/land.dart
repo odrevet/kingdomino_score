@@ -99,4 +99,3 @@ Color getColorForLandType(LandType? type) {
 
   return color;
 }
-

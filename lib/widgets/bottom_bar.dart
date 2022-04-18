@@ -12,13 +12,13 @@ import 'giant_details_widget.dart';
 import 'kingdomino_widget.dart';
 
 class BottomBar extends StatefulWidget {
-  final getSelectionMode;
-  final setSelectionMode;
-  final getSelectedLandType;
-  final setSelectedLandType;
-  final getSelectedCourtierType;
-  final setSelectedCourtierType;
-  final getExtension;
+  final Function getSelectionMode;
+  final Function setSelectionMode;
+  final Function getSelectedLandType;
+  final Function setSelectedLandType;
+  final Function getSelectedCourtierType;
+  final Function setSelectedCourtierType;
+  final Function getExtension;
   final groupScore;
   final quests;
 

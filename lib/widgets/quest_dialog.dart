@@ -9,8 +9,8 @@ import 'package:kingdomino_score_count/models/quests/quest.dart';
 import '../cubits/score_cubit.dart';
 
 class _QuestDialogOption extends StatefulWidget {
-  final getSelectedQuests;
-  final updateScores;
+  final Function getSelectedQuests;
+  final Function updateScores;
   final QuestType questType;
   final Widget svg;
 
@@ -71,9 +71,9 @@ class _QuestDialogOptionState extends State<_QuestDialogOption> {
 }
 
 class QuestDialogWidget extends StatefulWidget {
-  final getSelectedQuests;
-  final updateScores;
-  final getExtension;
+  final Function getSelectedQuests;
+  final Function updateScores;
+  final Function getExtension;
 
   const QuestDialogWidget(
       this.getSelectedQuests, this.updateScores, this.getExtension,

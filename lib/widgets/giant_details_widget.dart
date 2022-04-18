@@ -16,7 +16,11 @@ class GiantsDetailsWidget extends StatelessWidget {
   final score;
 
   const GiantsDetailsWidget(
-      {this.groupScore, this.quests, this.scoreOfQuest, this.score, Key? key})
+      {this.groupScore,
+      this.quests,
+      required this.scoreOfQuest,
+      required this.score,
+      Key? key})
       : super(key: key);
 
   @override

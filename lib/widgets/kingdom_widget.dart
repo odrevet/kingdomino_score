@@ -12,22 +12,22 @@ import 'castle_widget.dart';
 import 'kingdomino_widget.dart';
 
 class KingdomWidget extends StatefulWidget {
+  final Function getSelectionMode;
+  final Function getSelectedLandType;
+  final Function getSelectedCourtierType;
+  final Function getGameSet;
+  final Function calculateScore;
+  final Kingdom kingdom;
+
   const KingdomWidget(
-      {required Function this.getSelectionMode,
-      required Function this.getSelectedLandType,
-      required Function this.getSelectedCourtierType,
-      required Function this.getGameSet,
-      required Function this.calculateScore,
-      required Kingdom this.kingdom,
+      {required this.getSelectionMode,
+      required this.getSelectedLandType,
+      required this.getSelectedCourtierType,
+      required this.getGameSet,
+      required this.calculateScore,
+      required this.kingdom,
       Key? key})
       : super(key: key);
-
-  final getSelectionMode;
-  final getSelectedLandType;
-  final getSelectedCourtierType;
-  final getGameSet;
-  final calculateScore;
-  final kingdom;
 
   @override
   _KingdomWidgetState createState() => _KingdomWidgetState();

@@ -11,10 +11,13 @@ import 'kingdomino_widget.dart';
 class ScoreDetailsWidget extends StatelessWidget {
   final groupScore;
   final quests;
-  final getExtension;
+  final Function getExtension;
 
   const ScoreDetailsWidget(
-      {this.groupScore, this.quests, this.getExtension, Key? key})
+      {required this.groupScore,
+      required this.quests,
+      required this.getExtension,
+      Key? key})
       : super(key: key);
 
   @override

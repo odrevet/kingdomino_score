@@ -20,8 +20,8 @@ class Kingdom {
     if (lands == null) {
       var landsCopy = [];
       for (var i = 0; i < this.size; i++) {
-        landsCopy.add(List<Land>.generate(
-            this.size, (j) => this.getLand(j, i)!.copyWith()));
+        landsCopy.add(
+            List<Land>.generate(this.size, (j) => getLand(j, i)!.copyWith()));
       }
     }
     return Kingdom(size: size ?? this.size, lands: lands ?? this.lands);
@@ -32,7 +32,7 @@ class Kingdom {
   }
 
   Land? getLand(int y, int x) {
-    if (y < 0 || x < 0 || x > this.size || y > this.size) {
+    if (y < 0 || x < 0 || x > size || y > size) {
       return null;
     }
 
@@ -41,9 +41,9 @@ class Kingdom {
 
   void reSize(int size) {
     this.size = size;
-    this.lands = [];
+    lands = [];
     for (var i = 0; i < size; i++) {
-      this.lands.add(List<Land>.generate(size, (_) => Land()));
+      lands.add(List<Land>.generate(size, (_) => Land()));
     }
   }
 
@@ -118,8 +118,9 @@ class Kingdom {
 
   int calculateScoreFromProperties(List<Property> properties) {
     int score = 0;
-    properties.forEach(
-        (property) => score += property.landCount * property.crownCount);
+    for (var property in properties) {
+      score += property.landCount * property.crownCount;
+    }
     return score;
   }
 

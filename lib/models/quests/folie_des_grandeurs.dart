@@ -13,25 +13,24 @@ class CrownAlignment {
   CrownAlignment(this.y0, this.x0, this.y1, this.x1, this.y2, this.x2);
 
   @override
-  bool operator ==(dynamic other) =>
-      ((this.x0 == other.x0 && this.y0 == other.y0) &&
-          (this.x1 == other.x1 && this.y1 == other.y1) &&
-          (this.x2 == other.x2 && this.y2 == other.y2));
+  bool operator ==(dynamic other) => ((x0 == other.x0 && y0 == other.y0) &&
+      (x1 == other.x1 && y1 == other.y1) &&
+      (x2 == other.x2 && y2 == other.y2));
 
   bool cross(CrownAlignment other) {
-    return ((this.x0 == other.x0 && this.y0 == other.y0) ||
-        (this.x1 == other.x0 && this.y1 == other.y0) ||
-        (this.x2 == other.x0 && this.y2 == other.y0) ||
-        (this.x0 == other.x1 && this.y0 == other.y1) ||
-        (this.x1 == other.x1 && this.y1 == other.y1) ||
-        (this.x2 == other.x1 && this.y2 == other.y1) ||
-        (this.x0 == other.x2 && this.y0 == other.y2) ||
-        (this.x1 == other.x2 && this.y1 == other.y2) ||
-        (this.x2 == other.x2 && this.y2 == other.y2));
+    return ((x0 == other.x0 && y0 == other.y0) ||
+        (x1 == other.x0 && y1 == other.y0) ||
+        (x2 == other.x0 && y2 == other.y0) ||
+        (x0 == other.x1 && y0 == other.y1) ||
+        (x1 == other.x1 && y1 == other.y1) ||
+        (x2 == other.x1 && y2 == other.y1) ||
+        (x0 == other.x2 && y0 == other.y2) ||
+        (x1 == other.x2 && y1 == other.y2) ||
+        (x2 == other.x2 && y2 == other.y2));
   }
 
   String toString() {
-    return '[${this.x0}:${this.y0} ${this.x1}:${this.y1} ${this.x2}:${this.y2}]';
+    return '[$x0:$y0 $x1:$y1 $x2:$y2]';
   }
 }
 
@@ -105,12 +104,15 @@ class FolieDesGrandeurs extends Quest {
   int _countSharedSquare(
       List<List<int>> placedAlignments, CrownAlignment crownAlignment) {
     int sharedSquareCount = 0;
-    if (placedAlignments[crownAlignment.x0][crownAlignment.y0] > 1)
+    if (placedAlignments[crownAlignment.x0][crownAlignment.y0] > 1) {
       sharedSquareCount++;
-    if (placedAlignments[crownAlignment.x1][crownAlignment.y1] > 1)
+    }
+    if (placedAlignments[crownAlignment.x1][crownAlignment.y1] > 1) {
       sharedSquareCount++;
-    if (placedAlignments[crownAlignment.x2][crownAlignment.y2] > 1)
+    }
+    if (placedAlignments[crownAlignment.x2][crownAlignment.y2] > 1) {
       sharedSquareCount++;
+    }
 
     return sharedSquareCount;
   }
@@ -169,9 +171,9 @@ class FolieDesGrandeurs extends Quest {
     //more than one square when the said alignment would be place
     List<CrownAlignment> resultAlignments = [];
 
-    crownAlignments.forEach((crownAlignment) {
+    for (var crownAlignment in crownAlignments) {
       _alignmentAdd(crownAlignment, resultAlignments, placedAlignments);
-    });
+    }
 
     return resultAlignments.length;
   }

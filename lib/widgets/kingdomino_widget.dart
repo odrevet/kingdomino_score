@@ -113,9 +113,9 @@ class KingdominoWidgetState extends State<KingdominoWidget> {
   }
 
   Map<LandType, Map<String, dynamic>> getGameSet() {
-    if (extension == Extension.AgeOfGiants) {
+    if (extension == Extension.ageOfGiants) {
       return gameAogSet;
-    } else if (extension == Extension.LaCour) {
+    } else if (extension == Extension.laCour) {
       return laCourGameSet;
     } else {
       return gameSet;
@@ -198,13 +198,13 @@ class KingdominoWidgetState extends State<KingdominoWidget> {
             }
             break;
           case 'Giants':
-            setExtension(Extension.AgeOfGiants);
+            setExtension(Extension.ageOfGiants);
             setSelectionMode(SelectionMode.land);
 
             kingColors.add(Colors.brown);
             break;
           case 'LaCour':
-            setExtension(Extension.LaCour);
+            setExtension(Extension.laCour);
             if (selectionMode == SelectionMode.courtier ||
                 selectionMode == SelectionMode.resource) {
               selectionMode = SelectionMode.crown;

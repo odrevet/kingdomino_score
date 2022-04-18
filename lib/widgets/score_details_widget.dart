@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kingdomino_score_count/models/extension.dart';
 
 import '../cubits/kingdom_cubit.dart';
-import '../models/land.dart';
 import '../cubits/score_cubit.dart';
+import '../models/land.dart';
 import 'kingdomino_widget.dart';
 
 class ScoreDetailsWidget extends StatelessWidget {
@@ -101,7 +101,7 @@ class ScoreDetailsWidget extends StatelessWidget {
       tableRows.add(tableRow);
     }
 
-    if (getExtension() == Extension.LaCour) {
+    if (getExtension() == Extension.laCour) {
       var tableCells = <TableCell>[];
 
       tableCells.add(TableCell(child: AutoSizeText('')));

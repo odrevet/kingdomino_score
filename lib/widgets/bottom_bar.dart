@@ -64,9 +64,9 @@ class _BottomBarState extends State<BottomBar> {
       crownButton(),
     ];
 
-    if (widget.getExtension() == Extension.AgeOfGiants) {
+    if (widget.getExtension() == Extension.ageOfGiants) {
       kingdomEditorWidgets.add(giantButton());
-    } else if (widget.getExtension() == Extension.LaCour) {
+    } else if (widget.getExtension() == Extension.laCour) {
       kingdomEditorWidgets.add(resourceButton());
 
       CourtierType.values.forEach((element) {
@@ -156,7 +156,7 @@ class _BottomBarState extends State<BottomBar> {
         width: _buttonSize,
         decoration: BoxDecoration(
             color: Colors.white,
-            border: isSelected ? _selectedBorder : this.outline),
+            border: isSelected ? _selectedBorder : outline),
         child: CastleWidget(context.read<ThemeCubit>().state),
       ),
     );
@@ -171,8 +171,8 @@ class _BottomBarState extends State<BottomBar> {
           margin: EdgeInsets.all(5.0),
           height: _buttonSize,
           width: _buttonSize,
-          decoration: BoxDecoration(
-              border: isSelected ? _selectedBorder : this.outline),
+          decoration:
+              BoxDecoration(border: isSelected ? _selectedBorder : outline),
           child: FittedBox(fit: BoxFit.fitHeight, child: Text(crown)),
         ));
   }

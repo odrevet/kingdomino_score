@@ -1,1 +1,1 @@
-enum Extension { AgeOfGiants, LaCour }
+enum Extension { ageOfGiants, laCour }

@@ -1,4 +1,5 @@
 import 'dart:collection';
+
 import '../score_quest.dart';
 import 'extension.dart';
 import 'kingdom.dart';
@@ -48,13 +49,13 @@ class Score {
             case CourtierType.lumberjack:
               scoreOfLacour += Lumberjack().getPoints(kingdom, x, y);
               break;
-            case CourtierType.light_archery:
+            case CourtierType.lightArchery:
               scoreOfLacour += LightArchery().getPoints(kingdom, x, y);
               break;
             case CourtierType.fisherman:
               scoreOfLacour += Fisherman().getPoints(kingdom, x, y);
               break;
-            case CourtierType.heavy_archery:
+            case CourtierType.heavyArchery:
               scoreOfLacour += HeavyArchery().getPoints(kingdom, x, y);
               break;
             case CourtierType.shepherdess:
@@ -63,10 +64,10 @@ class Score {
             case CourtierType.captain:
               scoreOfLacour += Captain().getPoints(kingdom, x, y);
               break;
-            case CourtierType.axe_warrior:
+            case CourtierType.axeWarrior:
               scoreOfLacour += AxeWarrior().getPoints(kingdom, x, y);
               break;
-            case CourtierType.sword_warrior:
+            case CourtierType.swordWarrior:
               scoreOfLacour += SwordWarrior().getPoints(kingdom, x, y);
               break;
             case CourtierType.king:
@@ -189,7 +190,7 @@ class Score {
   void updateScores(Kingdom kingdom, Extension? extension, selectedQuests) {
     _updateScoreProperty(kingdom);
     updateScoreQuest(kingdom, selectedQuests);
-    if (extension == Extension.LaCour) {
+    if (extension == Extension.laCour) {
       updateScoreLacour(kingdom);
     }
     updateScore(extension);
@@ -202,7 +203,7 @@ class Score {
 
   void updateScore(Extension? extension) {
     score = scoreProperty + scoreOfQuest;
-    if (extension == Extension.LaCour) {
+    if (extension == Extension.laCour) {
       score += scoreOfLacour;
     }
   }

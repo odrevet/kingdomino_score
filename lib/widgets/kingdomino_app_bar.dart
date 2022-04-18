@@ -6,11 +6,11 @@ import 'package:kingdomino_score_count/cubits/kingdom_cubit.dart';
 import 'package:kingdomino_score_count/widgets/quest_dialog.dart';
 import 'package:kingdomino_score_count/widgets/warning_widget.dart';
 
+import '../cubits/score_cubit.dart';
+import '../cubits/theme_cubit.dart';
 import '../models/age_of_giants.dart';
 import '../models/king_colors.dart';
 import '../models/kingdom.dart';
-import '../cubits/score_cubit.dart';
-import '../cubits/theme_cubit.dart';
 
 class KingdominoAppBar extends StatelessWidget with PreferredSizeWidget {
   @override

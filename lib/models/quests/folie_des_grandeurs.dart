@@ -1,37 +1,35 @@
 import 'dart:math';
 
+import 'package:equatable/equatable.dart';
+
 import '../kingdom.dart';
 import 'quest.dart';
 
 ///`2 different alignments cannot share more than one square`
 ///see https://boardgamegeek.com/thread/2040636/tic-tac-toe-bonus-challenge-tile-clarification
-class CrownAlignment {
+class CrownAlignment extends Equatable {
   int x0, y0;
   int x1, y1;
   int x2, y2;
 
   CrownAlignment(this.y0, this.x0, this.y1, this.x1, this.y2, this.x2);
 
-  @override
-  bool operator ==(dynamic other) => ((x0 == other.x0 && y0 == other.y0) &&
-      (x1 == other.x1 && y1 == other.y1) &&
+  bool cross(CrownAlignment other) => ((x0 == other.x0 && y0 == other.y0) ||
+      (x1 == other.x0 && y1 == other.y0) ||
+      (x2 == other.x0 && y2 == other.y0) ||
+      (x0 == other.x1 && y0 == other.y1) ||
+      (x1 == other.x1 && y1 == other.y1) ||
+      (x2 == other.x1 && y2 == other.y1) ||
+      (x0 == other.x2 && y0 == other.y2) ||
+      (x1 == other.x2 && y1 == other.y2) ||
       (x2 == other.x2 && y2 == other.y2));
-
-  bool cross(CrownAlignment other) {
-    return ((x0 == other.x0 && y0 == other.y0) ||
-        (x1 == other.x0 && y1 == other.y0) ||
-        (x2 == other.x0 && y2 == other.y0) ||
-        (x0 == other.x1 && y0 == other.y1) ||
-        (x1 == other.x1 && y1 == other.y1) ||
-        (x2 == other.x1 && y2 == other.y1) ||
-        (x0 == other.x2 && y0 == other.y2) ||
-        (x1 == other.x2 && y1 == other.y2) ||
-        (x2 == other.x2 && y2 == other.y2));
-  }
 
   String toString() {
     return '[$x0:$y0 $x1:$y1 $x2:$y2]';
   }
+
+  @override
+  List<Object?> get props => [x0, y0, x1, y1, x2, y2];
 }
 
 class FolieDesGrandeurs extends Quest {

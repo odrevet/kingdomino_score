@@ -59,8 +59,8 @@ class _KingdomWidgetState extends State<KingdomWidget> {
       if (land.crowns > 0) {
         String text = (crown * land.crowns);
         text += giant * land.giants;
-        child = Container(
-          color: getColorForLandType(land.landType),
+        child = LandTile(
+          landType: land.landType,
           child: LayoutBuilder(
               builder: (BuildContext context, BoxConstraints constraints) {
             return Text(text,
@@ -68,8 +68,8 @@ class _KingdomWidgetState extends State<KingdomWidget> {
           }),
         );
       } else if (land.hasResource) {
-        child = Container(
-          color: getColorForLandType(land.landType),
+        child = LandTile(
+          landType: land.landType,
           child: LayoutBuilder(
               builder: (BuildContext context, BoxConstraints constraints) {
             return Align(
@@ -94,26 +94,13 @@ class _KingdomWidgetState extends State<KingdomWidget> {
           }),
         );
       } else {
-        child = Container(
-          color: getColorForLandType(land.landType),
+        child = LandTile(
+          landType: land.landType,
         );
       }
     }
 
-    return Container(
-        child: child,
-        decoration: BoxDecoration(
-            border: land.landType == null
-                ? Border.all(
-                    width: 0.5,
-                    color: Colors.blueGrey.shade900,
-                  )
-                : Border(
-                    right:
-                        BorderSide(width: 2.5, color: Colors.blueGrey.shade600),
-                    bottom:
-                        BorderSide(width: 2.5, color: Colors.blueGrey.shade900),
-                  )));
+    return child;
   }
 
   Widget _buildLands(BuildContext context, int index) {

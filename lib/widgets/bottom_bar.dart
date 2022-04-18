@@ -103,8 +103,7 @@ class _BottomBarState extends State<BottomBar> {
             height: _buttonSize,
             width: _buttonSize,
             decoration: BoxDecoration(
-                boxShadow: isSelected ? [_selectedBoxShadow] : null,
-                border: landType == null ? null : outline),
+                boxShadow: isSelected ? [_selectedBoxShadow] : null),
             child: LandTile(landType: landType)));
   }
 

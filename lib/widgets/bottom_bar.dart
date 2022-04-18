@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kingdomino_score_count/models/extension.dart';
 
-import '../cubits/score_cubit.dart';
 import '../cubits/theme_cubit.dart';
 import '../models/age_of_giants.dart';
 import '../models/lacour/lacour.dart';
@@ -13,7 +12,6 @@ import '../models/land.dart';
 import '../models/quests/quest.dart';
 import '../models/selection_mode.dart';
 import 'castle_tile.dart';
-import 'giant_details_widget.dart';
 import 'kingdomino_widget.dart';
 
 class BottomBar extends StatefulWidget {
@@ -87,11 +85,10 @@ class _BottomBarState extends State<BottomBar> {
     );
   }
 
-  final Border _selectedBorder = Border(
-    right: BorderSide(width: 1.5, color: Colors.red.shade600),
-    top: BorderSide(width: 1.5, color: Colors.red.shade600),
-    left: BorderSide(width: 1.5, color: Colors.red.shade600),
-    bottom: BorderSide(width: 1.5, color: Colors.red.shade900),
+  final BoxShadow _selectedBoxShadow = const BoxShadow(
+    color: Colors.yellowAccent,
+    spreadRadius: 5,
+    blurRadius: 3,
   );
 
   Widget landButton(LandType? landType) {
@@ -105,11 +102,8 @@ class _BottomBarState extends State<BottomBar> {
             height: _buttonSize,
             width: _buttonSize,
             decoration: BoxDecoration(
-                border: isSelected
-                    ? _selectedBorder
-                    : landType == null
-                        ? null
-                        : outline),
+                boxShadow: isSelected ? [_selectedBoxShadow] : null,
+                border: outline),
             child: Container(
               color: getColorForLandType(landType),
               child: null,
@@ -125,8 +119,8 @@ class _BottomBarState extends State<BottomBar> {
             margin: const EdgeInsets.all(5.0),
             height: _buttonSize,
             width: _buttonSize,
-            decoration:
-                BoxDecoration(border: isSelected ? _selectedBorder : null),
+            decoration: BoxDecoration(
+                boxShadow: isSelected ? [_selectedBoxShadow] : null),
             child: Image.asset('assets/lacour/resource.png')));
   }
 
@@ -140,8 +134,8 @@ class _BottomBarState extends State<BottomBar> {
             margin: const EdgeInsets.all(5.0),
             height: _buttonSize,
             width: _buttonSize,
-            decoration:
-                BoxDecoration(border: isSelected ? _selectedBorder : null),
+            decoration: BoxDecoration(
+                boxShadow: isSelected ? [_selectedBoxShadow] : null),
             child: Image(
                 height: 50,
                 width: 50,
@@ -162,8 +156,8 @@ class _BottomBarState extends State<BottomBar> {
         height: _buttonSize,
         width: _buttonSize,
         decoration: BoxDecoration(
-            color: Colors.white,
-            border: isSelected ? _selectedBorder : outline),
+            boxShadow: isSelected ? [_selectedBoxShadow] : null,
+            border: outline),
         child: CastleTile(context.read<ThemeCubit>().state),
       ),
     );
@@ -178,8 +172,8 @@ class _BottomBarState extends State<BottomBar> {
           margin: const EdgeInsets.all(5.0),
           height: _buttonSize,
           width: _buttonSize,
-          decoration:
-              BoxDecoration(border: isSelected ? _selectedBorder : null),
+          decoration: BoxDecoration(
+              boxShadow: isSelected ? [_selectedBoxShadow] : null),
           child: const FittedBox(fit: BoxFit.fitHeight, child: Text(crown)),
         ));
   }
@@ -219,8 +213,8 @@ class _BottomBarState extends State<BottomBar> {
           margin: const EdgeInsets.all(5.0),
           height: _buttonSize,
           width: _buttonSize,
-          decoration:
-              BoxDecoration(border: isSelected ? _selectedBorder : null),
+          decoration: BoxDecoration(
+              boxShadow: isSelected ? [_selectedBoxShadow] : null),
           child: const FittedBox(fit: BoxFit.fitHeight, child: Text(giant)),
         ));
   }

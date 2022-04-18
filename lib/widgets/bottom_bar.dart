@@ -22,7 +22,7 @@ class BottomBar extends StatefulWidget {
   final groupScore;
   final quests;
 
-  BottomBar(
+  const BottomBar(
       {required this.getSelectionMode,
       required this.setSelectionMode,
       required this.getSelectedLandType,
@@ -56,11 +56,11 @@ class _BottomBarState extends State<BottomBar> {
       landButton(LandType.lake),
       landButton(LandType.swamp),
       landButton(LandType.mine),
-      VerticalDivider(),
+      const VerticalDivider(),
       landButton(null),
-      VerticalDivider(),
+      const VerticalDivider(),
       castleButton(),
-      VerticalDivider(),
+      const VerticalDivider(),
       crownButton(),
     ];
 
@@ -102,7 +102,7 @@ class _BottomBarState extends State<BottomBar> {
                     ? _selectedBorder
                     : landType == null
                         ? null
-                        : this.outline),
+                        : outline),
             child: Container(
               color: getColorForLandType(landType),
               child: null,
@@ -118,8 +118,8 @@ class _BottomBarState extends State<BottomBar> {
             margin: EdgeInsets.all(5.0),
             height: _buttonSize,
             width: _buttonSize,
-            decoration: BoxDecoration(
-                border: isSelected ? _selectedBorder : this.outline),
+            decoration:
+                BoxDecoration(border: isSelected ? _selectedBorder : outline),
             child: Image.asset('assets/lacour/resource.png')));
   }
 
@@ -186,7 +186,7 @@ class _BottomBarState extends State<BottomBar> {
               context: context,
               builder: (BuildContext context) {
                 return AlertDialog(
-                  shape: RoundedRectangleBorder(
+                  shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(20.0))),
                   content: GiantsDetailsWidget(
                       scoreOfQuest: 'widget.scoreOfQuest',
@@ -195,7 +195,7 @@ class _BottomBarState extends State<BottomBar> {
                       score: 'widget.score'),
                   actions: <Widget>[
                     TextButton(
-                      child: Icon(
+                      child: const Icon(
                         Icons.done,
                         color: Colors.black87,
                       ),
@@ -211,21 +211,22 @@ class _BottomBarState extends State<BottomBar> {
           margin: EdgeInsets.all(5.0),
           height: _buttonSize,
           width: _buttonSize,
-          decoration: BoxDecoration(
-              border: isSelected ? _selectedBorder : this.outline),
-          child: FittedBox(fit: BoxFit.fitHeight, child: Text(giant)),
+          decoration:
+              BoxDecoration(border: isSelected ? _selectedBorder : outline),
+          child: const FittedBox(fit: BoxFit.fitHeight, child: Text(giant)),
         ));
   }
 
   //CALLBACKS
   void _onSelectLandType(LandType? selectedType) {
-    if (selectedType == LandType.castle)
+    if (selectedType == LandType.castle) {
       _onSelectCastle();
-    else
+    } else {
       setState(() {
         widget.setSelectedLandType(selectedType);
         widget.setSelectionMode(SelectionMode.land);
       });
+    }
   }
 
   void _onSelectCourtierType(CourtierType selectedType) {

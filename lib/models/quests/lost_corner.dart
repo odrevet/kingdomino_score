@@ -13,6 +13,7 @@ class LostCorner extends Quest {
 
   final int extraPoints = 20;
 
+  @override
   int getPoints(Kingdom kingdom) {
     int size = kingdom.size - 1;
     return kingdom.getLand(0, 0)?.landType == LandType.castle ||

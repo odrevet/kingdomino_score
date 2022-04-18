@@ -31,7 +31,7 @@ class GiantsDetailsWidget extends StatelessWidget {
 
     if (properties.isEmpty) {
       const String shrug = '\u{1F937}';
-      content = Text(shrug,
+      content = const Text(shrug,
           textAlign: TextAlign.center, style: TextStyle(fontSize: 50.0));
     } else {
       properties.sort((property, propertyToComp) =>
@@ -94,12 +94,12 @@ class GiantsDetailsWidget extends StatelessWidget {
         scoreQuestWithoutGiants = score.scoreOfQuest;
 
         var tableCells = <TableCell>[];
-        tableCells.add(TableCell(child: AutoSizeText('')));
-        tableCells.add(TableCell(child: AutoSizeText('')));
-        tableCells.add(TableCell(child: AutoSizeText('')));
-        tableCells.add(TableCell(child: AutoSizeText('')));
+        tableCells.add(const TableCell(child: AutoSizeText('')));
+        tableCells.add(const TableCell(child: AutoSizeText('')));
+        tableCells.add(const TableCell(child: AutoSizeText('')));
+        tableCells.add(const TableCell(child: AutoSizeText('')));
 
-        tableCells.add(TableCell(
+        tableCells.add(const TableCell(
             child: Align(
                 alignment: Alignment.centerRight,
                 child: Icon(Icons.shield, color: Colors.white))));
@@ -124,10 +124,10 @@ class GiantsDetailsWidget extends StatelessWidget {
           (scoreOfQuest - scoreQuestWithoutGiants) - totalCrownPointLoss;
       var tableCells = <TableCell>[];
 
-      tableCells.add(TableCell(child: AutoSizeText('')));
-      tableCells.add(TableCell(child: AutoSizeText('')));
-      tableCells.add(TableCell(child: AutoSizeText('')));
-      tableCells.add(TableCell(child: AutoSizeText('')));
+      tableCells.add(const TableCell(child: AutoSizeText('')));
+      tableCells.add(const TableCell(child: AutoSizeText('')));
+      tableCells.add(const TableCell(child: AutoSizeText('')));
+      tableCells.add(const TableCell(child: AutoSizeText('')));
 
       tableCells.add(TableCell(
           child: Align(
@@ -152,10 +152,14 @@ class GiantsDetailsWidget extends StatelessWidget {
       //SCORE WITHOUT GIANTS
       var tableCellsTotalWithoutGiants = <TableCell>[];
 
-      tableCellsTotalWithoutGiants.add(TableCell(child: AutoSizeText('')));
-      tableCellsTotalWithoutGiants.add(TableCell(child: AutoSizeText('')));
-      tableCellsTotalWithoutGiants.add(TableCell(child: AutoSizeText('')));
-      tableCellsTotalWithoutGiants.add(TableCell(child: AutoSizeText('')));
+      tableCellsTotalWithoutGiants
+          .add(const TableCell(child: AutoSizeText('')));
+      tableCellsTotalWithoutGiants
+          .add(const TableCell(child: AutoSizeText('')));
+      tableCellsTotalWithoutGiants
+          .add(const TableCell(child: AutoSizeText('')));
+      tableCellsTotalWithoutGiants
+          .add(const TableCell(child: AutoSizeText('')));
 
       tableCellsTotalWithoutGiants.add(TableCell(
           child: Align(

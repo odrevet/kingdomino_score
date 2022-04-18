@@ -80,7 +80,7 @@ class KingdominoWidgetState extends State<KingdominoWidget> {
 
   setSelectedLandType(LandType? landtype) {
     setState(() {
-      this.selectedLandType = landtype;
+      selectedLandType = landtype;
     });
   }
 
@@ -88,13 +88,13 @@ class KingdominoWidgetState extends State<KingdominoWidget> {
 
   setSelectedCourtierType(CourtierType courtiertype) {
     setState(() {
-      this.selectedCourtierType = courtiertype;
+      selectedCourtierType = courtiertype;
     });
   }
 
   setExtension(Extension extension) {
     setState(() {
-      this.extension = extension;
+      extension = extension;
     });
   }
 
@@ -232,11 +232,11 @@ class KingdominoWidgetState extends State<KingdominoWidget> {
           if (orientation == Orientation.portrait) {
             return Column(children: <Widget>[
               KingdomWidget(
-                  getSelectionMode: this.getSelectionMode,
-                  getSelectedLandType: this.getSelectedLandType,
-                  getSelectedCourtierType: this.getSelectedCourtierType,
-                  getGameSet: this.getGameSet,
-                  calculateScore: this.calculateScore,
+                  getSelectionMode: getSelectionMode,
+                  getSelectedLandType: getSelectedLandType,
+                  getSelectedCourtierType: getSelectedCourtierType,
+                  getGameSet: getGameSet,
+                  calculateScore: calculateScore,
                   kingdom: kingdom),
               Expanded(
                 child: FittedBox(
@@ -248,16 +248,16 @@ class KingdominoWidgetState extends State<KingdominoWidget> {
                               context: context,
                               builder: (BuildContext dialogContext) {
                                 return AlertDialog(
-                                  shape: RoundedRectangleBorder(
+                                  shape: const RoundedRectangleBorder(
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(20.0))),
                                   content: ScoreDetailsWidget(
-                                      groupScore: this.groupScore,
-                                      quests: this.selectedQuests,
-                                      getExtension: this.getExtension),
+                                      groupScore: groupScore,
+                                      quests: selectedQuests,
+                                      getExtension: getExtension),
                                   actions: <Widget>[
                                     TextButton(
-                                      child: Icon(Icons.done),
+                                      child: const Icon(Icons.done),
                                       onPressed: () {
                                         Navigator.of(dialogContext).pop();
                                       },
@@ -272,15 +272,15 @@ class KingdominoWidgetState extends State<KingdominoWidget> {
             return Row(children: <Widget>[
               Expanded(
                   child: ScoreDetailsWidget(
-                      groupScore: this.groupScore,
-                      quests: this.selectedQuests,
-                      getExtension: this.getExtension)),
+                      groupScore: groupScore,
+                      quests: selectedQuests,
+                      getExtension: getExtension)),
               KingdomWidget(
-                  getSelectionMode: this.getSelectionMode,
-                  getSelectedLandType: this.getSelectedLandType,
-                  getSelectedCourtierType: this.getSelectedCourtierType,
-                  getGameSet: this.getGameSet,
-                  calculateScore: this.calculateScore,
+                  getSelectionMode: getSelectionMode,
+                  getSelectedLandType: getSelectedLandType,
+                  getSelectedCourtierType: getSelectedCourtierType,
+                  getGameSet: getGameSet,
+                  calculateScore: calculateScore,
                   kingdom: kingdom),
               Expanded(
                 child: FittedBox(
@@ -301,7 +301,7 @@ class KingdominoWidgetState extends State<KingdominoWidget> {
               onKingdomClear: onKingdomClear,
               getSelectedQuests: getSelectedQuests,
               packageInfo: _packageInfo,
-              calculateScore: this.calculateScore,
+              calculateScore: calculateScore,
             ),
             bottomNavigationBar: BottomAppBar(
                 child: BottomBar(
@@ -312,8 +312,8 @@ class KingdominoWidgetState extends State<KingdominoWidget> {
                   getSelectedCourtierType: getSelectedCourtierType,
                   setSelectedCourtierType: setSelectedCourtierType,
                   getExtension: getExtension,
-                  quests: this.selectedQuests,
-                  groupScore: this.groupScore,
+                  quests: selectedQuests,
+                  groupScore: groupScore,
                 ),
                 color: Theme.of(context).primaryColor),
             body: body);

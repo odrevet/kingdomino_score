@@ -13,6 +13,7 @@ class MiddleKingdom extends Quest {
 
   final int extraPoints = 10;
 
+  @override
   int getPoints(Kingdom kingdom) {
     int x, y;
 
@@ -22,9 +23,10 @@ class MiddleKingdom extends Quest {
       x = y = 3;
     }
 
-    if (kingdom.getLand(x, y)?.landType == LandType.castle)
+    if (kingdom.getLand(x, y)?.landType == LandType.castle) {
       return extraPoints;
-    else
+    } else {
       return 0;
+    }
   }
 }

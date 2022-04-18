@@ -16,6 +16,7 @@ class BleakKing extends Quest {
 
   int? extraPoints = 10;
 
+  @override
   int getPoints(Kingdom kingdom) {
     var properties = kingdom.getProperties();
     int count = properties

@@ -59,7 +59,7 @@ class KingdominoAppBar extends StatelessWidget with PreferredSizeWidget {
                 }
               : null,
           icon: const Icon(Icons.redo)),
-      VerticalDivider(),
+      const VerticalDivider(),
       // Extension Selector
       DropdownButton<String>(
         value: dropdownSelectedExtension,
@@ -73,7 +73,7 @@ class KingdominoAppBar extends StatelessWidget with PreferredSizeWidget {
           Widget child;
 
           if (value == 'Giants') {
-            child = Text(giant);
+            child = const Text(giant);
           } else if (value == 'LaCour') {
             child = Image.asset(
               'assets/lacour/resource.png',
@@ -81,7 +81,7 @@ class KingdominoAppBar extends StatelessWidget with PreferredSizeWidget {
               width: 25,
             );
           } else {
-            child = Text('');
+            child = const Text('');
           }
           return DropdownMenuItem<String>(
             value: value,
@@ -89,22 +89,21 @@ class KingdominoAppBar extends StatelessWidget with PreferredSizeWidget {
           );
         }).toList(),
       ),
-      QuestDialogWidget(
-          this.getSelectedQuests, this.calculateScore, this.getExtension),
+      QuestDialogWidget(getSelectedQuests, calculateScore, getExtension),
       IconButton(
           icon: Icon(kingdom.size == 5 ? Icons.filter_5 : Icons.filter_7),
           onPressed: () =>
               context.read<KingdomCubit>().resize(kingdom.size == 5 ? 7 : 5)),
-      VerticalDivider(),
+      const VerticalDivider(),
       IconButton(
-          icon: Icon(Icons.delete),
+          icon: const Icon(Icons.delete),
           onPressed: () {
             context.read<KingdomCubit>().clear();
             onKingdomClear();
           }),
-      VerticalDivider(),
+      const VerticalDivider(),
       IconButton(
-          icon: Icon(Icons.help),
+          icon: const Icon(Icons.help),
           onPressed: () => showAboutDialog(
               context: context,
               applicationName: 'Kingdomino Score',
@@ -130,13 +129,13 @@ I will not use or share your information with anyone : Kingdomino Score works of
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                          shape: RoundedRectangleBorder(
+                          shape: const RoundedRectangleBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(20.0))),
                           content: WarningsWidget(warnings: this.warnings),
                           actions: <Widget>[
                             TextButton(
-                              child: Icon(
+                              child: const Icon(
                                 Icons.done,
                                 color: Colors.black87,
                               ),

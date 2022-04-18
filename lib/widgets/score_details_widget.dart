@@ -74,12 +74,12 @@ class ScoreDetailsWidget extends StatelessWidget {
     if (quests.isNotEmpty) {
       var tableCells = <TableCell>[];
 
-      tableCells.add(TableCell(child: AutoSizeText('')));
-      tableCells.add(TableCell(child: AutoSizeText('')));
-      tableCells.add(TableCell(child: AutoSizeText('')));
-      tableCells.add(TableCell(child: AutoSizeText('')));
+      tableCells.add(const TableCell(child: AutoSizeText('')));
+      tableCells.add(const TableCell(child: AutoSizeText('')));
+      tableCells.add(const TableCell(child: AutoSizeText('')));
+      tableCells.add(const TableCell(child: AutoSizeText('')));
 
-      tableCells.add(TableCell(
+      tableCells.add(const TableCell(
           child: Align(
               alignment: Alignment.centerRight,
               child: Icon(Icons.shield, color: Colors.white))));
@@ -104,10 +104,10 @@ class ScoreDetailsWidget extends StatelessWidget {
     if (getExtension() == Extension.laCour) {
       var tableCells = <TableCell>[];
 
-      tableCells.add(TableCell(child: AutoSizeText('')));
-      tableCells.add(TableCell(child: AutoSizeText('')));
-      tableCells.add(TableCell(child: AutoSizeText('')));
-      tableCells.add(TableCell(child: AutoSizeText('')));
+      tableCells.add(const TableCell(child: AutoSizeText('')));
+      tableCells.add(const TableCell(child: AutoSizeText('')));
+      tableCells.add(const TableCell(child: AutoSizeText('')));
+      tableCells.add(const TableCell(child: AutoSizeText('')));
 
       tableCells.add(TableCell(
           child: Align(
@@ -138,10 +138,10 @@ class ScoreDetailsWidget extends StatelessWidget {
     //SUM
     var tableCells = <TableCell>[];
 
-    tableCells.add(TableCell(child: AutoSizeText('')));
-    tableCells.add(TableCell(child: AutoSizeText('')));
-    tableCells.add(TableCell(child: AutoSizeText('')));
-    tableCells.add(TableCell(child: AutoSizeText('')));
+    tableCells.add(const TableCell(child: AutoSizeText('')));
+    tableCells.add(const TableCell(child: AutoSizeText('')));
+    tableCells.add(const TableCell(child: AutoSizeText('')));
+    tableCells.add(const TableCell(child: AutoSizeText('')));
 
     tableCells.add(TableCell(
         child: Align(

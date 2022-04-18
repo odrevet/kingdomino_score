@@ -18,8 +18,8 @@ class _QuestDialogOption extends StatefulWidget {
       this.questType, this.svg, this.getSelectedQuests, this.updateScores);
 
   @override
-  _QuestDialogOptionState createState() => _QuestDialogOptionState(
-      this.questType, this.svg, this.getSelectedQuests, this.updateScores);
+  _QuestDialogOptionState createState() =>
+      _QuestDialogOptionState(questType, svg, getSelectedQuests, updateScores);
 }
 
 class _QuestDialogOptionState extends State<_QuestDialogOption> {
@@ -82,7 +82,7 @@ class QuestDialogWidget extends StatefulWidget {
   final updateScores;
   final getExtension;
 
-  QuestDialogWidget(
+  const QuestDialogWidget(
       this.getSelectedQuests, this.updateScores, this.getExtension);
 
   @override
@@ -120,11 +120,11 @@ class _QuestDialogWidgetState extends State<QuestDialogWidget> {
     }
 
     SimpleDialog dialog = SimpleDialog(
-      contentPadding: EdgeInsets.symmetric(
+      contentPadding: const EdgeInsets.symmetric(
         horizontal: 60,
         vertical: 40,
       ),
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20.0))),
       children: options,
     );
@@ -134,7 +134,7 @@ class _QuestDialogWidgetState extends State<QuestDialogWidget> {
         position: BadgePosition.topEnd(top: -1, end: -1),
         badgeContent: Text(widget.getSelectedQuests().length.toString()),
         child: IconButton(
-            icon: Icon(Icons.shield),
+            icon: const Icon(Icons.shield),
             onPressed: () => showDialog(
                   context: context,
                   builder: (BuildContext context) {

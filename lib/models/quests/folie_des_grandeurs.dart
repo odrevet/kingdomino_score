@@ -66,8 +66,9 @@ class FolieDesGrandeurs extends Quest {
     int y1 = y + 1;
     int x2 = x;
     int y2 = y + 2;
-    if (_hasCrownAlignment(y, x, y1, x1, y2, x2, kingdom))
+    if (_hasCrownAlignment(y, x, y1, x1, y2, x2, kingdom)) {
       crownAlignment.add(CrownAlignment(y, x, y1, x1, y2, x2));
+    }
   }
 
   void _addCrownAlignmentHorizontal(
@@ -76,8 +77,9 @@ class FolieDesGrandeurs extends Quest {
     int y1 = y;
     int x2 = x + 2;
     int y2 = y;
-    if (_hasCrownAlignment(y, x, y1, x1, y2, x2, kingdom))
+    if (_hasCrownAlignment(y, x, y1, x1, y2, x2, kingdom)) {
       crownAlignment.add(CrownAlignment(y, x, y1, x1, y2, x2));
+    }
   }
 
   void _addCrownAlignmentDiagonalRight(
@@ -86,8 +88,9 @@ class FolieDesGrandeurs extends Quest {
     int y1 = y + 1;
     int x2 = x + 2;
     int y2 = y + 2;
-    if (_hasCrownAlignment(y, x, y1, x1, y2, x2, kingdom))
+    if (_hasCrownAlignment(y, x, y1, x1, y2, x2, kingdom)) {
       crownAlignment.add(CrownAlignment(y, x, y1, x1, y2, x2));
+    }
   }
 
   void _addCrownAlignmentDiagonalLeft(
@@ -96,8 +99,9 @@ class FolieDesGrandeurs extends Quest {
     int y1 = y + 1;
     int x2 = x - 2;
     int y2 = y + 2;
-    if (_hasCrownAlignment(y, x, y1, x1, y2, x2, kingdom))
+    if (_hasCrownAlignment(y, x, y1, x1, y2, x2, kingdom)) {
       crownAlignment.add(CrownAlignment(y, x, y1, x1, y2, x2));
+    }
   }
 
   ///return how many square is shared by crownAlignment on the placedAlignments

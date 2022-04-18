@@ -34,33 +34,45 @@ class LocalBusiness extends Quest {
 
     x = castleX - 1;
     y = castleY - 1;
-    if (kingdom.isInBound(x, y) && kingdom.getLand(x, y)?.landType == landType)
+    if (kingdom.isInBound(x, y) &&
+        kingdom.getLand(x, y)?.landType == landType) {
       count++;
+    }
 
     x = castleX;
     y = castleY - 1;
-    if (kingdom.isInBound(x, y) && kingdom.getLand(x, y)?.landType == landType)
+    if (kingdom.isInBound(x, y) &&
+        kingdom.getLand(x, y)?.landType == landType) {
       count++;
+    }
 
     x = castleX + 1;
     y = castleY - 1;
-    if (kingdom.isInBound(x, y) && kingdom.getLand(x, y)?.landType == landType)
+    if (kingdom.isInBound(x, y) &&
+        kingdom.getLand(x, y)?.landType == landType) {
       count++;
+    }
 
     x = castleX - 1;
     y = castleY;
-    if (kingdom.isInBound(x, y) && kingdom.getLand(x, y)?.landType == landType)
+    if (kingdom.isInBound(x, y) &&
+        kingdom.getLand(x, y)?.landType == landType) {
       count++;
+    }
 
     x = castleX + 1;
     y = castleY;
-    if (kingdom.isInBound(x, y) && kingdom.getLand(x, y)?.landType == landType)
+    if (kingdom.isInBound(x, y) &&
+        kingdom.getLand(x, y)?.landType == landType) {
       count++;
+    }
 
     x = castleX - 1;
     y = castleY + 1;
-    if (kingdom.isInBound(x, y) && kingdom.getLand(x, y)?.landType == landType)
+    if (kingdom.isInBound(x, y) &&
+        kingdom.getLand(x, y)?.landType == landType) {
       count++;
+    }
 
     x = castleX;
     y = castleY + 1;

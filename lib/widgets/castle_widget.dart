@@ -11,6 +11,6 @@ class CastleWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         color: kingColor,
-        child: FittedBox(fit: BoxFit.fitWidth, child: Text(castle)));
+        child: const FittedBox(fit: BoxFit.fitWidth, child: Text(castle)));
   }
 }

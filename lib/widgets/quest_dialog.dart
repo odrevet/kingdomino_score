@@ -18,26 +18,19 @@ class _QuestDialogOption extends StatefulWidget {
       this.questType, this.svg, this.getSelectedQuests, this.updateScores);
 
   @override
-  _QuestDialogOptionState createState() =>
-      _QuestDialogOptionState(questType, svg, getSelectedQuests, updateScores);
+  _QuestDialogOptionState createState() => _QuestDialogOptionState();
 }
 
 class _QuestDialogOptionState extends State<_QuestDialogOption> {
-  final getSelectedQuests;
-  final updateScores;
-  final QuestType questType;
-  final Widget svg;
-
   bool? _active;
 
   @override
   initState() {
     super.initState();
-    _active = getSelectedQuests().contains(questType);
+    _active = widget.getSelectedQuests().contains(widget.questType);
   }
 
-  _QuestDialogOptionState(
-      this.questType, this.svg, this.getSelectedQuests, this.updateScores);
+  _QuestDialogOptionState();
 
   void _setActive(bool value) {
     setState(() {
@@ -54,23 +47,23 @@ class _QuestDialogOptionState extends State<_QuestDialogOption> {
               left: BorderSide(width: 3, color: Colors.green.shade600),
               right: BorderSide(width: 3, color: Colors.green.shade600),
             )),
-            child: svg)
-        : svg;
+            child: widget.svg)
+        : widget.svg;
 
     return SimpleDialogOption(
       child: child,
       onPressed: () {
         setState(() {
-          if (getSelectedQuests().contains(questType)) {
+          if (widget.getSelectedQuests().contains(widget.questType)) {
             _setActive(false);
-            getSelectedQuests().remove(questType);
-          } else if (getSelectedQuests().length < 2) {
+            widget.getSelectedQuests().remove(widget.questType);
+          } else if (widget.getSelectedQuests().length < 2) {
             _setActive(true);
-            getSelectedQuests().add(questType);
+            widget.getSelectedQuests().add(widget.questType);
           }
         });
         context.read<ScoreCubit>().calculate(context.read<KingdomCubit>().state,
-            null, getSelectedQuests()); //TODO getExtension
+            null, widget.getSelectedQuests()); //TODO getExtension
         //this.updateScores();
       },
     );

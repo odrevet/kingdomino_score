@@ -20,7 +20,7 @@ import '../models/quests/quest.dart';
 import '../models/selection_mode.dart';
 import '../models/warning.dart';
 import 'bottom_bar.dart';
-import 'kingdom_tile.dart';
+import 'kingdom_widget.dart';
 import 'score_details_widget.dart';
 
 const String crown = '\u{1F451}';
@@ -231,7 +231,7 @@ class KingdominoWidgetState extends State<KingdominoWidget> {
             builder: (orientationBuilderContext, orientation) {
           if (orientation == Orientation.portrait) {
             return Column(children: <Widget>[
-              KingdomTile(
+              KingdomWidget(
                   getSelectionMode: getSelectionMode,
                   getSelectedLandType: getSelectedLandType,
                   getSelectedCourtierType: getSelectedCourtierType,
@@ -275,7 +275,7 @@ class KingdominoWidgetState extends State<KingdominoWidget> {
                       groupScore: groupScore,
                       quests: selectedQuests,
                       getExtension: getExtension)),
-              KingdomTile(
+              KingdomWidget(
                   getSelectionMode: getSelectionMode,
                   getSelectedLandType: getSelectedLandType,
                   getSelectedCourtierType: getSelectedCourtierType,

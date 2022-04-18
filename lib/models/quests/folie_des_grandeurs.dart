@@ -24,6 +24,7 @@ class CrownAlignment extends Equatable {
       (x1 == other.x2 && y1 == other.y2) ||
       (x2 == other.x2 && y2 == other.y2));
 
+  @override
   String toString() {
     return '[$x0:$y0 $x1:$y1 $x2:$y2]';
   }

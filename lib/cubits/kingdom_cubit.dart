@@ -13,6 +13,8 @@ class KingdomCubit extends ReplayCubit<Kingdom> {
 
   setLand(int y, int x, selectedLandType, getSelectionMode, getGameSet,
       getSelectedcourtier) {
+    bool isValid = true;
+
     var kingdom = Kingdom(size: state.size);
     for (var x = 0; x < state.size; x++) {
       for (var y = 0; y < state.size; y++) {
@@ -28,11 +30,14 @@ class KingdomCubit extends ReplayCubit<Kingdom> {
         land.reset();
         break;
       case SelectionMode.crown:
-        if (land!.landType == LandType.castle || land.landType == null) break;
-        land.crowns++;
-        land.courtier = null;
-        if (land.crowns > getGameSet()[land.landType]['crowns']['max']) {
-          land.reset();
+        if (land!.landType == LandType.castle || land.landType == null) {
+          isValid = false;
+        } else {
+          land.crowns++;
+          land.courtier = null;
+          if (land.crowns > getGameSet()[land.landType]['crowns']['max']) {
+            land.reset();
+          }
         }
         break;
       case SelectionMode.castle:
@@ -50,7 +55,11 @@ class KingdomCubit extends ReplayCubit<Kingdom> {
         land.reset();
         break;
       case SelectionMode.giant:
-        land!.giants = (land.giants + 1) % (land.crowns + 1);
+        if (land!.crowns > 0) {
+          land.giants = (land.giants + 1) % (land.crowns + 1);
+        } else {
+          isValid = false;
+        }
         break;
       case SelectionMode.courtier:
         if ([
@@ -78,6 +87,8 @@ class KingdomCubit extends ReplayCubit<Kingdom> {
 
           land.reset();
           land.courtier = courtier;
+        } else {
+          isValid = false;
         }
         break;
       case SelectionMode.resource:
@@ -85,10 +96,12 @@ class KingdomCubit extends ReplayCubit<Kingdom> {
             .contains(land!.landType)) {
           land.hasResource = !land.hasResource;
           land.crowns = 0;
+        } else {
+          isValid = false;
         }
         break;
     }
 
-    emit(kingdom);
+    if (isValid) emit(kingdom);
   }
 }

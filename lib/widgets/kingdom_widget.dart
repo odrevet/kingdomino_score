@@ -12,7 +12,7 @@ import 'castle_widget.dart';
 import 'kingdomino_widget.dart';
 
 class KingdomWidget extends StatefulWidget {
-  KingdomWidget(
+  const KingdomWidget(
       {required Function this.getSelectionMode,
       required Function this.getSelectedLandType,
       required Function this.getSelectedCourtierType,

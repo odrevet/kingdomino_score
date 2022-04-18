@@ -69,9 +69,9 @@ class _BottomBarState extends State<BottomBar> {
     } else if (widget.getExtension() == Extension.laCour) {
       kingdomEditorWidgets.add(resourceButton());
 
-      CourtierType.values.forEach((element) {
+      for (var element in CourtierType.values) {
         kingdomEditorWidgets.add(courtierButton(element));
-      });
+      }
     }
 
     return Wrap(
@@ -80,7 +80,7 @@ class _BottomBarState extends State<BottomBar> {
     );
   }
 
-  Border _selectedBorder = Border(
+  final Border _selectedBorder = Border(
     right: BorderSide(width: 3.5, color: Colors.red.shade600),
     top: BorderSide(width: 3.5, color: Colors.red.shade600),
     left: BorderSide(width: 3.5, color: Colors.red.shade600),
@@ -94,7 +94,7 @@ class _BottomBarState extends State<BottomBar> {
     return GestureDetector(
         onTap: () => _onSelectLandType(landType),
         child: Container(
-            margin: EdgeInsets.all(5.0),
+            margin: const EdgeInsets.all(5.0),
             height: _buttonSize,
             width: _buttonSize,
             decoration: BoxDecoration(
@@ -115,7 +115,7 @@ class _BottomBarState extends State<BottomBar> {
     return GestureDetector(
         onTap: () => widget.setSelectionMode(SelectionMode.resource),
         child: Container(
-            margin: EdgeInsets.all(5.0),
+            margin: const EdgeInsets.all(5.0),
             height: _buttonSize,
             width: _buttonSize,
             decoration:
@@ -130,11 +130,11 @@ class _BottomBarState extends State<BottomBar> {
     return GestureDetector(
         onTap: () => _onSelectCourtierType(courtierType),
         child: Container(
-            margin: EdgeInsets.all(5.0),
+            margin: const EdgeInsets.all(5.0),
             height: _buttonSize,
             width: _buttonSize,
-            decoration: BoxDecoration(
-                border: isSelected ? _selectedBorder : this.outline),
+            decoration:
+                BoxDecoration(border: isSelected ? _selectedBorder : outline),
             child: Image(
                 height: 50,
                 width: 50,
@@ -151,7 +151,7 @@ class _BottomBarState extends State<BottomBar> {
         widget.setSelectedLandType(LandType.castle);
       }),
       child: Container(
-        margin: EdgeInsets.all(5.0),
+        margin: const EdgeInsets.all(5.0),
         height: _buttonSize,
         width: _buttonSize,
         decoration: BoxDecoration(
@@ -168,12 +168,12 @@ class _BottomBarState extends State<BottomBar> {
     return GestureDetector(
         onTap: () => _onSelectCrown(),
         child: Container(
-          margin: EdgeInsets.all(5.0),
+          margin: const EdgeInsets.all(5.0),
           height: _buttonSize,
           width: _buttonSize,
           decoration:
               BoxDecoration(border: isSelected ? _selectedBorder : outline),
-          child: FittedBox(fit: BoxFit.fitHeight, child: Text(crown)),
+          child: const FittedBox(fit: BoxFit.fitHeight, child: Text(crown)),
         ));
   }
 
@@ -208,7 +208,7 @@ class _BottomBarState extends State<BottomBar> {
               },
             ),
         child: Container(
-          margin: EdgeInsets.all(5.0),
+          margin: const EdgeInsets.all(5.0),
           height: _buttonSize,
           width: _buttonSize,
           decoration:

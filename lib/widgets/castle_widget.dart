@@ -5,7 +5,7 @@ import 'kingdomino_widget.dart';
 class CastleWidget extends StatelessWidget {
   final Color kingColor;
 
-  CastleWidget(this.kingColor);
+  const CastleWidget(this.kingColor);
 
   @override
   Widget build(BuildContext context) {

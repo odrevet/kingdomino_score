@@ -8,10 +8,8 @@ class AxeWarrior extends Courtier {
     return _singleton;
   }
 
-  AxeWarrior._internal();
+  AxeWarrior._internal() : super(isWarrior: true);
 
   @override
-  int getPoints(Kingdom kingdom, int x, int y) {
-    return 3;
-  }
+  int getPoints(Kingdom kingdom, int x, int y) => 3;
 }

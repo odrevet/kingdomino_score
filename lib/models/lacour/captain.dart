@@ -9,14 +9,9 @@ class Captain extends Courtier {
     return _singleton;
   }
 
-  Captain._internal();
+  Captain._internal() : super(isWarrior: true);
 
-  bool _checkLand(Land? land) {
-    if (land == null) return false;
-
-    return [AxeWarrior(), HeavyArchery(), LightArchery(), SwordWarrior()]
-        .contains(land.courtier);
-  }
+  bool _checkLand(Land? land) => land?.courtier?.isWarrior == true;
 
   @override
   int getPoints(Kingdom kingdom, int x, int y) {

@@ -74,5 +74,9 @@ Map<Type, String> courtierPicture = {
 };
 
 abstract class Courtier {
+  bool isWarrior;
+
+  Courtier({this.isWarrior = false});
+
   int getPoints(Kingdom kingdom, int x, int y);
 }

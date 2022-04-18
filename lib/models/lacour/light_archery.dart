@@ -8,7 +8,7 @@ class LightArchery extends Courtier {
     return _singleton;
   }
 
-  LightArchery._internal();
+  LightArchery._internal() : super(isWarrior: true);
 
   @override
   int getPoints(Kingdom kingdom, int x, int y) {

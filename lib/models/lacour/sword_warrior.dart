@@ -8,7 +8,7 @@ class SwordWarrior extends Courtier {
     return _singleton;
   }
 
-  SwordWarrior._internal();
+  SwordWarrior._internal() : super(isWarrior: true);
 
   @override
   int getPoints(Kingdom kingdom, int x, int y) {

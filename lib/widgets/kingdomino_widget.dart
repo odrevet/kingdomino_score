@@ -280,9 +280,6 @@ class KingdominoWidgetState extends State<KingdominoWidget> {
                                               context,
                                               listen: false),
                                           child: AlertDialog(
-                                            shape: const RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(20.0))),
                                             content: ScoreDetailsWidget(
                                                 groupScore: groupScore,
                                                 quests: selectedQuests,
@@ -345,9 +342,6 @@ class KingdominoWidgetState extends State<KingdominoWidget> {
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                            shape: const RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20.0))),
                             content: WarningsWidget(warnings: warnings),
                             actions: <Widget>[
                               TextButton(

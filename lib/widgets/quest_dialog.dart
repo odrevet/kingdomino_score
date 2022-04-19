@@ -119,8 +119,6 @@ class _QuestDialogWidgetState extends State<QuestDialogWidget> {
         horizontal: 60,
         vertical: 40,
       ),
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(20.0))),
       children: options,
     );
 

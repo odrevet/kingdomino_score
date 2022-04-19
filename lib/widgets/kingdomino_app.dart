@@ -22,7 +22,10 @@ class KingdominoApp extends StatelessWidget {
                 fontFamily: 'HammersmithOne',
                 dialogTheme: DialogTheme(
                     backgroundColor: color.shade200,
-                    contentTextStyle: const TextStyle(color: Colors.black))),
+                    contentTextStyle: const TextStyle(color: Colors.black),
+                    shape: const RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.all(Radius.circular(20.0))))),
             home: MultiBlocProvider(providers: [
               BlocProvider<ScoreCubit>(
                 create: (BuildContext context) => ScoreCubit(),

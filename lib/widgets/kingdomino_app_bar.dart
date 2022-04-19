@@ -39,6 +39,28 @@ class KingdominoAppBar extends StatelessWidget with PreferredSizeWidget {
     var kingdom = context.read<KingdomCubit>().state;
 
     var actions = <Widget>[
+      DropdownButton<MaterialColor>(
+        value: context.read<ThemeCubit>().state,
+        iconSize: 25,
+        iconEnabledColor: Colors.white,
+        underline: Container(height: 1, color: Colors.white),
+        onChanged: (materialColor) =>
+            context.read<ThemeCubit>().updateTheme(materialColor!),
+        items: kingColors
+            .map<DropdownMenuItem<MaterialColor>>((MaterialColor value) {
+          return DropdownMenuItem<MaterialColor>(
+            value: value,
+            child: Container(
+              color: value,
+              child: Image.asset(
+                'assets/king_pawn.png',
+                height: 25,
+                width: 25,
+              ),
+            ),
+          );
+        }).toList(),
+      ),
       IconButton(
           onPressed: context.read<KingdomCubit>().canUndo
               ? () {
@@ -110,62 +132,6 @@ I will not use or share your information with anyone : Kingdomino Score works of
                   'android/app/src/main/res/mipmap-mdpi/ic_launcher.png')))
     ];
 
-    /*if (warnings.isNotEmpty) {
-      actions.insert(
-          0,
-          Badge(
-            position: BadgePosition.topEnd(top: 1, end: 5),
-            badgeContent: Text(warnings.length.toString()),
-            child: IconButton(
-                icon: const Icon(Icons.warning),
-                onPressed: () => showDialog<void>(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          shape: const RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20.0))),
-                          content: WarningsWidget(warnings: warnings),
-                          actions: <Widget>[
-                            TextButton(
-                              child: const Icon(
-                                Icons.done,
-                                color: Colors.black87,
-                              ),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          ],
-                        );
-                      },
-                    )),
-          ));
-    }*/
-
-    return AppBar(
-        leading: DropdownButton<MaterialColor>(
-          value: context.read<ThemeCubit>().state,
-          iconSize: 25,
-          iconEnabledColor: Colors.white,
-          underline: Container(height: 1, color: Colors.white),
-          onChanged: (materialColor) =>
-              context.read<ThemeCubit>().updateTheme(materialColor!),
-          items: kingColors
-              .map<DropdownMenuItem<MaterialColor>>((MaterialColor value) {
-            return DropdownMenuItem<MaterialColor>(
-              value: value,
-              child: Container(
-                color: value,
-                child: Image.asset(
-                  'assets/king_pawn.png',
-                  height: 25,
-                  width: 25,
-                ),
-              ),
-            );
-          }).toList(),
-        ),
-        actions: actions);
+    return AppBar(actions: actions);
   }
 }

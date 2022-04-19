@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kingdomino_score_count/cubits/kingdom_cubit.dart';
 import 'package:kingdomino_score_count/models/extension.dart';
 import 'package:kingdomino_score_count/models/quests/quest.dart';
+import 'package:provider/provider.dart';
 
 import '../cubits/score_cubit.dart';
 
@@ -64,8 +65,7 @@ class _QuestDialogOptionState extends State<_QuestDialogOption> {
             widget.getSelectedQuests().add(widget.questType);
           }
         });
-        context.read<ScoreCubit>().calculate(context.read<KingdomCubit>().state,
-            null, widget.getSelectedQuests()); //TODO getExtension
+        widget.updateScores(context.read<KingdomCubit>().state);
       },
     );
   }
@@ -133,9 +133,12 @@ class _QuestDialogWidgetState extends State<QuestDialogWidget> {
             icon: const Icon(Icons.shield),
             onPressed: () => showDialog(
                   context: context,
-                  builder: (BuildContext context) {
-                    return dialog;
-                  },
+                  builder: (BuildContext dialogContext) => Provider.value(
+                    value: Provider.of<KingdomCubit>(context, listen: false),
+                    child: Provider.value(
+                        value: Provider.of<ScoreCubit>(context, listen: false),
+                        child: dialog),
+                  ),
                 )));
   }
 }

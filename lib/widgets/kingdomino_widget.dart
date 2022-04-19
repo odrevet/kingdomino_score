@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kingdomino_score_count/cubits/kingdom_cubit.dart';
@@ -8,6 +9,7 @@ import 'package:kingdomino_score_count/cubits/score_cubit.dart';
 import 'package:kingdomino_score_count/cubits/theme_cubit.dart';
 import 'package:kingdomino_score_count/models/lacour/lacour.dart';
 import 'package:kingdomino_score_count/widgets/kingdomino_app_bar.dart';
+import 'package:kingdomino_score_count/widgets/warning_widget.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 
@@ -327,12 +329,41 @@ class KingdominoWidgetState extends State<KingdominoWidget> {
               onExtensionSelect: onExtensionSelect,
               getExtension: getExtension,
               dropdownSelectedExtension: dropdownSelectedExtension,
-              warnings: warnings,
               onKingdomClear: onKingdomClear,
               getSelectedQuests: getSelectedQuests,
               packageInfo: _packageInfo,
               calculateScore: calculateScore,
             ),
+            floatingActionButton: warnings.isEmpty
+                ? null
+                : FloatingActionButton(
+                    child: Badge(
+                        badgeContent: Text(warnings.length.toString()),
+                        child: const Icon(Icons.warning)),
+                    onPressed: () {
+                      showDialog<void>(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            shape: const RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20.0))),
+                            content: WarningsWidget(warnings: warnings),
+                            actions: <Widget>[
+                              TextButton(
+                                child: const Icon(
+                                  Icons.done,
+                                  color: Colors.black87,
+                                ),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }),
             bottomNavigationBar: BottomAppBar(
                 child: BottomBar(
                   getSelectionMode: getSelectionMode,

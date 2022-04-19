@@ -1,18 +1,14 @@
-import 'package:badges/badges.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kingdomino_score_count/cubits/kingdom_cubit.dart';
 import 'package:kingdomino_score_count/widgets/quest_dialog.dart';
-import 'package:kingdomino_score_count/widgets/warning_widget.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
-import '../cubits/score_cubit.dart';
 import '../cubits/theme_cubit.dart';
 import '../models/age_of_giants.dart';
 import '../models/king_colors.dart';
 import '../models/kingdom.dart';
-import '../models/warning.dart';
 
 class KingdominoAppBar extends StatelessWidget with PreferredSizeWidget {
   @override
@@ -24,7 +20,6 @@ class KingdominoAppBar extends StatelessWidget with PreferredSizeWidget {
   final void Function(Kingdom) calculateScore;
   final Function getSelectedQuests;
   final Function onKingdomClear;
-  final List<Warning> warnings;
   final PackageInfo packageInfo;
 
   const KingdominoAppBar({
@@ -32,7 +27,6 @@ class KingdominoAppBar extends StatelessWidget with PreferredSizeWidget {
     required this.onExtensionSelect,
     required this.getExtension,
     required this.dropdownSelectedExtension,
-    required this.warnings,
     required this.packageInfo,
     required this.getSelectedQuests,
     required this.onKingdomClear,
@@ -116,7 +110,7 @@ I will not use or share your information with anyone : Kingdomino Score works of
                   'android/app/src/main/res/mipmap-mdpi/ic_launcher.png')))
     ];
 
-    if (warnings.isNotEmpty) {
+    /*if (warnings.isNotEmpty) {
       actions.insert(
           0,
           Badge(
@@ -147,7 +141,7 @@ I will not use or share your information with anyone : Kingdomino Score works of
                       },
                     )),
           ));
-    }
+    }*/
 
     return AppBar(
         leading: DropdownButton<MaterialColor>(

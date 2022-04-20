@@ -1,6 +1,6 @@
 import 'dart:collection';
 
-import 'score_quest.dart';
+import 'quests/quest.dart';
 import 'extensions/extension.dart';
 import 'kingdom.dart';
 import 'extensions/lacour/lacour.dart';

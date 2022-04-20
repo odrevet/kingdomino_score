@@ -1,5 +1,14 @@
 import '../kingdom.dart';
 
+export 'bleak_king.dart';
+export 'folie_des_grandeurs.dart';
+export 'four_corners.dart';
+export 'harmony.dart';
+export 'local_business.dart';
+export 'lost_corner.dart';
+export 'middle_kingdom.dart';
+export 'quest.dart';
+
 enum QuestType {
   harmony,
   middleKingdom,
@@ -21,7 +30,7 @@ enum QuestType {
 }
 
 abstract class Quest {
-  int reward; //points awarded if quest is fulfilled
+  int reward;
 
   Quest({required this.reward});
 

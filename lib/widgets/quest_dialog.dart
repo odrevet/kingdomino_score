@@ -2,7 +2,7 @@ import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kingdomino_score_count/cubits/kingdom_cubit.dart';
-import 'package:kingdomino_score_count/models/extension.dart';
+import 'package:kingdomino_score_count/models/extensions/extension.dart';
 import 'package:kingdomino_score_count/models/quests/quest.dart';
 import 'package:provider/provider.dart';
 

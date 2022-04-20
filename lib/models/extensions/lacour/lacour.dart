@@ -1,18 +1,18 @@
-import 'package:kingdomino_score_count/models/lacour/axe_warrior.dart';
-import 'package:kingdomino_score_count/models/lacour/banker.dart';
-import 'package:kingdomino_score_count/models/lacour/captain.dart';
-import 'package:kingdomino_score_count/models/lacour/farmer.dart';
-import 'package:kingdomino_score_count/models/lacour/fisherman.dart';
-import 'package:kingdomino_score_count/models/lacour/heavy_archery.dart';
-import 'package:kingdomino_score_count/models/lacour/king.dart';
-import 'package:kingdomino_score_count/models/lacour/light_archery.dart';
-import 'package:kingdomino_score_count/models/lacour/lumberjack.dart';
-import 'package:kingdomino_score_count/models/lacour/queen.dart';
-import 'package:kingdomino_score_count/models/lacour/shepherdess.dart';
-import 'package:kingdomino_score_count/models/lacour/sword_warrior.dart';
+import 'package:kingdomino_score_count/models/extensions/lacour/axe_warrior.dart';
+import 'package:kingdomino_score_count/models/extensions/lacour/banker.dart';
+import 'package:kingdomino_score_count/models/extensions/lacour/captain.dart';
+import 'package:kingdomino_score_count/models/extensions/lacour/farmer.dart';
+import 'package:kingdomino_score_count/models/extensions/lacour/fisherman.dart';
+import 'package:kingdomino_score_count/models/extensions/lacour/heavy_archery.dart';
+import 'package:kingdomino_score_count/models/extensions/lacour/king.dart';
+import 'package:kingdomino_score_count/models/extensions/lacour/light_archery.dart';
+import 'package:kingdomino_score_count/models/extensions/lacour/lumberjack.dart';
+import 'package:kingdomino_score_count/models/extensions/lacour/queen.dart';
+import 'package:kingdomino_score_count/models/extensions/lacour/shepherdess.dart';
+import 'package:kingdomino_score_count/models/extensions/lacour/sword_warrior.dart';
 
-import '../kingdom.dart';
-import '../land.dart';
+import '../../kingdom.dart';
+import '../../land.dart';
 
 export 'axe_warrior.dart';
 export 'banker.dart';

@@ -3,7 +3,7 @@ import 'dart:collection';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kingdomino_score_count/models/extension.dart';
+import 'package:kingdomino_score_count/models/extensions/extension.dart';
 
 import '../cubits/kingdom_cubit.dart';
 import '../cubits/score_cubit.dart';

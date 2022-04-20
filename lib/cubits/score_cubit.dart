@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../models/extension.dart';
+import '../models/extensions/extension.dart';
 import '../models/kingdom.dart';
 import '../models/score.dart';
 

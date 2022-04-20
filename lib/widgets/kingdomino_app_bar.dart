@@ -6,7 +6,7 @@ import 'package:kingdomino_score_count/widgets/quest_dialog.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import '../cubits/theme_cubit.dart';
-import '../models/age_of_giants.dart';
+import '../models/extensions/age_of_giants.dart';
 import '../models/king_colors.dart';
 import '../models/kingdom.dart';
 

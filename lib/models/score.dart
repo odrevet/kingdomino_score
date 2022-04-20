@@ -1,9 +1,9 @@
 import 'dart:collection';
 
-import '../score_quest.dart';
-import 'extension.dart';
+import 'score_quest.dart';
+import 'extensions/extension.dart';
 import 'kingdom.dart';
-import 'lacour/lacour.dart';
+import 'extensions/lacour/lacour.dart';
 import 'land.dart' show LandType;
 
 class Score {

@@ -7,14 +7,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kingdomino_score_count/cubits/kingdom_cubit.dart';
 import 'package:kingdomino_score_count/cubits/score_cubit.dart';
 import 'package:kingdomino_score_count/cubits/theme_cubit.dart';
-import 'package:kingdomino_score_count/models/lacour/lacour.dart';
+import 'package:kingdomino_score_count/models/extensions/lacour/lacour.dart';
 import 'package:kingdomino_score_count/widgets/kingdomino_app_bar.dart';
 import 'package:kingdomino_score_count/widgets/warning_widget.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 
-import '../models/age_of_giants.dart';
-import '../models/extension.dart';
+import '../models/extensions/age_of_giants.dart';
+import '../models/extensions/extension.dart';
 import '../models/game_set.dart';
 import '../models/king_colors.dart';
 import '../models/kingdom.dart';

@@ -1,4 +1,4 @@
-import '../kingdom.dart';
+import '../../kingdom.dart';
 import 'lacour.dart';
 
 class SwordWarrior extends Courtier {

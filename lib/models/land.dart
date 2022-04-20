@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'lacour/lacour.dart';
+import 'extensions/lacour/lacour.dart';
 
 enum LandType { wheat, grassland, forest, lake, swamp, mine, castle }
 

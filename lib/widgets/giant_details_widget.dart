@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../cubits/kingdom_cubit.dart';
-import '../models/age_of_giants.dart';
+import '../models/extensions/age_of_giants.dart';
 import '../models/land.dart';
 import '../models/property.dart';
 import '../models/quests/quest.dart';

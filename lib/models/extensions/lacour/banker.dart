@@ -1,58 +1,58 @@
-import '../kingdom.dart';
-import '../land.dart';
+import '../../kingdom.dart';
+import '../../land.dart';
 import 'lacour.dart';
 
-class Fisherman extends Courtier {
-  static final Fisherman _singleton = Fisherman._internal();
+class Banker extends Courtier {
+  static final Banker _singleton = Banker._internal();
 
-  factory Fisherman() {
+  factory Banker() {
     return _singleton;
   }
 
-  Fisherman._internal();
+  Banker._internal();
 
   bool _checkLand(Land land) {
-    return land.landType == LandType.lake && land.hasResource;
+    return land.hasResource;
   }
 
   @override
   int getPoints(Kingdom kingdom, int x, int y) {
-    int points = 3;
+    int points = 2;
 
     if (kingdom.isInBound(x - 1, y - 1) &&
         _checkLand(kingdom.getLand(x - 1, y - 1)!)) {
-      points += 3;
+      points += 2;
     }
 
     if (kingdom.isInBound(x - 1, y) && _checkLand(kingdom.getLand(x - 1, y)!)) {
-      points += 3;
+      points += 2;
     }
 
     if (kingdom.isInBound(x - 1, y + 1) &&
         _checkLand(kingdom.getLand(x - 1, y + 1)!)) {
-      points += 3;
+      points += 2;
     }
 
     if (kingdom.isInBound(x, y - 1) && _checkLand(kingdom.getLand(x, y - 1)!)) {
-      points += 3;
+      points += 2;
     }
 
     if (kingdom.isInBound(x, y + 1) && _checkLand(kingdom.getLand(x, y + 1)!)) {
-      points += 3;
+      points += 2;
     }
 
     if (kingdom.isInBound(x + 1, y - 1) &&
         _checkLand(kingdom.getLand(x + 1, y - 1)!)) {
-      points += 3;
+      points += 2;
     }
 
     if (kingdom.isInBound(x + 1, y) && _checkLand(kingdom.getLand(x + 1, y)!)) {
-      points += 3;
+      points += 2;
     }
 
     if (kingdom.isInBound(x + 1, y + 1) &&
         _checkLand(kingdom.getLand(x + 1, y + 1)!)) {
-      points += 3;
+      points += 2;
     }
 
     return points;

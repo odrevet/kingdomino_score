@@ -1,4 +1,4 @@
-import 'land.dart' show LandType;
+import '../land.dart';
 
 const String giant = '\u{1F9D4}';
 

@@ -1,5 +1,5 @@
-import '../kingdom.dart';
-import '../land.dart';
+import '../../kingdom.dart';
+import '../../land.dart';
 import 'lacour.dart';
 
 class Lumberjack extends Courtier {

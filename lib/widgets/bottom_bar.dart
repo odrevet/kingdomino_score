@@ -109,66 +109,78 @@ class _BottomBarState extends State<BottomBar> {
     var isSelected = widget.getSelectionMode() == SelectionMode.land &&
         widget.getSelectedLandType() == landType;
 
-    return GestureDetector(
-        onTap: () => _onSelectLandType(landType),
-        child: Container(
-            margin: const EdgeInsets.all(5.0),
-            height: _buttonSize,
-            width: _buttonSize,
-            decoration: BoxDecoration(
-                boxShadow: isSelected ? [_selectedBoxShadow] : null),
-            child: LandTile(landType: landType)));
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+          onTap: () => _onSelectLandType(landType),
+          child: Container(
+              margin: const EdgeInsets.all(5.0),
+              height: _buttonSize,
+              width: _buttonSize,
+              decoration: BoxDecoration(
+                  boxShadow: isSelected ? [_selectedBoxShadow] : null),
+              child: LandTile(landType: landType))),
+    );
   }
 
   Widget resourceButton() {
     var isSelected = widget.getSelectionMode() == SelectionMode.resource;
 
-    return GestureDetector(
-        onTap: () => widget.setSelectionMode(SelectionMode.resource),
-        child: Container(
-            margin: const EdgeInsets.all(5.0),
-            height: _buttonSize,
-            width: _buttonSize,
-            decoration: BoxDecoration(
-                boxShadow: isSelected ? [_selectedBoxShadow] : null),
-            child: Image.asset('assets/lacour/resource.png')));
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+          onTap: () => widget.setSelectionMode(SelectionMode.resource),
+          child: Container(
+              margin: const EdgeInsets.all(5.0),
+              height: _buttonSize,
+              width: _buttonSize,
+              decoration: BoxDecoration(
+                  boxShadow: isSelected ? [_selectedBoxShadow] : null),
+              child: Image.asset('assets/lacour/resource.png'))),
+    );
   }
 
   Widget courtierButton(Courtier courtier) {
     var isSelected = widget.getSelectionMode() == SelectionMode.courtier &&
         widget.getSelectedcourtier() == courtier;
 
-    return GestureDetector(
-        onTap: () => _onSelectcourtier(courtier),
-        child: Container(
-            margin: const EdgeInsets.all(5.0),
-            height: _buttonSize,
-            width: _buttonSize,
-            decoration: BoxDecoration(
-                boxShadow: isSelected ? [_selectedBoxShadow] : null),
-            child: Image(
-                height: 50,
-                width: 50,
-                image: AssetImage(courtierPicture[courtier.runtimeType]!))));
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+          onTap: () => _onSelectcourtier(courtier),
+          child: Container(
+              margin: const EdgeInsets.all(5.0),
+              height: _buttonSize,
+              width: _buttonSize,
+              decoration: BoxDecoration(
+                  boxShadow: isSelected ? [_selectedBoxShadow] : null),
+              child: Image(
+                  height: 50,
+                  width: 50,
+                  image: AssetImage(courtierPicture[courtier.runtimeType]!)))),
+    );
   }
 
   Widget castleButton() {
     bool isSelected = widget.getSelectionMode() == SelectionMode.castle &&
         widget.getSelectedLandType() == LandType.castle;
 
-    return GestureDetector(
-      onTap: () => setState(() {
-        widget.setSelectionMode(SelectionMode.castle);
-        widget.setSelectedLandType(LandType.castle);
-      }),
-      child: Container(
-        margin: const EdgeInsets.all(5.0),
-        height: _buttonSize,
-        width: _buttonSize,
-        decoration: BoxDecoration(
-            boxShadow: isSelected ? [_selectedBoxShadow] : null,
-            border: outline),
-        child: CastleTile(context.read<ThemeCubit>().state),
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: () => setState(() {
+          widget.setSelectionMode(SelectionMode.castle);
+          widget.setSelectedLandType(LandType.castle);
+        }),
+        child: Container(
+          margin: const EdgeInsets.all(5.0),
+          height: _buttonSize,
+          width: _buttonSize,
+          decoration: BoxDecoration(
+              boxShadow: isSelected ? [_selectedBoxShadow] : null,
+              border: outline),
+          child: CastleTile(context.read<ThemeCubit>().state),
+        ),
       ),
     );
   }
@@ -176,57 +188,63 @@ class _BottomBarState extends State<BottomBar> {
   Widget crownButton() {
     var isSelected = widget.getSelectionMode() == SelectionMode.crown;
 
-    return GestureDetector(
-        onTap: () => _onSelectCrown(),
-        child: Container(
-          margin: const EdgeInsets.all(5.0),
-          height: _buttonSize,
-          width: _buttonSize,
-          decoration: BoxDecoration(
-              boxShadow: isSelected ? [_selectedBoxShadow] : null),
-          child: const FittedBox(fit: BoxFit.fitHeight, child: Text(crown)),
-        ));
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+          onTap: () => _onSelectCrown(),
+          child: Container(
+            margin: const EdgeInsets.all(5.0),
+            height: _buttonSize,
+            width: _buttonSize,
+            decoration: BoxDecoration(
+                boxShadow: isSelected ? [_selectedBoxShadow] : null),
+            child: const FittedBox(fit: BoxFit.fitHeight, child: Text(crown)),
+          )),
+    );
   }
 
   Widget giantButton() {
     var isSelected = widget.getSelectionMode() == SelectionMode.giant;
 
-    return GestureDetector(
-        onTap: () => _onSelectGiant(),
-        /*onLongPress: () => showDialog<void>(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(20.0))),
-                  content: GiantsDetailsWidget(
-                      scoreOfQuest:
-                          context.read<ScoreCubit>().state.scoreOfQuest,
-                      quests: widget.quests,
-                      groupScore: widget.groupScore,
-                      score: context.read<ScoreCubit>().state.score),
-                  actions: <Widget>[
-                    TextButton(
-                      child: const Icon(
-                        Icons.done,
-                        color: Colors.black87,
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+          onTap: () => _onSelectGiant(),
+          /*onLongPress: () => showDialog<void>(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(20.0))),
+                    content: GiantsDetailsWidget(
+                        scoreOfQuest:
+                            context.read<ScoreCubit>().state.scoreOfQuest,
+                        quests: widget.quests,
+                        groupScore: widget.groupScore,
+                        score: context.read<ScoreCubit>().state.score),
+                    actions: <Widget>[
+                      TextButton(
+                        child: const Icon(
+                          Icons.done,
+                          color: Colors.black87,
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
                       ),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                  ],
-                );
-              },
-            ),*/
-        child: Container(
-          margin: const EdgeInsets.all(5.0),
-          height: _buttonSize,
-          width: _buttonSize,
-          decoration: BoxDecoration(
-              boxShadow: isSelected ? [_selectedBoxShadow] : null),
-          child: const FittedBox(fit: BoxFit.fitHeight, child: Text(giant)),
-        ));
+                    ],
+                  );
+                },
+              ),*/
+          child: Container(
+            margin: const EdgeInsets.all(5.0),
+            height: _buttonSize,
+            width: _buttonSize,
+            decoration: BoxDecoration(
+                boxShadow: isSelected ? [_selectedBoxShadow] : null),
+            child: const FittedBox(fit: BoxFit.fitHeight, child: Text(giant)),
+          )),
+    );
   }
 
   //CALLBACKS

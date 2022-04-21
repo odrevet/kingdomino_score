@@ -4,10 +4,10 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kingdomino_score_count/models/extensions/extension.dart';
+import 'package:kingdomino_score_count/widgets/land_tile.dart';
 
 import '../cubits/kingdom_cubit.dart';
 import '../cubits/score_cubit.dart';
-import '../models/land.dart';
 import '../models/quests/quest.dart';
 import 'kingdomino_widget.dart';
 
@@ -46,10 +46,13 @@ class ScoreDetailsWidget extends StatelessWidget {
       tableCells.add(TableCell(
           child: Align(
         alignment: Alignment.centerRight,
-        child: AutoSizeText(square,
-            maxLines: 1,
-            group: groupScore,
-            style: TextStyle(color: getColorForLandType(property.landType))),
+        child: SizedBox(
+          width: 16.0,
+          height: 16.0,
+          child: LandTile(
+            landType: property.landType,
+          ),
+        ),
       )));
       tableCells.add(TableCell(
           child: Align(

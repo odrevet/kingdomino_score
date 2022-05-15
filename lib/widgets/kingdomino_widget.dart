@@ -359,6 +359,7 @@ class KingdominoWidgetState extends State<KingdominoWidget> {
                       );
                     }),
             bottomNavigationBar: BottomAppBar(
+                color: Theme.of(context).primaryColor,
                 child: BottomBar(
                   getSelectionMode: getSelectionMode,
                   setSelectionMode: setSelectionMode,
@@ -369,8 +370,7 @@ class KingdominoWidgetState extends State<KingdominoWidget> {
                   getExtension: getExtension,
                   quests: selectedQuests,
                   groupScore: groupScore,
-                ),
-                color: Theme.of(context).primaryColor),
+                )),
             body: body);
       },
     );

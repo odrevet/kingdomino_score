@@ -40,11 +40,11 @@ class BottomBar extends StatefulWidget {
       : super(key: key);
 
   @override
-  _BottomBarState createState() => _BottomBarState();
+  BottomBarState createState() => BottomBarState();
 }
 
-class _BottomBarState extends State<BottomBar> {
-  _BottomBarState();
+class BottomBarState extends State<BottomBar> {
+  BottomBarState();
 
   final double _buttonSize = 40.0;
 

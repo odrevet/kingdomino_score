@@ -31,11 +31,11 @@ class KingdomWidget extends StatefulWidget {
       : super(key: key);
 
   @override
-  _KingdomWidgetState createState() => _KingdomWidgetState();
+  KingdomWidgetState createState() => KingdomWidgetState();
 }
 
-class _KingdomWidgetState extends State<KingdomWidget> {
-  _KingdomWidgetState();
+class KingdomWidgetState extends State<KingdomWidget> {
+  KingdomWidgetState();
 
   Widget _buildLand(int y, int x) {
     Land? land = widget.kingdom.getLand(x, y);

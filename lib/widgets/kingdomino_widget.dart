@@ -36,10 +36,10 @@ class KingdominoWidget extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  KingdominoWidgetState createState() => KingdominoWidgetState();
+  State<KingdominoWidget> createState() => _KingdominoWidgetState();
 }
 
-class KingdominoWidgetState extends State<KingdominoWidget> {
+class _KingdominoWidgetState extends State<KingdominoWidget> {
   LandType? selectedLandType;
   Courtier? selectedcourtier;
   SelectionMode selectionMode = SelectionMode.land;
@@ -58,7 +58,7 @@ class KingdominoWidgetState extends State<KingdominoWidget> {
   );
   String dropdownSelectedExtension = '';
 
-  KingdominoWidgetState();
+  _KingdominoWidgetState();
 
   setKingColor(MaterialColor materialColor) =>
       context.read<ThemeCubit>().updateTheme(materialColor);

@@ -81,11 +81,11 @@ class QuestDialogWidget extends StatefulWidget {
       : super(key: key);
 
   @override
-  QuestDialogWidgetState createState() => QuestDialogWidgetState();
+  State<QuestDialogWidget> createState() => _QuestDialogWidgetState();
 }
 
-class QuestDialogWidgetState extends State<QuestDialogWidget> {
-  QuestDialogWidgetState();
+class _QuestDialogWidgetState extends State<QuestDialogWidget> {
+  _QuestDialogWidgetState();
 
   @override
   build(BuildContext context) {

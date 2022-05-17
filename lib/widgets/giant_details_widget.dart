@@ -140,8 +140,7 @@ class GiantsDetailsWidget extends StatelessWidget {
       tableCells.add(TableCell(
           child: Align(
               alignment: Alignment.centerRight,
-              child:
-                  AutoSizeText('Σ$giant', maxLines: 1, group: groupScore))));
+              child: AutoSizeText('Σ$giant', maxLines: 1, group: groupScore))));
 
       tableCells.add(TableCell(
           child: Align(

@@ -4,8 +4,8 @@ import 'package:kingdomino_score_count/cubits/theme_cubit.dart';
 
 import '../cubits/kingdom_cubit.dart';
 import '../models/extensions/age_of_giants.dart';
-import '../models/kingdom.dart';
 import '../models/extensions/lacour/lacour.dart';
+import '../models/kingdom.dart';
 import '../models/land.dart';
 import '../models/selection_mode.dart';
 import 'castle_tile.dart';

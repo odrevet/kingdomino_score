@@ -1,10 +1,10 @@
 import 'dart:collection';
 
-import 'quests/quest.dart';
 import 'extensions/extension.dart';
-import 'kingdom.dart';
 import 'extensions/lacour/lacour.dart';
+import 'kingdom.dart';
 import 'land.dart' show LandType;
+import 'quests/quest.dart';
 
 class Score {
   int scoreProperty = 0;

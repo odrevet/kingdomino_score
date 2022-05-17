@@ -1,6 +1,5 @@
 import 'dart:collection';
 
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -43,7 +42,6 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
   LandType? selectedLandType;
   Courtier? selectedcourtier;
   SelectionMode selectionMode = SelectionMode.land;
-  var groupScore = AutoSizeGroup();
 
   Extension? extension;
 
@@ -281,7 +279,6 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
                                               listen: false),
                                           child: AlertDialog(
                                             content: ScoreDetailsWidget(
-                                                groupScore: groupScore,
                                                 quests: selectedQuests,
                                                 getExtension: getExtension),
                                             actions: <Widget>[
@@ -301,9 +298,7 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
             return Row(children: <Widget>[
               Expanded(
                   child: ScoreDetailsWidget(
-                      groupScore: groupScore,
-                      quests: selectedQuests,
-                      getExtension: getExtension)),
+                      quests: selectedQuests, getExtension: getExtension)),
               KingdomWidget(
                   getSelectionMode: getSelectionMode,
                   getSelectedLandType: getSelectedLandType,
@@ -369,7 +364,6 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
                   setSelectedcourtier: setSelectedcourtier,
                   getExtension: getExtension,
                   quests: selectedQuests,
-                  groupScore: groupScore,
                 )),
             body: body);
       },

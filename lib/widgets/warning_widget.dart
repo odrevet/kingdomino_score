@@ -1,4 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 import '../models/land.dart';
@@ -7,9 +6,8 @@ import 'kingdomino_widget.dart';
 
 class WarningsWidget extends StatelessWidget {
   final List<Warning>? warnings;
-  final groupWarning = AutoSizeGroup();
 
-  WarningsWidget({this.warnings, Key? key}) : super(key: key);
+  const WarningsWidget({this.warnings, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,41 +19,44 @@ class WarningsWidget extends StatelessWidget {
       tableCells.add(TableCell(
           child: Align(
               alignment: Alignment.centerRight,
-              child: AutoSizeText(warning.leftOperand.toString(),
-                  maxLines: 1, group: groupWarning))));
+              child: Text(
+                warning.leftOperand.toString(),
+              ))));
 
       tableCells.add(warning.landType == LandType.castle
-          ? TableCell(
+          ? const TableCell(
               child: Align(
                   alignment: Alignment.center,
-                  child:
-                      AutoSizeText(castle, maxLines: 1, group: groupWarning)))
+                  child: Text(
+                    castle,
+                  )))
           : TableCell(
               child: Align(
                   alignment: Alignment.center,
-                  child: AutoSizeText(square,
-                      maxLines: 1,
-                      group: groupWarning,
+                  child: Text(square,
                       style: TextStyle(
                           color: getColorForLandType(warning.landType))))));
 
       tableCells.add(TableCell(
           child: Align(
               alignment: Alignment.center,
-              child: AutoSizeText(crown * warning.crown,
-                  maxLines: 1, group: groupWarning))));
+              child: Text(
+                crown * warning.crown,
+              ))));
 
       tableCells.add(TableCell(
           child: Align(
               alignment: Alignment.center,
-              child: AutoSizeText(warning.operator,
-                  maxLines: 1, group: groupWarning))));
+              child: Text(
+                warning.operator,
+              ))));
 
       tableCells.add(TableCell(
           child: Align(
               alignment: Alignment.centerRight,
-              child: AutoSizeText(warning.rightOperand.toString(),
-                  maxLines: 1, group: groupWarning))));
+              child: Text(
+                warning.rightOperand.toString(),
+              ))));
 
       TableRow tableRow = TableRow(children: tableCells);
       tableRows.add(tableRow);

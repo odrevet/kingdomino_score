@@ -1,6 +1,5 @@
 import 'dart:collection';
 
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kingdomino_score_count/models/extensions/extension.dart';
@@ -12,15 +11,11 @@ import '../models/quests/quest.dart';
 import 'kingdomino_widget.dart';
 
 class ScoreDetailsWidget extends StatelessWidget {
-  final AutoSizeGroup groupScore;
   final HashSet<QuestType> quests;
   final Function getExtension;
 
   const ScoreDetailsWidget(
-      {required this.groupScore,
-      required this.quests,
-      required this.getExtension,
-      Key? key})
+      {required this.quests, required this.getExtension, Key? key})
       : super(key: key);
 
   @override
@@ -39,10 +34,8 @@ class ScoreDetailsWidget extends StatelessWidget {
 
       tableCells.add(TableCell(
           child: Align(
-        alignment: Alignment.centerRight,
-        child: AutoSizeText('${property.landCount}',
-            maxLines: 1, group: groupScore),
-      )));
+              alignment: Alignment.centerRight,
+              child: Text('${property.landCount}'))));
       tableCells.add(TableCell(
           child: Align(
         alignment: Alignment.centerRight,
@@ -54,28 +47,26 @@ class ScoreDetailsWidget extends StatelessWidget {
           ),
         ),
       )));
+      tableCells.add(const TableCell(
+          child: Align(
+              alignment: Alignment.centerRight,
+              child: Text('×', maxLines: 1))));
       tableCells.add(TableCell(
           child: Align(
               alignment: Alignment.centerRight,
-              child: AutoSizeText('×', maxLines: 1, group: groupScore))));
+              child: Text(property.crownCount.toString(), maxLines: 1))));
+      tableCells.add(const TableCell(
+          child: Align(
+              alignment: Alignment.centerRight,
+              child: Text(crown, maxLines: 1))));
+      tableCells.add(const TableCell(
+          child: Align(
+              alignment: Alignment.center, child: Text('=', maxLines: 1))));
       tableCells.add(TableCell(
           child: Align(
               alignment: Alignment.centerRight,
-              child: AutoSizeText(property.crownCount.toString(),
-                  maxLines: 1, group: groupScore))));
-      tableCells.add(TableCell(
-          child: Align(
-              alignment: Alignment.centerRight,
-              child: AutoSizeText(crown, maxLines: 1, group: groupScore))));
-      tableCells.add(TableCell(
-          child: Align(
-              alignment: Alignment.center,
-              child: AutoSizeText('=', maxLines: 1, group: groupScore))));
-      tableCells.add(TableCell(
-          child: Align(
-              alignment: Alignment.centerRight,
-              child: AutoSizeText('${property.landCount * property.crownCount}',
-                  maxLines: 1, group: groupScore))));
+              child: Text('${property.landCount * property.crownCount}',
+                  maxLines: 1))));
 
       var tableRow = TableRow(children: tableCells);
       tableRows.add(tableRow);
@@ -85,28 +76,25 @@ class ScoreDetailsWidget extends StatelessWidget {
     if (quests.isNotEmpty) {
       var tableCells = <TableCell>[];
 
-      tableCells.add(const TableCell(child: AutoSizeText('')));
-      tableCells.add(const TableCell(child: AutoSizeText('')));
-      tableCells.add(const TableCell(child: AutoSizeText('')));
-      tableCells.add(const TableCell(child: AutoSizeText('')));
+      tableCells.add(const TableCell(child: Text('')));
+      tableCells.add(const TableCell(child: Text('')));
+      tableCells.add(const TableCell(child: Text('')));
+      tableCells.add(const TableCell(child: Text('')));
 
       tableCells.add(const TableCell(
           child: Align(
               alignment: Alignment.centerRight,
               child: Icon(Icons.shield, color: Colors.white))));
 
-      tableCells.add(TableCell(
-          child: Align(
-              alignment: Alignment.center,
-              child: AutoSizeText('=', maxLines: 1, group: groupScore))));
+      tableCells.add(const TableCell(
+          child: Align(alignment: Alignment.center, child: Text('='))));
 
       tableCells.add(TableCell(
           child: Align(
               alignment: Alignment.centerRight,
-              child: AutoSizeText(
-                  context.read<ScoreCubit>().state.scoreOfQuest.toString(),
-                  maxLines: 1,
-                  group: groupScore))));
+              child: Text(
+                context.read<ScoreCubit>().state.scoreOfQuest.toString(),
+              ))));
 
       var tableRow = TableRow(children: tableCells);
       tableRows.add(tableRow);
@@ -115,10 +103,10 @@ class ScoreDetailsWidget extends StatelessWidget {
     if (getExtension() == Extension.laCour) {
       var tableCells = <TableCell>[];
 
-      tableCells.add(const TableCell(child: AutoSizeText('')));
-      tableCells.add(const TableCell(child: AutoSizeText('')));
-      tableCells.add(const TableCell(child: AutoSizeText('')));
-      tableCells.add(const TableCell(child: AutoSizeText('')));
+      tableCells.add(const TableCell(child: Text('')));
+      tableCells.add(const TableCell(child: Text('')));
+      tableCells.add(const TableCell(child: Text('')));
+      tableCells.add(const TableCell(child: Text('')));
 
       tableCells.add(TableCell(
           child: Align(
@@ -129,18 +117,14 @@ class ScoreDetailsWidget extends StatelessWidget {
                 width: 25,
               ))));
 
-      tableCells.add(TableCell(
-          child: Align(
-              alignment: Alignment.center,
-              child: AutoSizeText('=', maxLines: 1, group: groupScore))));
+      tableCells.add(const TableCell(
+          child: Align(alignment: Alignment.center, child: Text('='))));
 
       tableCells.add(TableCell(
           child: Align(
               alignment: Alignment.centerRight,
-              child: AutoSizeText(
-                  context.read<ScoreCubit>().state.scoreOfLacour.toString(),
-                  maxLines: 1,
-                  group: groupScore))));
+              child: Text(
+                  context.read<ScoreCubit>().state.scoreOfLacour.toString()))));
 
       var tableRow = TableRow(children: tableCells);
       tableRows.add(tableRow);
@@ -149,28 +133,21 @@ class ScoreDetailsWidget extends StatelessWidget {
     //SUM
     var tableCells = <TableCell>[];
 
-    tableCells.add(const TableCell(child: AutoSizeText('')));
-    tableCells.add(const TableCell(child: AutoSizeText('')));
-    tableCells.add(const TableCell(child: AutoSizeText('')));
-    tableCells.add(const TableCell(child: AutoSizeText('')));
+    tableCells.add(const TableCell(child: Text('')));
+    tableCells.add(const TableCell(child: Text('')));
+    tableCells.add(const TableCell(child: Text('')));
+    tableCells.add(const TableCell(child: Text('')));
+
+    tableCells.add(const TableCell(
+        child: Align(alignment: Alignment.centerRight, child: Text('Σ'))));
+
+    tableCells.add(const TableCell(
+        child: Align(alignment: Alignment.center, child: Text('='))));
 
     tableCells.add(TableCell(
         child: Align(
             alignment: Alignment.centerRight,
-            child: AutoSizeText('Σ', maxLines: 1, group: groupScore))));
-
-    tableCells.add(TableCell(
-        child: Align(
-            alignment: Alignment.center,
-            child: AutoSizeText('=', maxLines: 1, group: groupScore))));
-
-    tableCells.add(TableCell(
-        child: Align(
-            alignment: Alignment.centerRight,
-            child: AutoSizeText(
-                context.read<ScoreCubit>().state.score.toString(),
-                maxLines: 1,
-                group: groupScore))));
+            child: Text(context.read<ScoreCubit>().state.score.toString()))));
 
     var tableRow = TableRow(children: tableCells);
     tableRows.add(tableRow);

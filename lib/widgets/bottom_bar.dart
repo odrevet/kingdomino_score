@@ -1,6 +1,5 @@
 import 'dart:collection';
 
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kingdomino_score_count/models/extensions/extension.dart';
@@ -23,7 +22,6 @@ class BottomBar extends StatefulWidget {
   final Function getSelectedcourtier;
   final Function setSelectedcourtier;
   final Function getExtension;
-  final AutoSizeGroup groupScore;
   final HashSet<QuestType> quests;
 
   const BottomBar(
@@ -35,7 +33,6 @@ class BottomBar extends StatefulWidget {
       required this.setSelectedcourtier,
       required this.getExtension,
       required this.quests,
-      required this.groupScore,
       Key? key})
       : super(key: key);
 

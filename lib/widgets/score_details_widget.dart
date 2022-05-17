@@ -1,5 +1,6 @@
 import 'dart:collection';
 
+import "package:charcode/charcode.dart";
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kingdomino_score_count/models/extensions/extension.dart';
@@ -138,8 +139,10 @@ class ScoreDetailsWidget extends StatelessWidget {
     tableCells.add(const TableCell(child: Text('')));
     tableCells.add(const TableCell(child: Text('')));
 
-    tableCells.add(const TableCell(
-        child: Align(alignment: Alignment.centerRight, child: Text('Σ'))));
+    tableCells.add(TableCell(
+        child: Align(
+            alignment: Alignment.centerRight,
+            child: Text(String.fromCharCode($Sigma)))));
 
     tableCells.add(const TableCell(
         child: Align(alignment: Alignment.center, child: Text('='))));

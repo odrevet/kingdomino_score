@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../models/land.dart';
 import '../models/warning.dart';
 import 'kingdomino_widget.dart';
+import 'land_tile.dart';
 
 class WarningsWidget extends StatelessWidget {
   final List<Warning>? warnings;
@@ -26,16 +27,21 @@ class WarningsWidget extends StatelessWidget {
       tableCells.add(warning.landType == LandType.castle
           ? const TableCell(
               child: Align(
-                  alignment: Alignment.center,
+                  alignment: Alignment.centerRight,
                   child: Text(
                     castle,
                   )))
           : TableCell(
               child: Align(
-                  alignment: Alignment.center,
-                  child: Text(square,
-                      style: TextStyle(
-                          color: getColorForLandType(warning.landType))))));
+              alignment: Alignment.centerRight,
+              child: SizedBox(
+                width: 16.0,
+                height: 16.0,
+                child: LandTile(
+                  landType: warning.landType,
+                ),
+              ),
+            )));
 
       tableCells.add(TableCell(
           child: Align(

@@ -8,29 +8,22 @@ import 'quests/quest.dart';
 
 class Score {
   int scoreProperty = 0;
-  int scoreOfQuest = 0;
-  int scoreOfLacour = 0;
-  int score = 0;
+  int scoreQuest = 0;
+  int scoreLacour = 0;
 
-  Score(
-      {this.score = 0,
-      this.scoreProperty = 0,
-      this.scoreOfQuest = 0,
-      this.scoreOfLacour = 0});
+  Score({this.scoreProperty = 0, this.scoreQuest = 0, this.scoreLacour = 0});
 
-  copyWith(
-          {int? score,
-          int? scoreProperty,
-          int? scoreOfQuest,
-          int? scoreOfLacour}) =>
-      Score(
-          score: score ?? this.score,
-          scoreProperty: scoreProperty ?? this.scoreProperty,
-          scoreOfQuest: scoreOfQuest ?? this.scoreOfQuest,
-          scoreOfLacour: scoreOfLacour ?? this.scoreOfLacour);
+  copyWith({int? scoreProperty, int? scoreQuest, int? scoreLacour}) => Score(
+      scoreProperty: scoreProperty ?? this.scoreProperty,
+      scoreQuest: scoreQuest ?? this.scoreQuest,
+      scoreLacour: scoreLacour ?? this.scoreLacour);
+
+  int get score {
+    return scoreProperty + scoreQuest + scoreLacour;
+  }
 
   void updateScoreQuest(Kingdom kingdom, selectedQuests) {
-    scoreOfQuest = calculateQuestScore(selectedQuests, kingdom);
+    scoreQuest = calculateQuestScore(selectedQuests, kingdom);
   }
 
   int calculateLacourScore(Kingdom kingdom) {
@@ -142,7 +135,7 @@ class Score {
   }
 
   void updateScoreLacour(Kingdom kingdom) {
-    scoreOfLacour = calculateLacourScore(kingdom);
+    scoreLacour = calculateLacourScore(kingdom);
   }
 
   void updateScores(Kingdom kingdom, Extension? extension, selectedQuests) {
@@ -151,7 +144,6 @@ class Score {
     if (extension == Extension.laCour) {
       updateScoreLacour(kingdom);
     }
-    updateScore(extension);
   }
 
   void _updateScoreProperty(Kingdom kingdom) {
@@ -159,14 +151,7 @@ class Score {
     scoreProperty = kingdom.calculateScoreFromProperties(properties);
   }
 
-  void updateScore(Extension? extension) {
-    score = scoreProperty + scoreOfQuest;
-    if (extension == Extension.laCour) {
-      score += scoreOfLacour;
-    }
-  }
-
   void resetScores() {
-    score = scoreProperty = scoreOfQuest = scoreOfLacour = 0;
+    scoreProperty = scoreQuest = scoreLacour = 0;
   }
 }

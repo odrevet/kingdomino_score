@@ -94,7 +94,7 @@ class ScoreDetailsWidget extends StatelessWidget {
           child: Align(
               alignment: Alignment.centerRight,
               child: Text(
-                context.read<ScoreCubit>().state.scoreOfQuest.toString(),
+                context.read<ScoreCubit>().state.scoreQuest.toString(),
               ))));
 
       var tableRow = TableRow(children: tableCells);
@@ -125,7 +125,7 @@ class ScoreDetailsWidget extends StatelessWidget {
           child: Align(
               alignment: Alignment.centerRight,
               child: Text(
-                  context.read<ScoreCubit>().state.scoreOfLacour.toString()))));
+                  context.read<ScoreCubit>().state.scoreLacour.toString()))));
 
       var tableRow = TableRow(children: tableCells);
       tableRows.add(tableRow);

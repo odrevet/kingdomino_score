@@ -1,6 +1,5 @@
 import 'dart:collection';
 
-import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kingdomino_score_count/cubits/kingdom_cubit.dart';
@@ -330,7 +329,7 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
                 ? null
                 : FloatingActionButton(
                     child: Badge(
-                        badgeContent: Text(warnings.length.toString()),
+                        label: Text(warnings.length.toString()),
                         child: const Icon(Icons.warning)),
                     onPressed: () {
                       showDialog<void>(

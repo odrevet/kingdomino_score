@@ -10,7 +10,7 @@ import '../models/extensions/age_of_giants.dart';
 import '../models/king_colors.dart';
 import '../models/kingdom.dart';
 
-class KingdominoAppBar extends StatelessWidget with PreferredSizeWidget {
+class KingdominoAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   final Size preferredSize;
 

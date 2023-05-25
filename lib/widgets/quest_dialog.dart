@@ -1,4 +1,3 @@
-import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kingdomino_score_count/cubits/kingdom_cubit.dart';
@@ -123,9 +122,8 @@ class _QuestDialogWidgetState extends State<QuestDialogWidget> {
     );
 
     return Badge(
-        showBadge: widget.getSelectedQuests().length > 0,
-        position: BadgePosition.topEnd(top: -1, end: -1),
-        badgeContent: Text(widget.getSelectedQuests().length.toString()),
+        isLabelVisible: widget.getSelectedQuests().length > 0,
+        label: Text(widget.getSelectedQuests().length.toString()),
         child: IconButton(
             icon: const Icon(Icons.shield),
             onPressed: () => showDialog(

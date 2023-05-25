@@ -49,7 +49,7 @@ android {
 
     defaultConfig {
         applicationId "fr.odrevet.kingdomino_score_count"
-        minSdkVersion flutter.minSdkVersion
+        minSdkVersion 23//flutter.minSdkVersion
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName

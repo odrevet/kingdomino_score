@@ -138,21 +138,23 @@ class ScoreDetailsWidget extends StatelessWidget {
     tableCells.add(const TableCell(child: Text('')));
     tableCells.add(const TableCell(child: Text('')));
 
-    tableCells.add(TableCell(
-        child: Align(
-            alignment: Alignment.centerRight,
-            child: Text(String.fromCharCode($Sigma)))));
+    if (context.read<ScoreCubit>().state.score > 0) {
+      tableCells.add(TableCell(
+          child: Align(
+              alignment: Alignment.centerRight,
+              child: Text(String.fromCharCode($Sigma)))));
 
-    tableCells.add(const TableCell(
-        child: Align(alignment: Alignment.center, child: Text('='))));
+      tableCells.add(const TableCell(
+          child: Align(alignment: Alignment.center, child: Text('='))));
 
-    tableCells.add(TableCell(
-        child: Align(
-            alignment: Alignment.centerRight,
-            child: Text(context.read<ScoreCubit>().state.score.toString()))));
+      tableCells.add(TableCell(
+          child: Align(
+              alignment: Alignment.centerRight,
+              child: Text(context.read<ScoreCubit>().state.score.toString()))));
 
-    var tableRow = TableRow(children: tableCells);
-    tableRows.add(tableRow);
+      var tableRow = TableRow(children: tableCells);
+      tableRows.add(tableRow);
+    }
 
     content = SingleChildScrollView(child: Table(children: tableRows));
 

@@ -17,15 +17,12 @@ class KingdominoApp extends StatelessWidget {
         builder: (context, color) => MaterialApp(
             title: 'Kingdomino Score',
             theme: ThemeData(
-                primarySwatch: color,
-                canvasColor: color.shade200,
+              colorScheme: ColorScheme.fromSeed(
+                brightness: MediaQuery.platformBrightnessOf(context),
+                seedColor: color,
+              ),
                 fontFamily: 'HammersmithOne',
-                dialogTheme: DialogTheme(
-                    backgroundColor: color.shade200,
-                    contentTextStyle: const TextStyle(color: Colors.black),
-                    shape: const RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.all(Radius.circular(20.0))))),
+                ),
             home: MultiBlocProvider(providers: [
               BlocProvider<ScoreCubit>(
                 create: (BuildContext context) => ScoreCubit(),

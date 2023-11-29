@@ -6,8 +6,7 @@ class LandTile extends StatelessWidget {
   final LandType? landType;
   final Widget? child;
 
-  const LandTile({required this.landType, this.child, Key? key})
-      : super(key: key);
+  const LandTile({required this.landType, this.child, super.key});
 
   @override
   Widget build(BuildContext context) {

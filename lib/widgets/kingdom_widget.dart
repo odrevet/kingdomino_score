@@ -27,8 +27,7 @@ class KingdomWidget extends StatefulWidget {
       required this.getGameSet,
       required this.calculateScore,
       required this.kingdom,
-      Key? key})
-      : super(key: key);
+      super.key});
 
   @override
   State<KingdomWidget> createState() => _KingdomWidgetState();

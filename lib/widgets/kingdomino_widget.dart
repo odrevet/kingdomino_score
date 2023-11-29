@@ -30,8 +30,8 @@ const String square = '\u{25A0}';
 
 class KingdominoWidget extends StatefulWidget {
   const KingdominoWidget({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<KingdominoWidget> createState() => _KingdominoWidgetState();

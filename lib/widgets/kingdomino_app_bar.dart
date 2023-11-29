@@ -31,8 +31,8 @@ class KingdominoAppBar extends StatelessWidget implements PreferredSizeWidget {
     required this.getSelectedQuests,
     required this.onKingdomClear,
     required this.calculateScore,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

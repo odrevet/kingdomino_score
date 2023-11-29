@@ -16,8 +16,7 @@ class ScoreDetailsWidget extends StatelessWidget {
   final Function getExtension;
 
   const ScoreDetailsWidget(
-      {required this.quests, required this.getExtension, Key? key})
-      : super(key: key);
+      {required this.quests, required this.getExtension, super.key});
 
   @override
   Widget build(BuildContext context) {

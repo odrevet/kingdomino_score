@@ -7,7 +7,7 @@ import 'package:kingdomino_score_count/cubits/theme_cubit.dart';
 import 'kingdomino_widget.dart';
 
 class KingdominoApp extends StatelessWidget {
-  const KingdominoApp({Key? key}) : super(key: key);
+  const KingdominoApp({super.key});
 
   @override
   Widget build(BuildContext context) {

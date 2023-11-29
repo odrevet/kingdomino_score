@@ -8,7 +8,7 @@ import 'land_tile.dart';
 class WarningsWidget extends StatelessWidget {
   final List<Warning>? warnings;
 
-  const WarningsWidget({this.warnings, Key? key}) : super(key: key);
+  const WarningsWidget({this.warnings, super.key});
 
   @override
   Widget build(BuildContext context) {

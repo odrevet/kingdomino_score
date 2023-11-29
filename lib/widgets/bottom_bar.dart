@@ -33,8 +33,7 @@ class BottomBar extends StatefulWidget {
       required this.setSelectedcourtier,
       required this.getExtension,
       required this.quests,
-      Key? key})
-      : super(key: key);
+      super.key});
 
   @override
   State<BottomBar> createState() => _BottomBarState();

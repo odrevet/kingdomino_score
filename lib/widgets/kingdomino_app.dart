@@ -21,8 +21,8 @@ class KingdominoApp extends StatelessWidget {
                 brightness: MediaQuery.platformBrightnessOf(context),
                 seedColor: color,
               ),
-                fontFamily: 'HammersmithOne',
-                ),
+              fontFamily: 'HammersmithOne',
+            ),
             home: MultiBlocProvider(providers: [
               BlocProvider<ScoreCubit>(
                 create: (BuildContext context) => ScoreCubit(),

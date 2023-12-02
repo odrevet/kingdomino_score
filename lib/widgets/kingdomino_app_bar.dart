@@ -10,7 +10,7 @@ import '../models/extensions/age_of_giants.dart';
 import '../models/king_colors.dart';
 import '../models/kingdom.dart';
 
-class KingdominoAppBar extends StatelessWidget implements PreferredSizeWidget {
+class KingdominoAppBar extends StatefulWidget implements PreferredSizeWidget {
   @override
   final Size preferredSize;
 
@@ -34,6 +34,11 @@ class KingdominoAppBar extends StatelessWidget implements PreferredSizeWidget {
     super.key,
   });
 
+  @override
+  State<KingdominoAppBar> createState() => _KingdominoAppBarState();
+}
+
+class _KingdominoAppBarState extends State<KingdominoAppBar> {
   @override
   Widget build(BuildContext context) {
     var kingdom = context.read<KingdomCubit>().state;
@@ -65,7 +70,7 @@ class KingdominoAppBar extends StatelessWidget implements PreferredSizeWidget {
           onPressed: context.read<KingdomCubit>().canUndo
               ? () {
                   context.read<KingdomCubit>().undo();
-                  calculateScore(context.read<KingdomCubit>().state);
+                  widget.calculateScore(context.read<KingdomCubit>().state);
                 }
               : null,
           icon: const Icon(Icons.undo)),
@@ -73,18 +78,18 @@ class KingdominoAppBar extends StatelessWidget implements PreferredSizeWidget {
           onPressed: context.read<KingdomCubit>().canRedo
               ? () {
                   context.read<KingdomCubit>().redo();
-                  calculateScore(context.read<KingdomCubit>().state);
+                  widget.calculateScore(context.read<KingdomCubit>().state);
                 }
               : null,
           icon: const Icon(Icons.redo)),
       // Extension Selector
       DropdownButton<String>(
-        value: dropdownSelectedExtension,
+        value: widget.dropdownSelectedExtension,
         icon: const Icon(Icons.extension, color: Colors.white),
         iconSize: 25,
         elevation: 16,
         underline: Container(height: 1, color: Colors.white),
-        onChanged: (value) => onExtensionSelect(kingdom, value),
+        onChanged: (value) => widget.onExtensionSelect(kingdom, value),
         items: <String>['', 'Giants', 'LaCour']
             .map<DropdownMenuItem<String>>((String value) {
           Widget child;
@@ -106,7 +111,7 @@ class KingdominoAppBar extends StatelessWidget implements PreferredSizeWidget {
           );
         }).toList(),
       ),
-      QuestDialogWidget(getSelectedQuests, calculateScore, getExtension),
+      QuestDialogWidget(widget.getSelectedQuests, widget.calculateScore, widget.getExtension),
       IconButton(
           icon: Icon(kingdom.size == 5 ? Icons.filter_5 : Icons.filter_7),
           onPressed: () =>
@@ -115,14 +120,14 @@ class KingdominoAppBar extends StatelessWidget implements PreferredSizeWidget {
           icon: const Icon(Icons.delete),
           onPressed: () {
             context.read<KingdomCubit>().clear();
-            onKingdomClear();
+            widget.onKingdomClear();
           }),
       IconButton(
           icon: const Icon(Icons.help),
           onPressed: () => showAboutDialog(
               context: context,
               applicationName: 'Kingdomino Score',
-              applicationVersion: kIsWeb ? 'Web build ' : packageInfo.version,
+              applicationVersion: kIsWeb ? 'Web build ' : widget.packageInfo.version,
               applicationLegalese:
                   '''Drevet Olivier built the Kingdomino Score app under the GPL license Version 3. 
 This SERVICE is provided by Drevet Olivier at no cost and is intended for use as is.

@@ -34,7 +34,7 @@ class BottomBar extends StatefulWidget {
       required this.setSelectedcourtier,
       required this.getExtension,
       required this.quests,
-        required this.verticalAlign,
+      required this.verticalAlign,
       super.key});
 
   @override
@@ -60,11 +60,10 @@ class _BottomBarState extends State<BottomBar> {
       landButton(LandType.lake),
       landButton(LandType.swamp),
       landButton(LandType.mine),
-      //const VerticalDivider(),
+      widget.verticalAlign ? const Divider() : const VerticalDivider(),
       landButton(null),
-      //const VerticalDivider(),
+      widget.verticalAlign ? const Divider() : const VerticalDivider(),
       castleButton(),
-      //const VerticalDivider(),
       crownButton(),
     ];
 
@@ -102,7 +101,7 @@ class _BottomBarState extends State<BottomBar> {
   }
 
   final BoxShadow _selectedBoxShadow = const BoxShadow(
-    color: Colors.yellowAccent,
+    color: Colors.yellow,
     spreadRadius: 5,
     blurRadius: 3,
   );

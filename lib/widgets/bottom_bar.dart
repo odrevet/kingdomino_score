@@ -23,6 +23,7 @@ class BottomBar extends StatefulWidget {
   final Function setSelectedcourtier;
   final Function getExtension;
   final HashSet<QuestType> quests;
+  final bool verticalAlign;
 
   const BottomBar(
       {required this.getSelectionMode,
@@ -33,6 +34,7 @@ class BottomBar extends StatefulWidget {
       required this.setSelectedcourtier,
       required this.getExtension,
       required this.quests,
+        required this.verticalAlign,
       super.key});
 
   @override
@@ -58,11 +60,11 @@ class _BottomBarState extends State<BottomBar> {
       landButton(LandType.lake),
       landButton(LandType.swamp),
       landButton(LandType.mine),
-      const VerticalDivider(),
+      //const VerticalDivider(),
       landButton(null),
-      const VerticalDivider(),
+      //const VerticalDivider(),
       castleButton(),
-      const VerticalDivider(),
+      //const VerticalDivider(),
       crownButton(),
     ];
 
@@ -90,6 +92,7 @@ class _BottomBarState extends State<BottomBar> {
     }
 
     return Wrap(
+      direction: widget.verticalAlign ? Axis.vertical : Axis.horizontal,
       alignment: WrapAlignment.center,
       children: kingdomEditorWidgets,
     );

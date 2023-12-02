@@ -55,14 +55,18 @@ class _KingdominoAppBarState extends State<KingdominoAppBar> {
             .map<DropdownMenuItem<MaterialColor>>((MaterialColor value) {
           return DropdownMenuItem<MaterialColor>(
             value: value,
-            child: Container(
-              color: value,
+            child: ColorFiltered(
+              colorFilter: ColorFilter.mode(
+                value,
+                BlendMode.srcATop,
+              ),
               child: Image.asset(
                 'assets/king_pawn.png',
                 height: 25,
                 width: 25,
               ),
-            ),
+            )
+            ,
           );
         }).toList(),
       ),

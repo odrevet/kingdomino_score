@@ -254,47 +254,36 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
           if (orientation == Orientation.portrait) {
             return Column(children: <Widget>[
               Expanded(
-                flex: 5,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: ScoreDetailsWidget(
-                          quests: selectedQuests, getExtension: getExtension),
-                    ),
-                    Expanded(
-                      child: FittedBox(
-                          fit: BoxFit.fitHeight,
-                          child: InkWell(
-                              child: Text(
-                                  context.read<ScoreCubit>().state.score.toString()),
-                              onTap: () => showDialog<void>(
-                                    context: context,
-                                    builder: (BuildContext dialogContext) =>
-                                        Provider.value(
-                                            value: Provider.of<ScoreCubit>(context,
-                                                listen: false),
-                                            child: Provider.value(
-                                                value: Provider.of<KingdomCubit>(
-                                                    context,
-                                                    listen: false),
-                                                child: AlertDialog(
-                                                  content: ScoreDetailsWidget(
-                                                      quests: selectedQuests,
-                                                      getExtension: getExtension),
-                                                  actions: <Widget>[
-                                                    TextButton(
-                                                      child: const Icon(Icons.done),
-                                                      onPressed: () {
-                                                        Navigator.of(dialogContext)
-                                                            .pop();
-                                                      },
-                                                    ),
-                                                  ],
-                                                ))),
-                                  ))),
-                    ),
-                  ],
-                ),
+                child: FittedBox(
+                    fit: BoxFit.fitHeight,
+                    child: InkWell(
+                        child: Text(
+                            context.read<ScoreCubit>().state.score.toString()),
+                        onTap: () => showDialog<void>(
+                          context: context,
+                          builder: (BuildContext dialogContext) =>
+                              Provider.value(
+                                  value: Provider.of<ScoreCubit>(context,
+                                      listen: false),
+                                  child: Provider.value(
+                                      value: Provider.of<KingdomCubit>(
+                                          context,
+                                          listen: false),
+                                      child: AlertDialog(
+                                        content: ScoreDetailsWidget(
+                                            quests: selectedQuests,
+                                            getExtension: getExtension),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            child: const Icon(Icons.done),
+                                            onPressed: () {
+                                              Navigator.of(dialogContext)
+                                                  .pop();
+                                            },
+                                          ),
+                                        ],
+                                      ))),
+                        ))),
               ),
               Expanded(
                 flex: 5,

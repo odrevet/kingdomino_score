@@ -352,18 +352,16 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
                         },
                       );
                     }),
-            bottomNavigationBar: BottomAppBar(
-                color: Theme.of(context).primaryColor,
-                child: BottomBar(
-                  getSelectionMode: getSelectionMode,
-                  setSelectionMode: setSelectionMode,
-                  getSelectedLandType: getSelectedLandType,
-                  setSelectedLandType: setSelectedLandType,
-                  getSelectedcourtier: getSelectedcourtier,
-                  setSelectedcourtier: setSelectedcourtier,
-                  getExtension: getExtension,
-                  quests: selectedQuests,
-                )),
+            bottomNavigationBar:BottomBar(
+              getSelectionMode: getSelectionMode,
+              setSelectionMode: setSelectionMode,
+              getSelectedLandType: getSelectedLandType,
+              setSelectedLandType: setSelectedLandType,
+              getSelectedcourtier: getSelectedcourtier,
+              setSelectedcourtier: setSelectedcourtier,
+              getExtension: getExtension,
+              quests: selectedQuests,
+            ),
             body: body);
       },
     );

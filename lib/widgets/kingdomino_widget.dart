@@ -254,6 +254,7 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
           if (orientation == Orientation.portrait) {
             return Column(children: <Widget>[
               Expanded(
+                flex: 4,
                 child: FittedBox(
                     fit: BoxFit.fitHeight,
                     child: InkWell(

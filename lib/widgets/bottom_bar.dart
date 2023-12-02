@@ -91,10 +91,13 @@ class _BottomBarState extends State<BottomBar> {
       }
     }
 
-    return Wrap(
-      direction: widget.verticalAlign ? Axis.vertical : Axis.horizontal,
-      alignment: WrapAlignment.center,
-      children: kingdomEditorWidgets,
+    return Align(
+      alignment: Alignment.center,
+      child: Wrap(
+        direction: widget.verticalAlign ? Axis.vertical : Axis.horizontal,
+        alignment: WrapAlignment.center,
+        children: kingdomEditorWidgets,
+      ),
     );
   }
 

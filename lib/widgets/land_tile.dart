@@ -10,23 +10,31 @@ class LandTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: getColorForLandType(landType),
-      child: Container(
-        decoration: BoxDecoration(
-            border: landType == null
-                ? Border.all(
-                    width: 0.0,
-                    color: Colors.blueGrey.shade900,
-                  )
-                : Border(
-                    right:
-                        BorderSide(width: 3.0, color: Colors.blueGrey.shade600),
-                    bottom:
-                        BorderSide(width: 3.0, color: Colors.blueGrey.shade900),
-                  )),
-        child: child,
-      ),
-    );
+    if (landType == null) {
+      return Container(
+        child: Container(
+          decoration: BoxDecoration(
+              border: Border.all(
+            width: 0.1,
+            color: MediaQuery.of(context).platformBrightness == Brightness.dark
+                ? Colors.white
+                : Colors.black,
+          )),
+          child: child,
+        ),
+      );
+    } else {
+      return Container(
+        color: getColorForLandType(landType),
+        child: Container(
+          decoration: BoxDecoration(
+              border: Border(
+            right: BorderSide(width: 3.0, color: Colors.blueGrey.shade600),
+            bottom: BorderSide(width: 3.0, color: Colors.blueGrey.shade900),
+          )),
+          child: child,
+        ),
+      );
+    }
   }
 }

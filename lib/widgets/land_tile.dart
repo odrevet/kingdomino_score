@@ -12,10 +12,11 @@ class LandTile extends StatelessWidget {
   Widget build(BuildContext context) {
     if (landType == null) {
       return Container(
+        color: Theme.of(context).primaryColor,
         child: Container(
           decoration: BoxDecoration(
               border: Border.all(
-            width: 0.1,
+            width: 0.5,
             color: MediaQuery.of(context).platformBrightness == Brightness.dark
                 ? Colors.white
                 : Colors.black,

@@ -42,7 +42,7 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
   LandType? selectedLandType;
   Courtier? selectedcourtier;
   SelectionMode selectionMode = SelectionMode.land;
-  late  bool _showPie = false;
+  late bool _showPie = false;
   Extension? extension;
 
   HashSet<QuestType> selectedQuests = HashSet();
@@ -312,27 +312,25 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
               ),
             ]);
           } else {
-            return Row(children: <Widget>[
-              Expanded(
-                  flex: 5,
-                  child: Column(
-                    children: [
+            return Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  Expanded(
+                    child: Column(children: [
                       GestureDetector(
                         onTap: () {
                           setState(() {
                             _showPie = !_showPie; // Toggling _showPie
                           });
                         },
-                        child: Expanded(
-                          flex: 1,
-                          child: _showPie ? ScorePie() : ScoreDetailsWidget(
-                            quests: selectedQuests,
-                            getExtension: getExtension,
-                          ),
-                        ),
+                        child: _showPie
+                            ? ScorePie()
+                            : ScoreDetailsWidget(
+                                quests: selectedQuests,
+                                getExtension: getExtension,
+                              ),
                       ),
                       Expanded(
-                        flex: 1,
                         child: FittedBox(
                             fit: BoxFit.fitHeight,
                             child: Text(
@@ -344,27 +342,27 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
                                 style: TextStyle(
                                     color: context.read<ThemeCubit>().state))),
                       )
-                    ],
-                  )),
-              KingdomWidget(
-                  getSelectionMode: getSelectionMode,
-                  getSelectedLandType: getSelectedLandType,
-                  getSelectedcourtier: getSelectedcourtier,
-                  getGameSet: getGameSet,
-                  calculateScore: calculateScore,
-                  kingdom: kingdom),
-              TileBar(
-                getSelectionMode: getSelectionMode,
-                setSelectionMode: setSelectionMode,
-                getSelectedLandType: getSelectedLandType,
-                setSelectedLandType: setSelectedLandType,
-                getSelectedcourtier: getSelectedcourtier,
-                setSelectedcourtier: setSelectedcourtier,
-                getExtension: getExtension,
-                quests: selectedQuests,
-                verticalAlign: true,
-              )
-            ]);
+                    ]),
+                  ),
+                  KingdomWidget(
+                      getSelectionMode: getSelectionMode,
+                      getSelectedLandType: getSelectedLandType,
+                      getSelectedcourtier: getSelectedcourtier,
+                      getGameSet: getGameSet,
+                      calculateScore: calculateScore,
+                      kingdom: kingdom),
+                  TileBar(
+                    getSelectionMode: getSelectionMode,
+                    setSelectionMode: setSelectionMode,
+                    getSelectedLandType: getSelectedLandType,
+                    setSelectedLandType: setSelectedLandType,
+                    getSelectedcourtier: getSelectedcourtier,
+                    setSelectedcourtier: setSelectedcourtier,
+                    getExtension: getExtension,
+                    quests: selectedQuests,
+                    verticalAlign: true,
+                  )
+                ]);
           }
         });
 

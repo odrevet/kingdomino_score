@@ -316,19 +316,22 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   Expanded(
-                    child: Column(children: [
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _showPie = !_showPie; // Toggling _showPie
-                          });
-                        },
-                        child: _showPie
-                            ? ScorePie()
-                            : ScoreDetailsWidget(
-                                quests: selectedQuests,
-                                getExtension: getExtension,
-                              ),
+                    child: Column(mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _showPie = !_showPie; // Toggling _showPie
+                            });
+                          },
+                          child: _showPie
+                              ? ScorePie()
+                              : ScoreDetailsWidget(
+                                  quests: selectedQuests,
+                                  getExtension: getExtension,
+                                ),
+                        ),
                       ),
                       Expanded(
                         child: FittedBox(

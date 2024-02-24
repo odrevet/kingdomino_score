@@ -1,18 +1,11 @@
-import 'dart:collection';
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kingdomino_score_count/cubits/kingdom_cubit.dart';
-import 'package:kingdomino_score_count/cubits/score_cubit.dart';
-import 'package:kingdomino_score_count/cubits/theme_cubit.dart';
-import 'package:kingdomino_score_count/models/extensions/lacour/lacour.dart';
-import 'package:kingdomino_score_count/widgets/kingdomino_app_bar.dart';
-import 'package:kingdomino_score_count/widgets/warning_widget.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:provider/provider.dart';
 
+import '../cubits/score_cubit.dart';
+import '../cubits/theme_cubit.dart';
 import '../models/land.dart' show LandType, getColorForLandType;
 
 class ScorePie extends StatelessWidget {
@@ -46,19 +39,25 @@ class ScorePie extends StatelessWidget {
     });
 
     return PieChart(
-      chartRadius: MediaQuery.of(context).size.width / 5.5,
-      colorList: landScore.isEmpty
-          ? [Colors.transparent]
-          : landScore.keys
-              .map((landType) => getColorForLandType(landType))
-              .toList(),
-      dataMap: dataMap.isEmpty ? {'': 0} : dataMap,
-      emptyColor: Colors.transparent,
-      baseChartColor: Colors.transparent,
-      legendOptions: const LegendOptions(showLegends: false),
+        chartRadius: MediaQuery.of(context).size.width / 5.5,
+        colorList: landScore.isEmpty
+            ? [Colors.transparent]
+            : landScore.keys
+                .map((landType) => getColorForLandType(landType))
+                .toList(),
+        dataMap: dataMap.isEmpty ? {'': 0} : dataMap,
+        emptyColor: Colors.transparent,
+        baseChartColor: Colors.transparent,
+        centerWidget: Container(
+          color: Colors.white,
+          child: Text(
+            context.read<ScoreCubit>().state.score.toString(),
+            style: TextStyle(color: Colors.black),
+          ),
+        ),
+        legendOptions: const LegendOptions(showLegends: false),
         chartValuesOptions: const ChartValuesOptions(
           decimalPlaces: 0,
-        )
-    );
+        ));
   }
 }

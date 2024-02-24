@@ -7,6 +7,13 @@ import 'package:kingdomino_score_count/cubits/theme_cubit.dart';
 import 'package:provider/provider.dart';
 import '../models/quests/quest.dart';
 import 'score_details_widget.dart';
+import 'score_pie.dart';
+
+enum DisplayMode {
+  score,
+  details,
+  pie,
+}
 
 class ScoreWidget extends StatefulWidget {
   final HashSet<QuestType> quests;
@@ -20,25 +27,36 @@ class ScoreWidget extends StatefulWidget {
 }
 
 class _ScoreWidgetState extends State<ScoreWidget> {
-  //late bool _showPie = false;
-  late bool _showDetails = false;
+  DisplayMode _displayMode = DisplayMode.score;
+
+  void _cycleDisplayMode() {
+    setState(() {
+      // Cycle through display modes
+      _displayMode = _displayMode == DisplayMode.pie
+          ? DisplayMode.score
+          : DisplayMode.values[_displayMode.index + 1];
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     int score = context.read<ScoreCubit>().state.score;
     return GestureDetector(
-        child: _showDetails && score > 0
-            ? ScoreDetailsWidget(
-                quests: widget.quests, getExtension: widget.getExtension)
-            : FittedBox(
-                fit: BoxFit.fitHeight,
-                child: Text(score.toString(),
-                    style: TextStyle(color: context.read<ThemeCubit>().state)),
+      onTap: score > 0 ? _cycleDisplayMode : null,
+      child: _displayMode == DisplayMode.score || score == 0
+          ? FittedBox(
+              fit: BoxFit.fitHeight,
+              child: Text(
+                score.toString(),
+                style: TextStyle(color: context.read<ThemeCubit>().state),
               ),
-        onTap: () => setState(() {
-              if (score > 0) {
-                _showDetails = !_showDetails;
-              }
-            }));
+            )
+          : _displayMode == DisplayMode.details
+              ? ScoreDetailsWidget(
+                  quests: widget.quests,
+                  getExtension: widget.getExtension,
+                )
+              : FittedBox(fit: BoxFit.fitHeight, child: ScorePie()),
+    );
   }
 }

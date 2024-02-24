@@ -65,8 +65,7 @@ class _KingdominoAppBarState extends State<KingdominoAppBar> {
                 height: 25,
                 width: 25,
               ),
-            )
-            ,
+            ),
           );
         }).toList(),
       ),
@@ -115,7 +114,8 @@ class _KingdominoAppBarState extends State<KingdominoAppBar> {
           );
         }).toList(),
       ),
-      QuestDialogWidget(widget.getSelectedQuests, widget.calculateScore, widget.getExtension),
+      QuestDialogWidget(
+          widget.getSelectedQuests, widget.calculateScore, widget.getExtension),
       IconButton(
           icon: Icon(kingdom.size == 5 ? Icons.filter_5 : Icons.filter_7),
           onPressed: () =>
@@ -131,7 +131,8 @@ class _KingdominoAppBarState extends State<KingdominoAppBar> {
           onPressed: () => showAboutDialog(
               context: context,
               applicationName: 'Kingdomino Score',
-              applicationVersion: kIsWeb ? 'Web build ' : widget.packageInfo.version,
+              applicationVersion:
+                  kIsWeb ? 'Web build ' : widget.packageInfo.version,
               applicationLegalese:
                   '''Drevet Olivier built the Kingdomino Score app under the GPL license Version 3. 
 This SERVICE is provided by Drevet Olivier at no cost and is intended for use as is.

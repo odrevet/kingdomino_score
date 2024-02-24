@@ -30,7 +30,7 @@ class KingdominoApp extends StatelessWidget {
               BlocProvider<KingdomCubit>(
                 create: (BuildContext context) => KingdomCubit(),
               ),
-            // ignore: prefer_const_constructors
+              // ignore: prefer_const_constructors
             ], child: KingdominoWidget())),
       ),
     );

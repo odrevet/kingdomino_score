@@ -261,30 +261,30 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
                         child: Text(
                             context.read<ScoreCubit>().state.score.toString()),
                         onTap: () => showDialog<void>(
-                          context: context,
-                          builder: (BuildContext dialogContext) =>
-                              Provider.value(
-                                  value: Provider.of<ScoreCubit>(context,
-                                      listen: false),
-                                  child: Provider.value(
-                                      value: Provider.of<KingdomCubit>(
-                                          context,
+                              context: context,
+                              builder: (BuildContext dialogContext) =>
+                                  Provider.value(
+                                      value: Provider.of<ScoreCubit>(context,
                                           listen: false),
-                                      child: AlertDialog(
-                                        content: ScoreDetailsWidget(
-                                            quests: selectedQuests,
-                                            getExtension: getExtension),
-                                        actions: <Widget>[
-                                          TextButton(
-                                            child: const Icon(Icons.done),
-                                            onPressed: () {
-                                              Navigator.of(dialogContext)
-                                                  .pop();
-                                            },
-                                          ),
-                                        ],
-                                      ))),
-                        ))),
+                                      child: Provider.value(
+                                          value: Provider.of<KingdomCubit>(
+                                              context,
+                                              listen: false),
+                                          child: AlertDialog(
+                                            content: ScoreDetailsWidget(
+                                                quests: selectedQuests,
+                                                getExtension: getExtension),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                child: const Icon(Icons.done),
+                                                onPressed: () {
+                                                  Navigator.of(dialogContext)
+                                                      .pop();
+                                                },
+                                              ),
+                                            ],
+                                          ))),
+                            ))),
               ),
               Expanded(
                 flex: 5,
@@ -338,17 +338,17 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
                   getGameSet: getGameSet,
                   calculateScore: calculateScore,
                   kingdom: kingdom),
-                TileBar(
-                  getSelectionMode: getSelectionMode,
-                  setSelectionMode: setSelectionMode,
-                  getSelectedLandType: getSelectedLandType,
-                  setSelectedLandType: setSelectedLandType,
-                  getSelectedcourtier: getSelectedcourtier,
-                  setSelectedcourtier: setSelectedcourtier,
-                  getExtension: getExtension,
-                  quests: selectedQuests,
-                  verticalAlign: true,
-                )
+              TileBar(
+                getSelectionMode: getSelectionMode,
+                setSelectionMode: setSelectionMode,
+                getSelectedLandType: getSelectedLandType,
+                setSelectedLandType: setSelectedLandType,
+                getSelectedcourtier: getSelectedcourtier,
+                setSelectedcourtier: setSelectedcourtier,
+                getExtension: getExtension,
+                quests: selectedQuests,
+                verticalAlign: true,
+              )
             ]);
           }
         });

@@ -28,8 +28,7 @@ class LandTile extends StatelessWidget {
     } else {
       return Container(
         color: getColorForLandType(landType),
-        child: CardboardTile(key: null,
-        child: child),
+        child: CardboardTile(key: null, child: child),
       );
     }
   }

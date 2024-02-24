@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'cardboard_tile.dart';
 import 'kingdomino_widget.dart';
 
 class CastleTile extends StatelessWidget {
@@ -9,8 +10,10 @@ class CastleTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        color: kingColor,
-        child: const FittedBox(fit: BoxFit.fitWidth, child: Text(castle)));
+    return CardboardTile(
+      child: Container(
+          color: kingColor,
+          child: const FittedBox(fit: BoxFit.fitWidth, child: Text(castle))),
+    );
   }
 }

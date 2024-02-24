@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/land.dart';
+import 'cardboard_tile.dart';
 
 class LandTile extends StatelessWidget {
   final LandType? landType;
@@ -27,14 +28,8 @@ class LandTile extends StatelessWidget {
     } else {
       return Container(
         color: getColorForLandType(landType),
-        child: Container(
-          decoration: BoxDecoration(
-              border: Border(
-            right: BorderSide(width: 3.0, color: Colors.blueGrey.shade600),
-            bottom: BorderSide(width: 3.0, color: Colors.blueGrey.shade900),
-          )),
-          child: child,
-        ),
+        child: CardboardTile(key: null,
+        child: child),
       );
     }
   }

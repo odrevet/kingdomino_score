@@ -56,6 +56,8 @@ class ScorePie extends StatelessWidget {
       emptyColor: Colors.transparent,
       baseChartColor: Colors.transparent,
       legendOptions: const LegendOptions(showLegends: false),
+        chartValuesOptions: const ChartValuesOptions(
+        )
     );
   }
 }

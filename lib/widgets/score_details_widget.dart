@@ -156,11 +156,7 @@ class ScoreDetailsWidget extends StatelessWidget {
       tableCellsTotal.add(TableCell(
           child: Align(
               alignment: Alignment.center,
-              child: Text(context
-                  .read<ScoreCubit>()
-                  .state
-                  .score
-                  .toString()))));
+              child: Text(context.read<ScoreCubit>().state.score.toString()))));
 
       var tableRowTotal = TableRow(children: tableCellsTotal);
       tableRows.add(tableRowTotal);

@@ -13,9 +13,13 @@ import 'kingdomino_widget.dart';
 class ScoreDetailsWidget extends StatelessWidget {
   final HashSet<QuestType> quests;
   final Function getExtension;
+  final bool showTotal;
 
   const ScoreDetailsWidget(
-      {required this.quests, required this.getExtension, super.key});
+      {required this.quests,
+      required this.getExtension,
+      this.showTotal = true,
+      super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -128,7 +132,7 @@ class ScoreDetailsWidget extends StatelessWidget {
     }
 
     //SUM
-    if (context.read<ScoreCubit>().state.score > 0) {
+    if (context.read<ScoreCubit>().state.score > 0 && showTotal == true) {
       var tableCells = <TableCell>[];
 
       tableCells.add(const TableCell(child: Text('')));

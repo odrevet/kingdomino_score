@@ -316,36 +316,39 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   Expanded(
-                    child: Column(mainAxisAlignment: MainAxisAlignment.start,
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              _showPie = !_showPie; // Toggling _showPie
-                            });
-                          },
-                          child: _showPie
-                              ? ScorePie()
-                              : ScoreDetailsWidget(
-                                  quests: selectedQuests,
-                                  getExtension: getExtension,
-                                ),
-                        ),
-                      ),
-                      Expanded(
-                        child: FittedBox(
-                            fit: BoxFit.fitHeight,
-                            child: Text(
-                                context
-                                    .read<ScoreCubit>()
-                                    .state
-                                    .score
-                                    .toString(),
-                                style: TextStyle(
-                                    color: context.read<ThemeCubit>().state))),
-                      )
-                    ]),
+                          Expanded(
+                            child: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  _showPie = !_showPie; // Toggling _showPie
+                                });
+                              },
+                              child: _showPie
+                                  ? ScorePie()
+                                  : ScoreDetailsWidget(
+                                      quests: selectedQuests,
+                                      getExtension: getExtension,
+                                      showTotal: false,
+                                    ),
+                            ),
+                          ),
+                          Expanded(
+                            child: FittedBox(
+                                fit: BoxFit.fitHeight,
+                                child: Text(
+                                    context
+                                        .read<ScoreCubit>()
+                                        .state
+                                        .score
+                                        .toString(),
+                                    style: TextStyle(
+                                        color:
+                                            context.read<ThemeCubit>().state))),
+                          )
+                        ]),
                   ),
                   KingdomWidget(
                       getSelectionMode: getSelectionMode,

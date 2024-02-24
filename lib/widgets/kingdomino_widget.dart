@@ -7,10 +7,9 @@ import 'package:kingdomino_score_count/cubits/score_cubit.dart';
 import 'package:kingdomino_score_count/cubits/theme_cubit.dart';
 import 'package:kingdomino_score_count/models/extensions/lacour/lacour.dart';
 import 'package:kingdomino_score_count/widgets/kingdomino_app_bar.dart';
-import 'package:kingdomino_score_count/widgets/score_pie.dart';
+import 'package:kingdomino_score_count/widgets/score_widget.dart';
 import 'package:kingdomino_score_count/widgets/warning_widget.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:provider/provider.dart';
 
 import '../models/extensions/age_of_giants.dart';
 import '../models/extensions/extension.dart';
@@ -23,7 +22,6 @@ import '../models/selection_mode.dart';
 import '../models/warning.dart';
 import 'tile_bar.dart';
 import 'kingdom_widget.dart';
-import 'score_details_widget.dart';
 
 const String crown = '\u{1F451}';
 const String castle = '\u{1F3F0}';
@@ -42,8 +40,6 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
   LandType? selectedLandType;
   Courtier? selectedcourtier;
   SelectionMode selectionMode = SelectionMode.land;
-  late bool _showPie = false;
-  late bool _showDetails = false;
   Extension? extension;
 
   HashSet<QuestType> selectedQuests = HashSet();
@@ -257,25 +253,8 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
             return Column(children: <Widget>[
               Expanded(
                 flex: 4,
-                child: GestureDetector(
-                    child: _showDetails
-                        ? ScoreDetailsWidget(
-                        quests: selectedQuests,
-                        getExtension: getExtension)
-                        : FittedBox(
-                      fit: BoxFit.fitHeight,
-                          child: Text(
-                          context
-                              .read<ScoreCubit>()
-                              .state
-                              .score
-                              .toString(),
-                          style: TextStyle(
-                              color: context.read<ThemeCubit>().state)),
-                        ),
-                    onTap: () => setState(() {
-                      _showDetails = !_showDetails;
-                    })),
+                child: ScoreWidget(
+                    quests: selectedQuests, getExtension: getExtension),
               ),
               Expanded(
                 flex: 5,
@@ -304,39 +283,8 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   Expanded(
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  _showPie = !_showPie; // Toggling _showPie
-                                });
-                              },
-                              child: _showPie
-                                  ? ScorePie()
-                                  : ScoreDetailsWidget(
-                                      quests: selectedQuests,
-                                      getExtension: getExtension,
-                                      showTotal: false,
-                                    ),
-                            ),
-                          ),
-                          Expanded(
-                            child: FittedBox(
-                                fit: BoxFit.fitHeight,
-                                child: Text(
-                                    context
-                                        .read<ScoreCubit>()
-                                        .state
-                                        .score
-                                        .toString(),
-                                    style: TextStyle(
-                                        color:
-                                            context.read<ThemeCubit>().state))),
-                          )
-                        ]),
+                    child: ScoreWidget(
+                        quests: selectedQuests, getExtension: getExtension),
                   ),
                   KingdomWidget(
                       getSelectionMode: getSelectionMode,

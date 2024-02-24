@@ -62,8 +62,11 @@ class _KingdomWidgetState extends State<KingdomWidget> {
           landType: land.landType,
           child: LayoutBuilder(
               builder: (BuildContext context, BoxConstraints constraints) {
-            return Text(text,
-                style: TextStyle(fontSize: constraints.maxWidth / 4));
+            return Padding(
+              padding: const EdgeInsets.all(2.0),
+              child: Text(text,
+                  style: TextStyle(fontSize: constraints.maxWidth / 5)),
+            );
           }),
         );
       } else if (land.hasResource) {

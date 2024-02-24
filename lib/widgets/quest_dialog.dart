@@ -6,6 +6,8 @@ import 'package:kingdomino_score_count/models/quests/quest.dart';
 import 'package:provider/provider.dart';
 
 import '../cubits/score_cubit.dart';
+import '../cubits/theme_cubit.dart';
+import 'highlight_box.dart';
 
 class _QuestDialogOption extends StatefulWidget {
   final Function getSelectedQuests;
@@ -37,17 +39,12 @@ class _QuestDialogOptionState extends State<_QuestDialogOption> {
     });
   }
 
-  final BoxShadow _selectedBoxShadow = const BoxShadow(
-    color: Colors.yellowAccent,
-    spreadRadius: 5,
-    blurRadius: 3,
-  );
-
   @override
   Widget build(BuildContext context) {
     Widget child = _active!
         ? Container(
-            decoration: BoxDecoration(boxShadow: [_selectedBoxShadow]),
+            decoration: BoxDecoration(
+                boxShadow: [highlightBox(context.read<ThemeCubit>().state)]),
             child: widget.svg)
         : widget.svg;
 

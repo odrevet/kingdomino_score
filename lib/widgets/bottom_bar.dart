@@ -12,6 +12,7 @@ import '../models/land.dart';
 import '../models/quests/quest.dart';
 import '../models/selection_mode.dart';
 import 'castle_tile.dart';
+import 'highlight_box.dart';
 import 'kingdomino_widget.dart';
 
 class BottomBar extends StatefulWidget {
@@ -100,12 +101,6 @@ class _BottomBarState extends State<BottomBar> {
     );
   }
 
-  final BoxShadow _selectedBoxShadow = const BoxShadow(
-    color: Colors.yellow,
-    spreadRadius: 5,
-    blurRadius: 3,
-  );
-
   Widget landButton(LandType? landType) {
     var isSelected = widget.getSelectionMode() == SelectionMode.land &&
         widget.getSelectedLandType() == landType;
@@ -119,7 +114,9 @@ class _BottomBarState extends State<BottomBar> {
               height: _buttonSize,
               width: _buttonSize,
               decoration: BoxDecoration(
-                  boxShadow: isSelected ? [_selectedBoxShadow] : null),
+                  boxShadow: isSelected
+                      ? [highlightBox(context.read<ThemeCubit>().state)]
+                      : null),
               child: LandTile(landType: landType))),
     );
   }
@@ -136,7 +133,9 @@ class _BottomBarState extends State<BottomBar> {
               height: _buttonSize,
               width: _buttonSize,
               decoration: BoxDecoration(
-                  boxShadow: isSelected ? [_selectedBoxShadow] : null),
+                  boxShadow: isSelected
+                      ? [highlightBox(context.read<ThemeCubit>().state)]
+                      : null),
               child: Image.asset('assets/lacour/resource.png'))),
     );
   }
@@ -154,7 +153,9 @@ class _BottomBarState extends State<BottomBar> {
               height: _buttonSize,
               width: _buttonSize,
               decoration: BoxDecoration(
-                  boxShadow: isSelected ? [_selectedBoxShadow] : null),
+                  boxShadow: isSelected
+                      ? [highlightBox(context.read<ThemeCubit>().state)]
+                      : null),
               child: Image(
                   height: 50,
                   width: 50,
@@ -178,7 +179,9 @@ class _BottomBarState extends State<BottomBar> {
           height: _buttonSize,
           width: _buttonSize,
           decoration: BoxDecoration(
-              boxShadow: isSelected ? [_selectedBoxShadow] : null,
+              boxShadow: isSelected
+                  ? [highlightBox(context.read<ThemeCubit>().state)]
+                  : null,
               border: outline),
           child: CastleTile(context.read<ThemeCubit>().state),
         ),
@@ -198,7 +201,9 @@ class _BottomBarState extends State<BottomBar> {
             height: _buttonSize,
             width: _buttonSize,
             decoration: BoxDecoration(
-                boxShadow: isSelected ? [_selectedBoxShadow] : null),
+                boxShadow: isSelected
+                    ? [highlightBox(context.read<ThemeCubit>().state)]
+                    : null),
             child: const FittedBox(fit: BoxFit.fitHeight, child: Text(crown)),
           )),
     );
@@ -242,7 +247,9 @@ class _BottomBarState extends State<BottomBar> {
             height: _buttonSize,
             width: _buttonSize,
             decoration: BoxDecoration(
-                boxShadow: isSelected ? [_selectedBoxShadow] : null),
+                boxShadow: isSelected
+                    ? [highlightBox(context.read<ThemeCubit>().state)]
+                    : null),
             child: const FittedBox(fit: BoxFit.fitHeight, child: Text(giant)),
           )),
     );

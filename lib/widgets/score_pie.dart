@@ -13,7 +13,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:provider/provider.dart';
 
-import '../models/land.dart' show getColorForLandType;
+import '../models/land.dart' show LandType, getColorForLandType;
 
 class ScorePie extends StatelessWidget {
   const ScorePie({super.key});
@@ -21,22 +21,38 @@ class ScorePie extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var properties = context.read<KingdomCubit>().state.getProperties();
+    var landScore = <LandType, double>{};
 
-
-    var data = <String, double>{};
-    var colors = <Color>[];
-
-    for (int index = 0; index < properties.length; index++) {
-      data[index.toString()] =
-          (properties[index].crownCount * properties[index].landCount)
-              .toDouble();
-      colors.add(getColorForLandType(properties[index].landType));
+    // Summing up scores by land type
+    for (var property in properties) {
+      double propertyScore =
+          (property.landCount * property.crownCount).toDouble();
+      if (propertyScore > 0) {
+        if (landScore.containsKey(property.landType)) {
+          // If land type already exists in the map, add the score to its existing value
+          landScore[property.landType!] =
+              (landScore[property.landType!]! + propertyScore);
+        } else {
+          // If land type doesn't exist in the map, initialize it with the score
+          landScore[property.landType!] = propertyScore;
+        }
+      }
     }
+
+    Map<String, double> dataMap = {};
+
+    landScore.forEach((key, value) {
+      dataMap[key.toString()] = value;
+    });
 
     return PieChart(
       chartRadius: MediaQuery.of(context).size.width / 5.5,
-      colorList: colors.isEmpty ? [Colors.transparent] : colors.toList(),
-      dataMap: data.isEmpty ? {'': 0} : data,
+      colorList: landScore.isEmpty
+          ? [Colors.transparent]
+          : landScore.keys
+              .map((landType) => getColorForLandType(landType))
+              .toList(),
+      dataMap: dataMap.isEmpty ? {'': 0} : dataMap,
       emptyColor: Colors.transparent,
       baseChartColor: Colors.transparent,
       legendOptions: const LegendOptions(showLegends: false),

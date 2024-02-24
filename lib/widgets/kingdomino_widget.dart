@@ -7,6 +7,7 @@ import 'package:kingdomino_score_count/cubits/score_cubit.dart';
 import 'package:kingdomino_score_count/cubits/theme_cubit.dart';
 import 'package:kingdomino_score_count/models/extensions/lacour/lacour.dart';
 import 'package:kingdomino_score_count/widgets/kingdomino_app_bar.dart';
+import 'package:kingdomino_score_count/widgets/score_pie.dart';
 import 'package:kingdomino_score_count/widgets/warning_widget.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
@@ -41,7 +42,7 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
   LandType? selectedLandType;
   Courtier? selectedcourtier;
   SelectionMode selectionMode = SelectionMode.land;
-
+  late  bool _showPie = false;
   Extension? extension;
 
   HashSet<QuestType> selectedQuests = HashSet();
@@ -316,10 +317,19 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
                   flex: 5,
                   child: Column(
                     children: [
-                      Expanded(
-                        flex: 1,
-                        child: ScoreDetailsWidget(
-                            quests: selectedQuests, getExtension: getExtension),
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _showPie = !_showPie; // Toggling _showPie
+                          });
+                        },
+                        child: Expanded(
+                          flex: 1,
+                          child: _showPie ? ScorePie() : ScoreDetailsWidget(
+                            quests: selectedQuests,
+                            getExtension: getExtension,
+                          ),
+                        ),
                       ),
                       Expanded(
                         flex: 1,

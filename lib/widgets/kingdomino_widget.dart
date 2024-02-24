@@ -20,7 +20,7 @@ import '../models/land.dart' show LandType;
 import '../models/quests/quest.dart';
 import '../models/selection_mode.dart';
 import '../models/warning.dart';
-import 'bottom_bar.dart';
+import 'tile_bar.dart';
 import 'kingdom_widget.dart';
 import 'score_details_widget.dart';
 
@@ -296,7 +296,7 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
                     calculateScore: calculateScore,
                     kingdom: kingdom),
               ),
-              BottomBar(
+              TileBar(
                 getSelectionMode: getSelectionMode,
                 setSelectionMode: setSelectionMode,
                 getSelectedLandType: getSelectedLandType,
@@ -338,7 +338,7 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
                   getGameSet: getGameSet,
                   calculateScore: calculateScore,
                   kingdom: kingdom),
-                BottomBar(
+                TileBar(
                   getSelectionMode: getSelectionMode,
                   setSelectionMode: setSelectionMode,
                   getSelectedLandType: getSelectedLandType,

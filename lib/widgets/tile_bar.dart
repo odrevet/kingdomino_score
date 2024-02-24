@@ -15,7 +15,7 @@ import 'castle_tile.dart';
 import 'highlight_box.dart';
 import 'kingdomino_widget.dart';
 
-class BottomBar extends StatefulWidget {
+class TileBar extends StatefulWidget {
   final Function getSelectionMode;
   final Function setSelectionMode;
   final Function getSelectedLandType;
@@ -26,7 +26,7 @@ class BottomBar extends StatefulWidget {
   final HashSet<QuestType> quests;
   final bool verticalAlign;
 
-  const BottomBar(
+  const TileBar(
       {required this.getSelectionMode,
       required this.setSelectionMode,
       required this.getSelectedLandType,
@@ -39,11 +39,11 @@ class BottomBar extends StatefulWidget {
       super.key});
 
   @override
-  State<BottomBar> createState() => _BottomBarState();
+  State<TileBar> createState() => _TileBarState();
 }
 
-class _BottomBarState extends State<BottomBar> {
-  _BottomBarState();
+class _TileBarState extends State<TileBar> {
+  _TileBarState();
 
   final double _buttonSize = 40.0;
 

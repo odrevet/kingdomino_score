@@ -34,11 +34,11 @@ class ScoreDetailsWidget extends StatelessWidget {
 
       tableCells.add(TableCell(
           child: Align(
-              alignment: Alignment.centerRight,
+              alignment: Alignment.center,
               child: Text('${property.landCount}'))));
       tableCells.add(TableCell(
           child: Align(
-        alignment: Alignment.centerRight,
+        alignment: Alignment.center,
         child: SizedBox(
           width: 16.0,
           height: 16.0,
@@ -49,22 +49,20 @@ class ScoreDetailsWidget extends StatelessWidget {
       )));
       tableCells.add(const TableCell(
           child: Align(
-              alignment: Alignment.centerRight,
-              child: Text('×', maxLines: 1))));
+              alignment: Alignment.center, child: Text('×', maxLines: 1))));
       tableCells.add(TableCell(
           child: Align(
-              alignment: Alignment.centerRight,
+              alignment: Alignment.center,
               child: Text(property.crownCount.toString(), maxLines: 1))));
       tableCells.add(const TableCell(
           child: Align(
-              alignment: Alignment.centerRight,
-              child: Text(crown, maxLines: 1))));
+              alignment: Alignment.center, child: Text(crown, maxLines: 1))));
       tableCells.add(const TableCell(
           child: Align(
               alignment: Alignment.center, child: Text('=', maxLines: 1))));
       tableCells.add(TableCell(
           child: Align(
-              alignment: Alignment.centerRight,
+              alignment: Alignment.center,
               child: Text('${property.landCount * property.crownCount}',
                   maxLines: 1))));
 
@@ -83,7 +81,7 @@ class ScoreDetailsWidget extends StatelessWidget {
 
       tableCells.add(const TableCell(
           child: Align(
-              alignment: Alignment.centerRight,
+              alignment: Alignment.center,
               child: Icon(Icons.shield, color: Colors.white))));
 
       tableCells.add(const TableCell(
@@ -91,7 +89,7 @@ class ScoreDetailsWidget extends StatelessWidget {
 
       tableCells.add(TableCell(
           child: Align(
-              alignment: Alignment.centerRight,
+              alignment: Alignment.center,
               child: Text(
                 context.read<ScoreCubit>().state.scoreQuest.toString(),
               ))));
@@ -110,7 +108,7 @@ class ScoreDetailsWidget extends StatelessWidget {
 
       tableCells.add(TableCell(
           child: Align(
-              alignment: Alignment.centerRight,
+              alignment: Alignment.center,
               child: Image.asset(
                 'assets/lacour/resource.png',
                 height: 25,
@@ -122,7 +120,7 @@ class ScoreDetailsWidget extends StatelessWidget {
 
       tableCells.add(TableCell(
           child: Align(
-              alignment: Alignment.centerRight,
+              alignment: Alignment.center,
               child: Text(
                   context.read<ScoreCubit>().state.scoreLacour.toString()))));
 
@@ -131,30 +129,38 @@ class ScoreDetailsWidget extends StatelessWidget {
     }
 
     //SUM
-    var tableCells = <TableCell>[];
-
-    tableCells.add(const TableCell(child: Text('')));
-    tableCells.add(const TableCell(child: Text('')));
-    tableCells.add(const TableCell(child: Text('')));
-    tableCells.add(const TableCell(child: Text('')));
-
     if (context.read<ScoreCubit>().state.score > 0) {
-      tableCells.add(TableCell(
-          child: Align(
-              alignment: Alignment.centerRight,
-              child: Text(String.fromCharCode($Sigma)))));
+      var tableCells = <TableCell>[];
 
-      tableCells.add(const TableCell(
-          child: Align(alignment: Alignment.center, child: Text('='))));
+      tableCells.add(const TableCell(child: Text('')));
+      tableCells.add(const TableCell(child: Text('')));
+      tableCells.add(const TableCell(child: Text('')));
+      tableCells.add(const TableCell(child: Text('')));
+      tableCells.add(const TableCell(child: Text('')));
+      tableCells.add(const TableCell(child: Text('')));
 
-      tableCells.add(TableCell(
-          child: Align(
-              alignment: Alignment.centerRight,
-              child: Text(context.read<ScoreCubit>().state.score.toString()))));
+      tableCells.add(const TableCell(child: Divider(color: Colors.white)));
 
       var tableRow = TableRow(children: tableCells);
       tableRows.add(tableRow);
     }
+    //SUM
+    var tableCellsTotal = <TableCell>[];
+
+    tableCellsTotal.add(const TableCell(child: Text('')));
+    tableCellsTotal.add(const TableCell(child: Text('')));
+    tableCellsTotal.add(const TableCell(child: Text('')));
+    tableCellsTotal.add(const TableCell(child: Text('')));
+    tableCellsTotal.add(const TableCell(child: Text('')));
+    tableCellsTotal.add(const TableCell(child: Text('')));
+
+    tableCellsTotal.add(TableCell(
+        child: Align(
+            alignment: Alignment.center,
+            child: Text(context.read<ScoreCubit>().state.score.toString()))));
+
+    var tableRow = TableRow(children: tableCellsTotal);
+    tableRows.add(tableRow);
 
     content = SingleChildScrollView(child: Table(children: tableRows));
 

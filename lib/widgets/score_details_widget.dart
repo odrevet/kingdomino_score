@@ -142,24 +142,29 @@ class ScoreDetailsWidget extends StatelessWidget {
 
       var tableRow = TableRow(children: tableCells);
       tableRows.add(tableRow);
+
+      //SUM
+      var tableCellsTotal = <TableCell>[];
+
+      tableCellsTotal.add(const TableCell(child: Text('')));
+      tableCellsTotal.add(const TableCell(child: Text('')));
+      tableCellsTotal.add(const TableCell(child: Text('')));
+      tableCellsTotal.add(const TableCell(child: Text('')));
+      tableCellsTotal.add(const TableCell(child: Text('')));
+      tableCellsTotal.add(const TableCell(child: Text('')));
+
+      tableCellsTotal.add(TableCell(
+          child: Align(
+              alignment: Alignment.center,
+              child: Text(context
+                  .read<ScoreCubit>()
+                  .state
+                  .score
+                  .toString()))));
+
+      var tableRowTotal = TableRow(children: tableCellsTotal);
+      tableRows.add(tableRowTotal);
     }
-    //SUM
-    var tableCellsTotal = <TableCell>[];
-
-    tableCellsTotal.add(const TableCell(child: Text('')));
-    tableCellsTotal.add(const TableCell(child: Text('')));
-    tableCellsTotal.add(const TableCell(child: Text('')));
-    tableCellsTotal.add(const TableCell(child: Text('')));
-    tableCellsTotal.add(const TableCell(child: Text('')));
-    tableCellsTotal.add(const TableCell(child: Text('')));
-
-    tableCellsTotal.add(TableCell(
-        child: Align(
-            alignment: Alignment.center,
-            child: Text(context.read<ScoreCubit>().state.score.toString()))));
-
-    var tableRow = TableRow(children: tableCellsTotal);
-    tableRows.add(tableRow);
 
     content = SingleChildScrollView(child: Table(children: tableRows));
 

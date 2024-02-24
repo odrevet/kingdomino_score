@@ -259,7 +259,9 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
                     fit: BoxFit.fitHeight,
                     child: InkWell(
                         child: Text(
-                            context.read<ScoreCubit>().state.score.toString()),
+                            context.read<ScoreCubit>().state.score.toString(),
+                            style: TextStyle(
+                                color: context.read<ThemeCubit>().state)),
                         onTap: () => showDialog<void>(
                               context: context,
                               builder: (BuildContext dialogContext) =>
@@ -323,11 +325,14 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
                         flex: 1,
                         child: FittedBox(
                             fit: BoxFit.fitHeight,
-                            child: Text(context
-                                .read<ScoreCubit>()
-                                .state
-                                .score
-                                .toString())),
+                            child: Text(
+                                context
+                                    .read<ScoreCubit>()
+                                    .state
+                                    .score
+                                    .toString(),
+                                style: TextStyle(
+                                    color: context.read<ThemeCubit>().state))),
                       )
                     ],
                   )),

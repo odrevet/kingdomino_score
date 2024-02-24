@@ -43,6 +43,7 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
   Courtier? selectedcourtier;
   SelectionMode selectionMode = SelectionMode.land;
   late bool _showPie = false;
+  late bool _showDetails = false;
   Extension? extension;
 
   HashSet<QuestType> selectedQuests = HashSet();
@@ -256,38 +257,25 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
             return Column(children: <Widget>[
               Expanded(
                 flex: 4,
-                child: FittedBox(
-                    fit: BoxFit.fitHeight,
-                    child: InkWell(
-                        child: Text(
-                            context.read<ScoreCubit>().state.score.toString(),
-                            style: TextStyle(
-                                color: context.read<ThemeCubit>().state)),
-                        onTap: () => showDialog<void>(
-                              context: context,
-                              builder: (BuildContext dialogContext) =>
-                                  Provider.value(
-                                      value: Provider.of<ScoreCubit>(context,
-                                          listen: false),
-                                      child: Provider.value(
-                                          value: Provider.of<KingdomCubit>(
-                                              context,
-                                              listen: false),
-                                          child: AlertDialog(
-                                            content: ScoreDetailsWidget(
-                                                quests: selectedQuests,
-                                                getExtension: getExtension),
-                                            actions: <Widget>[
-                                              TextButton(
-                                                child: const Icon(Icons.done),
-                                                onPressed: () {
-                                                  Navigator.of(dialogContext)
-                                                      .pop();
-                                                },
-                                              ),
-                                            ],
-                                          ))),
-                            ))),
+                child: GestureDetector(
+                    child: _showDetails
+                        ? ScoreDetailsWidget(
+                        quests: selectedQuests,
+                        getExtension: getExtension)
+                        : FittedBox(
+                      fit: BoxFit.fitHeight,
+                          child: Text(
+                          context
+                              .read<ScoreCubit>()
+                              .state
+                              .score
+                              .toString(),
+                          style: TextStyle(
+                              color: context.read<ThemeCubit>().state)),
+                        ),
+                    onTap: () => setState(() {
+                      _showDetails = !_showDetails;
+                    })),
               ),
               Expanded(
                 flex: 5,

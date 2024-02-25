@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kingdomino_score_count/cubits/theme_cubit.dart';
 
+import '../cubits/app_state_cubit.dart';
 import '../cubits/kingdom_cubit.dart';
 import '../models/extensions/age_of_giants.dart';
 import '../models/extensions/lacour/lacour.dart';
 import '../models/kingdom.dart';
 import '../models/land.dart';
-import '../models/selection_mode.dart';
+import '../models/user_selection.dart';
 import 'tile/castle_tile.dart';
 import 'kingdomino_widget.dart';
 import 'tile/land_tile.dart';
 
 class KingdomWidget extends StatefulWidget {
   final Function getSelectionMode;
-  final Function getSelectedLandType;
   final Function getSelectedcourtier;
   final Function getGameSet;
   final Function calculateScore;
@@ -22,7 +22,6 @@ class KingdomWidget extends StatefulWidget {
 
   const KingdomWidget(
       {required this.getSelectionMode,
-      required this.getSelectedLandType,
       required this.getSelectedcourtier,
       required this.getGameSet,
       required this.calculateScore,
@@ -117,7 +116,11 @@ class _KingdomWidgetState extends State<KingdomWidget> {
       child: GestureDetector(
         onTap: () {
           var selectionMode = widget.getSelectionMode();
-          var selectedLandType = widget.getSelectedLandType();
+          var selectedLandType = context
+              .read<AppStateCubit>()
+              .state
+              .userSelection
+              .getSelectedLandType();
           if (selectionMode != SelectionMode.land ||
               selectedLandType != kingdom.getLand(x, y)!.landType) {
             context.read<KingdomCubit>().setLand(

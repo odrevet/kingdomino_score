@@ -6,7 +6,7 @@ import 'package:kingdomino_score_count/models/extensions/extension.dart';
 import 'package:kingdomino_score_count/widgets/tile/land_tile.dart';
 
 import '../../cubits/kingdom_cubit.dart';
-import '../../cubits/score_cubit.dart';
+import '../../cubits/app_state_cubit.dart';
 import '../../models/quests/quest.dart';
 import '../kingdomino_widget.dart';
 
@@ -94,7 +94,7 @@ class ScoreDetailsWidget extends StatelessWidget {
           child: Align(
               alignment: Alignment.center,
               child: Text(
-                context.read<ScoreCubit>().state.scoreQuest.toString(),
+                context.read<AppStateCubit>().state.score.scoreQuest.toString(),
               ))));
 
       var tableRow = TableRow(children: tableCells);
@@ -125,14 +125,14 @@ class ScoreDetailsWidget extends StatelessWidget {
           child: Align(
               alignment: Alignment.center,
               child: Text(
-                  context.read<ScoreCubit>().state.scoreLacour.toString()))));
+                  context.read<AppStateCubit>().state.score.scoreLacour.toString()))));
 
       var tableRow = TableRow(children: tableCells);
       tableRows.add(tableRow);
     }
 
     //SUM
-    if (context.read<ScoreCubit>().state.score > 0 && showTotal == true) {
+    if (context.read<AppStateCubit>().state.score.total > 0 && showTotal == true) {
       var tableCells = <TableCell>[];
 
       tableCells.add(const TableCell(child: Text('')));
@@ -160,7 +160,7 @@ class ScoreDetailsWidget extends StatelessWidget {
       tableCellsTotal.add(TableCell(
           child: Align(
               alignment: Alignment.center,
-              child: Text(context.read<ScoreCubit>().state.score.toString()))));
+              child: Text(context.read<AppStateCubit>().state.score.total.toString()))));
 
       var tableRowTotal = TableRow(children: tableCellsTotal);
       tableRows.add(tableRowTotal);

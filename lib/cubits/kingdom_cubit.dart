@@ -2,7 +2,7 @@ import 'package:kingdomino_score_count/models/land.dart';
 import 'package:replay_bloc/replay_bloc.dart';
 
 import '../models/kingdom.dart';
-import '../models/selection_mode.dart';
+import '../models/user_selection.dart';
 
 class KingdomCubit extends ReplayCubit<Kingdom> {
   KingdomCubit() : super(Kingdom(size: 5));

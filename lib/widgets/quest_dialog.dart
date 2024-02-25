@@ -5,7 +5,7 @@ import 'package:kingdomino_score_count/models/extensions/extension.dart';
 import 'package:kingdomino_score_count/models/quests/quest.dart';
 import 'package:provider/provider.dart';
 
-import '../cubits/score_cubit.dart';
+import '../cubits/app_state_cubit.dart';
 import '../cubits/theme_cubit.dart';
 import 'highlight_box.dart';
 
@@ -127,7 +127,7 @@ class _QuestDialogWidgetState extends State<QuestDialogWidget> {
                   builder: (BuildContext dialogContext) => Provider.value(
                     value: Provider.of<KingdomCubit>(context, listen: false),
                     child: Provider.value(
-                        value: Provider.of<ScoreCubit>(context, listen: false),
+                        value: Provider.of<AppStateCubit>(context, listen: false),
                         child: dialog),
                   ),
                 )));

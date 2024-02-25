@@ -18,7 +18,7 @@ class Score {
       scoreQuest: scoreQuest ?? this.scoreQuest,
       scoreLacour: scoreLacour ?? this.scoreLacour);
 
-  int get score {
+  int get total {
     return scoreProperty + scoreQuest + scoreLacour;
   }
 

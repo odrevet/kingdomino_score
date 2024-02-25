@@ -3,7 +3,7 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kingdomino_score_count/cubits/kingdom_cubit.dart';
-import 'package:kingdomino_score_count/cubits/score_cubit.dart';
+import 'package:kingdomino_score_count/cubits/app_state_cubit.dart';
 import 'package:kingdomino_score_count/cubits/theme_cubit.dart';
 import 'package:kingdomino_score_count/models/extensions/lacour/lacour.dart';
 import 'package:kingdomino_score_count/widgets/kingdomino_app_bar.dart';
@@ -18,7 +18,7 @@ import '../models/king_colors.dart';
 import '../models/kingdom.dart';
 import '../models/land.dart' show LandType;
 import '../models/quests/quest.dart';
-import '../models/selection_mode.dart';
+import '../models/user_selection.dart';
 import '../models/warning.dart';
 import 'tile/tile_bar.dart';
 import 'kingdom_widget.dart';
@@ -37,7 +37,6 @@ class KingdominoWidget extends StatefulWidget {
 }
 
 class _KingdominoWidgetState extends State<KingdominoWidget> {
-  LandType? selectedLandType;
   Courtier? selectedcourtier;
   SelectionMode selectionMode = SelectionMode.land;
   Extension? extension;
@@ -64,7 +63,6 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
       _packageInfo = packageInfo;
     });
 
-    selectedLandType = LandType.castle;
     selectionMode = SelectionMode.castle;
 
     super.initState();
@@ -73,14 +71,6 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
   HashSet<QuestType> getSelectedQuests() => selectedQuests;
 
   Extension? getExtension() => extension;
-
-  LandType? getSelectedLandType() => selectedLandType;
-
-  setSelectedLandType(LandType? landtype) {
-    setState(() {
-      selectedLandType = landtype;
-    });
-  }
 
   Courtier? getSelectedcourtier() => selectedcourtier;
 
@@ -101,7 +91,9 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
   void calculateScore(Kingdom kingdom) {
     clearWarnings();
     checkKingdom(kingdom);
-    context.read<ScoreCubit>().calculate(kingdom, extension, selectedQuests);
+    context
+        .read<AppStateCubit>()
+        .calculateScore(kingdom, extension, selectedQuests);
   }
 
   Map<LandType, Map<String, dynamic>> getGameSet() {
@@ -186,7 +178,7 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
 
   void onKingdomClear() => setState(() {
         clearWarnings();
-        context.read<ScoreCubit>().reset();
+        //context.read<AppStateCubit>().reset();
       });
 
   void onExtensionSelect(Kingdom kingdom, String? newValue) => setState(() {
@@ -205,7 +197,7 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
           case '':
             extension = null;
             setSelectionMode(SelectionMode.land);
-            setSelectedLandType(null);
+            context.read<AppStateCubit>().setSelectedLandType(null);
 
             kingColors.remove(Colors.brown.shade800);
             if (context.read<ThemeCubit>().state == Colors.brown.shade800) {
@@ -215,7 +207,7 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
           case 'Giants':
             extension = Extension.ageOfGiants;
             setSelectionMode(SelectionMode.land);
-            setSelectedLandType(null);
+            context.read<AppStateCubit>().setSelectedLandType(null);
 
             kingColors.add(Colors.brown);
             break;
@@ -223,7 +215,7 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
             extension = Extension.laCour;
 
             setSelectionMode(SelectionMode.land);
-            setSelectedLandType(null);
+            context.read<AppStateCubit>().setSelectedLandType(null);
 
             if (selectionMode == SelectionMode.courtier ||
                 selectionMode == SelectionMode.resource) {
@@ -260,7 +252,6 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
                 flex: 5,
                 child: KingdomWidget(
                     getSelectionMode: getSelectionMode,
-                    getSelectedLandType: getSelectedLandType,
                     getSelectedcourtier: getSelectedcourtier,
                     getGameSet: getGameSet,
                     calculateScore: calculateScore,
@@ -269,8 +260,6 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
               TileBar(
                 getSelectionMode: getSelectionMode,
                 setSelectionMode: setSelectionMode,
-                getSelectedLandType: getSelectedLandType,
-                setSelectedLandType: setSelectedLandType,
                 getSelectedcourtier: getSelectedcourtier,
                 setSelectedcourtier: setSelectedcourtier,
                 getExtension: getExtension,
@@ -288,7 +277,6 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
                   ),
                   KingdomWidget(
                       getSelectionMode: getSelectionMode,
-                      getSelectedLandType: getSelectedLandType,
                       getSelectedcourtier: getSelectedcourtier,
                       getGameSet: getGameSet,
                       calculateScore: calculateScore,
@@ -296,8 +284,6 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
                   TileBar(
                     getSelectionMode: getSelectionMode,
                     setSelectionMode: setSelectionMode,
-                    getSelectedLandType: getSelectedLandType,
-                    setSelectedLandType: setSelectedLandType,
                     getSelectedcourtier: getSelectedcourtier,
                     setSelectedcourtier: setSelectedcourtier,
                     getExtension: getExtension,

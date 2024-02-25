@@ -4,7 +4,7 @@ import 'package:kingdomino_score_count/cubits/kingdom_cubit.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:provider/provider.dart';
 
-import '../../cubits/score_cubit.dart';
+import '../../cubits/app_state_cubit.dart';
 import '../../cubits/theme_cubit.dart';
 import '../../models/land.dart' show LandType, getColorForLandType;
 
@@ -52,7 +52,7 @@ class ScorePie extends StatelessWidget {
         centerWidget: Container(
           color: Colors.white.withOpacity(0.5),
           child: Text(
-            context.read<ScoreCubit>().state.score.toString(),
+            context.read<AppStateCubit>().state.score.total.toString(),
             style: const TextStyle(color: Colors.black),
           ),
         ),

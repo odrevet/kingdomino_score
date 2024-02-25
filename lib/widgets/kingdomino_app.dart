@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kingdomino_score_count/cubits/kingdom_cubit.dart';
-import 'package:kingdomino_score_count/cubits/score_cubit.dart';
+import 'package:kingdomino_score_count/cubits/app_state_cubit.dart';
 import 'package:kingdomino_score_count/cubits/theme_cubit.dart';
 
 import 'kingdomino_widget.dart';
@@ -24,8 +24,8 @@ class KingdominoApp extends StatelessWidget {
               fontFamily: 'HammersmithOne',
             ),
             home: MultiBlocProvider(providers: [
-              BlocProvider<ScoreCubit>(
-                create: (BuildContext context) => ScoreCubit(),
+              BlocProvider<AppStateCubit>(
+                create: (BuildContext context) => AppStateCubit(),
               ),
               BlocProvider<KingdomCubit>(
                 create: (BuildContext context) => KingdomCubit(),

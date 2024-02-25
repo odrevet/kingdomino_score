@@ -5,12 +5,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kingdomino_score_count/models/extensions/extension.dart';
 import 'package:kingdomino_score_count/widgets/tile/land_tile.dart';
 
+import '../../cubits/app_state_cubit.dart';
 import '../../cubits/theme_cubit.dart';
 import '../../models/extensions/age_of_giants.dart';
 import '../../models/extensions/lacour/lacour.dart';
 import '../../models/land.dart';
 import '../../models/quests/quest.dart';
-import '../../models/selection_mode.dart';
+import '../../models/user_selection.dart';
 import 'castle_tile.dart';
 import '../highlight_box.dart';
 import '../kingdomino_widget.dart';
@@ -18,8 +19,6 @@ import '../kingdomino_widget.dart';
 class TileBar extends StatefulWidget {
   final Function getSelectionMode;
   final Function setSelectionMode;
-  final Function getSelectedLandType;
-  final Function setSelectedLandType;
   final Function getSelectedcourtier;
   final Function setSelectedcourtier;
   final Function getExtension;
@@ -29,8 +28,6 @@ class TileBar extends StatefulWidget {
   const TileBar(
       {required this.getSelectionMode,
       required this.setSelectionMode,
-      required this.getSelectedLandType,
-      required this.setSelectedLandType,
       required this.getSelectedcourtier,
       required this.setSelectedcourtier,
       required this.getExtension,
@@ -103,7 +100,7 @@ class _TileBarState extends State<TileBar> {
 
   Widget landButton(LandType? landType) {
     var isSelected = widget.getSelectionMode() == SelectionMode.land &&
-        widget.getSelectedLandType() == landType;
+        context.read<AppStateCubit>().state.userSelection.getSelectedLandType() == landType;
 
     return MouseRegion(
       cursor: SystemMouseCursors.click,
@@ -165,14 +162,14 @@ class _TileBarState extends State<TileBar> {
 
   Widget castleButton() {
     bool isSelected = widget.getSelectionMode() == SelectionMode.castle &&
-        widget.getSelectedLandType() == LandType.castle;
+        context.read<AppStateCubit>().state.userSelection.getSelectedLandType() == LandType.castle;
 
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
         onTap: () => setState(() {
           widget.setSelectionMode(SelectionMode.castle);
-          widget.setSelectedLandType(LandType.castle);
+          context.read<AppStateCubit>().setSelectedLandType(LandType.castle);
         }),
         child: Container(
           margin: const EdgeInsets.all(5.0),
@@ -261,7 +258,7 @@ class _TileBarState extends State<TileBar> {
       _onSelectCastle();
     } else {
       setState(() {
-        widget.setSelectedLandType(selectedType);
+        context.read<AppStateCubit>().setSelectedLandType(selectedType);
         widget.setSelectionMode(SelectionMode.land);
       });
     }
@@ -282,7 +279,7 @@ class _TileBarState extends State<TileBar> {
 
   void _onSelectCastle() {
     setState(() {
-      widget.setSelectedLandType(LandType.castle);
+      context.read<AppStateCubit>().setSelectedLandType(LandType.castle);
       widget.setSelectionMode(SelectionMode.castle);
     });
   }

@@ -7,10 +7,7 @@ class AppState {
   Score score;
   UserSelection userSelection;
 
-  copyWith(
-          {UserSelection? userSelection,
-          Score? score}) =>
-      AppState(
-          userSelection: userSelection ?? this.userSelection,
-          score: score ?? this.score);
+  copyWith({UserSelection? userSelection, Score? score}) => AppState(
+      userSelection: userSelection ?? this.userSelection,
+      score: score ?? this.score);
 }

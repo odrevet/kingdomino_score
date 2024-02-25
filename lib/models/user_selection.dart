@@ -10,7 +10,7 @@ class UserSelection {
   UserSelection(
       {LandType? selectedLandType, HashSet<QuestType>? selectedQuests}) {
     setSelectedLandType(selectedLandType);
-    if(selectedQuests != null)this.selectedQuests = selectedQuests;
+    if (selectedQuests != null) this.selectedQuests = selectedQuests;
   }
 
   LandType? selectedLandType = LandType.castle;

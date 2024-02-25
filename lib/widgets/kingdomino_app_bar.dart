@@ -113,9 +113,7 @@ class _KingdominoAppBarState extends State<KingdominoAppBar> {
           );
         }).toList(),
       ),
-      QuestDialogWidget(
-          widget.calculateScore,
-          widget.getExtension),
+      QuestDialogWidget(widget.calculateScore, widget.getExtension),
       IconButton(
           icon: Icon(kingdom.size == 5 ? Icons.filter_5 : Icons.filter_7),
           onPressed: () =>

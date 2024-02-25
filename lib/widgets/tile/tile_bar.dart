@@ -95,7 +95,12 @@ class _TileBarState extends State<TileBar> {
 
   Widget landButton(LandType landType) {
     var isSelected = widget.getSelectionMode() == SelectionMode.land &&
-        context.read<AppStateCubit>().state.userSelection.getSelectedLandType() == landType;
+        context
+                .read<AppStateCubit>()
+                .state
+                .userSelection
+                .getSelectedLandType() ==
+            landType;
 
     return MouseRegion(
       cursor: SystemMouseCursors.click,
@@ -157,7 +162,12 @@ class _TileBarState extends State<TileBar> {
 
   Widget castleButton() {
     bool isSelected = widget.getSelectionMode() == SelectionMode.castle &&
-        context.read<AppStateCubit>().state.userSelection.getSelectedLandType() == LandType.castle;
+        context
+                .read<AppStateCubit>()
+                .state
+                .userSelection
+                .getSelectedLandType() ==
+            LandType.castle;
 
     return MouseRegion(
       cursor: SystemMouseCursors.click,

@@ -124,15 +124,20 @@ class ScoreDetailsWidget extends StatelessWidget {
       tableCells.add(TableCell(
           child: Align(
               alignment: Alignment.center,
-              child: Text(
-                  context.read<AppStateCubit>().state.score.scoreLacour.toString()))));
+              child: Text(context
+                  .read<AppStateCubit>()
+                  .state
+                  .score
+                  .scoreLacour
+                  .toString()))));
 
       var tableRow = TableRow(children: tableCells);
       tableRows.add(tableRow);
     }
 
     //SUM
-    if (context.read<AppStateCubit>().state.score.total > 0 && showTotal == true) {
+    if (context.read<AppStateCubit>().state.score.total > 0 &&
+        showTotal == true) {
       var tableCells = <TableCell>[];
 
       tableCells.add(const TableCell(child: Text('')));
@@ -160,7 +165,12 @@ class ScoreDetailsWidget extends StatelessWidget {
       tableCellsTotal.add(TableCell(
           child: Align(
               alignment: Alignment.center,
-              child: Text(context.read<AppStateCubit>().state.score.total.toString()))));
+              child: Text(context
+                  .read<AppStateCubit>()
+                  .state
+                  .score
+                  .total
+                  .toString()))));
 
       var tableRowTotal = TableRow(children: tableCellsTotal);
       tableRows.add(tableRowTotal);

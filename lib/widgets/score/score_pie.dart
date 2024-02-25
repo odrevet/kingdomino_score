@@ -39,30 +39,31 @@ class ScorePie extends StatelessWidget {
     });
 
     return PieChart(
-        chartRadius: MediaQuery.of(context).size.width / 3.2,
+      chartRadius: MediaQuery.of(context).size.width / 3.2,
       animationDuration: const Duration(milliseconds: 200),
-        colorList: landScore.isEmpty
-            ? [Colors.transparent.withOpacity(0.5)]
-            : landScore.keys
-                .map((landType) => getColorForLandType(landType))
-                .toList(),
-        dataMap: dataMap.isEmpty ? {'': 0} : dataMap,
-        emptyColor: Colors.transparent.withOpacity(0.5),
-        baseChartColor: Colors.transparent.withOpacity(0.5),
-        centerWidget: Container(
-          color: Colors.white.withOpacity(0.5),
-          child: Text(
-            context.read<AppStateCubit>().state.score.total.toString(),
-            style: const TextStyle(color: Colors.black),
-          ),
+      colorList: landScore.isEmpty
+          ? [Colors.transparent.withOpacity(0.5)]
+          : landScore.keys
+              .map((landType) => getColorForLandType(landType))
+              .toList(),
+      dataMap: dataMap.isEmpty ? {'': 0} : dataMap,
+      emptyColor: Colors.transparent.withOpacity(0.5),
+      baseChartColor: Colors.transparent.withOpacity(0.5),
+      centerWidget: Container(
+        color: Colors.white.withOpacity(0.5),
+        child: Text(
+          context.read<AppStateCubit>().state.score.total.toString(),
+          style: const TextStyle(color: Colors.black),
         ),
-        legendOptions: const LegendOptions(showLegends: false),
-        chartValuesOptions: const ChartValuesOptions(
-          decimalPlaces: 0,
-          showChartValueBackground: true,
-          showChartValues: true,
-          showChartValuesInPercentage: false,
-          showChartValuesOutside: false,
-        ), );
+      ),
+      legendOptions: const LegendOptions(showLegends: false),
+      chartValuesOptions: const ChartValuesOptions(
+        decimalPlaces: 0,
+        showChartValueBackground: true,
+        showChartValues: true,
+        showChartValuesInPercentage: false,
+        showChartValuesOutside: false,
+      ),
+    );
   }
 }

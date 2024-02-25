@@ -8,9 +8,9 @@ import '../models/extensions/lacour/lacour.dart';
 import '../models/kingdom.dart';
 import '../models/land.dart';
 import '../models/selection_mode.dart';
-import 'castle_tile.dart';
+import 'tile/castle_tile.dart';
 import 'kingdomino_widget.dart';
-import 'land_tile.dart';
+import 'tile/land_tile.dart';
 
 class KingdomWidget extends StatefulWidget {
   final Function getSelectionMode;

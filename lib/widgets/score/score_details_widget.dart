@@ -3,12 +3,12 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kingdomino_score_count/models/extensions/extension.dart';
-import 'package:kingdomino_score_count/widgets/land_tile.dart';
+import 'package:kingdomino_score_count/widgets/tile/land_tile.dart';
 
-import '../cubits/kingdom_cubit.dart';
-import '../cubits/score_cubit.dart';
-import '../models/quests/quest.dart';
-import 'kingdomino_widget.dart';
+import '../../cubits/kingdom_cubit.dart';
+import '../../cubits/score_cubit.dart';
+import '../../models/quests/quest.dart';
+import '../kingdomino_widget.dart';
 
 class ScoreDetailsWidget extends StatelessWidget {
   final HashSet<QuestType> quests;

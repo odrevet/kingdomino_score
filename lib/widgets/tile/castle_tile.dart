@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'cardboard_tile.dart';
-import 'kingdomino_widget.dart';
+import '../kingdomino_widget.dart';
 
 class CastleTile extends StatelessWidget {
   final Color kingColor;

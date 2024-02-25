@@ -7,7 +7,7 @@ import 'package:kingdomino_score_count/cubits/score_cubit.dart';
 import 'package:kingdomino_score_count/cubits/theme_cubit.dart';
 import 'package:kingdomino_score_count/models/extensions/lacour/lacour.dart';
 import 'package:kingdomino_score_count/widgets/kingdomino_app_bar.dart';
-import 'package:kingdomino_score_count/widgets/score_widget.dart';
+import 'package:kingdomino_score_count/widgets/score/score_widget.dart';
 import 'package:kingdomino_score_count/widgets/warning_widget.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
@@ -20,7 +20,7 @@ import '../models/land.dart' show LandType;
 import '../models/quests/quest.dart';
 import '../models/selection_mode.dart';
 import '../models/warning.dart';
-import 'tile_bar.dart';
+import 'tile/tile_bar.dart';
 import 'kingdom_widget.dart';
 
 const String crown = '\u{1F451}';

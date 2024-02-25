@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../models/land.dart';
 import '../models/warning.dart';
 import 'kingdomino_widget.dart';
-import 'land_tile.dart';
+import 'tile/land_tile.dart';
 
 class WarningsWidget extends StatelessWidget {
   final List<Warning>? warnings;

@@ -3,17 +3,17 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kingdomino_score_count/models/extensions/extension.dart';
-import 'package:kingdomino_score_count/widgets/land_tile.dart';
+import 'package:kingdomino_score_count/widgets/tile/land_tile.dart';
 
-import '../cubits/theme_cubit.dart';
-import '../models/extensions/age_of_giants.dart';
-import '../models/extensions/lacour/lacour.dart';
-import '../models/land.dart';
-import '../models/quests/quest.dart';
-import '../models/selection_mode.dart';
+import '../../cubits/theme_cubit.dart';
+import '../../models/extensions/age_of_giants.dart';
+import '../../models/extensions/lacour/lacour.dart';
+import '../../models/land.dart';
+import '../../models/quests/quest.dart';
+import '../../models/selection_mode.dart';
 import 'castle_tile.dart';
-import 'highlight_box.dart';
-import 'kingdomino_widget.dart';
+import '../highlight_box.dart';
+import '../kingdomino_widget.dart';
 
 class TileBar extends StatefulWidget {
   final Function getSelectionMode;

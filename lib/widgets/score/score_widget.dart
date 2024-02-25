@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kingdomino_score_count/cubits/score_cubit.dart';
 import 'package:kingdomino_score_count/cubits/theme_cubit.dart';
 import 'package:provider/provider.dart';
-import '../models/quests/quest.dart';
+import '../../models/quests/quest.dart';
 import 'score_details_widget.dart';
 import 'score_pie.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../models/land.dart';
+import '../../models/land.dart';
 import 'cardboard_tile.dart';
 
 class LandTile extends StatelessWidget {

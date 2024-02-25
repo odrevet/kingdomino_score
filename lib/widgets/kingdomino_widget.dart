@@ -9,7 +9,7 @@ import 'package:kingdomino_score_count/widgets/score/score_widget.dart';
 import 'package:kingdomino_score_count/widgets/warning_widget.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
-import '../check_kingdom.dart';
+import '../models/check_kingdom.dart';
 import '../models/extensions/age_of_giants.dart';
 import '../models/extensions/extension.dart';
 import '../models/game_set.dart';

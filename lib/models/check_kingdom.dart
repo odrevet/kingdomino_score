@@ -1,11 +1,11 @@
 import 'package:kingdomino_score_count/models/warning.dart';
 
-import 'models/extensions/age_of_giants.dart';
-import 'models/extensions/extension.dart';
-import 'models/extensions/lacour/lacour.dart';
-import 'models/game_set.dart';
-import 'models/kingdom.dart';
-import 'models/land.dart';
+import 'extensions/age_of_giants.dart';
+import 'extensions/extension.dart';
+import 'extensions/lacour/lacour.dart';
+import 'game_set.dart';
+import 'kingdom.dart';
+import 'land.dart';
 
 Map<LandType, Map<String, dynamic>> getGameSet(extension) {
   if (extension == Extension.ageOfGiants) {

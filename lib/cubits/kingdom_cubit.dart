@@ -1,7 +1,7 @@
 import 'package:kingdomino_score_count/models/land.dart';
 import 'package:replay_bloc/replay_bloc.dart';
 
-import '../check_kingdom.dart';
+import '../models/check_kingdom.dart';
 import '../models/kingdom.dart';
 import '../models/user_selection.dart';
 

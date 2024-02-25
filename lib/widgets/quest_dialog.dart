@@ -10,13 +10,11 @@ import '../cubits/theme_cubit.dart';
 import 'highlight_box.dart';
 
 class _QuestDialogOption extends StatefulWidget {
-  final Function getSelectedQuests;
   final Function updateScores;
   final QuestType questType;
   final Widget svg;
 
-  const _QuestDialogOption(
-      this.questType, this.svg, this.getSelectedQuests, this.updateScores);
+  const _QuestDialogOption(this.questType, this.svg, this.updateScores);
 
   @override
   _QuestDialogOptionState createState() => _QuestDialogOptionState();
@@ -28,7 +26,12 @@ class _QuestDialogOptionState extends State<_QuestDialogOption> {
   @override
   initState() {
     super.initState();
-    _active = widget.getSelectedQuests().contains(widget.questType);
+    _active = context
+        .read<AppStateCubit>()
+        .state
+        .userSelection
+        .getSelectedQuests()
+        .contains(widget.questType);
   }
 
   _QuestDialogOptionState();
@@ -52,12 +55,33 @@ class _QuestDialogOptionState extends State<_QuestDialogOption> {
       child: child,
       onPressed: () {
         setState(() {
-          if (widget.getSelectedQuests().contains(widget.questType)) {
+          if (context
+              .read<AppStateCubit>()
+              .state
+              .userSelection
+              .getSelectedQuests()
+              .contains(widget.questType)) {
             _setActive(false);
-            widget.getSelectedQuests().remove(widget.questType);
-          } else if (widget.getSelectedQuests().length < 2) {
+            context
+                .read<AppStateCubit>()
+                .state
+                .userSelection
+                .getSelectedQuests()
+                .remove(widget.questType);
+          } else if (context
+                  .read<AppStateCubit>()
+                  .state
+                  .userSelection
+                  .getSelectedQuests()
+                  .length <
+              2) {
             _setActive(true);
-            widget.getSelectedQuests().add(widget.questType);
+            context
+                .read<AppStateCubit>()
+                .state
+                .userSelection
+                .getSelectedQuests()
+                .add(widget.questType);
           }
         });
         widget.updateScores(context.read<KingdomCubit>().state);
@@ -67,13 +91,10 @@ class _QuestDialogOptionState extends State<_QuestDialogOption> {
 }
 
 class QuestDialogWidget extends StatefulWidget {
-  final Function getSelectedQuests;
   final Function updateScores;
   final Function getExtension;
 
-  const QuestDialogWidget(
-      this.getSelectedQuests, this.updateScores, this.getExtension,
-      {super.key});
+  const QuestDialogWidget(this.updateScores, this.getExtension, {super.key});
 
   @override
   State<QuestDialogWidget> createState() => _QuestDialogWidgetState();
@@ -91,7 +112,6 @@ class _QuestDialogWidgetState extends State<QuestDialogWidget> {
         options.add(_QuestDialogOption(
             type,
             SvgPicture.asset('$assetsquestsLocation/$picture'),
-            widget.getSelectedQuests,
             widget.updateScores));
       });
     } else {
@@ -99,13 +119,11 @@ class _QuestDialogWidgetState extends State<QuestDialogWidget> {
           QuestType.harmony,
           SvgPicture.asset(
               '$assetsquestsLocation/${questPicture[QuestType.harmony]!}'),
-          widget.getSelectedQuests,
           widget.updateScores));
       options.add(_QuestDialogOption(
           QuestType.middleKingdom,
           SvgPicture.asset(
               '$assetsquestsLocation/${questPicture[QuestType.middleKingdom]!}'),
-          widget.getSelectedQuests,
           widget.updateScores));
     }
 
@@ -118,8 +136,19 @@ class _QuestDialogWidgetState extends State<QuestDialogWidget> {
     );
 
     return Badge(
-        isLabelVisible: widget.getSelectedQuests().length > 0,
-        label: Text(widget.getSelectedQuests().length.toString()),
+        isLabelVisible: context
+            .read<AppStateCubit>()
+            .state
+            .userSelection
+            .getSelectedQuests()
+            .isNotEmpty,
+        label: Text(context
+            .read<AppStateCubit>()
+            .state
+            .userSelection
+            .getSelectedQuests()
+            .length
+            .toString()),
         child: IconButton(
             icon: const Icon(Icons.shield),
             onPressed: () => showDialog(
@@ -127,7 +156,8 @@ class _QuestDialogWidgetState extends State<QuestDialogWidget> {
                   builder: (BuildContext dialogContext) => Provider.value(
                     value: Provider.of<KingdomCubit>(context, listen: false),
                     child: Provider.value(
-                        value: Provider.of<AppStateCubit>(context, listen: false),
+                        value:
+                            Provider.of<AppStateCubit>(context, listen: false),
                         child: dialog),
                   ),
                 )));

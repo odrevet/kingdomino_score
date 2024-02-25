@@ -16,11 +16,9 @@ enum DisplayMode {
 }
 
 class ScoreWidget extends StatefulWidget {
-  final HashSet<QuestType> quests;
   final Function getExtension;
 
-  const ScoreWidget(
-      {super.key, required this.quests, required this.getExtension});
+  const ScoreWidget({super.key, required this.getExtension});
 
   @override
   State<ScoreWidget> createState() => _ScoreWidgetState();
@@ -53,7 +51,11 @@ class _ScoreWidgetState extends State<ScoreWidget> {
             )
           : _displayMode == DisplayMode.details
               ? ScoreDetailsWidget(
-                  quests: widget.quests,
+                  quests: context
+                      .read<AppStateCubit>()
+                      .state
+                      .userSelection
+                      .getSelectedQuests(),
                   getExtension: widget.getExtension,
                 )
               : FittedBox(fit: BoxFit.fitHeight, child: ScorePie()),

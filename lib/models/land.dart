@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'extensions/lacour/lacour.dart';
 
-enum LandType { wheat, grassland, forest, lake, swamp, mine, castle }
+enum LandType { wheat, grassland, forest, lake, swamp, mine, castle, empty }
 
 class Land {
-  LandType? landType;
+  LandType landType;
   int crowns;
   bool isMarked = false; //to create properties
 
@@ -17,7 +17,7 @@ class Land {
   bool hasResource;
 
   Land(
-      {this.landType,
+      {this.landType = LandType.empty,
       this.crowns = 0,
       this.courtier,
       this.hasResource = false,
@@ -69,8 +69,8 @@ String getResourceForLandType(LandType? type) {
 Color getColorForLandType(LandType? type) {
   Color color;
   switch (type) {
-    case null:
-      color = Colors.blueGrey.shade400;
+    case LandType.empty:
+      color = Colors.transparent.withOpacity(0.8);
       break;
     case LandType.wheat:
       color = Colors.yellow.shade600;

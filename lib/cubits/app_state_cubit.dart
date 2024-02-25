@@ -15,9 +15,9 @@ class AppStateCubit extends Cubit<AppState> {
       userSelection: UserSelection(),
       score: Score()));
 
-  void calculateScore(Kingdom kingdom, Extension? extension, selectedQuests) {
+  void calculateScore(Kingdom kingdom, Extension? extension) {
     var score = Score();
-    score.updateScores(kingdom, extension, selectedQuests);
+    score.updateScores(kingdom, extension, state.userSelection.getSelectedQuests());
     emit(state.copyWith(score: score));
   }
 

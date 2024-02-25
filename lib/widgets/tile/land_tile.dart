@@ -11,9 +11,9 @@ class LandTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (landType == null) {
+    if (landType == LandType.empty) {
       return Container(
-        color: Colors.transparent.withOpacity(0.6),
+        color: Colors.transparent.withOpacity(0.8),
         child: Container(
           decoration: BoxDecoration(
               border: Border.all(

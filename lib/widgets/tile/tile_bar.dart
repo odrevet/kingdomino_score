@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kingdomino_score_count/models/extensions/extension.dart';
@@ -10,7 +8,6 @@ import '../../cubits/theme_cubit.dart';
 import '../../models/extensions/age_of_giants.dart';
 import '../../models/extensions/lacour/lacour.dart';
 import '../../models/land.dart';
-import '../../models/quests/quest.dart';
 import '../../models/user_selection.dart';
 import 'castle_tile.dart';
 import '../highlight_box.dart';
@@ -22,7 +19,6 @@ class TileBar extends StatefulWidget {
   final Function getSelectedcourtier;
   final Function setSelectedcourtier;
   final Function getExtension;
-  final HashSet<QuestType> quests;
   final bool verticalAlign;
 
   const TileBar(
@@ -31,7 +27,6 @@ class TileBar extends StatefulWidget {
       required this.getSelectedcourtier,
       required this.setSelectedcourtier,
       required this.getExtension,
-      required this.quests,
       required this.verticalAlign,
       super.key});
 
@@ -59,7 +54,7 @@ class _TileBarState extends State<TileBar> {
       landButton(LandType.swamp),
       landButton(LandType.mine),
       widget.verticalAlign ? const Divider() : const VerticalDivider(),
-      landButton(null),
+      landButton(LandType.empty),
       widget.verticalAlign ? const Divider() : const VerticalDivider(),
       castleButton(),
       crownButton(),
@@ -98,7 +93,7 @@ class _TileBarState extends State<TileBar> {
     );
   }
 
-  Widget landButton(LandType? landType) {
+  Widget landButton(LandType landType) {
     var isSelected = widget.getSelectionMode() == SelectionMode.land &&
         context.read<AppStateCubit>().state.userSelection.getSelectedLandType() == landType;
 
@@ -213,32 +208,6 @@ class _TileBarState extends State<TileBar> {
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
           onTap: () => _onSelectGiant(),
-          /*onLongPress: () => showDialog<void>(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20.0))),
-                    content: GiantsDetailsWidget(
-                        scoreOfQuest:
-                            context.read<ScoreCubit>().state.scoreOfQuest,
-                        quests: widget.quests,
-                        groupScore: widget.groupScore,
-                        score: context.read<ScoreCubit>().state.score),
-                    actions: <Widget>[
-                      TextButton(
-                        child: const Icon(
-                          Icons.done,
-                          color: Colors.black87,
-                        ),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                    ],
-                  );
-                },
-              ),*/
           child: Container(
             margin: const EdgeInsets.all(5.0),
             height: _buttonSize,

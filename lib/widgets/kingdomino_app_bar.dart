@@ -5,6 +5,7 @@ import 'package:kingdomino_score_count/cubits/kingdom_cubit.dart';
 import 'package:kingdomino_score_count/widgets/quest_dialog.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
+import '../cubits/app_state_cubit.dart';
 import '../cubits/theme_cubit.dart';
 import '../models/extensions/age_of_giants.dart';
 import '../models/king_colors.dart';
@@ -18,7 +19,6 @@ class KingdominoAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String dropdownSelectedExtension;
   final void Function(Kingdom, String?) onExtensionSelect;
   final void Function(Kingdom) calculateScore;
-  final Function getSelectedQuests;
   final Function onKingdomClear;
   final PackageInfo packageInfo;
 
@@ -28,7 +28,6 @@ class KingdominoAppBar extends StatefulWidget implements PreferredSizeWidget {
     required this.getExtension,
     required this.dropdownSelectedExtension,
     required this.packageInfo,
-    required this.getSelectedQuests,
     required this.onKingdomClear,
     required this.calculateScore,
     super.key,
@@ -115,7 +114,8 @@ class _KingdominoAppBarState extends State<KingdominoAppBar> {
         }).toList(),
       ),
       QuestDialogWidget(
-          widget.getSelectedQuests, widget.calculateScore, widget.getExtension),
+          widget.calculateScore,
+          widget.getExtension),
       IconButton(
           icon: Icon(kingdom.size == 5 ? Icons.filter_5 : Icons.filter_7),
           onPressed: () =>

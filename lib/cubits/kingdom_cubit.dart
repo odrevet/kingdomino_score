@@ -45,7 +45,7 @@ class KingdomCubit extends ReplayCubit<Kingdom> {
         for (var cx = 0; cx < kingdom.size; cx++) {
           for (var cy = 0; cy < kingdom.size; cy++) {
             if (kingdom.getLand(cx, cy)?.landType == LandType.castle) {
-              kingdom.getLand(cx, cy)?.landType = null;
+              kingdom.getLand(cx, cy)?.landType = LandType.empty;
               kingdom.getLand(cx, cy)?.crowns = 0;
             }
           }

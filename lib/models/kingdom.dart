@@ -49,7 +49,7 @@ class Kingdom {
 
   void clear() {
     lands.expand((i) => i).toList().forEach((land) {
-      land.landType = null;
+      land.landType = LandType.empty;
       land.crowns = 0;
       land.giants = 0;
       land.hasResource = false;

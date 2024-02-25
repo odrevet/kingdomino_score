@@ -41,7 +41,6 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
   SelectionMode selectionMode = SelectionMode.land;
   Extension? extension;
 
-  HashSet<QuestType> selectedQuests = HashSet();
   List<Warning> warnings = [];
   PackageInfo _packageInfo = PackageInfo(
     appName: 'Unknown',
@@ -68,8 +67,6 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
     super.initState();
   }
 
-  HashSet<QuestType> getSelectedQuests() => selectedQuests;
-
   Extension? getExtension() => extension;
 
   Courtier? getSelectedcourtier() => selectedcourtier;
@@ -91,9 +88,7 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
   void calculateScore(Kingdom kingdom) {
     clearWarnings();
     checkKingdom(kingdom);
-    context
-        .read<AppStateCubit>()
-        .calculateScore(kingdom, extension, selectedQuests);
+    context.read<AppStateCubit>().calculateScore(kingdom, extension);
   }
 
   Map<LandType, Map<String, dynamic>> getGameSet() {
@@ -116,63 +111,65 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
   void checkKingdom(Kingdom kingdom) {
     //check if more tile in the kingdom than in the gameSet
     for (var landType in LandType.values) {
-      var count = kingdom
-          .getLands()
-          .expand((i) => i)
-          .toList()
-          .where((land) => land.landType == landType)
-          .length;
-      if (count > getGameSet()[landType]!['count']) {
-        Warning warning =
-            Warning(count, landType, 0, '>', getGameSet()[landType]!['count']);
-
-        setState(() {
-          warnings.add(warning);
-        });
-      }
-
-      //check if too many tile with given crowns
-      for (var crownsCounter = 1;
-          crownsCounter <= getGameSet()[landType]!['crowns']['max'];
-          crownsCounter++) {
+      if (landType != LandType.empty) {
         var count = kingdom
             .getLands()
             .expand((i) => i)
             .toList()
-            .where((land) =>
-                land.landType == landType && land.crowns == crownsCounter)
+            .where((land) => land.landType == landType)
             .length;
-
-        if (count > getGameSet()[landType]!['crowns'][crownsCounter]) {
-          Warning warning = Warning(count, landType, crownsCounter, '>',
-              getGameSet()[landType]!['crowns'][crownsCounter]);
+        if (count > getGameSet()[landType]!['count']) {
+          Warning warning = Warning(
+              count, landType, 0, '>', getGameSet()[landType]!['count']);
 
           setState(() {
             warnings.add(warning);
           });
         }
+
+        //check if too many tile with given crowns
+        for (var crownsCounter = 1;
+            crownsCounter <= getGameSet()[landType]!['crowns']['max'];
+            crownsCounter++) {
+          var count = kingdom
+              .getLands()
+              .expand((i) => i)
+              .toList()
+              .where((land) =>
+                  land.landType == landType && land.crowns == crownsCounter)
+              .length;
+
+          if (count > getGameSet()[landType]!['crowns'][crownsCounter]) {
+            Warning warning = Warning(count, landType, crownsCounter, '>',
+                getGameSet()[landType]!['crowns'][crownsCounter]);
+
+            setState(() {
+              warnings.add(warning);
+            });
+          }
+        }
       }
-    }
 
-    // Check if kingdom has castle (when less than a blank tile in board)
-    var countEmptyTile = kingdom
-        .getLands()
-        .expand((i) => i)
-        .toList()
-        .where((land) => land.landType == null)
-        .length;
+      // Check if kingdom has castle (when less than a blank tile in board)
+      var countEmptyTile = kingdom
+          .getLands()
+          .expand((i) => i)
+          .toList()
+          .where((land) => land.landType == LandType.empty)
+          .length;
 
-    var noCastle = kingdom
-        .getLands()
-        .expand((i) => i)
-        .toList()
-        .where((land) => land.landType == LandType.castle)
-        .isEmpty;
-    if (countEmptyTile <= 1 && noCastle) {
-      Warning warning = Warning(0, LandType.castle, 0, '<>', 1);
-      setState(() {
-        warnings.add(warning);
-      });
+      var noCastle = kingdom
+          .getLands()
+          .expand((i) => i)
+          .toList()
+          .where((land) => land.landType == LandType.castle)
+          .isEmpty;
+      if (countEmptyTile <= 1 && noCastle) {
+        Warning warning = Warning(0, LandType.castle, 0, '<>', 1);
+        setState(() {
+          warnings.add(warning);
+        });
+      }
     }
   }
 
@@ -229,7 +226,12 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
         }
 
         context.read<KingdomCubit>().clearHistory();
-        selectedQuests.clear();
+        context
+            .read<AppStateCubit>()
+            .state
+            .userSelection
+            .selectedQuests
+            .clear();
         clearWarnings();
         checkKingdom(kingdom);
         //updateScores(kingdom);
@@ -245,8 +247,7 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
             return Column(children: <Widget>[
               Expanded(
                 flex: 4,
-                child: ScoreWidget(
-                    quests: selectedQuests, getExtension: getExtension),
+                child: ScoreWidget(getExtension: getExtension),
               ),
               Expanded(
                 flex: 5,
@@ -263,7 +264,6 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
                 getSelectedcourtier: getSelectedcourtier,
                 setSelectedcourtier: setSelectedcourtier,
                 getExtension: getExtension,
-                quests: selectedQuests,
                 verticalAlign: false,
               ),
             ]);
@@ -272,8 +272,7 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   Expanded(
-                    child: ScoreWidget(
-                        quests: selectedQuests, getExtension: getExtension),
+                    child: ScoreWidget(getExtension: getExtension),
                   ),
                   KingdomWidget(
                       getSelectionMode: getSelectionMode,
@@ -287,7 +286,6 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
                     getSelectedcourtier: getSelectedcourtier,
                     setSelectedcourtier: setSelectedcourtier,
                     getExtension: getExtension,
-                    quests: selectedQuests,
                     verticalAlign: true,
                   )
                 ]);
@@ -300,7 +298,6 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
               getExtension: getExtension,
               dropdownSelectedExtension: dropdownSelectedExtension,
               onKingdomClear: onKingdomClear,
-              getSelectedQuests: getSelectedQuests,
               packageInfo: _packageInfo,
               calculateScore: calculateScore,
             ),

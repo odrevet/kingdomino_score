@@ -16,6 +16,6 @@ class UserSelection {
   }
 
   copyWith({LandType? selectedLandType}) => UserSelection(
-        selectedLandType: selectedLandType ?? this.selectedLandType,
-      );
+    selectedLandType: selectedLandType ?? this.selectedLandType,
+  );
 }

@@ -11,6 +11,9 @@ class AppStateCubit extends Cubit<AppState> {
   AppStateCubit()
       : super(AppState(userSelection: UserSelection(), score: Score()));
 
+  void reset() => emit(AppState(
+      userSelection: UserSelection(),
+      score: Score()));
 
   void calculateScore(Kingdom kingdom, Extension? extension, selectedQuests) {
     var score = Score();

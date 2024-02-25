@@ -178,7 +178,7 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
 
   void onKingdomClear() => setState(() {
         clearWarnings();
-        //context.read<AppStateCubit>().reset();
+        context.read<AppStateCubit>().reset();
       });
 
   void onExtensionSelect(Kingdom kingdom, String? newValue) => setState(() {

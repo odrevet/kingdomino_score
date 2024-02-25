@@ -19,7 +19,6 @@ class AppStateCubit extends Cubit<AppState> {
   }
 
   void setSelectedLandType(LandType? landType) {
-    print("APP STATE CUBIT $landType");
     emit(state.copyWith(
         userSelection:
             state.userSelection.copyWith(selectedLandType: landType)));

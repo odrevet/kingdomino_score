@@ -4,7 +4,6 @@ enum SelectionMode { land, crown, castle, giant, courtier, resource }
 
 class UserSelection {
   UserSelection({LandType? selectedLandType}){
-    print("UserSelection Constructor: $selectedLandType");
     setSelectedLandType(selectedLandType);
   }
 
@@ -13,7 +12,6 @@ class UserSelection {
   LandType? getSelectedLandType() => selectedLandType;
 
   setSelectedLandType(LandType? landType) {
-    print("UserSelection Setter: $landType");
     selectedLandType = landType;
   }
 

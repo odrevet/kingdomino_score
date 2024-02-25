@@ -1,6 +1,7 @@
 import 'package:kingdomino_score_count/models/land.dart';
 import 'package:replay_bloc/replay_bloc.dart';
 
+import '../check_kingdom.dart';
 import '../models/kingdom.dart';
 import '../models/user_selection.dart';
 
@@ -11,8 +12,8 @@ class KingdomCubit extends ReplayCubit<Kingdom> {
 
   resize(int size) => emit(Kingdom(size: size));
 
-  setLand(int y, int x, selectedLandType, getSelectionMode, getGameSet,
-      getSelectedcourtier) {
+  setLand(int y, int x, selectedLandType, getSelectionMode,
+      getSelectedcourtier, extension) {
     bool isValid = true;
 
     var kingdom = Kingdom(size: state.size);
@@ -35,7 +36,7 @@ class KingdomCubit extends ReplayCubit<Kingdom> {
         } else {
           land.crowns++;
           land.courtier = null;
-          if (land.crowns > getGameSet()[land.landType]['crowns']['max']) {
+          if (land.crowns > getGameSet(extension)[land.landType]?['crowns']['max']) {
             land.reset();
           }
         }

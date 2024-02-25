@@ -5,6 +5,7 @@ import 'package:kingdomino_score_count/cubits/theme_cubit.dart';
 import '../cubits/app_state_cubit.dart';
 import '../cubits/kingdom_cubit.dart';
 import '../models/extensions/age_of_giants.dart';
+import '../models/extensions/extension.dart';
 import '../models/extensions/lacour/lacour.dart';
 import '../models/kingdom.dart';
 import '../models/land.dart';
@@ -16,14 +17,14 @@ import 'tile/land_tile.dart';
 class KingdomWidget extends StatefulWidget {
   final Function getSelectionMode;
   final Function getSelectedcourtier;
-  final Function getGameSet;
+  final Extension? extension;
   final Function calculateScore;
   final Kingdom kingdom;
 
   const KingdomWidget(
       {required this.getSelectionMode,
       required this.getSelectedcourtier,
-      required this.getGameSet,
+      required this.extension,
       required this.calculateScore,
       required this.kingdom,
       super.key});
@@ -128,8 +129,8 @@ class _KingdomWidgetState extends State<KingdomWidget> {
                 y,
                 selectedLandType,
                 widget.getSelectionMode,
-                widget.getGameSet,
-                widget.getSelectedcourtier);
+                widget.getSelectedcourtier,
+                widget.extension);
             widget.calculateScore(context.read<KingdomCubit>().state);
           }
         },

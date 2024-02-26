@@ -8,11 +8,14 @@ enum SelectionMode { land, crown, castle, giant, courtier, resource }
 
 class UserSelection {
   UserSelection(
-      {LandType? selectedLandType, HashSet<QuestType>? selectedQuests}) {
+      {SelectionMode? selectionMode,
+      LandType? selectedLandType,
+      HashSet<QuestType>? selectedQuests}) {
     setSelectedLandType(selectedLandType);
     if (selectedQuests != null) this.selectedQuests = selectedQuests;
   }
 
+  SelectionMode selectionMode = SelectionMode.land;
   LandType? selectedLandType = LandType.castle;
   HashSet<QuestType> selectedQuests = HashSet();
 
@@ -20,12 +23,22 @@ class UserSelection {
 
   HashSet<QuestType> getSelectedQuests() => selectedQuests;
 
+  setSelectionMode(SelectionMode selectionMode) {
+    this.selectionMode = selectionMode;
+  }
+
+  SelectionMode getSelectionMode() => selectionMode;
+
   setSelectedLandType(LandType? landType) {
     selectedLandType = landType;
   }
 
-  copyWith({LandType? selectedLandType, HashSet<QuestType>? selectedQuests}) =>
+  copyWith(
+          {SelectionMode? selectionMode,
+          LandType? selectedLandType,
+          HashSet<QuestType>? selectedQuests}) =>
       UserSelection(
+        selectionMode: selectionMode ?? this.selectionMode,
         selectedLandType: selectedLandType ?? this.selectedLandType,
         selectedQuests: selectedQuests ?? this.selectedQuests,
       );

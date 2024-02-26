@@ -12,7 +12,7 @@ class KingdomCubit extends ReplayCubit<Kingdom> {
 
   resize(int size) => emit(Kingdom(size: size));
 
-  setLand(int y, int x, selectedLandType, getSelectionMode,
+  setLand(int y, int x, selectedLandType, selectionMode,
       getSelectedcourtier, extension) {
     bool isValid = true;
 
@@ -25,7 +25,7 @@ class KingdomCubit extends ReplayCubit<Kingdom> {
 
     Land? land = kingdom.getLand(y, x);
 
-    switch (getSelectionMode()) {
+    switch (selectionMode) {
       case SelectionMode.land:
         land!.landType = selectedLandType;
         land.reset();

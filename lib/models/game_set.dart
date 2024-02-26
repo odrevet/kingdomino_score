@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import 'land.dart';
 
 const Map<LandType, Map<String, dynamic>> gameSet = {
@@ -29,4 +31,11 @@ const Map<LandType, Map<String, dynamic>> gameSet = {
     'count': 1 + 1 + 3 + 1,
     'crowns': {'max': 3, 1: 1, 2: 3, 3: 1}
   }
+};
+
+Set<MaterialColor> kingColors = {
+  Colors.blue,
+  Colors.green,
+  Colors.orange,
+  Colors.pink
 };

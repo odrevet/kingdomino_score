@@ -95,8 +95,8 @@ class Kingdom {
 
     Land? land = getLand(x, y);
     if (land == null ||
+        land.landType == LandType.empty ||
         land.landType == LandType.castle ||
-        land.landType == null ||
         land.isMarked == true) return null;
 
     if (property == null) {

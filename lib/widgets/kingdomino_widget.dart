@@ -10,12 +10,9 @@ import 'package:kingdomino_score_count/widgets/warning_widget.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import '../models/check_kingdom.dart';
-import '../models/extensions/age_of_giants.dart';
 import '../models/extensions/extension.dart';
 import '../models/game_set.dart';
-import '../models/king_colors.dart';
 import '../models/kingdom.dart';
-import '../models/land.dart' show LandType;
 import '../models/user_selection.dart';
 import '../models/warning.dart';
 import 'tile/tile_bar.dart';

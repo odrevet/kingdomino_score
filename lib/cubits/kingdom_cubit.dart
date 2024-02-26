@@ -13,7 +13,7 @@ class KingdomCubit extends ReplayCubit<Kingdom> {
   resize(int size) => emit(Kingdom(size: size));
 
   setLand(int y, int x, selectedLandType, selectionMode,
-      getSelectedcourtier, extension) {
+      selectedCourtier, extension) {
     bool isValid = true;
 
     var kingdom = Kingdom(size: state.size);
@@ -71,8 +71,7 @@ class KingdomCubit extends ReplayCubit<Kingdom> {
           LandType.mine,
           LandType.swamp
         ].contains(land!.landType)) {
-          var courtier = getSelectedcourtier();
-          if (land.courtier == courtier) {
+          if (land.courtier == selectedCourtier) {
             land.courtier = null;
             break;
           }
@@ -80,14 +79,14 @@ class KingdomCubit extends ReplayCubit<Kingdom> {
           //remove same courtier type, if any
           for (var cx = 0; cx < kingdom.size; cx++) {
             for (var cy = 0; cy < kingdom.size; cy++) {
-              if (kingdom.getLand(cx, cy)?.courtier == courtier) {
+              if (kingdom.getLand(cx, cy)?.courtier == selectedCourtier) {
                 kingdom.getLand(cx, cy)?.courtier = null;
               }
             }
           }
 
           land.reset();
-          land.courtier = courtier;
+          land.courtier = selectedCourtier;
         } else {
           isValid = false;
         }

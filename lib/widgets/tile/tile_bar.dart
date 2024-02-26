@@ -15,15 +15,9 @@ import '../highlight_box.dart';
 import '../kingdomino_widget.dart';
 
 class TileBar extends StatefulWidget {
-  final Function getSelectedcourtier;
-  final Function setSelectedcourtier;
   final bool verticalAlign;
 
-  const TileBar(
-      {required this.getSelectedcourtier,
-      required this.setSelectedcourtier,
-      required this.verticalAlign,
-      super.key});
+  const TileBar({required this.verticalAlign, super.key});
 
   @override
   State<TileBar> createState() => _TileBarState();
@@ -55,9 +49,11 @@ class _TileBarState extends State<TileBar> {
       crownButton(),
     ];
 
-    if (context.read<AppStateCubit>().state.userSelection.extension == Extension.ageOfGiants) {
+    if (context.read<AppStateCubit>().state.userSelection.extension ==
+        Extension.ageOfGiants) {
       kingdomEditorWidgets.add(giantButton());
-    } else if (context.read<AppStateCubit>().state.userSelection.extension == Extension.laCour) {
+    } else if (context.read<AppStateCubit>().state.userSelection.extension ==
+        Extension.laCour) {
       kingdomEditorWidgets.add(resourceButton());
 
       for (var element in [
@@ -141,10 +137,14 @@ class _TileBarState extends State<TileBar> {
   }
 
   Widget courtierButton(Courtier courtier) {
-    var isSelected =
-        context.read<AppStateCubit>().state.userSelection.getSelectionMode() ==
-                SelectionMode.courtier &&
-            widget.getSelectedcourtier() == courtier;
+    var isSelected = context
+                .read<AppStateCubit>()
+                .state
+                .userSelection
+                .getSelectionMode() ==
+            SelectionMode.courtier &&
+        context.read<AppStateCubit>().state.userSelection.selectedCourtier ==
+            courtier;
 
     return MouseRegion(
       cursor: SystemMouseCursors.click,
@@ -168,7 +168,6 @@ class _TileBarState extends State<TileBar> {
   Widget castleButton() {
     return BlocBuilder<AppStateCubit, AppState>(
         builder: (BuildContext context, appState) {
-
       return MouseRegion(
         cursor: SystemMouseCursors.click,
         child: GestureDetector(
@@ -269,7 +268,11 @@ class _TileBarState extends State<TileBar> {
 
   void _onSelectcourtier(Courtier courtier) {
     setState(() {
-      widget.setSelectedcourtier(courtier);
+      context
+          .read<AppStateCubit>()
+          .state
+          .userSelection
+          .setSelectedCourtier(courtier);
       context
           .read<AppStateCubit>()
           .state

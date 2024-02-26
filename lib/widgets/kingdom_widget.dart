@@ -15,13 +15,11 @@ import 'kingdomino_widget.dart';
 import 'tile/land_tile.dart';
 
 class KingdomWidget extends StatefulWidget {
-  final Function getSelectedcourtier;
   final Function calculateScore;
   final Kingdom kingdom;
 
   const KingdomWidget(
       {
-      required this.getSelectedcourtier,
       required this.calculateScore,
       required this.kingdom,
       super.key});
@@ -126,7 +124,7 @@ class _KingdomWidgetState extends State<KingdomWidget> {
                 y,
                 selectedLandType,
                 context.read<AppStateCubit>().state.userSelection.getSelectionMode(),
-                widget.getSelectedcourtier,
+                context.read<AppStateCubit>().state.userSelection.selectedCourtier,
                 context.read<AppStateCubit>().state.userSelection.extension);
             widget.calculateScore(context.read<KingdomCubit>().state);
           }

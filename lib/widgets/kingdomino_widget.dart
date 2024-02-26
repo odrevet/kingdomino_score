@@ -32,8 +32,6 @@ class KingdominoWidget extends StatefulWidget {
 }
 
 class _KingdominoWidgetState extends State<KingdominoWidget> {
-  Courtier? selectedcourtier;
-
   List<Warning> warnings = [];
   PackageInfo _packageInfo = PackageInfo(
     appName: 'Unknown',
@@ -58,20 +56,12 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
     super.initState();
   }
 
-  Courtier? getSelectedcourtier() => selectedcourtier;
-
-  setSelectedcourtier(Courtier courtier) {
-    setState(() {
-      selectedcourtier = courtier;
-    });
-  }
-
   void calculateScore(Kingdom kingdom) {
     clearWarnings();
     setState(() {
       warnings = checkKingdom(kingdom, context.read<AppStateCubit>().state.userSelection.extension);
     });
-    context.read<AppStateCubit>().calculateScore(kingdom, context.read<AppStateCubit>().state.userSelection.extension);
+    context.read<AppStateCubit>().calculateScore(kingdom);
   }
 
   void clearWarnings() {
@@ -162,13 +152,10 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
               Expanded(
                 flex: 5,
                 child: KingdomWidget(
-                    getSelectedcourtier: getSelectedcourtier,
                     calculateScore: calculateScore,
                     kingdom: kingdom),
               ),
               TileBar(
-                getSelectedcourtier: getSelectedcourtier,
-                setSelectedcourtier: setSelectedcourtier,
                 verticalAlign: false,
               ),
             ]);
@@ -180,12 +167,9 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
                     child: ScoreWidget(),
                   ),
                   KingdomWidget(
-                      getSelectedcourtier: getSelectedcourtier,
                       calculateScore: calculateScore,
                       kingdom: kingdom),
                   TileBar(
-                    getSelectedcourtier: getSelectedcourtier,
-                    setSelectedcourtier: setSelectedcourtier,
                     verticalAlign: true,
                   )
                 ]);

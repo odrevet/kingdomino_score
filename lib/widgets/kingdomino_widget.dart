@@ -33,7 +33,6 @@ class KingdominoWidget extends StatefulWidget {
 
 class _KingdominoWidgetState extends State<KingdominoWidget> {
   Courtier? selectedcourtier;
-  Extension? extension;
 
   List<Warning> warnings = [];
   PackageInfo _packageInfo = PackageInfo(
@@ -59,8 +58,6 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
     super.initState();
   }
 
-  Extension? getExtension() => extension;
-
   Courtier? getSelectedcourtier() => selectedcourtier;
 
   setSelectedcourtier(Courtier courtier) {
@@ -72,9 +69,9 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
   void calculateScore(Kingdom kingdom) {
     clearWarnings();
     setState(() {
-      warnings = checkKingdom(kingdom, extension);
+      warnings = checkKingdom(kingdom, context.read<AppStateCubit>().state.userSelection.extension);
     });
-    context.read<AppStateCubit>().calculateScore(kingdom, extension);
+    context.read<AppStateCubit>().calculateScore(kingdom, context.read<AppStateCubit>().state.userSelection.extension);
   }
 
   void clearWarnings() {
@@ -102,7 +99,7 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
 
         switch (newValue) {
           case '':
-            extension = null;
+            context.read<AppStateCubit>().state.userSelection.extension = null;
             context.read<AppStateCubit>().state.userSelection.setSelectionMode(SelectionMode.land);
             context.read<AppStateCubit>().state.userSelection.setSelectedLandType(null);
 
@@ -112,14 +109,14 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
             }
             break;
           case 'Giants':
-            extension = Extension.ageOfGiants;
+            context.read<AppStateCubit>().state.userSelection.extension = Extension.ageOfGiants;
             context.read<AppStateCubit>().state.userSelection.setSelectionMode(SelectionMode.land);
             context.read<AppStateCubit>().state.userSelection.setSelectedLandType(null);
 
             kingColors.add(Colors.brown);
             break;
           case 'LaCour':
-            extension = Extension.laCour;
+            context.read<AppStateCubit>().state.userSelection.extension = Extension.laCour;
 
             context.read<AppStateCubit>().state.userSelection.setSelectionMode(SelectionMode.land);
             context.read<AppStateCubit>().state.userSelection.setSelectedLandType(null);
@@ -144,7 +141,7 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
             .clear();
         clearWarnings();
         setState(() {
-          warnings = checkKingdom(kingdom, extension);
+          warnings = checkKingdom(kingdom, context.read<AppStateCubit>().state.userSelection.extension);
         });
 
         //updateScores(kingdom);
@@ -160,20 +157,18 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
             return Column(children: <Widget>[
               Expanded(
                 flex: 4,
-                child: ScoreWidget(getExtension: getExtension),
+                child: ScoreWidget(),
               ),
               Expanded(
                 flex: 5,
                 child: KingdomWidget(
                     getSelectedcourtier: getSelectedcourtier,
-                    extension: extension,
                     calculateScore: calculateScore,
                     kingdom: kingdom),
               ),
               TileBar(
                 getSelectedcourtier: getSelectedcourtier,
                 setSelectedcourtier: setSelectedcourtier,
-                getExtension: getExtension,
                 verticalAlign: false,
               ),
             ]);
@@ -182,17 +177,15 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   Expanded(
-                    child: ScoreWidget(getExtension: getExtension),
+                    child: ScoreWidget(),
                   ),
                   KingdomWidget(
                       getSelectedcourtier: getSelectedcourtier,
-                      extension: extension,
                       calculateScore: calculateScore,
                       kingdom: kingdom),
                   TileBar(
                     getSelectedcourtier: getSelectedcourtier,
                     setSelectedcourtier: setSelectedcourtier,
-                    getExtension: getExtension,
                     verticalAlign: true,
                   )
                 ]);
@@ -202,7 +195,6 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
         return Scaffold(
             appBar: KingdominoAppBar(
               onExtensionSelect: onExtensionSelect,
-              getExtension: getExtension,
               dropdownSelectedExtension: dropdownSelectedExtension,
               onKingdomClear: onKingdomClear,
               packageInfo: _packageInfo,

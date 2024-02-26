@@ -92,9 +92,8 @@ class _QuestDialogOptionState extends State<_QuestDialogOption> {
 
 class QuestDialogWidget extends StatefulWidget {
   final Function updateScores;
-  final Function getExtension;
 
-  const QuestDialogWidget(this.updateScores, this.getExtension, {super.key});
+  const QuestDialogWidget(this.updateScores, {super.key});
 
   @override
   State<QuestDialogWidget> createState() => _QuestDialogWidgetState();
@@ -107,7 +106,7 @@ class _QuestDialogWidgetState extends State<QuestDialogWidget> {
   build(BuildContext context) {
     var options = <Widget>[];
 
-    if (widget.getExtension() == Extension.ageOfGiants) {
+    if (context.read<AppStateCubit>().state.userSelection.extension == Extension.ageOfGiants) {
       questPicture.forEach((type, picture) {
         options.add(_QuestDialogOption(
             type,

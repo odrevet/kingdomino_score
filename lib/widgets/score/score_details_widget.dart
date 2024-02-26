@@ -11,14 +11,10 @@ import '../../models/quests/quest.dart';
 import '../kingdomino_widget.dart';
 
 class ScoreDetailsWidget extends StatelessWidget {
-  final HashSet<QuestType> quests;
-  final Function getExtension;
   final bool showTotal;
 
   const ScoreDetailsWidget(
-      {required this.quests,
-      required this.getExtension,
-      this.showTotal = true,
+      {this.showTotal = true,
       super.key});
 
   @override
@@ -74,7 +70,7 @@ class ScoreDetailsWidget extends StatelessWidget {
     }
 
     //quests points
-    if (quests.isNotEmpty) {
+    if (context.read<AppStateCubit>().state.userSelection.getSelectedQuests().isNotEmpty) {
       var tableCells = <TableCell>[];
 
       tableCells.add(const TableCell(child: Text('')));
@@ -101,7 +97,7 @@ class ScoreDetailsWidget extends StatelessWidget {
       tableRows.add(tableRow);
     }
 
-    if (getExtension() == Extension.laCour) {
+    if (context.read<AppStateCubit>().state.userSelection.extension == Extension.laCour) {
       var tableCells = <TableCell>[];
 
       tableCells.add(const TableCell(child: Text('')));

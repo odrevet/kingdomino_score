@@ -17,13 +17,11 @@ import '../kingdomino_widget.dart';
 class TileBar extends StatefulWidget {
   final Function getSelectedcourtier;
   final Function setSelectedcourtier;
-  final Function getExtension;
   final bool verticalAlign;
 
   const TileBar(
       {required this.getSelectedcourtier,
       required this.setSelectedcourtier,
-      required this.getExtension,
       required this.verticalAlign,
       super.key});
 
@@ -57,9 +55,9 @@ class _TileBarState extends State<TileBar> {
       crownButton(),
     ];
 
-    if (widget.getExtension() == Extension.ageOfGiants) {
+    if (context.read<AppStateCubit>().state.userSelection.extension == Extension.ageOfGiants) {
       kingdomEditorWidgets.add(giantButton());
-    } else if (widget.getExtension() == Extension.laCour) {
+    } else if (context.read<AppStateCubit>().state.userSelection.extension == Extension.laCour) {
       kingdomEditorWidgets.add(resourceButton());
 
       for (var element in [

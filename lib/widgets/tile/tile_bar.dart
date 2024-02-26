@@ -43,54 +43,51 @@ class _TileBarState extends State<TileBar> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AppStateCubit, AppState>(
-        builder: (BuildContext context, appState) {
-      var kingdomEditorWidgets = [
-        landButton(LandType.wheat),
-        landButton(LandType.grassland),
-        landButton(LandType.forest),
-        landButton(LandType.lake),
-        landButton(LandType.swamp),
-        landButton(LandType.mine),
-        widget.verticalAlign ? const Divider() : const VerticalDivider(),
-        landButton(LandType.empty),
-        widget.verticalAlign ? const Divider() : const VerticalDivider(),
-        castleButton(),
-        crownButton(),
-      ];
+    var kingdomEditorWidgets = [
+      landButton(LandType.wheat),
+      landButton(LandType.grassland),
+      landButton(LandType.forest),
+      landButton(LandType.lake),
+      landButton(LandType.swamp),
+      landButton(LandType.mine),
+      widget.verticalAlign ? const Divider() : const VerticalDivider(),
+      landButton(LandType.empty),
+      widget.verticalAlign ? const Divider() : const VerticalDivider(),
+      castleButton(),
+      crownButton(),
+    ];
 
-      if (widget.getExtension() == Extension.ageOfGiants) {
-        kingdomEditorWidgets.add(giantButton());
-      } else if (widget.getExtension() == Extension.laCour) {
-        kingdomEditorWidgets.add(resourceButton());
+    if (widget.getExtension() == Extension.ageOfGiants) {
+      kingdomEditorWidgets.add(giantButton());
+    } else if (widget.getExtension() == Extension.laCour) {
+      kingdomEditorWidgets.add(resourceButton());
 
-        for (var element in [
-          Farmer(),
-          Banker(),
-          AxeWarrior(),
-          Captain(),
-          Fisherman(),
-          HeavyArchery(),
-          King(),
-          LightArchery(),
-          Lumberjack(),
-          Queen(),
-          Shepherdess(),
-          SwordWarrior()
-        ]) {
-          kingdomEditorWidgets.add(courtierButton(element));
-        }
+      for (var element in [
+        Farmer(),
+        Banker(),
+        AxeWarrior(),
+        Captain(),
+        Fisherman(),
+        HeavyArchery(),
+        King(),
+        LightArchery(),
+        Lumberjack(),
+        Queen(),
+        Shepherdess(),
+        SwordWarrior()
+      ]) {
+        kingdomEditorWidgets.add(courtierButton(element));
       }
+    }
 
-      return Align(
-        alignment: Alignment.center,
-        child: Wrap(
-          direction: widget.verticalAlign ? Axis.vertical : Axis.horizontal,
-          alignment: WrapAlignment.center,
-          children: kingdomEditorWidgets,
-        ),
-      );
-    });
+    return Align(
+      alignment: Alignment.center,
+      child: Wrap(
+        direction: widget.verticalAlign ? Axis.vertical : Axis.horizontal,
+        alignment: WrapAlignment.center,
+        children: kingdomEditorWidgets,
+      ),
+    );
   }
 
   Widget landButton(LandType landType) {
@@ -173,34 +170,39 @@ class _TileBarState extends State<TileBar> {
   Widget castleButton() {
     return BlocBuilder<AppStateCubit, AppState>(
         builder: (BuildContext context, appState) {
-          print(appState.userSelection.getSelectionMode());
-        return MouseRegion(
-          cursor: SystemMouseCursors.click,
-          child: GestureDetector(
-            onTap: () => setState(() {
-              context
-                  .read<AppStateCubit>()
-                  .state
-                  .userSelection
-                  .setSelectionMode(SelectionMode.castle);
-              context.read<AppStateCubit>().state.userSelection.setSelectedLandType(LandType.castle);
-            }),
-            child: Container(
-              margin: const EdgeInsets.all(5.0),
-              height: _buttonSize,
-              width: _buttonSize,
-              decoration: BoxDecoration(
-                  boxShadow: appState.userSelection.getSelectionMode() == SelectionMode.castle &&
-                      appState.userSelection.getSelectedLandType() == LandType.castle
-                      ? [highlightBox(context.read<ThemeCubit>().state)]
-                      : null,
-                  border: outline),
-              child: CastleTile(context.read<ThemeCubit>().state),
-            ),
+
+      return MouseRegion(
+        cursor: SystemMouseCursors.click,
+        child: GestureDetector(
+          onTap: () => setState(() {
+            context
+                .read<AppStateCubit>()
+                .state
+                .userSelection
+                .setSelectionMode(SelectionMode.castle);
+            context
+                .read<AppStateCubit>()
+                .state
+                .userSelection
+                .setSelectedLandType(LandType.castle);
+          }),
+          child: Container(
+            margin: const EdgeInsets.all(5.0),
+            height: _buttonSize,
+            width: _buttonSize,
+            decoration: BoxDecoration(
+                boxShadow: appState.userSelection.getSelectionMode() ==
+                            SelectionMode.castle &&
+                        appState.userSelection.getSelectedLandType() ==
+                            LandType.castle
+                    ? [highlightBox(context.read<ThemeCubit>().state)]
+                    : null,
+                border: outline),
+            child: CastleTile(context.read<ThemeCubit>().state),
           ),
-        );
-      }
-    );
+        ),
+      );
+    });
   }
 
   Widget crownButton() {
@@ -253,7 +255,11 @@ class _TileBarState extends State<TileBar> {
       _onSelectCastle();
     } else {
       setState(() {
-        context.read<AppStateCubit>().state.userSelection.setSelectedLandType(selectedType);
+        context
+            .read<AppStateCubit>()
+            .state
+            .userSelection
+            .setSelectedLandType(selectedType);
         context
             .read<AppStateCubit>()
             .state
@@ -286,7 +292,11 @@ class _TileBarState extends State<TileBar> {
 
   void _onSelectCastle() {
     setState(() {
-      context.read<AppStateCubit>().state.userSelection.setSelectedLandType(LandType.castle);
+      context
+          .read<AppStateCubit>()
+          .state
+          .userSelection
+          .setSelectedLandType(LandType.castle);
       context
           .read<AppStateCubit>()
           .state

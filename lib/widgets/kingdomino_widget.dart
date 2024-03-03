@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kingdomino_score_count/cubits/kingdom_cubit.dart';
 import 'package:kingdomino_score_count/cubits/app_state_cubit.dart';
 import 'package:kingdomino_score_count/cubits/theme_cubit.dart';
-import 'package:kingdomino_score_count/models/extensions/lacour/lacour.dart';
 import 'package:kingdomino_score_count/widgets/kingdomino_app_bar.dart';
 import 'package:kingdomino_score_count/widgets/score/score_widget.dart';
 import 'package:kingdomino_score_count/widgets/warning_widget.dart';
@@ -134,7 +133,7 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
           warnings = checkKingdom(kingdom, context.read<AppStateCubit>().state.userSelection.extension);
         });
 
-        //updateScores(kingdom);
+        calculateScore(context.read<KingdomCubit>().state);
       });
 
   @override

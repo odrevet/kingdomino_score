@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kingdomino_score_count/cubits/kingdom_cubit.dart';
 import 'package:pie_chart/pie_chart.dart';
-import 'package:provider/provider.dart';
+
 
 import '../../cubits/app_state_cubit.dart';
-import '../../cubits/theme_cubit.dart';
 import '../../models/land.dart' show LandType, getColorForLandType;
 
 class ScorePie extends StatelessWidget {

@@ -45,8 +45,8 @@ class _ScoreWidgetState extends State<ScoreWidget> {
               ),
             )
           : _displayMode == DisplayMode.details
-              ? const ScoreDetailsWidget()
-              : const FittedBox(fit: BoxFit.fitHeight, child: ScorePie()),
+              ? ScoreDetailsWidget()
+              : FittedBox(fit: BoxFit.fitHeight, child: ScorePie()),
     );
   }
 }

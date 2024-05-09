@@ -164,7 +164,8 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
                 children: <Widget>[
                   // ignore: prefer_const_constructors
                   Expanded(
-                    child: const ScoreWidget(),
+                    // ignore: prefer_const_constructors
+                    child: ScoreWidget(),
                   ),
                   KingdomWidget(
                       calculateScore: calculateScore,

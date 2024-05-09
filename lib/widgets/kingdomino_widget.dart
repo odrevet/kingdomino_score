@@ -144,8 +144,10 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
             builder: (orientationBuilderContext, orientation) {
           if (orientation == Orientation.portrait) {
             return Column(children: <Widget>[
+              // ignore: prefer_const_constructors
               Expanded(
                 flex: 4,
+                // ignore: prefer_const_constructors
                 child: ScoreWidget(),
               ),
               Expanded(
@@ -154,7 +156,7 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
                     calculateScore: calculateScore,
                     kingdom: kingdom),
               ),
-              TileBar(
+              const TileBar(
                 verticalAlign: false,
               ),
             ]);
@@ -162,12 +164,12 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
             return Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
-                  Expanded(child: ScoreWidget(),
+                  const Expanded(child: ScoreWidget(),
                   ),
                   KingdomWidget(
                       calculateScore: calculateScore,
                       kingdom: kingdom),
-                  TileBar(
+                  const TileBar(
                     verticalAlign: true,
                   )
                 ]);

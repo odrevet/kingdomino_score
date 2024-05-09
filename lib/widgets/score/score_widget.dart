@@ -45,7 +45,9 @@ class _ScoreWidgetState extends State<ScoreWidget> {
               ),
             )
           : _displayMode == DisplayMode.details
+              // ignore: prefer_const_constructors
               ? ScoreDetailsWidget()
+              // ignore: prefer_const_constructors
               : FittedBox(fit: BoxFit.fitHeight, child: ScorePie()),
     );
   }

@@ -187,6 +187,14 @@ class _TileBarState extends State<TileBar> {
             margin: const EdgeInsets.all(5.0),
             height: _buttonSize,
             width: _buttonSize,
+            decoration: BoxDecoration(
+                boxShadow: appState.userSelection.getSelectionMode() ==
+                            SelectionMode.castle &&
+                        appState.userSelection.getSelectedLandType() ==
+                            LandType.castle
+                    ? [highlightBox(context.read<ThemeCubit>().state)]
+                    : null,
+                border: outline),
             child: CastleTile(context.read<ThemeCubit>().state),
           ),
         ),

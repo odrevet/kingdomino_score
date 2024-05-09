@@ -1,3 +1,5 @@
+import 'package:kingdomino_score_count/models/land.dart';
+
 import '../kingdom.dart';
 import 'quest.dart';
 
@@ -16,7 +18,7 @@ class Harmony extends Quest {
             .getLands()
             .expand((i) => i)
             .toList()
-            .where((land) => land.landType == null)
+            .where((land) => land.landType == LandType.empty)
             .isEmpty
         ? reward
         : 0;

@@ -31,7 +31,7 @@ class KingdomCubit extends ReplayCubit<Kingdom> {
         land.reset();
         break;
       case SelectionMode.crown:
-        if (land!.landType == LandType.castle || land.landType == null) {
+        if (land!.landType == LandType.castle || land.landType == LandType.empty) {
           isValid = false;
         } else {
           land.crowns++;

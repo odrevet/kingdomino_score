@@ -1,11 +1,7 @@
-import 'dart:collection';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kingdomino_score_count/cubits/app_state_cubit.dart';
 import 'package:kingdomino_score_count/cubits/theme_cubit.dart';
-import 'package:provider/provider.dart';
-import '../../models/quests/quest.dart';
 import 'score_details_widget.dart';
 import 'score_pie.dart';
 

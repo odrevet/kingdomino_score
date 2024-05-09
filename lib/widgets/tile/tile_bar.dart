@@ -194,7 +194,7 @@ class _TileBarState extends State<TileBar> {
                             LandType.castle
                     ? [highlightBox(context.read<ThemeCubit>().state)]
                     : null,
-                border: outline),
+                ),
             child: CastleTile(context.read<ThemeCubit>().state),
           ),
         ),

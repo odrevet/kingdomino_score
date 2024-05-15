@@ -164,7 +164,8 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
             return Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
-                  const Expanded(child: ScoreWidget(),
+                  // ignore: prefer_const_constructors
+                  Expanded(child: ScoreWidget(),
                   ),
                   KingdomWidget(
                       calculateScore: calculateScore,

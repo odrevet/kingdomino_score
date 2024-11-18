@@ -10,9 +10,9 @@ import '../../models/extensions/age_of_giants.dart';
 import '../../models/extensions/lacour/lacour.dart';
 import '../../models/land.dart';
 import '../../models/user_selection.dart';
-import 'castle_tile.dart';
 import '../highlight_box.dart';
 import '../kingdomino_widget.dart';
+import 'castle_tile.dart';
 
 class TileBar extends StatefulWidget {
   final bool verticalAlign;
@@ -49,10 +49,10 @@ class _TileBarState extends State<TileBar> {
       crownButton(),
     ];
 
-    if (context.read<AppStateCubit>().state.userSelection.extension ==
+    if (context.read<AppStateCubit>().state.rules.extension ==
         Extension.ageOfGiants) {
       kingdomEditorWidgets.add(giantButton());
-    } else if (context.read<AppStateCubit>().state.userSelection.extension ==
+    } else if (context.read<AppStateCubit>().state.rules.extension ==
         Extension.laCour) {
       kingdomEditorWidgets.add(resourceButton());
 
@@ -188,13 +188,13 @@ class _TileBarState extends State<TileBar> {
             height: _buttonSize,
             width: _buttonSize,
             decoration: BoxDecoration(
-                boxShadow: appState.userSelection.getSelectionMode() ==
-                            SelectionMode.castle &&
-                        appState.userSelection.getSelectedLandType() ==
-                            LandType.castle
-                    ? [highlightBox(context.read<ThemeCubit>().state)]
-                    : null,
-                ),
+              boxShadow: appState.userSelection.getSelectionMode() ==
+                          SelectionMode.castle &&
+                      appState.userSelection.getSelectedLandType() ==
+                          LandType.castle
+                  ? [highlightBox(context.read<ThemeCubit>().state)]
+                  : null,
+            ),
             child: CastleTile(context.read<ThemeCubit>().state),
           ),
         ),

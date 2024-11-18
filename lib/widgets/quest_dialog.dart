@@ -29,7 +29,7 @@ class _QuestDialogOptionState extends State<_QuestDialogOption> {
     _active = context
         .read<AppStateCubit>()
         .state
-        .userSelection
+        .rules
         .getSelectedQuests()
         .contains(widget.questType);
   }
@@ -58,20 +58,20 @@ class _QuestDialogOptionState extends State<_QuestDialogOption> {
           if (context
               .read<AppStateCubit>()
               .state
-              .userSelection
+              .rules
               .getSelectedQuests()
               .contains(widget.questType)) {
             _setActive(false);
             context
                 .read<AppStateCubit>()
                 .state
-                .userSelection
+                .rules
                 .getSelectedQuests()
                 .remove(widget.questType);
           } else if (context
                   .read<AppStateCubit>()
                   .state
-                  .userSelection
+                  .rules
                   .getSelectedQuests()
                   .length <
               2) {
@@ -79,7 +79,7 @@ class _QuestDialogOptionState extends State<_QuestDialogOption> {
             context
                 .read<AppStateCubit>()
                 .state
-                .userSelection
+                .rules
                 .getSelectedQuests()
                 .add(widget.questType);
           }
@@ -106,7 +106,8 @@ class _QuestDialogWidgetState extends State<QuestDialogWidget> {
   build(BuildContext context) {
     var options = <Widget>[];
 
-    if (context.read<AppStateCubit>().state.userSelection.extension == Extension.ageOfGiants) {
+    if (context.read<AppStateCubit>().state.rules.extension ==
+        Extension.ageOfGiants) {
       questPicture.forEach((type, picture) {
         options.add(_QuestDialogOption(
             type,
@@ -138,13 +139,13 @@ class _QuestDialogWidgetState extends State<QuestDialogWidget> {
         isLabelVisible: context
             .read<AppStateCubit>()
             .state
-            .userSelection
+            .rules
             .getSelectedQuests()
             .isNotEmpty,
         label: Text(context
             .read<AppStateCubit>()
             .state
-            .userSelection
+            .rules
             .getSelectedQuests()
             .length
             .toString()),

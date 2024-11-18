@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kingdomino_score_count/cubits/kingdom_cubit.dart';
 import 'package:kingdomino_score_count/cubits/app_state_cubit.dart';
+import 'package:kingdomino_score_count/cubits/kingdom_cubit.dart';
 import 'package:kingdomino_score_count/cubits/theme_cubit.dart';
 import 'package:kingdomino_score_count/widgets/kingdomino_app_bar.dart';
 import 'package:kingdomino_score_count/widgets/score/score_widget.dart';
@@ -14,8 +14,8 @@ import '../models/game_set.dart';
 import '../models/kingdom.dart';
 import '../models/user_selection.dart';
 import '../models/warning.dart';
-import 'tile/tile_bar.dart';
 import 'kingdom_widget.dart';
+import 'tile/tile_bar.dart';
 
 const String crown = '\u{1F451}';
 const String castle = '\u{1F3F0}';
@@ -58,7 +58,8 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
   void calculateScore(Kingdom kingdom) {
     clearWarnings();
     setState(() {
-      warnings = checkKingdom(kingdom, context.read<AppStateCubit>().state.userSelection.extension);
+      warnings = checkKingdom(
+          kingdom, context.read<AppStateCubit>().state.rules.extension);
     });
     context.read<AppStateCubit>().calculateScore(kingdom);
   }
@@ -88,9 +89,17 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
 
         switch (newValue) {
           case '':
-            context.read<AppStateCubit>().state.userSelection.extension = null;
-            context.read<AppStateCubit>().state.userSelection.setSelectionMode(SelectionMode.land);
-            context.read<AppStateCubit>().state.userSelection.setSelectedLandType(null);
+            context.read<AppStateCubit>().state.rules.extension = null;
+            context
+                .read<AppStateCubit>()
+                .state
+                .userSelection
+                .setSelectionMode(SelectionMode.land);
+            context
+                .read<AppStateCubit>()
+                .state
+                .userSelection
+                .setSelectedLandType(null);
 
             kingColors.remove(Colors.brown.shade800);
             if (context.read<ThemeCubit>().state == Colors.brown.shade800) {
@@ -98,21 +107,53 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
             }
             break;
           case 'Giants':
-            context.read<AppStateCubit>().state.userSelection.extension = Extension.ageOfGiants;
-            context.read<AppStateCubit>().state.userSelection.setSelectionMode(SelectionMode.land);
-            context.read<AppStateCubit>().state.userSelection.setSelectedLandType(null);
+            context.read<AppStateCubit>().state.rules.extension =
+                Extension.ageOfGiants;
+            context
+                .read<AppStateCubit>()
+                .state
+                .userSelection
+                .setSelectionMode(SelectionMode.land);
+            context
+                .read<AppStateCubit>()
+                .state
+                .userSelection
+                .setSelectedLandType(null);
 
             kingColors.add(Colors.brown);
             break;
           case 'LaCour':
-            context.read<AppStateCubit>().state.userSelection.extension = Extension.laCour;
+            context.read<AppStateCubit>().state.rules.extension =
+                Extension.laCour;
 
-            context.read<AppStateCubit>().state.userSelection.setSelectionMode(SelectionMode.land);
-            context.read<AppStateCubit>().state.userSelection.setSelectedLandType(null);
+            context
+                .read<AppStateCubit>()
+                .state
+                .userSelection
+                .setSelectionMode(SelectionMode.land);
+            context
+                .read<AppStateCubit>()
+                .state
+                .userSelection
+                .setSelectedLandType(null);
 
-            if (context.read<AppStateCubit>().state.userSelection.getSelectionMode() == SelectionMode.courtier ||
-                context.read<AppStateCubit>().state.userSelection.getSelectionMode() == SelectionMode.resource) {
-              context.read<AppStateCubit>().state.userSelection.setSelectionMode(SelectionMode.crown);
+            if (context
+                        .read<AppStateCubit>()
+                        .state
+                        .userSelection
+                        .getSelectionMode() ==
+                    SelectionMode.courtier ||
+                context
+                        .read<AppStateCubit>()
+                        .state
+                        .userSelection
+                        .getSelectionMode() ==
+                    SelectionMode.resource) {
+              context
+                  .read<AppStateCubit>()
+                  .state
+                  .userSelection
+                  .setSelectionMode(SelectionMode.crown);
             }
             kingColors.remove(Colors.brown.shade800);
             if (context.read<ThemeCubit>().state == Colors.brown.shade800) {
@@ -122,15 +163,11 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
         }
 
         context.read<KingdomCubit>().clearHistory();
-        context
-            .read<AppStateCubit>()
-            .state
-            .userSelection
-            .selectedQuests
-            .clear();
+        context.read<AppStateCubit>().state.rules.selectedQuests.clear();
         clearWarnings();
         setState(() {
-          warnings = checkKingdom(kingdom, context.read<AppStateCubit>().state.userSelection.extension);
+          warnings = checkKingdom(
+              kingdom, context.read<AppStateCubit>().state.rules.extension);
         });
 
         calculateScore(context.read<KingdomCubit>().state);
@@ -153,8 +190,7 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
               Expanded(
                 flex: 5,
                 child: KingdomWidget(
-                    calculateScore: calculateScore,
-                    kingdom: kingdom),
+                    calculateScore: calculateScore, kingdom: kingdom),
               ),
               const TileBar(
                 verticalAlign: false,
@@ -165,11 +201,11 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   // ignore: prefer_const_constructors
-                  Expanded(child: ScoreWidget(),
+                  Expanded(
+                    child: ScoreWidget(),
                   ),
                   KingdomWidget(
-                      calculateScore: calculateScore,
-                      kingdom: kingdom),
+                      calculateScore: calculateScore, kingdom: kingdom),
                   const TileBar(
                     verticalAlign: true,
                   )

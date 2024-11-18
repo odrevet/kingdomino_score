@@ -67,7 +67,7 @@ class ScoreDetailsWidget extends StatelessWidget {
     }
 
     //quests points
-    if (context.read<AppStateCubit>().state.userSelection.getSelectedQuests().isNotEmpty) {
+    if (context.read<AppStateCubit>().state.rules.getSelectedQuests().isNotEmpty) {
       var tableCells = <TableCell>[];
 
       tableCells.add(const TableCell(child: Text('')));
@@ -94,7 +94,7 @@ class ScoreDetailsWidget extends StatelessWidget {
       tableRows.add(tableRow);
     }
 
-    if (context.read<AppStateCubit>().state.userSelection.extension == Extension.laCour) {
+    if (context.read<AppStateCubit>().state.rules.extension == Extension.laCour) {
       var tableCells = <TableCell>[];
 
       tableCells.add(const TableCell(child: Text('')));

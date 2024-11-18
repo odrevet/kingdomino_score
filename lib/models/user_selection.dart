@@ -12,22 +12,16 @@ class UserSelection {
   UserSelection(
       {SelectionMode? selectionMode,
       LandType? selectedLandType,
-      Extension? extension,
-      Courtier? selectedCourtier,
-      HashSet<QuestType>? selectedQuests}) {
+      Courtier? selectedCourtier}) {
     setSelectedLandType(selectedLandType);
-    if (selectedQuests != null) this.selectedQuests = selectedQuests;
   }
 
   SelectionMode selectionMode = SelectionMode.land;
   LandType? selectedLandType = LandType.castle;
-  HashSet<QuestType> selectedQuests = HashSet();
-  Extension? extension;
   Courtier? selectedCourtier;
 
   LandType? getSelectedLandType() => selectedLandType;
 
-  HashSet<QuestType> getSelectedQuests() => selectedQuests;
 
   setSelectionMode(SelectionMode selectionMode) {
     this.selectionMode = selectionMode;
@@ -51,9 +45,7 @@ class UserSelection {
           HashSet<QuestType>? selectedQuests}) =>
       UserSelection(
         selectionMode: selectionMode ?? this.selectionMode,
-        extension: extension ?? this.extension,
         selectedLandType: selectedLandType ?? this.selectedLandType,
         selectedCourtier: selectedCourtier ?? this.selectedCourtier,
-        selectedQuests: selectedQuests ?? this.selectedQuests,
       );
 }

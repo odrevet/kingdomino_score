@@ -124,7 +124,7 @@ class _KingdomWidgetState extends State<KingdomWidget> {
                 selectedLandType,
                 context.read<AppStateCubit>().state.userSelection.getSelectionMode(),
                 context.read<AppStateCubit>().state.userSelection.selectedCourtier,
-                context.read<AppStateCubit>().state.userSelection.extension);
+                context.read<AppStateCubit>().state.rules.extension);
             widget.calculateScore(context.read<KingdomCubit>().state);
           }
         },

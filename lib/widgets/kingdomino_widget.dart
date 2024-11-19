@@ -169,7 +169,7 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
                 child: KingdomWidget(
                     calculateScore: calculateScore, kingdom: kingdom),
               ),
-              const TileBar(
+              TileBar(
                 verticalAlign: false,
               ),
             ]);
@@ -183,7 +183,7 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
                   ),
                   KingdomWidget(
                       calculateScore: calculateScore, kingdom: kingdom),
-                  const TileBar(
+                  TileBar(
                     verticalAlign: true,
                   )
                 ]);

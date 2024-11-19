@@ -8,9 +8,15 @@ class ScoreCubit extends Cubit<Score> {
 
   void reset() => emit(Score());
 
-  void calculateScore(Kingdom kingdom, userSelection) {
-    state.updateScores(
-        kingdom, userSelection.extension, userSelection.getSelectedQuests());
+  void calculateScore(Kingdom kingdom, rules) {
+    state.updateScores(kingdom, rules.extension, rules.getSelectedQuests());
     emit(state);
   }
+
+//void calculateScore(Kingdom kingdom) {
+//  var score = Score();
+//  score.updateScores(kingdom, state.rules.extension,
+//      state.rules.getSelectedQuests());
+//  emit(state.copyWith(score: score));
+//}
 }

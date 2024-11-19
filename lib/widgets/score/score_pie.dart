@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kingdomino_score_count/cubits/kingdom_cubit.dart';
+import 'package:kingdomino_score_count/cubits/score_cubit.dart';
 import 'package:pie_chart/pie_chart.dart';
 
-
-import '../../cubits/app_state_cubit.dart';
 import '../../models/land.dart' show LandType, getColorForLandType;
 
 class ScorePie extends StatelessWidget {
@@ -51,7 +50,7 @@ class ScorePie extends StatelessWidget {
       centerWidget: Container(
         color: Colors.white.withOpacity(0.5),
         child: Text(
-          context.read<AppStateCubit>().state.score.total.toString(),
+          context.read<ScoreCubit>().state.total.toString(),
           style: const TextStyle(color: Colors.black),
         ),
       ),

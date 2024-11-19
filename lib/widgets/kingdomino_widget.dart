@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kingdomino_score_count/cubits/app_state_cubit.dart';
 import 'package:kingdomino_score_count/cubits/kingdom_cubit.dart';
+import 'package:kingdomino_score_count/cubits/score_cubit.dart';
 import 'package:kingdomino_score_count/cubits/theme_cubit.dart';
+import 'package:kingdomino_score_count/cubits/user_selection_cubit.dart';
 import 'package:kingdomino_score_count/widgets/kingdomino_app_bar.dart';
 import 'package:kingdomino_score_count/widgets/score/score_widget.dart';
 import 'package:kingdomino_score_count/widgets/warning_widget.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
+import '../cubits/rules_cubit.dart';
 import '../models/check_kingdom.dart';
 import '../models/extensions/extension.dart';
 import '../models/game_set.dart';
@@ -58,10 +60,12 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
   void calculateScore(Kingdom kingdom) {
     clearWarnings();
     setState(() {
-      warnings = checkKingdom(
-          kingdom, context.read<AppStateCubit>().state.rules.extension);
+      warnings =
+          checkKingdom(kingdom, context.read<RulesCubit>().state.extension);
     });
-    context.read<AppStateCubit>().calculateScore(kingdom);
+    context
+        .read<ScoreCubit>()
+        .calculateScore(kingdom, context.read<RulesCubit>().state);
   }
 
   void clearWarnings() {
@@ -72,7 +76,6 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
 
   void onKingdomClear() => setState(() {
         clearWarnings();
-        context.read<AppStateCubit>().reset();
       });
 
   void onExtensionSelect(Kingdom kingdom, String? newValue) => setState(() {
@@ -89,17 +92,12 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
 
         switch (newValue) {
           case '':
-            context.read<AppStateCubit>().state.rules.extension = null;
+            context.read<RulesCubit>().state.extension = null;
             context
-                .read<AppStateCubit>()
+                .read<UserSelectionCubit>()
                 .state
-                .userSelection
                 .setSelectionMode(SelectionMode.land);
-            context
-                .read<AppStateCubit>()
-                .state
-                .userSelection
-                .setSelectedLandType(null);
+            context.read<UserSelectionCubit>().state.setSelectedLandType(null);
 
             kingColors.remove(Colors.brown.shade800);
             if (context.read<ThemeCubit>().state == Colors.brown.shade800) {
@@ -107,52 +105,31 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
             }
             break;
           case 'Giants':
-            context.read<AppStateCubit>().state.rules.extension =
-                Extension.ageOfGiants;
+            context.read<RulesCubit>().state.extension = Extension.ageOfGiants;
             context
-                .read<AppStateCubit>()
+                .read<UserSelectionCubit>()
                 .state
-                .userSelection
                 .setSelectionMode(SelectionMode.land);
-            context
-                .read<AppStateCubit>()
-                .state
-                .userSelection
-                .setSelectedLandType(null);
+            context.read<UserSelectionCubit>().state.setSelectedLandType(null);
 
             kingColors.add(Colors.brown);
             break;
           case 'LaCour':
-            context.read<AppStateCubit>().state.rules.extension =
-                Extension.laCour;
+            context.read<RulesCubit>().state.extension = Extension.laCour;
 
             context
-                .read<AppStateCubit>()
+                .read<UserSelectionCubit>()
                 .state
-                .userSelection
                 .setSelectionMode(SelectionMode.land);
-            context
-                .read<AppStateCubit>()
-                .state
-                .userSelection
-                .setSelectedLandType(null);
+            context.read<UserSelectionCubit>().state.setSelectedLandType(null);
 
-            if (context
-                        .read<AppStateCubit>()
-                        .state
-                        .userSelection
-                        .getSelectionMode() ==
+            if (context.read<UserSelectionCubit>().state.getSelectionMode() ==
                     SelectionMode.courtier ||
-                context
-                        .read<AppStateCubit>()
-                        .state
-                        .userSelection
-                        .getSelectionMode() ==
+                context.read<UserSelectionCubit>().state.getSelectionMode() ==
                     SelectionMode.resource) {
               context
-                  .read<AppStateCubit>()
+                  .read<UserSelectionCubit>()
                   .state
-                  .userSelection
                   .setSelectionMode(SelectionMode.crown);
             }
             kingColors.remove(Colors.brown.shade800);
@@ -163,11 +140,11 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
         }
 
         context.read<KingdomCubit>().clearHistory();
-        context.read<AppStateCubit>().state.rules.selectedQuests.clear();
+        context.read<RulesCubit>().state.selectedQuests.clear();
         clearWarnings();
         setState(() {
-          warnings = checkKingdom(
-              kingdom, context.read<AppStateCubit>().state.rules.extension);
+          warnings =
+              checkKingdom(kingdom, context.read<RulesCubit>().state.extension);
         });
 
         calculateScore(context.read<KingdomCubit>().state);

@@ -4,15 +4,14 @@ import 'package:kingdomino_score_count/models/extensions/extension.dart';
 import 'package:kingdomino_score_count/widgets/tile/land_tile.dart';
 
 import '../../cubits/kingdom_cubit.dart';
-import '../../cubits/app_state_cubit.dart';
+import '../../cubits/rules_cubit.dart';
+import '../../cubits/score_cubit.dart';
 import '../kingdomino_widget.dart';
 
 class ScoreDetailsWidget extends StatelessWidget {
   final bool showTotal;
 
-  const ScoreDetailsWidget(
-      {this.showTotal = true,
-      super.key});
+  const ScoreDetailsWidget({this.showTotal = true, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +66,7 @@ class ScoreDetailsWidget extends StatelessWidget {
     }
 
     //quests points
-    if (context.read<AppStateCubit>().state.rules.getSelectedQuests().isNotEmpty) {
+    if (context.read<RulesCubit>().state.getSelectedQuests().isNotEmpty) {
       var tableCells = <TableCell>[];
 
       tableCells.add(const TableCell(child: Text('')));
@@ -87,14 +86,14 @@ class ScoreDetailsWidget extends StatelessWidget {
           child: Align(
               alignment: Alignment.center,
               child: Text(
-                context.read<AppStateCubit>().state.score.scoreQuest.toString(),
+                context.read<ScoreCubit>().state.scoreQuest.toString(),
               ))));
 
       var tableRow = TableRow(children: tableCells);
       tableRows.add(tableRow);
     }
 
-    if (context.read<AppStateCubit>().state.rules.extension == Extension.laCour) {
+    if (context.read<RulesCubit>().state.extension == Extension.laCour) {
       var tableCells = <TableCell>[];
 
       tableCells.add(const TableCell(child: Text('')));
@@ -117,20 +116,15 @@ class ScoreDetailsWidget extends StatelessWidget {
       tableCells.add(TableCell(
           child: Align(
               alignment: Alignment.center,
-              child: Text(context
-                  .read<AppStateCubit>()
-                  .state
-                  .score
-                  .scoreLacour
-                  .toString()))));
+              child: Text(
+                  context.read<ScoreCubit>().state.scoreLacour.toString()))));
 
       var tableRow = TableRow(children: tableCells);
       tableRows.add(tableRow);
     }
 
     //SUM
-    if (context.read<AppStateCubit>().state.score.total > 0 &&
-        showTotal == true) {
+    if (context.read<ScoreCubit>().state.total > 0 && showTotal == true) {
       var tableCells = <TableCell>[];
 
       tableCells.add(const TableCell(child: Text('')));
@@ -158,12 +152,7 @@ class ScoreDetailsWidget extends StatelessWidget {
       tableCellsTotal.add(TableCell(
           child: Align(
               alignment: Alignment.center,
-              child: Text(context
-                  .read<AppStateCubit>()
-                  .state
-                  .score
-                  .total
-                  .toString()))));
+              child: Text(context.read<ScoreCubit>().state.total.toString()))));
 
       var tableRowTotal = TableRow(children: tableCellsTotal);
       tableRows.add(tableRowTotal);

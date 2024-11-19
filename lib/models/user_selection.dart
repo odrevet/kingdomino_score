@@ -22,7 +22,6 @@ class UserSelection {
 
   LandType? getSelectedLandType() => selectedLandType;
 
-
   setSelectionMode(SelectionMode selectionMode) {
     this.selectionMode = selectionMode;
   }

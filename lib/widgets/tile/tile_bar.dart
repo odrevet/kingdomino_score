@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kingdomino_score_count/cubits/rules_cubit.dart';
+import 'package:kingdomino_score_count/cubits/user_selection_cubit.dart';
 import 'package:kingdomino_score_count/models/extensions/extension.dart';
 import 'package:kingdomino_score_count/widgets/tile/land_tile.dart';
 
-import '../../cubits/app_state_cubit.dart';
 import '../../cubits/theme_cubit.dart';
-import '../../models/app_state.dart';
 import '../../models/extensions/age_of_giants.dart';
 import '../../models/extensions/lacour/lacour.dart';
 import '../../models/land.dart';
@@ -49,11 +49,9 @@ class _TileBarState extends State<TileBar> {
       crownButton(),
     ];
 
-    if (context.read<AppStateCubit>().state.rules.extension ==
-        Extension.ageOfGiants) {
+    if (context.read<RulesCubit>().state.extension == Extension.ageOfGiants) {
       kingdomEditorWidgets.add(giantButton());
-    } else if (context.read<AppStateCubit>().state.rules.extension ==
-        Extension.laCour) {
+    } else if (context.read<RulesCubit>().state.extension == Extension.laCour) {
       kingdomEditorWidgets.add(resourceButton());
 
       for (var element in [
@@ -86,13 +84,9 @@ class _TileBarState extends State<TileBar> {
 
   Widget landButton(LandType landType) {
     var isSelected =
-        context.read<AppStateCubit>().state.userSelection.getSelectionMode() ==
+        context.read<UserSelectionCubit>().state.getSelectionMode() ==
                 SelectionMode.land &&
-            context
-                    .read<AppStateCubit>()
-                    .state
-                    .userSelection
-                    .getSelectedLandType() ==
+            context.read<UserSelectionCubit>().state.getSelectedLandType() ==
                 landType;
 
     return MouseRegion(
@@ -113,16 +107,15 @@ class _TileBarState extends State<TileBar> {
 
   Widget resourceButton() {
     var isSelected =
-        context.read<AppStateCubit>().state.userSelection.getSelectionMode() ==
+        context.read<UserSelectionCubit>().state.getSelectionMode() ==
             SelectionMode.resource;
 
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
           onTap: () => context
-              .read<AppStateCubit>()
+              .read<UserSelectionCubit>()
               .state
-              .userSelection
               .setSelectionMode(SelectionMode.resource),
           child: Container(
               margin: const EdgeInsets.all(5.0),
@@ -138,13 +131,11 @@ class _TileBarState extends State<TileBar> {
 
   Widget courtierButton(Courtier courtier) {
     var isSelected = context
-                .read<AppStateCubit>()
+                .read<UserSelectionCubit>()
                 .state
-                .userSelection
                 .getSelectionMode() ==
             SelectionMode.courtier &&
-        context.read<AppStateCubit>().state.userSelection.selectedCourtier ==
-            courtier;
+        context.read<UserSelectionCubit>().state.selectedCourtier == courtier;
 
     return MouseRegion(
       cursor: SystemMouseCursors.click,
@@ -166,34 +157,25 @@ class _TileBarState extends State<TileBar> {
   }
 
   Widget castleButton() {
-    return BlocBuilder<AppStateCubit, AppState>(
-        builder: (BuildContext context, appState) {
+    return BlocBuilder<UserSelectionCubit, UserSelection>(
+        builder: (BuildContext context, userSelection) {
       return MouseRegion(
         cursor: SystemMouseCursors.click,
         child: GestureDetector(
-          onTap: () => setState(() {
-            context
-                .read<AppStateCubit>()
-                .state
-                .userSelection
-                .setSelectionMode(SelectionMode.castle);
-            context
-                .read<AppStateCubit>()
-                .state
-                .userSelection
-                .setSelectedLandType(LandType.castle);
-          }),
+          onTap: () {
+            userSelection.setSelectionMode(SelectionMode.castle);
+            userSelection.setSelectedLandType(LandType.castle);
+          },
           child: Container(
             margin: const EdgeInsets.all(5.0),
             height: _buttonSize,
             width: _buttonSize,
             decoration: BoxDecoration(
-              boxShadow: appState.userSelection.getSelectionMode() ==
-                          SelectionMode.castle &&
-                      appState.userSelection.getSelectedLandType() ==
-                          LandType.castle
-                  ? [highlightBox(context.read<ThemeCubit>().state)]
-                  : null,
+              boxShadow:
+                  userSelection.getSelectionMode() == SelectionMode.castle &&
+                          userSelection.getSelectedLandType() == LandType.castle
+                      ? [highlightBox(context.read<ThemeCubit>().state)]
+                      : null,
             ),
             child: CastleTile(context.read<ThemeCubit>().state),
           ),
@@ -204,7 +186,7 @@ class _TileBarState extends State<TileBar> {
 
   Widget crownButton() {
     var isSelected =
-        context.read<AppStateCubit>().state.userSelection.getSelectionMode() ==
+        context.read<UserSelectionCubit>().state.getSelectionMode() ==
             SelectionMode.crown;
 
     return MouseRegion(
@@ -226,7 +208,7 @@ class _TileBarState extends State<TileBar> {
 
   Widget giantButton() {
     var isSelected =
-        context.read<AppStateCubit>().state.userSelection.getSelectionMode() ==
+        context.read<UserSelectionCubit>().state.getSelectionMode() ==
             SelectionMode.giant;
 
     return MouseRegion(
@@ -253,14 +235,12 @@ class _TileBarState extends State<TileBar> {
     } else {
       setState(() {
         context
-            .read<AppStateCubit>()
+            .read<UserSelectionCubit>()
             .state
-            .userSelection
             .setSelectedLandType(selectedType);
         context
-            .read<AppStateCubit>()
+            .read<UserSelectionCubit>()
             .state
-            .userSelection
             .setSelectionMode(SelectionMode.land);
       });
     }
@@ -268,15 +248,10 @@ class _TileBarState extends State<TileBar> {
 
   void _onSelectcourtier(Courtier courtier) {
     setState(() {
+      context.read<UserSelectionCubit>().state.setSelectedCourtier(courtier);
       context
-          .read<AppStateCubit>()
+          .read<UserSelectionCubit>()
           .state
-          .userSelection
-          .setSelectedCourtier(courtier);
-      context
-          .read<AppStateCubit>()
-          .state
-          .userSelection
           .setSelectionMode(SelectionMode.courtier);
     });
   }
@@ -284,9 +259,8 @@ class _TileBarState extends State<TileBar> {
   void _onSelectCrown() {
     setState(() {
       context
-          .read<AppStateCubit>()
+          .read<UserSelectionCubit>()
           .state
-          .userSelection
           .setSelectionMode(SelectionMode.crown);
     });
   }
@@ -294,14 +268,12 @@ class _TileBarState extends State<TileBar> {
   void _onSelectCastle() {
     setState(() {
       context
-          .read<AppStateCubit>()
+          .read<UserSelectionCubit>()
           .state
-          .userSelection
           .setSelectedLandType(LandType.castle);
       context
-          .read<AppStateCubit>()
+          .read<UserSelectionCubit>()
           .state
-          .userSelection
           .setSelectionMode(SelectionMode.castle);
     });
   }
@@ -309,9 +281,8 @@ class _TileBarState extends State<TileBar> {
   void _onSelectGiant() {
     setState(() {
       context
-          .read<AppStateCubit>()
+          .read<UserSelectionCubit>()
           .state
-          .userSelection
           .setSelectionMode(SelectionMode.giant);
     });
   }

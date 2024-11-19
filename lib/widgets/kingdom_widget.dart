@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kingdomino_score_count/cubits/rules_cubit.dart';
 import 'package:kingdomino_score_count/cubits/theme_cubit.dart';
 
-import '../cubits/app_state_cubit.dart';
 import '../cubits/kingdom_cubit.dart';
+import '../cubits/user_selection_cubit.dart';
 import '../models/extensions/age_of_giants.dart';
 import '../models/extensions/lacour/lacour.dart';
 import '../models/kingdom.dart';
 import '../models/land.dart';
 import '../models/user_selection.dart';
-import 'tile/castle_tile.dart';
 import 'kingdomino_widget.dart';
+import 'tile/castle_tile.dart';
 import 'tile/land_tile.dart';
 
 class KingdomWidget extends StatefulWidget {
@@ -18,10 +19,7 @@ class KingdomWidget extends StatefulWidget {
   final Kingdom kingdom;
 
   const KingdomWidget(
-      {
-      required this.calculateScore,
-      required this.kingdom,
-      super.key});
+      {required this.calculateScore, required this.kingdom, super.key});
 
   @override
   State<KingdomWidget> createState() => _KingdomWidgetState();
@@ -110,21 +108,19 @@ class _KingdomWidgetState extends State<KingdomWidget> {
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
         onTap: () {
-          var selectionMode = context.read<AppStateCubit>().state.userSelection.getSelectionMode();
-          var selectedLandType = context
-              .read<AppStateCubit>()
-              .state
-              .userSelection
-              .getSelectedLandType();
+          var selectionMode =
+              context.read<UserSelectionCubit>().state.getSelectionMode();
+          var selectedLandType =
+              context.read<UserSelectionCubit>().state.getSelectedLandType();
           if (selectionMode != SelectionMode.land ||
               selectedLandType != kingdom.getLand(x, y)!.landType) {
             context.read<KingdomCubit>().setLand(
                 x,
                 y,
                 selectedLandType,
-                context.read<AppStateCubit>().state.userSelection.getSelectionMode(),
-                context.read<AppStateCubit>().state.userSelection.selectedCourtier,
-                context.read<AppStateCubit>().state.rules.extension);
+                context.read<UserSelectionCubit>().state.getSelectionMode(),
+                context.read<UserSelectionCubit>().state.selectedCourtier,
+                context.read<RulesCubit>().state.extension);
             widget.calculateScore(context.read<KingdomCubit>().state);
           }
         },

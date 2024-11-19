@@ -9,6 +9,7 @@ class Rules {
     if (selectedQuests != null) this.selectedQuests = selectedQuests;
   }
 
+  bool largeKingdom = false; // 7x7 kingdom if true, 5 otherwise
   HashSet<QuestType> selectedQuests = HashSet();
   Extension? extension;
 

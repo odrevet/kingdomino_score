@@ -5,7 +5,7 @@ import 'package:kingdomino_score_count/models/extensions/extension.dart';
 import 'package:kingdomino_score_count/models/quests/quest.dart';
 import 'package:provider/provider.dart';
 
-import '../cubits/app_state_cubit.dart';
+import '../cubits/rules_cubit.dart';
 import '../cubits/theme_cubit.dart';
 import 'highlight_box.dart';
 
@@ -27,9 +27,8 @@ class _QuestDialogOptionState extends State<_QuestDialogOption> {
   initState() {
     super.initState();
     _active = context
-        .read<AppStateCubit>()
+        .read<RulesCubit>()
         .state
-        .rules
         .getSelectedQuests()
         .contains(widget.questType);
   }
@@ -56,30 +55,26 @@ class _QuestDialogOptionState extends State<_QuestDialogOption> {
       onPressed: () {
         setState(() {
           if (context
-              .read<AppStateCubit>()
+              .read<RulesCubit>()
               .state
-              .rules
               .getSelectedQuests()
               .contains(widget.questType)) {
             _setActive(false);
             context
-                .read<AppStateCubit>()
+                .read<RulesCubit>()
                 .state
-                .rules
                 .getSelectedQuests()
                 .remove(widget.questType);
           } else if (context
-                  .read<AppStateCubit>()
+                  .read<RulesCubit>()
                   .state
-                  .rules
                   .getSelectedQuests()
                   .length <
               2) {
             _setActive(true);
             context
-                .read<AppStateCubit>()
+                .read<RulesCubit>()
                 .state
-                .rules
                 .getSelectedQuests()
                 .add(widget.questType);
           }
@@ -106,8 +101,7 @@ class _QuestDialogWidgetState extends State<QuestDialogWidget> {
   build(BuildContext context) {
     var options = <Widget>[];
 
-    if (context.read<AppStateCubit>().state.rules.extension ==
-        Extension.ageOfGiants) {
+    if (context.read<RulesCubit>().state.extension == Extension.ageOfGiants) {
       questPicture.forEach((type, picture) {
         options.add(_QuestDialogOption(
             type,
@@ -136,16 +130,11 @@ class _QuestDialogWidgetState extends State<QuestDialogWidget> {
     );
 
     return Badge(
-        isLabelVisible: context
-            .read<AppStateCubit>()
-            .state
-            .rules
-            .getSelectedQuests()
-            .isNotEmpty,
+        isLabelVisible:
+            context.read<RulesCubit>().state.getSelectedQuests().isNotEmpty,
         label: Text(context
-            .read<AppStateCubit>()
+            .read<RulesCubit>()
             .state
-            .rules
             .getSelectedQuests()
             .length
             .toString()),
@@ -156,8 +145,7 @@ class _QuestDialogWidgetState extends State<QuestDialogWidget> {
                   builder: (BuildContext dialogContext) => Provider.value(
                     value: Provider.of<KingdomCubit>(context, listen: false),
                     child: Provider.value(
-                        value:
-                            Provider.of<AppStateCubit>(context, listen: false),
+                        value: Provider.of<RulesCubit>(context, listen: false),
                         child: dialog),
                   ),
                 )));

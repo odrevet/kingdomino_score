@@ -1,3 +1,4 @@
+import 'package:kingdomino_score_count/models/game_set.dart';
 import 'package:kingdomino_score_count/models/land.dart';
 import 'package:replay_bloc/replay_bloc.dart';
 
@@ -6,17 +7,20 @@ import '../models/kingdom.dart';
 import '../models/user_selection.dart';
 
 class KingdomCubit extends ReplayCubit<Kingdom> {
-  KingdomCubit() : super(Kingdom(size: 5));
+  final Player player;
 
-  clear() => emit(Kingdom(size: state.size));
+  KingdomCubit({required this.player})
+      : super(Kingdom(player: player, size: 5));
 
-  resize(int size) => emit(Kingdom(size: size));
+  clear() => emit(Kingdom(player: player, size: state.size));
+
+  resize(int size) => emit(Kingdom(player: player, size: size));
 
   setLand(int y, int x, selectedLandType, selectionMode, selectedCourtier,
       extension) {
     bool isValid = true;
 
-    var kingdom = Kingdom(size: state.size);
+    var kingdom = Kingdom(player: player, size: state.size);
     for (var x = 0; x < state.size; x++) {
       for (var y = 0; y < state.size; y++) {
         kingdom.lands[y][x] = state.getLand(x, y)!.copyWith();

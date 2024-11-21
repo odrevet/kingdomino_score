@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kingdomino_score_count/cubits/game_cubit.dart';
 import 'package:kingdomino_score_count/cubits/kingdom_cubit.dart';
-import 'package:kingdomino_score_count/cubits/rules_cubit.dart';
 import 'package:kingdomino_score_count/cubits/score_cubit.dart';
 import 'package:kingdomino_score_count/cubits/theme_cubit.dart';
 
 import '../cubits/user_selection_cubit.dart';
+import '../models/game_set.dart';
 import 'kingdomino_widget.dart';
 
 class KingdominoApp extends StatelessWidget {
@@ -13,8 +14,14 @@ class KingdominoApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => ThemeCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<GameCubit>(
+          create: (context) => GameCubit(),
+        ),
+        BlocProvider<ThemeCubit>(
+            create: (context) => ThemeCubit(context.read<GameCubit>()))
+      ],
       child: BlocBuilder<ThemeCubit, MaterialColor>(
         builder: (context, color) => MaterialApp(
             title: 'Kingdomino Score',
@@ -26,9 +33,6 @@ class KingdominoApp extends StatelessWidget {
               fontFamily: 'HammersmithOne',
             ),
             home: MultiBlocProvider(providers: [
-              BlocProvider<RulesCubit>(
-                create: (BuildContext context) => RulesCubit(),
-              ),
               BlocProvider<ScoreCubit>(
                 create: (BuildContext context) => ScoreCubit(),
               ),
@@ -36,8 +40,8 @@ class KingdominoApp extends StatelessWidget {
                 create: (BuildContext context) => UserSelectionCubit(),
               ),
               BlocProvider<KingdomCubit>(
-                create: (BuildContext context) => KingdomCubit(),
-              ),
+                  create: (BuildContext context) =>
+                      KingdomCubit(player: Player.blue)),
               // ignore: prefer_const_constructors
             ], child: KingdominoWidget())),
       ),

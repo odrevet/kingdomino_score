@@ -9,7 +9,7 @@ import 'package:kingdomino_score_count/widgets/score/score_widget.dart';
 import 'package:kingdomino_score_count/widgets/warning_widget.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
-import '../cubits/rules_cubit.dart';
+import '../cubits/game_cubit.dart';
 import '../models/check_kingdom.dart';
 import '../models/extensions/extension.dart';
 import '../models/game_set.dart';
@@ -45,9 +45,6 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
 
   _KingdominoWidgetState();
 
-  setKingColor(MaterialColor materialColor) =>
-      context.read<ThemeCubit>().updateTheme(materialColor);
-
   @override
   initState() {
     PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
@@ -61,11 +58,11 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
     clearWarnings();
     setState(() {
       warnings =
-          checkKingdom(kingdom, context.read<RulesCubit>().state.extension);
+          checkKingdom(kingdom, context.read<GameCubit>().state.extension);
     });
     context
         .read<ScoreCubit>()
-        .calculateScore(kingdom, context.read<RulesCubit>().state);
+        .calculateScore(kingdom, context.read<GameCubit>().state);
   }
 
   void clearWarnings() {
@@ -92,30 +89,23 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
 
         switch (newValue) {
           case '':
-            context.read<RulesCubit>().state.extension = null;
+            context.read<GameCubit>().state.extension = null;
             context
                 .read<UserSelectionCubit>()
                 .state
                 .setSelectionMode(SelectionMode.land);
             context.read<UserSelectionCubit>().state.setSelectedLandType(null);
-
-            kingColors.remove(Colors.brown.shade800);
-            if (context.read<ThemeCubit>().state == Colors.brown.shade800) {
-              setKingColor(kingColors.first);
-            }
             break;
           case 'Giants':
-            context.read<RulesCubit>().state.extension = Extension.ageOfGiants;
+            context.read<GameCubit>().state.extension = Extension.ageOfGiants;
             context
                 .read<UserSelectionCubit>()
                 .state
                 .setSelectionMode(SelectionMode.land);
             context.read<UserSelectionCubit>().state.setSelectedLandType(null);
-
-            kingColors.add(Colors.brown);
             break;
           case 'LaCour':
-            context.read<RulesCubit>().state.extension = Extension.laCour;
+            context.read<GameCubit>().state.extension = Extension.laCour;
 
             context
                 .read<UserSelectionCubit>()
@@ -132,19 +122,16 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
                   .state
                   .setSelectionMode(SelectionMode.crown);
             }
-            kingColors.remove(Colors.brown.shade800);
-            if (context.read<ThemeCubit>().state == Colors.brown.shade800) {
-              setKingColor(kingColors.first);
-            }
+
             break;
         }
 
         context.read<KingdomCubit>().clearHistory();
-        context.read<RulesCubit>().state.selectedQuests.clear();
+        context.read<GameCubit>().state.selectedQuests.clear();
         clearWarnings();
         setState(() {
           warnings =
-              checkKingdom(kingdom, context.read<RulesCubit>().state.extension);
+              checkKingdom(kingdom, context.read<GameCubit>().state.extension);
         });
 
         calculateScore(context.read<KingdomCubit>().state);

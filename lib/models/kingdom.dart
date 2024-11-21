@@ -1,11 +1,13 @@
+import 'game_set.dart';
 import 'land.dart';
 import 'property.dart';
 
 class Kingdom {
   int size = 5;
   late List<List<Land>> lands = [];
+  Player player;
 
-  Kingdom({required this.size, List<List<Land>>? lands}) {
+  Kingdom({required this.size, required this.player, List<List<Land>>? lands}) {
     if (lands != null) {
       this.lands = lands;
     } else {
@@ -16,7 +18,7 @@ class Kingdom {
     }
   }
 
-  Kingdom copyWith({int? size, List<List<Land>>? lands}) {
+  Kingdom copyWith({int? size, Player? player, List<List<Land>>? lands}) {
     if (lands == null) {
       var landsCopy = [];
       for (var i = 0; i < this.size; i++) {
@@ -24,7 +26,10 @@ class Kingdom {
             List<Land>.generate(this.size, (j) => getLand(j, i)!.copyWith()));
       }
     }
-    return Kingdom(size: size ?? this.size, lands: lands ?? this.lands);
+    return Kingdom(
+        size: size ?? this.size,
+        player: player ?? this.player,
+        lands: lands ?? this.lands);
   }
 
   List<List<Land>> getLands() {

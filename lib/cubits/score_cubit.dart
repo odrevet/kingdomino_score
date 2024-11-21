@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../models/kingdom.dart';
-import '../models/rules.dart';
+import '../models/game.dart';
 import '../models/score.dart';
 
 class ScoreCubit extends Cubit<Score> {
@@ -11,12 +11,9 @@ class ScoreCubit extends Cubit<Score> {
     emit(const Score());
   }
 
-  void calculateScore(Kingdom kingdom, Rules rules) {
+  void calculateScore(Kingdom kingdom, Game rules) {
     final newScore = Score.calculateFromKingdom(
-        kingdom,
-        rules.extension,
-        rules.getSelectedQuests()
-    );
+        kingdom, rules.extension, rules.getSelectedQuests());
     emit(newScore);
   }
 }

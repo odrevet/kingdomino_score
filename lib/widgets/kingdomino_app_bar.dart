@@ -1,12 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kingdomino_score_count/cubits/game_cubit.dart';
 import 'package:kingdomino_score_count/cubits/kingdom_cubit.dart';
 import 'package:kingdomino_score_count/widgets/quest_dialog.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
-import '../cubits/theme_cubit.dart';
 import '../models/extensions/age_of_giants.dart';
+import '../models/extensions/extension.dart';
 import '../models/game_set.dart';
 import '../models/kingdom.dart';
 
@@ -38,22 +39,31 @@ class _KingdominoAppBarState extends State<KingdominoAppBar> {
   @override
   Widget build(BuildContext context) {
     var kingdom = context.read<KingdomCubit>().state;
+    bool hasBrownKing =  context.read<GameCubit>().state.extension == Extension.ageOfGiants;
+
+    Player currentPlayer = context.read<GameCubit>().state.player!;
+    
+    if (currentPlayer == Player.brown && !hasBrownKing) {
+      context.read<GameCubit>().setPlayer(Player.blue);
+      currentPlayer = Player.blue;
+    }
+
 
     var actions = <Widget>[
-      DropdownButton<MaterialColor>(
-        value: context.read<ThemeCubit>().state,
+      DropdownButton<Player>(
+        value: currentPlayer,
         iconSize: 25,
         iconEnabledColor: Colors.white,
         underline: Container(height: 1, color: Colors.white),
-        onChanged: (materialColor) =>
-            context.read<ThemeCubit>().updateTheme(materialColor!),
-        items: kingColors
-            .map<DropdownMenuItem<MaterialColor>>((MaterialColor value) {
-          return DropdownMenuItem<MaterialColor>(
-            value: value,
+        onChanged: (player) => context.read<GameCubit>().setPlayer(player!),
+        items: Player.values
+            .where((player) => player != Player.brown || hasBrownKing)
+            .map<DropdownMenuItem<Player>>((Player player) {
+          return DropdownMenuItem<Player>(
+            value: player,
             child: ColorFiltered(
               colorFilter: ColorFilter.mode(
-                value,
+                player.color,
                 BlendMode.srcATop,
               ),
               child: Image.asset(

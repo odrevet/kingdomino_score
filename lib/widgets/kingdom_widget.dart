@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kingdomino_score_count/cubits/rules_cubit.dart';
+import 'package:kingdomino_score_count/cubits/game_cubit.dart';
 import 'package:kingdomino_score_count/cubits/theme_cubit.dart';
 
 import '../cubits/kingdom_cubit.dart';
 import '../cubits/user_selection_cubit.dart';
 import '../models/extensions/age_of_giants.dart';
 import '../models/extensions/lacour/lacour.dart';
+import '../models/game_set.dart';
 import '../models/kingdom.dart';
 import '../models/land.dart';
 import '../models/user_selection.dart';
@@ -98,7 +99,9 @@ class _KingdomWidgetState extends State<KingdomWidget> {
   }
 
   Widget _buildLands(BuildContext context, int index) {
-    var kingdom = context.read<KingdomCubit>().state;
+    var kingdom_cubit = context.read<KingdomCubit>();
+
+    var kingdom = kingdom_cubit.state;
     int gridStateLength = kingdom.getLands().length;
 
     int x, y = 0;
@@ -114,13 +117,13 @@ class _KingdomWidgetState extends State<KingdomWidget> {
               context.read<UserSelectionCubit>().state.getSelectedLandType();
           if (selectionMode != SelectionMode.land ||
               selectedLandType != kingdom.getLand(x, y)!.landType) {
-            context.read<KingdomCubit>().setLand(
+            kingdom_cubit.setLand(
                 x,
                 y,
                 selectedLandType,
                 context.read<UserSelectionCubit>().state.getSelectionMode(),
                 context.read<UserSelectionCubit>().state.selectedCourtier,
-                context.read<RulesCubit>().state.extension);
+                context.read<GameCubit>().state.extension);
             widget.calculateScore(context.read<KingdomCubit>().state);
           }
         },

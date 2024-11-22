@@ -1,3 +1,5 @@
+import 'package:kingdomino_score_count/models/kingdom_size.dart';
+
 import '../kingdom.dart';
 import '../land.dart' show LandType;
 import 'quest.dart';
@@ -15,7 +17,7 @@ class MiddleKingdom extends Quest {
   int getPoints(Kingdom kingdom) {
     int x, y;
 
-    if (kingdom.kingdomSize == 5) {
+    if (kingdom.kingdomSize == KingdomSize.small) {
       x = y = 2;
     } else {
       x = y = 3;

@@ -33,17 +33,15 @@ class KingdominoApp extends StatelessWidget {
               fontFamily: 'HammersmithOne',
             ),
             home: MultiBlocProvider(providers: [
+              BlocProvider<ScoreCubit>(
+                create: (BuildContext context) => ScoreCubit(),
+              ),
               BlocProvider<UserSelectionCubit>(
                 create: (BuildContext context) => UserSelectionCubit(),
               ),
               BlocProvider<KingdomCubit>(
                   create: (BuildContext context) =>
                       KingdomCubit(player: Player.blue)),
-              BlocProvider<ScoreCubit>(
-                create: (BuildContext context) => ScoreCubit(
-                    kingdomCubit: context.read<KingdomCubit>(),
-                    gameCubit: context.read<GameCubit>()),
-              ),
               // ignore: prefer_const_constructors
             ], child: KingdominoWidget())),
       ),

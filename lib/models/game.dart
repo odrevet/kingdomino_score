@@ -9,8 +9,8 @@ import 'kingdom_size.dart';
 class Game {
   Game(
       {this.extension,
-      required this.kingdomSize,
-      required this.selectedQuests,
+      KingdomSize? kingdomSize,
+      HashSet<QuestType>? selectedQuests,
       this.player}) {
     if (selectedQuests != null) this.selectedQuests = selectedQuests;
   }

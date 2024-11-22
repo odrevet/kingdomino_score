@@ -98,9 +98,9 @@ class _KingdomWidgetState extends State<KingdomWidget> {
   }
 
   Widget _buildLands(BuildContext context, int index) {
-    var kingdomCubit = context.read<KingdomCubit>();
+    var kingdom_cubit = context.read<KingdomCubit>();
 
-    var kingdom = kingdomCubit.state;
+    var kingdom = kingdom_cubit.state;
     int gridStateLength = kingdom.getLands().length;
 
     int x, y = 0;
@@ -116,7 +116,7 @@ class _KingdomWidgetState extends State<KingdomWidget> {
               context.read<UserSelectionCubit>().state.getSelectedLandType();
           if (selectionMode != SelectionMode.land ||
               selectedLandType != kingdom.getLand(x, y)!.landType) {
-            kingdomCubit.setLand(
+            kingdom_cubit.setLand(
                 x,
                 y,
                 selectedLandType,

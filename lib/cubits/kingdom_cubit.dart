@@ -4,25 +4,26 @@ import 'package:replay_bloc/replay_bloc.dart';
 
 import '../models/check_kingdom.dart';
 import '../models/kingdom.dart';
+import '../models/kingdom_size.dart';
 import '../models/user_selection.dart';
 
 class KingdomCubit extends ReplayCubit<Kingdom> {
   final Player player;
 
   KingdomCubit({required this.player})
-      : super(Kingdom(player: player, size: 5));
+      : super(Kingdom(player: player, kingdomSize: KingdomSize.small));
 
-  clear() => emit(Kingdom(player: player, size: state.size));
+  clear() => emit(Kingdom(player: player, kingdomSize: state.kingdomSize));
 
-  resize(int size) => emit(Kingdom(player: player, size: size));
+  resize(KingdomSize kingdomSize) => emit(Kingdom(player: player, kingdomSize: kingdomSize));
 
   setLand(int y, int x, selectedLandType, selectionMode, selectedCourtier,
       extension) {
     bool isValid = true;
 
-    var kingdom = Kingdom(player: player, size: state.size);
-    for (var x = 0; x < state.size; x++) {
-      for (var y = 0; y < state.size; y++) {
+    var kingdom = Kingdom(player: player, kingdomSize: state.kingdomSize);
+    for (var x = 0; x < state.kingdomSize.size; x++) {
+      for (var y = 0; y < state.kingdomSize.size; y++) {
         kingdom.lands[y][x] = state.getLand(x, y)!.copyWith();
       }
     }
@@ -49,8 +50,8 @@ class KingdomCubit extends ReplayCubit<Kingdom> {
         break;
       case SelectionMode.castle:
         //remove other castle, if any
-        for (var cx = 0; cx < kingdom.size; cx++) {
-          for (var cy = 0; cy < kingdom.size; cy++) {
+        for (var cx = 0; cx < kingdom.kingdomSize.size; cx++) {
+          for (var cy = 0; cy < kingdom.kingdomSize.size; cy++) {
             if (kingdom.getLand(cx, cy)?.landType == LandType.castle) {
               kingdom.getLand(cx, cy)?.landType = LandType.empty;
               kingdom.getLand(cx, cy)?.crowns = 0;
@@ -83,8 +84,8 @@ class KingdomCubit extends ReplayCubit<Kingdom> {
           }
 
           //remove same courtier type, if any
-          for (var cx = 0; cx < kingdom.size; cx++) {
-            for (var cy = 0; cy < kingdom.size; cy++) {
+          for (var cx = 0; cx < kingdom.kingdomSize.size; cx++) {
+            for (var cy = 0; cy < kingdom.kingdomSize.size; cy++) {
               if (kingdom.getLand(cx, cy)?.courtier == selectedCourtier) {
                 kingdom.getLand(cx, cy)?.courtier = null;
               }

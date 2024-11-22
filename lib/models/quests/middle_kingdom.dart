@@ -15,7 +15,7 @@ class MiddleKingdom extends Quest {
   int getPoints(Kingdom kingdom) {
     int x, y;
 
-    if (kingdom.size == 5) {
+    if (kingdom.kingdomSize == 5) {
       x = y = 2;
     } else {
       x = y = 3;

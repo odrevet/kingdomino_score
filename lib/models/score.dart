@@ -52,8 +52,8 @@ class Score {
 
   static int _calculateLacourScore(Kingdom kingdom) {
     int score = 0;
-    for (int y = 0; y < kingdom.size; y++) {
-      for (int x = 0; x < kingdom.size; x++) {
+    for (int y = 0; y < kingdom.kingdomSize.size; y++) {
+      for (int x = 0; x < kingdom.kingdomSize.size; x++) {
         final courtier = kingdom.getLand(x, y)?.courtier;
         if (courtier != null) {
           score += courtier.getPoints(kingdom, x, y);

@@ -10,6 +10,7 @@ import '../models/extensions/age_of_giants.dart';
 import '../models/extensions/extension.dart';
 import '../models/game_set.dart';
 import '../models/kingdom.dart';
+import '../models/kingdom_size.dart';
 
 class KingdominoAppBar extends StatefulWidget implements PreferredSizeWidget {
   @override
@@ -122,9 +123,9 @@ class _KingdominoAppBarState extends State<KingdominoAppBar> {
       ),
       QuestDialogWidget(widget.calculateScore),
       IconButton(
-          icon: Icon(kingdom.size == 5 ? Icons.filter_5 : Icons.filter_7),
+          icon: Icon(kingdom.kingdomSize == KingdomSize.small ? Icons.filter_5 : Icons.filter_7),
           onPressed: () =>
-              context.read<KingdomCubit>().resize(kingdom.size == 5 ? 7 : 5)),
+              context.read<KingdomCubit>().resize(kingdom.kingdomSize ==  KingdomSize.small ?  KingdomSize.large : KingdomSize.small)),
       IconButton(
           icon: const Icon(Icons.delete),
           onPressed: () {

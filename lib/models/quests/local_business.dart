@@ -18,8 +18,8 @@ class LocalBusiness extends Quest {
   int getPoints(Kingdom kingdom) {
     int castleX = 0, castleY = 0;
 
-    for (var x = 0; x < kingdom.size; x++) {
-      for (var y = 0; y < kingdom.size; y++) {
+    for (var x = 0; x < kingdom.kingdomSize.size; x++) {
+      for (var y = 0; y < kingdom.kingdomSize.size; y++) {
         if (kingdom.getLand(x, y)?.landType == LandType.castle) {
           castleX = x;
           castleY = y;

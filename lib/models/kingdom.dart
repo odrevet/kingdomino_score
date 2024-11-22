@@ -1,33 +1,34 @@
 import 'game_set.dart';
+import 'kingdom_size.dart';
 import 'land.dart';
 import 'property.dart';
 
 class Kingdom {
-  int size = 5;
+  KingdomSize kingdomSize = KingdomSize.small;
   late List<List<Land>> lands = [];
   Player player;
 
-  Kingdom({required this.size, required this.player, List<List<Land>>? lands}) {
+  Kingdom({required this.kingdomSize, required this.player, List<List<Land>>? lands}) {
     if (lands != null) {
       this.lands = lands;
     } else {
       this.lands = [];
-      for (var i = 0; i < size; i++) {
-        this.lands.add(List<Land>.generate(size, (_) => Land()));
+      for (var i = 0; i < kingdomSize.size; i++) {
+        this.lands.add(List<Land>.generate(kingdomSize.size, (_) => Land()));
       }
     }
   }
 
-  Kingdom copyWith({int? size, Player? player, List<List<Land>>? lands}) {
+  Kingdom copyWith({KingdomSize? kingdomSize, Player? player, List<List<Land>>? lands}) {
     if (lands == null) {
       var landsCopy = [];
-      for (var i = 0; i < this.size; i++) {
+      for (var i = 0; i < this.kingdomSize.size; i++) {
         landsCopy.add(
-            List<Land>.generate(this.size, (j) => getLand(j, i)!.copyWith()));
+            List<Land>.generate(this.kingdomSize.size, (j) => getLand(j, i)!.copyWith()));
       }
     }
     return Kingdom(
-        size: size ?? this.size,
+        kingdomSize: kingdomSize ?? this.kingdomSize,
         player: player ?? this.player,
         lands: lands ?? this.lands);
   }
@@ -37,18 +38,18 @@ class Kingdom {
   }
 
   Land? getLand(int y, int x) {
-    if (y < 0 || x < 0 || x > size || y > size) {
+    if (y < 0 || x < 0 || x > kingdomSize.size || y > kingdomSize.size) {
       return null;
     }
 
     return lands[x][y];
   }
 
-  void reSize(int size) {
-    this.size = size;
+  void reSize(KingdomSize kingdomSize) {
+    this.kingdomSize = kingdomSize;
     lands = [];
-    for (var i = 0; i < size; i++) {
-      lands.add(List<Land>.generate(size, (_) => Land()));
+    for (var i = 0; i < kingdomSize.size; i++) {
+      lands.add(List<Land>.generate(kingdomSize.size, (_) => Land()));
     }
   }
 
@@ -65,8 +66,8 @@ class Kingdom {
   List<Property> getProperties() {
     var properties = <Property>[];
 
-    for (var x = 0; x < size; x++) {
-      for (var y = 0; y < size; y++) {
+    for (var x = 0; x < kingdomSize.size; x++) {
+      for (var y = 0; y < kingdomSize.size; y++) {
         var property = _getAdjacentLand(x, y, null);
         if (property != null) {
           properties.add(property);
@@ -130,6 +131,6 @@ class Kingdom {
   }
 
   bool isInBound(int x, int y) {
-    return (x >= 0 && x < size && y >= 0 && y < size);
+    return (x >= 0 && x < kingdomSize.size && y >= 0 && y < kingdomSize.size);
   }
 }

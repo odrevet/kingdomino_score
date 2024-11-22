@@ -17,7 +17,7 @@ class FourCorners extends Quest {
   @override
   int getPoints(Kingdom kingdom) {
     int count = 0;
-    int size = kingdom.size - 1;
+    int size = kingdom.kingdomSize.size - 1;
     if (kingdom.getLand(0, 0)?.landType == landType) count++;
     if (kingdom.getLand(size, 0)?.landType == landType) count++;
     if (kingdom.getLand(0, size)?.landType == landType) count++;

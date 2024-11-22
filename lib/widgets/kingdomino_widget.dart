@@ -60,7 +60,7 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
     });
     context
         .read<ScoreCubit>()
-        .calculateScore(kingdom, context.read<GameCubit>().state);
+        .updateScore(kingdom, context.read<GameCubit>().state);
   }
 
   void clearWarnings() {

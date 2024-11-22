@@ -8,7 +8,10 @@ class Kingdom {
   late List<List<Land>> lands = [];
   Player player;
 
-  Kingdom({required this.kingdomSize, required this.player, List<List<Land>>? lands}) {
+  Kingdom(
+      {required this.kingdomSize,
+      required this.player,
+      List<List<Land>>? lands}) {
     if (lands != null) {
       this.lands = lands;
     } else {
@@ -19,12 +22,13 @@ class Kingdom {
     }
   }
 
-  Kingdom copyWith({KingdomSize? kingdomSize, Player? player, List<List<Land>>? lands}) {
+  Kingdom copyWith(
+      {KingdomSize? kingdomSize, Player? player, List<List<Land>>? lands}) {
     if (lands == null) {
       var landsCopy = [];
       for (var i = 0; i < this.kingdomSize.size; i++) {
-        landsCopy.add(
-            List<Land>.generate(this.kingdomSize.size, (j) => getLand(j, i)!.copyWith()));
+        landsCopy.add(List<Land>.generate(
+            this.kingdomSize.size, (j) => getLand(j, i)!.copyWith()));
       }
     }
     return Kingdom(

@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kingdomino_score_count/models/extensions/extension.dart';
 import 'package:kingdomino_score_count/widgets/tile/land_tile.dart';
 
-import '../../cubits/kingdom_cubit.dart';
 import '../../cubits/game_cubit.dart';
+import '../../cubits/kingdom_cubit.dart';
 import '../../cubits/score_cubit.dart';
 import '../kingdomino_widget.dart';
 

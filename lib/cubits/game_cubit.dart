@@ -4,7 +4,7 @@ import '../models/game.dart';
 import '../models/game_set.dart';
 
 class GameCubit extends Cubit<Game> {
-  GameCubit() : super(Game(player: Player.blue)){
+  GameCubit() : super(Game(player: Player.blue)) {
     setPlayer(Player.blue);
   }
 

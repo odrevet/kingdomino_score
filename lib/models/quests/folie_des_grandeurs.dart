@@ -164,7 +164,8 @@ class FolieDesGrandeurs extends Quest {
     //count for every land how many square crosses
     List<List<int>> placedAlignments = [];
     for (var i = 0; i < kingdom.kingdomSize.size; i++) {
-      placedAlignments.add(List<int>.generate(kingdom.kingdomSize.size, (_) => 0));
+      placedAlignments
+          .add(List<int>.generate(kingdom.kingdomSize.size, (_) => 0));
     }
 
     //do not keep alignments that have more than one shared square with another

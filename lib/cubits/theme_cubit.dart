@@ -9,7 +9,6 @@ class ThemeCubit extends Cubit<MaterialColor> {
   ThemeCubit(this._gameCubit) : super(defaultColor) {
     // Listen to game state changes
     _gameCubit.stream.listen((gameState) {
-
       if (gameState.player != null) {
         emit(gameState.player!.color);
       }
@@ -21,5 +20,4 @@ class ThemeCubit extends Cubit<MaterialColor> {
   void updateTheme(MaterialColor materialColor) {
     emit(materialColor);
   }
-
 }

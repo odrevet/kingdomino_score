@@ -15,7 +15,8 @@ class KingdomCubit extends ReplayCubit<Kingdom> {
 
   clear() => emit(Kingdom(player: player, kingdomSize: state.kingdomSize));
 
-  resize(KingdomSize kingdomSize) => emit(Kingdom(player: player, kingdomSize: kingdomSize));
+  resize(KingdomSize kingdomSize) =>
+      emit(Kingdom(player: player, kingdomSize: kingdomSize));
 
   setLand(int y, int x, selectedLandType, selectionMode, selectedCourtier,
       extension) {

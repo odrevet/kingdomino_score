@@ -40,15 +40,15 @@ class _KingdominoAppBarState extends State<KingdominoAppBar> {
   @override
   Widget build(BuildContext context) {
     var kingdom = context.read<KingdomCubit>().state;
-    bool hasBrownKing =  context.read<GameCubit>().state.extension == Extension.ageOfGiants;
+    bool hasBrownKing =
+        context.read<GameCubit>().state.extension == Extension.ageOfGiants;
 
     Player currentPlayer = context.read<GameCubit>().state.player!;
-    
+
     if (currentPlayer == Player.brown && !hasBrownKing) {
       context.read<GameCubit>().setPlayer(Player.blue);
       currentPlayer = Player.blue;
     }
-
 
     var actions = <Widget>[
       DropdownButton<Player>(
@@ -123,9 +123,13 @@ class _KingdominoAppBarState extends State<KingdominoAppBar> {
       ),
       QuestDialogWidget(widget.calculateScore),
       IconButton(
-          icon: Icon(kingdom.kingdomSize == KingdomSize.small ? Icons.filter_5 : Icons.filter_7),
-          onPressed: () =>
-              context.read<KingdomCubit>().resize(kingdom.kingdomSize ==  KingdomSize.small ?  KingdomSize.large : KingdomSize.small)),
+          icon: Icon(kingdom.kingdomSize == KingdomSize.small
+              ? Icons.filter_5
+              : Icons.filter_7),
+          onPressed: () => context.read<KingdomCubit>().resize(
+              kingdom.kingdomSize == KingdomSize.small
+                  ? KingdomSize.large
+                  : KingdomSize.small)),
       IconButton(
           icon: const Icon(Icons.delete),
           onPressed: () {

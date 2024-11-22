@@ -7,7 +7,6 @@ import '../cubits/kingdom_cubit.dart';
 import '../cubits/user_selection_cubit.dart';
 import '../models/extensions/age_of_giants.dart';
 import '../models/extensions/lacour/lacour.dart';
-import '../models/game_set.dart';
 import '../models/kingdom.dart';
 import '../models/land.dart';
 import '../models/user_selection.dart';

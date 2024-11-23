@@ -40,21 +40,6 @@ enum Player {
   blue,
   brown;
 
-  String get displayName {
-    switch (this) {
-      case Player.pink:
-        return 'Pink';
-      case Player.yellow:
-        return 'Yellow';
-      case Player.green:
-        return 'Green';
-      case Player.blue:
-        return 'Blue';
-      case Player.brown:
-        return 'Brown';
-    }
-  }
-
   MaterialColor get color {
     switch (this) {
       case Player.pink:

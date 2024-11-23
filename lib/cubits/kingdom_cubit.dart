@@ -11,18 +11,18 @@ class KingdomCubit extends ReplayCubit<Kingdom> {
   final Player player;
 
   KingdomCubit({required this.player})
-      : super(Kingdom(player: player, kingdomSize: KingdomSize.small));
+      : super(Kingdom(kingdomSize: KingdomSize.small));
 
-  clear() => emit(Kingdom(player: player, kingdomSize: state.kingdomSize));
+  clear() => emit(Kingdom(kingdomSize: state.kingdomSize));
 
   resize(KingdomSize kingdomSize) =>
-      emit(Kingdom(player: player, kingdomSize: kingdomSize));
+      emit(Kingdom(kingdomSize: kingdomSize));
 
   setLand(int y, int x, selectedLandType, selectionMode, selectedCourtier,
       extension) {
     bool isValid = true;
 
-    var kingdom = Kingdom(player: player, kingdomSize: state.kingdomSize);
+    var kingdom = Kingdom(kingdomSize: state.kingdomSize);
     for (var x = 0; x < state.kingdomSize.size; x++) {
       for (var y = 0; y < state.kingdomSize.size; y++) {
         kingdom.lands[y][x] = state.getLand(x, y)!.copyWith();

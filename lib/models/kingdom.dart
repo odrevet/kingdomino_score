@@ -6,11 +6,9 @@ import 'property.dart';
 class Kingdom {
   KingdomSize kingdomSize = KingdomSize.small;
   late List<List<Land>> lands = [];
-  Player player;
 
   Kingdom(
       {required this.kingdomSize,
-      required this.player,
       List<List<Land>>? lands}) {
     if (lands != null) {
       this.lands = lands;
@@ -33,7 +31,6 @@ class Kingdom {
     }
     return Kingdom(
         kingdomSize: kingdomSize ?? this.kingdomSize,
-        player: player ?? this.player,
         lands: lands ?? this.lands);
   }
 

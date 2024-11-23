@@ -62,30 +62,31 @@ class ResourceButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var isSelected =
-        context.read<UserSelectionCubit>().state.getSelectionMode() ==
-            SelectionMode.resource;
+    return BlocBuilder<UserSelectionCubit, UserSelection>(
+        builder: (BuildContext context, userSelection) {
+      var isSelected =
+          userSelection.getSelectionMode() == SelectionMode.resource;
 
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      child: GestureDetector(
-        onTap: () => context
-            .read<UserSelectionCubit>()
-            .state
-            .setSelectionMode(SelectionMode.resource),
-        child: Container(
-          margin: const EdgeInsets.all(5.0),
-          height: buttonSize,
-          width: buttonSize,
-          decoration: BoxDecoration(
-            boxShadow: isSelected
-                ? [highlightBox(context.read<ThemeCubit>().state)]
-                : null,
+      return MouseRegion(
+        cursor: SystemMouseCursors.click,
+        child: GestureDetector(
+          onTap: () => context
+              .read<UserSelectionCubit>()
+              .setSelectionMode(SelectionMode.resource),
+          child: Container(
+            margin: const EdgeInsets.all(5.0),
+            height: buttonSize,
+            width: buttonSize,
+            decoration: BoxDecoration(
+              boxShadow: isSelected
+                  ? [highlightBox(context.read<ThemeCubit>().state)]
+                  : null,
+            ),
+            child: Image.asset('assets/lacour/resource.png'),
           ),
-          child: Image.asset('assets/lacour/resource.png'),
         ),
-      ),
-    );
+      );
+    });
   }
 }
 
@@ -154,8 +155,10 @@ class CastleButton extends StatelessWidget {
           cursor: SystemMouseCursors.click,
           child: GestureDetector(
             onTap: () {
-              userSelection.setSelectionMode(SelectionMode.castle);
-              userSelection.setSelectedLandType(LandType.castle);
+              context.read<UserSelectionCubit>().updateSelection(
+                    SelectionMode.castle,
+                    LandType.castle,
+                  );
             },
             child: Container(
               margin: const EdgeInsets.all(5.0),
@@ -180,37 +183,38 @@ class CrownButton extends StatelessWidget {
   final VoidCallback onSelectCrown;
 
   const CrownButton({
-    Key? key,
+    super.key,
     required this.buttonSize,
     required this.onSelectCrown,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
-    var isSelected =
-        context.read<UserSelectionCubit>().state.getSelectionMode() ==
-            SelectionMode.crown;
+    return BlocBuilder<UserSelectionCubit, UserSelection>(
+        builder: (BuildContext context, userSelection) {
+      var isSelected = userSelection.getSelectionMode() == SelectionMode.crown;
 
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      child: GestureDetector(
-        onTap: onSelectCrown,
-        child: Container(
-          margin: const EdgeInsets.all(5.0),
-          height: buttonSize,
-          width: buttonSize,
-          decoration: BoxDecoration(
-            boxShadow: isSelected
-                ? [highlightBox(context.read<ThemeCubit>().state)]
-                : null,
-          ),
-          child: const FittedBox(
-            fit: BoxFit.fitHeight,
-            child: Text(crown),
+      return MouseRegion(
+        cursor: SystemMouseCursors.click,
+        child: GestureDetector(
+          onTap: onSelectCrown,
+          child: Container(
+            margin: const EdgeInsets.all(5.0),
+            height: buttonSize,
+            width: buttonSize,
+            decoration: BoxDecoration(
+              boxShadow: isSelected
+                  ? [highlightBox(context.read<ThemeCubit>().state)]
+                  : null,
+            ),
+            child: const FittedBox(
+              fit: BoxFit.fitHeight,
+              child: Text(crown),
+            ),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 }
 

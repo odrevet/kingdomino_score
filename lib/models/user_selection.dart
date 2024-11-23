@@ -10,9 +10,9 @@ enum SelectionMode { land, crown, castle, giant, courtier, resource }
 
 class UserSelection {
   UserSelection(
-      {SelectionMode? selectionMode,
-      LandType? selectedLandType,
-      Courtier? selectedCourtier}) {
+      {required this.selectionMode,
+      this.selectedLandType,
+      this.selectedCourtier}) {
     setSelectedLandType(selectedLandType);
   }
 

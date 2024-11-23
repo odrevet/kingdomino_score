@@ -18,11 +18,11 @@ class LandButton extends StatelessWidget {
   final Function(LandType) onSelectLandType;
 
   const LandButton({
-    Key? key,
+    super.key,
     required this.landType,
     required this.buttonSize,
     required this.onSelectLandType,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -56,9 +56,9 @@ class ResourceButton extends StatelessWidget {
   final double buttonSize;
 
   const ResourceButton({
-    Key? key,
+    super.key,
     required this.buttonSize,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -96,11 +96,11 @@ class CourtierButton extends StatelessWidget {
   final Function(Courtier) onSelectCourtier;
 
   const CourtierButton({
-    Key? key,
+    super.key,
     required this.courtier,
     required this.buttonSize,
     required this.onSelectCourtier,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -139,9 +139,9 @@ class CastleButton extends StatelessWidget {
   final double buttonSize;
 
   const CastleButton({
-    Key? key,
+    super.key,
     required this.buttonSize,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -223,10 +223,10 @@ class GiantButton extends StatelessWidget {
   final VoidCallback onSelectGiant;
 
   const GiantButton({
-    Key? key,
+    super.key,
     required this.buttonSize,
     required this.onSelectGiant,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

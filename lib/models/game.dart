@@ -11,9 +11,7 @@ class Game {
       {this.extension,
       required this.kingdomSize,
       required this.selectedQuests,
-      this.player}) {
-    if (selectedQuests != null) this.selectedQuests = selectedQuests;
-  }
+      this.player});
 
   Player? player;
   KingdomSize kingdomSize = KingdomSize.small;

@@ -23,25 +23,7 @@ class _QuestDialogOption extends StatefulWidget {
 }
 
 class _QuestDialogOptionState extends State<_QuestDialogOption> {
-  bool? _active;
-
-  @override
-  initState() {
-    super.initState();
-    _active = context
-        .read<GameCubit>()
-        .state
-        .getSelectedQuests()
-        .contains(widget.questType);
-  }
-
   _QuestDialogOptionState();
-
-  void _setActive(bool value) {
-    setState(() {
-      _active = value;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {

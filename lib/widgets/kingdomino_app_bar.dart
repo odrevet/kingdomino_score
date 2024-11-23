@@ -6,6 +6,7 @@ import 'package:kingdomino_score_count/cubits/kingdom_cubit.dart';
 import 'package:kingdomino_score_count/widgets/quest_dialog.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
+import '../cubits/score_cubit.dart';
 import '../models/extensions/age_of_giants.dart';
 import '../models/extensions/extension.dart';
 import '../models/game_set.dart';
@@ -126,15 +127,20 @@ class _KingdominoAppBarState extends State<KingdominoAppBar> {
           icon: Icon(kingdom.kingdomSize == KingdomSize.small
               ? Icons.filter_5
               : Icons.filter_7),
-          onPressed: () => context.read<KingdomCubit>().resize(
-              kingdom.kingdomSize == KingdomSize.small
-                  ? KingdomSize.large
-                  : KingdomSize.small)),
+          onPressed: ()
+          {
+                context.read<KingdomCubit>().resize(
+                    kingdom.kingdomSize == KingdomSize.small
+                        ? KingdomSize.large
+                        : KingdomSize.small);
+                widget.calculateScore(context.read<KingdomCubit>().state);
+              }),
       IconButton(
           icon: const Icon(Icons.delete),
           onPressed: () {
             context.read<KingdomCubit>().clear();
             widget.onKingdomClear();
+            widget.calculateScore(context.read<KingdomCubit>().state);
           }),
       IconButton(
           icon: const Icon(Icons.help),

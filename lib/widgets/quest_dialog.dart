@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kingdomino_score_count/cubits/kingdom_cubit.dart';
 import 'package:kingdomino_score_count/models/extensions/extension.dart';
@@ -7,6 +8,7 @@ import 'package:provider/provider.dart';
 
 import '../cubits/game_cubit.dart';
 import '../cubits/theme_cubit.dart';
+import '../models/game.dart';
 import 'highlight_box.dart';
 
 class _QuestDialogOption extends StatefulWidget {
@@ -43,47 +45,33 @@ class _QuestDialogOptionState extends State<_QuestDialogOption> {
 
   @override
   Widget build(BuildContext context) {
-    Widget child = _active!
-        ? Container(
-            decoration: BoxDecoration(
-                boxShadow: [highlightBox(context.read<ThemeCubit>().state)]),
-            child: widget.svg)
-        : widget.svg;
+    return BlocBuilder<GameCubit, Game>(
+      builder: (context, game) {
+        final isSelected = game.selectedQuests.contains(widget.questType);
 
-    return SimpleDialogOption(
-      child: child,
-      onPressed: () {
-        setState(() {
-          if (context
-              .read<GameCubit>()
-              .state
-              .getSelectedQuests()
-              .contains(widget.questType)) {
-            _setActive(false);
-            context
-                .read<GameCubit>()
-                .state
-                .getSelectedQuests()
-                .remove(widget.questType);
-          } else if (context
-                  .read<GameCubit>()
-                  .state
-                  .getSelectedQuests()
-                  .length <
-              2) {
-            _setActive(true);
-            context
-                .read<GameCubit>()
-                .state
-                .getSelectedQuests()
-                .add(widget.questType);
-          }
-        });
-        widget.updateScores(context.read<KingdomCubit>().state);
+        return BlocBuilder<ThemeCubit, Color>(
+          builder: (context, themeColor) {
+            Widget child = isSelected
+                ? Container(
+              decoration: BoxDecoration(
+                boxShadow: [highlightBox(themeColor)],
+              ),
+              child: widget.svg,
+            )
+                : widget.svg;
+
+            return SimpleDialogOption(
+              child: child,
+              onPressed: () {
+                context.read<GameCubit>().toggleQuest(widget.questType);
+                widget.updateScores(context.read<KingdomCubit>().state);
+              },
+            );
+          },
+        );
       },
     );
-  }
-}
+  }}
 
 class QuestDialogWidget extends StatefulWidget {
   final Function updateScores;

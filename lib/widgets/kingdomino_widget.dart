@@ -11,6 +11,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import '../cubits/game_cubit.dart';
 import '../models/check_kingdom.dart';
 import '../models/extensions/extension.dart';
+import '../models/game.dart';
 import '../models/kingdom.dart';
 import '../models/user_selection.dart';
 import '../models/warning.dart';
@@ -52,15 +53,12 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
     super.initState();
   }
 
-  void calculateScore(Kingdom kingdom) {
+  void refreshWarnings(Kingdom kingdom) {
     clearWarnings();
     setState(() {
       warnings =
           checkKingdom(kingdom, context.read<GameCubit>().state.extension);
     });
-    context
-        .read<ScoreCubit>()
-        .calculateScore(kingdom, context.read<GameCubit>().state);
   }
 
   void clearWarnings() {
@@ -132,86 +130,102 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
               checkKingdom(kingdom, context.read<GameCubit>().state.extension);
         });
 
-        calculateScore(context.read<KingdomCubit>().state);
+        refreshWarnings(context.read<KingdomCubit>().state);
+        context
+            .read<ScoreCubit>()
+            .calculateScore(kingdom, context.read<GameCubit>().state);
       });
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<KingdomCubit, Kingdom>(
-      builder: (BuildContext context, kingdom) {
-        Widget body = OrientationBuilder(
-            builder: (orientationBuilderContext, orientation) {
-          if (orientation == Orientation.portrait) {
-            return Column(children: <Widget>[
-              // ignore: prefer_const_constructors
-              Expanded(
-                flex: 4,
-                // ignore: prefer_const_constructors
-                child: ScoreWidget(),
+    return MultiBlocListener(
+        listeners: [
+          BlocListener<KingdomCubit, Kingdom>(listener: (context, kingdom) {
+            context
+                .read<ScoreCubit>()
+                .calculateScore(kingdom, context.read<GameCubit>().state);
+          }),
+          BlocListener<GameCubit, Game>(listener: (context, game) {
+            context
+                .read<ScoreCubit>()
+                .calculateScore(context.read<KingdomCubit>().state, game);
+          })
+        ],
+        child: BlocBuilder<KingdomCubit, Kingdom>(builder: (context, kingdom) {
+          return Scaffold(
+              appBar: KingdominoAppBar(
+                onExtensionSelect: onExtensionSelect,
+                dropdownSelectedExtension: dropdownSelectedExtension,
+                packageInfo: _packageInfo,
+                onKingdomClear: onKingdomClear,
+                refreshWarnings: refreshWarnings,
               ),
-              Expanded(
-                flex: 5,
-                child: KingdomWidget(
-                    calculateScore: calculateScore, kingdom: kingdom),
-              ),
-              TileBar(
-                verticalAlign: false,
-              ),
-            ]);
-          } else {
-            return Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  // ignore: prefer_const_constructors
-                  Expanded(
-                    child: ScoreWidget(),
-                  ),
-                  KingdomWidget(
-                      calculateScore: calculateScore, kingdom: kingdom),
-                  TileBar(
-                    verticalAlign: true,
-                  )
-                ]);
-          }
-        });
-
-        return Scaffold(
-            appBar: KingdominoAppBar(
-              onExtensionSelect: onExtensionSelect,
-              dropdownSelectedExtension: dropdownSelectedExtension,
-              onKingdomClear: onKingdomClear,
-              packageInfo: _packageInfo,
-              calculateScore: calculateScore,
-            ),
-            floatingActionButton: warnings.isEmpty
-                ? null
-                : FloatingActionButton(
-                    child: Badge(
-                        label: Text(warnings.length.toString()),
-                        child: const Icon(Icons.warning)),
-                    onPressed: () {
-                      showDialog<void>(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            content: WarningsWidget(warnings: warnings),
-                            actions: <Widget>[
-                              TextButton(
-                                child: const Icon(
-                                  Icons.done,
-                                  color: Colors.black87,
+              floatingActionButton: warnings.isEmpty
+                  ? null
+                  : FloatingActionButton(
+                      child: Badge(
+                          label: Text(warnings.length.toString()),
+                          child: const Icon(Icons.warning)),
+                      onPressed: () {
+                        showDialog<void>(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              content: WarningsWidget(warnings: warnings),
+                              actions: <Widget>[
+                                TextButton(
+                                  child: const Icon(
+                                    Icons.done,
+                                    color: Colors.black87,
+                                  ),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
                                 ),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    }),
-            body: body);
-      },
-    );
+                              ],
+                            );
+                          },
+                        );
+                      }),
+              body: OrientationBuilder(
+                  builder: (orientationBuilderContext, orientation) {
+                if (orientation == Orientation.portrait) {
+                  return Column(children: <Widget>[
+                    // ignore: prefer_const_constructors
+                    Expanded(
+                      flex: 4,
+                      // ignore: prefer_const_constructors
+                      child: ScoreWidget(),
+                    ),
+                    Expanded(
+                      flex: 5,
+                      child: KingdomWidget(
+                        refreshWarnings: refreshWarnings,
+                        kingdom: kingdom,
+                      ),
+                    ),
+                    TileBar(
+                      verticalAlign: false,
+                    ),
+                  ]);
+                } else {
+                  return Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[
+                        // ignore: prefer_const_constructors
+                        Expanded(
+                          child: ScoreWidget(),
+                        ),
+                        KingdomWidget(
+                          refreshWarnings: refreshWarnings,
+                          kingdom: kingdom,
+                        ),
+                        TileBar(
+                          verticalAlign: true,
+                        )
+                      ]);
+                }
+              }));
+        }));
   }
 }

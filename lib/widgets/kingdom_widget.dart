@@ -15,11 +15,11 @@ import 'tile/castle_tile.dart';
 import 'tile/land_tile.dart';
 
 class KingdomWidget extends StatefulWidget {
-  final Function calculateScore;
+  final Function refreshWarnings;
   final Kingdom kingdom;
 
   const KingdomWidget(
-      {required this.calculateScore, required this.kingdom, super.key});
+      {required this.refreshWarnings, required this.kingdom, super.key});
 
   @override
   State<KingdomWidget> createState() => _KingdomWidgetState();
@@ -123,7 +123,7 @@ class _KingdomWidgetState extends State<KingdomWidget> {
                 context.read<UserSelectionCubit>().state.getSelectionMode(),
                 context.read<UserSelectionCubit>().state.selectedCourtier,
                 context.read<GameCubit>().state.extension);
-            widget.calculateScore(context.read<KingdomCubit>().state);
+            widget.refreshWarnings(context.read<KingdomCubit>().state);
           }
         },
         child: GridTile(

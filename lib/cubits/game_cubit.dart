@@ -8,6 +8,7 @@ import '../models/game_set.dart';
 import '../models/kingdom.dart';
 import '../models/quests/quest.dart';
 import '../models/score.dart';
+import '../models/warning.dart';
 
 class GameCubit extends Cubit<Game> {
   GameCubit()
@@ -15,6 +16,7 @@ class GameCubit extends Cubit<Game> {
             kingColor: KingColor.blue,
             kingdomSize: KingdomSize.small,
             selectedQuests: HashSet(),
+            warnings: [],
             score: Score())) {
     setPlayer(KingColor.blue);
   }
@@ -28,6 +30,7 @@ class GameCubit extends Cubit<Game> {
   void reset() => emit(Game(
       kingColor: KingColor.blue,
       kingdomSize: KingdomSize.small,
+      warnings: [],
       selectedQuests: HashSet(),
       score: Score()));
 
@@ -64,4 +67,14 @@ class GameCubit extends Cubit<Game> {
   bool hasQuest(QuestType quest) {
     return state.selectedQuests.contains(quest);
   }
+
+  void clearWarnings() {
+    emit(state.copyWith(warnings: []));
+  }
+
+  void addWarning(Warning warning) =>
+      emit(state.copyWith(warnings: [...state.warnings, warning]));
+
+  void setWarnings(Kingdom kingdom) =>
+      emit(state.copyWith(warnings: checkKingdom(kingdom, state.extension)));
 }

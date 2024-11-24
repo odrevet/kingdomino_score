@@ -18,8 +18,6 @@ class KingdominoAppBar extends StatefulWidget implements PreferredSizeWidget {
 
   final String dropdownSelectedExtension;
   final void Function(Kingdom, String?) onExtensionSelect;
-  final void Function(Kingdom) refreshWarnings;
-  final Function onKingdomClear;
   final PackageInfo packageInfo;
 
   const KingdominoAppBar({
@@ -27,8 +25,6 @@ class KingdominoAppBar extends StatefulWidget implements PreferredSizeWidget {
     required this.onExtensionSelect,
     required this.dropdownSelectedExtension,
     required this.packageInfo,
-    required this.onKingdomClear,
-    required this.refreshWarnings,
     super.key,
   });
 
@@ -80,7 +76,9 @@ class _KingdominoAppBarState extends State<KingdominoAppBar> {
           onPressed: context.read<KingdomCubit>().canUndo
               ? () {
                   context.read<KingdomCubit>().undo();
-                  widget.refreshWarnings(context.read<KingdomCubit>().state);
+                  context
+                      .read<GameCubit>()
+                      .setWarnings(context.read<KingdomCubit>().state);
                 }
               : null,
           icon: const Icon(Icons.undo)),
@@ -88,7 +86,9 @@ class _KingdominoAppBarState extends State<KingdominoAppBar> {
           onPressed: context.read<KingdomCubit>().canRedo
               ? () {
                   context.read<KingdomCubit>().redo();
-                  widget.refreshWarnings(context.read<KingdomCubit>().state);
+                  context
+                      .read<GameCubit>()
+                      .setWarnings(context.read<KingdomCubit>().state);
                 }
               : null,
           icon: const Icon(Icons.redo)),
@@ -121,7 +121,7 @@ class _KingdominoAppBarState extends State<KingdominoAppBar> {
           );
         }).toList(),
       ),
-      QuestDialogWidget(widget.refreshWarnings),
+      QuestDialogWidget(),
       IconButton(
           icon: Icon(kingdom.kingdomSize == KingdomSize.small
               ? Icons.filter_5
@@ -131,14 +131,17 @@ class _KingdominoAppBarState extends State<KingdominoAppBar> {
                 kingdom.kingdomSize == KingdomSize.small
                     ? KingdomSize.large
                     : KingdomSize.small);
-            widget.refreshWarnings(context.read<KingdomCubit>().state);
+            context
+                .read<GameCubit>()
+                .setWarnings(context.read<KingdomCubit>().state);
           }),
       IconButton(
           icon: const Icon(Icons.delete),
           onPressed: () {
             context.read<KingdomCubit>().clear();
-            widget.onKingdomClear();
-            widget.refreshWarnings(context.read<KingdomCubit>().state);
+            context
+                .read<GameCubit>()
+                .setWarnings(context.read<KingdomCubit>().state);
           }),
       IconButton(
           icon: const Icon(Icons.help),

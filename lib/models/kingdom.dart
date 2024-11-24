@@ -1,6 +1,7 @@
 import 'package:kingdomino_score_count/models/user_selection.dart';
+import 'package:kingdomino_score_count/models/warning.dart';
 
-import 'check_kingdom.dart';
+import 'extensions/extension.dart';
 import 'game_set.dart';
 import 'kingdom_size.dart';
 import 'land.dart';
@@ -21,8 +22,7 @@ class Kingdom {
     }
   }
 
-  Kingdom copyWith(
-      {KingdomSize? kingdomSize, List<List<Land>>? lands}) {
+  Kingdom copyWith({KingdomSize? kingdomSize, List<List<Land>>? lands}) {
     if (lands == null) {
       var landsCopy = [];
       for (var i = 0; i < this.kingdomSize.size; i++) {
@@ -136,7 +136,7 @@ class Kingdom {
     return (x >= 0 && x < kingdomSize.size && y >= 0 && y < kingdomSize.size);
   }
 
-  void setLand(int y, int x, selectionMode, selectedLandType, extension,
+  bool setLand(int y, int x, selectionMode, selectedLandType, extension,
       selectedCourtier) {
     bool isValid = true;
     for (var x = 0; x < kingdomSize.size; x++) {
@@ -225,5 +225,68 @@ class Kingdom {
         }
         break;
     }
+    return isValid;
   }
+}
+
+List<Warning> checkKingdom(Kingdom kingdom, Extension? extension) {
+  var warnings = <Warning>[];
+  Map<LandType, Map<String, dynamic>> gameSet = getGameSet(extension);
+
+  //check if more tile in the kingdom than in the gameSet
+  for (var landType in LandType.values) {
+    if (landType != LandType.empty) {
+      var count = kingdom
+          .getLands()
+          .expand((i) => i)
+          .toList()
+          .where((land) => land.landType == landType)
+          .length;
+      if (count > gameSet[landType]!['count']) {
+        Warning warning =
+            Warning(count, landType, 0, '>', gameSet[landType]!['count']);
+        warnings.add(warning);
+      }
+
+      //check if too many tile with given crowns
+      for (var crownsCounter = 1;
+          crownsCounter <= gameSet[landType]!['crowns']['max'];
+          crownsCounter++) {
+        var count = kingdom
+            .getLands()
+            .expand((i) => i)
+            .toList()
+            .where((land) =>
+                land.landType == landType && land.crowns == crownsCounter)
+            .length;
+
+        if (count > gameSet[landType]!['crowns'][crownsCounter]) {
+          Warning warning = Warning(count, landType, crownsCounter, '>',
+              gameSet[landType]!['crowns'][crownsCounter]);
+
+          warnings.add(warning);
+        }
+      }
+    }
+
+    // Check if kingdom has castle (when less than a blank tile in board)
+    var countEmptyTile = kingdom
+        .getLands()
+        .expand((i) => i)
+        .toList()
+        .where((land) => land.landType == LandType.empty)
+        .length;
+
+    var noCastle = kingdom
+        .getLands()
+        .expand((i) => i)
+        .toList()
+        .where((land) => land.landType == LandType.castle)
+        .isEmpty;
+    if (countEmptyTile <= 1 && noCastle) {
+      warnings.add(Warning(0, LandType.castle, 0, '<>', 1));
+    }
+  }
+
+  return warnings;
 }

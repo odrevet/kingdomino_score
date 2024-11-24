@@ -8,11 +8,9 @@ import 'package:kingdomino_score_count/widgets/warning_widget.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import '../cubits/game_cubit.dart';
-import '../models/check_kingdom.dart';
 import '../models/extensions/extension.dart';
 import '../models/kingdom.dart';
 import '../models/user_selection.dart';
-import '../models/warning.dart';
 import 'kingdom_widget.dart';
 import 'tile/tile_bar.dart';
 
@@ -30,7 +28,6 @@ class KingdominoWidget extends StatefulWidget {
 }
 
 class _KingdominoWidgetState extends State<KingdominoWidget> {
-  List<Warning> warnings = [];
   PackageInfo _packageInfo = PackageInfo(
     appName: 'Unknown',
     packageName: 'Unknown',
@@ -50,24 +47,6 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
 
     super.initState();
   }
-
-  void refreshWarnings(Kingdom kingdom) {
-    clearWarnings();
-    setState(() {
-      warnings =
-          checkKingdom(kingdom, context.read<GameCubit>().state.extension);
-    });
-  }
-
-  void clearWarnings() {
-    setState(() {
-      warnings.clear();
-    });
-  }
-
-  void onKingdomClear() => setState(() {
-        clearWarnings();
-      });
 
   void onExtensionSelect(Kingdom kingdom, String? newValue) => setState(() {
         dropdownSelectedExtension = newValue!;
@@ -122,13 +101,9 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
 
         context.read<KingdomCubit>().clearHistory();
         context.read<GameCubit>().state.selectedQuests.clear();
-        clearWarnings();
-        setState(() {
-          warnings =
-              checkKingdom(kingdom, context.read<GameCubit>().state.extension);
-        });
-
-        refreshWarnings(context.read<KingdomCubit>().state);
+        context
+            .read<GameCubit>()
+            .setWarnings(context.read<KingdomCubit>().state);
         context.read<GameCubit>().calculateScore(kingdom);
       });
 
@@ -143,24 +118,21 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
         child: BlocBuilder<KingdomCubit, Kingdom>(builder: (context, kingdom) {
           return Scaffold(
               appBar: KingdominoAppBar(
-                onExtensionSelect: onExtensionSelect,
-                dropdownSelectedExtension: dropdownSelectedExtension,
-                packageInfo: _packageInfo,
-                onKingdomClear: onKingdomClear,
-                refreshWarnings: refreshWarnings,
-              ),
-              floatingActionButton: warnings.isEmpty
+                  onExtensionSelect: onExtensionSelect,
+                  dropdownSelectedExtension: dropdownSelectedExtension,
+                  packageInfo: _packageInfo),
+              floatingActionButton: context.read<GameCubit>().state.warnings.isEmpty
                   ? null
                   : FloatingActionButton(
                       child: Badge(
-                          label: Text(warnings.length.toString()),
+                          label: Text(context.read<GameCubit>().state.warnings.length.toString()),
                           child: const Icon(Icons.warning)),
                       onPressed: () {
                         showDialog<void>(
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialog(
-                              content: WarningsWidget(warnings: warnings),
+                              content: WarningsWidget(),
                               actions: <Widget>[
                                 TextButton(
                                   child: const Icon(
@@ -189,7 +161,6 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
                     Expanded(
                       flex: 5,
                       child: KingdomWidget(
-                        refreshWarnings: refreshWarnings,
                         kingdom: kingdom,
                       ),
                     ),
@@ -206,7 +177,6 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
                           child: ScoreWidget(),
                         ),
                         KingdomWidget(
-                          refreshWarnings: refreshWarnings,
                           kingdom: kingdom,
                         ),
                         TileBar(

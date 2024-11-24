@@ -1,12 +1,10 @@
-import 'package:kingdomino_score_count/models/game_set.dart';
 import 'package:replay_bloc/replay_bloc.dart';
 
 import '../models/kingdom.dart';
 import '../models/kingdom_size.dart';
 
 class KingdomCubit extends ReplayCubit<Kingdom> {
-  KingdomCubit()
-      : super(Kingdom(kingdomSize: KingdomSize.small));
+  KingdomCubit() : super(Kingdom(kingdomSize: KingdomSize.small));
 
   clear() => emit(Kingdom(kingdomSize: state.kingdomSize));
 

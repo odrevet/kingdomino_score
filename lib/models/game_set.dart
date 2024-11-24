@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'extensions/age_of_giants.dart';
+import 'extensions/extension.dart';
+import 'extensions/lacour/lacour.dart';
 import 'land.dart';
 
 const Map<LandType, Map<String, dynamic>> gameSet = {
@@ -53,5 +56,15 @@ enum KingColor {
       case KingColor.brown:
         return Colors.brown;
     }
+  }
+}
+
+Map<LandType, Map<String, dynamic>> getGameSet(extension) {
+  if (extension == Extension.ageOfGiants) {
+    return gameAogSet;
+  } else if (extension == Extension.laCour) {
+    return laCourGameSet;
+  } else {
+    return gameSet;
   }
 }

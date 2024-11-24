@@ -12,11 +12,10 @@ import '../models/game.dart';
 import 'highlight_box.dart';
 
 class _QuestDialogOption extends StatefulWidget {
-  final Function refreshWarnings;
   final QuestType questType;
   final Widget svg;
 
-  const _QuestDialogOption(this.questType, this.svg, this.refreshWarnings);
+  const _QuestDialogOption(this.questType, this.svg);
 
   @override
   _QuestDialogOptionState createState() => _QuestDialogOptionState();
@@ -46,8 +45,12 @@ class _QuestDialogOptionState extends State<_QuestDialogOption> {
               child: child,
               onPressed: () {
                 context.read<GameCubit>().toggleQuest(widget.questType);
-                widget.refreshWarnings(context.read<KingdomCubit>().state);
-                context.read<GameCubit>().calculateScore(context.read<KingdomCubit>().state);
+                context
+                    .read<GameCubit>()
+                    .setWarnings(context.read<KingdomCubit>().state);
+                context
+                    .read<GameCubit>()
+                    .calculateScore(context.read<KingdomCubit>().state);
               },
             );
           },
@@ -58,9 +61,7 @@ class _QuestDialogOptionState extends State<_QuestDialogOption> {
 }
 
 class QuestDialogWidget extends StatefulWidget {
-  final Function refreshWarnings;
-
-  const QuestDialogWidget(this.refreshWarnings, {super.key});
+  const QuestDialogWidget({super.key});
 
   @override
   State<QuestDialogWidget> createState() => _QuestDialogWidgetState();
@@ -76,21 +77,17 @@ class _QuestDialogWidgetState extends State<QuestDialogWidget> {
     if (context.read<GameCubit>().state.extension == Extension.ageOfGiants) {
       questPicture.forEach((type, picture) {
         options.add(_QuestDialogOption(
-            type,
-            SvgPicture.asset('$assetsquestsLocation/$picture'),
-            widget.refreshWarnings));
+            type, SvgPicture.asset('$assetsquestsLocation/$picture')));
       });
     } else {
       options.add(_QuestDialogOption(
           QuestType.harmony,
           SvgPicture.asset(
-              '$assetsquestsLocation/${questPicture[QuestType.harmony]!}'),
-          widget.refreshWarnings));
+              '$assetsquestsLocation/${questPicture[QuestType.harmony]!}')));
       options.add(_QuestDialogOption(
           QuestType.middleKingdom,
           SvgPicture.asset(
-              '$assetsquestsLocation/${questPicture[QuestType.middleKingdom]!}'),
-          widget.refreshWarnings));
+              '$assetsquestsLocation/${questPicture[QuestType.middleKingdom]!}')));
     }
 
     SimpleDialog dialog = SimpleDialog(

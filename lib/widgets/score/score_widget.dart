@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kingdomino_score_count/cubits/score_cubit.dart';
+import 'package:kingdomino_score_count/cubits/game_cubit.dart';
 import 'package:kingdomino_score_count/cubits/theme_cubit.dart';
 
 import 'score_details_widget.dart';
@@ -33,7 +33,7 @@ class _ScoreWidgetState extends State<ScoreWidget> {
 
   @override
   Widget build(BuildContext context) {
-    int score = context.read<ScoreCubit>().state.total;
+    int score = context.read<GameCubit>().state.score.total;
     return GestureDetector(
       onTap: score > 0 ? _cycleDisplayMode : null,
       child: _displayMode == DisplayMode.score || score == 0

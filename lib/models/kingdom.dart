@@ -7,9 +7,7 @@ class Kingdom {
   KingdomSize kingdomSize = KingdomSize.small;
   late List<List<Land>> lands = [];
 
-  Kingdom(
-      {required this.kingdomSize,
-      List<List<Land>>? lands}) {
+  Kingdom({required this.kingdomSize, List<List<Land>>? lands}) {
     if (lands != null) {
       this.lands = lands;
     } else {

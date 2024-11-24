@@ -35,11 +35,11 @@ class _QuestDialogOptionState extends State<_QuestDialogOption> {
           builder: (context, themeColor) {
             Widget child = isSelected
                 ? Container(
-              decoration: BoxDecoration(
-                boxShadow: [highlightBox(themeColor)],
-              ),
-              child: widget.svg,
-            )
+                    decoration: BoxDecoration(
+                      boxShadow: [highlightBox(themeColor)],
+                    ),
+                    child: widget.svg,
+                  )
                 : widget.svg;
 
             return SimpleDialogOption(
@@ -53,7 +53,8 @@ class _QuestDialogOptionState extends State<_QuestDialogOption> {
         );
       },
     );
-  }}
+  }
+}
 
 class QuestDialogWidget extends StatefulWidget {
   final Function updateScores;

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kingdomino_score_count/cubits/kingdom_cubit.dart';
-import 'package:kingdomino_score_count/cubits/score_cubit.dart';
 import 'package:kingdomino_score_count/cubits/user_selection_cubit.dart';
 import 'package:kingdomino_score_count/widgets/kingdomino_app_bar.dart';
 import 'package:kingdomino_score_count/widgets/score/score_widget.dart';
@@ -11,7 +10,6 @@ import 'package:package_info_plus/package_info_plus.dart';
 import '../cubits/game_cubit.dart';
 import '../models/check_kingdom.dart';
 import '../models/extensions/extension.dart';
-import '../models/game.dart';
 import '../models/kingdom.dart';
 import '../models/user_selection.dart';
 import '../models/warning.dart';
@@ -131,9 +129,7 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
         });
 
         refreshWarnings(context.read<KingdomCubit>().state);
-        context
-            .read<ScoreCubit>()
-            .calculateScore(kingdom, context.read<GameCubit>().state);
+        context.read<GameCubit>().calculateScore(kingdom);
       });
 
   @override
@@ -141,14 +137,7 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
     return MultiBlocListener(
         listeners: [
           BlocListener<KingdomCubit, Kingdom>(listener: (context, kingdom) {
-            context
-                .read<ScoreCubit>()
-                .calculateScore(kingdom, context.read<GameCubit>().state);
-          }),
-          BlocListener<GameCubit, Game>(listener: (context, game) {
-            context
-                .read<ScoreCubit>()
-                .calculateScore(context.read<KingdomCubit>().state, game);
+            context.read<GameCubit>().calculateScore(kingdom);
           })
         ],
         child: BlocBuilder<KingdomCubit, Kingdom>(builder: (context, kingdom) {

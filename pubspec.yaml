@@ -1,7 +1,7 @@
 name: kingdomino_score_count
 description: Kingdomino board game score calculation
 
-version: 3.2.3+25
+version: 3.3.0+26
 
 environment:
   sdk: '>=3.2.0 <4.0.0'

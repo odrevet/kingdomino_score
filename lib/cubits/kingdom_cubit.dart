@@ -8,7 +8,7 @@ import '../models/kingdom_size.dart';
 import '../models/user_selection.dart';
 
 class KingdomCubit extends ReplayCubit<Kingdom> {
-  final KingColors player;
+  final KingColor player;
 
   KingdomCubit({required this.player})
       : super(Kingdom(kingdomSize: KingdomSize.small));

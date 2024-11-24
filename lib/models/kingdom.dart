@@ -19,7 +19,7 @@ class Kingdom {
   }
 
   Kingdom copyWith(
-      {KingdomSize? kingdomSize, KingColors? player, List<List<Land>>? lands}) {
+      {KingdomSize? kingdomSize, KingColor? player, List<List<Land>>? lands}) {
     if (lands == null) {
       var landsCopy = [];
       for (var i = 0; i < this.kingdomSize.size; i++) {

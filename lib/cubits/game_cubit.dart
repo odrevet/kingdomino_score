@@ -12,11 +12,11 @@ import '../models/score.dart';
 class GameCubit extends Cubit<Game> {
   GameCubit()
       : super(Game(
-            kingColor: KingColors.blue,
+            kingColor: KingColor.blue,
             kingdomSize: KingdomSize.small,
             selectedQuests: HashSet(),
             score: Score())) {
-    setPlayer(KingColors.blue);
+    setPlayer(KingColor.blue);
   }
 
   void calculateScore(Kingdom kingdom) {
@@ -26,13 +26,13 @@ class GameCubit extends Cubit<Game> {
   }
 
   void reset() => emit(Game(
-      kingColor: KingColors.blue,
+      kingColor: KingColor.blue,
       kingdomSize: KingdomSize.small,
       selectedQuests: HashSet(),
       score: Score()));
 
-  void setPlayer(KingColors player) {
-    emit(state.copyWith(player: player));
+  void setPlayer(KingColor kingColor) {
+    emit(state.copyWith(kingColor: kingColor));
   }
 
   void addQuest(QuestType quest) {

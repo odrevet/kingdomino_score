@@ -15,7 +15,7 @@ class Game {
       required this.score,
       this.kingColor});
 
-  KingColors? kingColor;
+  KingColor? kingColor;
   KingdomSize kingdomSize = KingdomSize.small;
   HashSet<QuestType> selectedQuests = HashSet();
   Extension? extension;
@@ -24,13 +24,13 @@ class Game {
   HashSet<QuestType> getSelectedQuests() => selectedQuests;
 
   copyWith(
-          {KingColors? player,
+          {KingColor? kingColor,
           Score? score,
           KingdomSize? kingdomSize,
           Extension? extension,
           HashSet<QuestType>? selectedQuests}) =>
       Game(
-        kingColor: player ?? this.kingColor,
+        kingColor: kingColor ?? this.kingColor,
         score: score ?? this.score,
         kingdomSize: kingdomSize ?? this.kingdomSize,
         extension: extension ?? this.extension,

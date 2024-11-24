@@ -43,24 +43,24 @@ class _KingdominoAppBarState extends State<KingdominoAppBar> {
     bool hasBrownKing =
         context.read<GameCubit>().state.extension == Extension.ageOfGiants;
 
-    KingColors currentPlayer = context.read<GameCubit>().state.kingColor!;
+    KingColor currentPlayer = context.read<GameCubit>().state.kingColor!;
 
-    if (currentPlayer == KingColors.brown && !hasBrownKing) {
-      context.read<GameCubit>().setPlayer(KingColors.blue);
-      currentPlayer = KingColors.blue;
+    if (currentPlayer == KingColor.brown && !hasBrownKing) {
+      context.read<GameCubit>().setPlayer(KingColor.blue);
+      currentPlayer = KingColor.blue;
     }
 
     var actions = <Widget>[
-      DropdownButton<KingColors>(
+      DropdownButton<KingColor>(
         value: currentPlayer,
         iconSize: 25,
         iconEnabledColor: Colors.white,
         underline: Container(height: 1, color: Colors.white),
         onChanged: (player) => context.read<GameCubit>().setPlayer(player!),
-        items: KingColors.values
-            .where((player) => player != KingColors.brown || hasBrownKing)
-            .map<DropdownMenuItem<KingColors>>((KingColors player) {
-          return DropdownMenuItem<KingColors>(
+        items: KingColor.values
+            .where((player) => player != KingColor.brown || hasBrownKing)
+            .map<DropdownMenuItem<KingColor>>((KingColor player) {
+          return DropdownMenuItem<KingColor>(
             value: player,
             child: ColorFiltered(
               colorFilter: ColorFilter.mode(

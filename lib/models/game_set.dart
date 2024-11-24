@@ -33,7 +33,7 @@ const Map<LandType, Map<String, dynamic>> gameSet = {
   }
 };
 
-enum KingColors {
+enum KingColor {
   pink,
   yellow,
   green,
@@ -42,15 +42,15 @@ enum KingColors {
 
   MaterialColor get color {
     switch (this) {
-      case KingColors.pink:
+      case KingColor.pink:
         return Colors.pink;
-      case KingColors.yellow:
+      case KingColor.yellow:
         return Colors.yellow;
-      case KingColors.green:
+      case KingColor.green:
         return Colors.green;
-      case KingColors.blue:
+      case KingColor.blue:
         return Colors.blue;
-      case KingColors.brown:
+      case KingColor.brown:
         return Colors.brown;
     }
   }

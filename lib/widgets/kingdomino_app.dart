@@ -37,7 +37,7 @@ class KingdominoApp extends StatelessWidget {
               ),
               BlocProvider<KingdomCubit>(
                   create: (BuildContext context) =>
-                      KingdomCubit(player: KingColors.blue)),
+                      KingdomCubit(player: KingColor.blue)),
               // ignore: prefer_const_constructors
             ], child: KingdominoWidget())),
       ),

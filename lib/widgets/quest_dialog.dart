@@ -47,6 +47,7 @@ class _QuestDialogOptionState extends State<_QuestDialogOption> {
               onPressed: () {
                 context.read<GameCubit>().toggleQuest(widget.questType);
                 widget.updateScores(context.read<KingdomCubit>().state);
+                context.read<GameCubit>().calculateScore(context.read<KingdomCubit>().state);
               },
             );
           },

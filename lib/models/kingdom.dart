@@ -1,3 +1,6 @@
+import 'package:kingdomino_score_count/models/user_selection.dart';
+
+import 'check_kingdom.dart';
 import 'game_set.dart';
 import 'kingdom_size.dart';
 import 'land.dart';
@@ -19,7 +22,7 @@ class Kingdom {
   }
 
   Kingdom copyWith(
-      {KingdomSize? kingdomSize, KingColor? player, List<List<Land>>? lands}) {
+      {KingdomSize? kingdomSize, List<List<Land>>? lands}) {
     if (lands == null) {
       var landsCopy = [];
       for (var i = 0; i < this.kingdomSize.size; i++) {
@@ -131,5 +134,96 @@ class Kingdom {
 
   bool isInBound(int x, int y) {
     return (x >= 0 && x < kingdomSize.size && y >= 0 && y < kingdomSize.size);
+  }
+
+  void setLand(int y, int x, selectionMode, selectedLandType, extension,
+      selectedCourtier) {
+    bool isValid = true;
+    for (var x = 0; x < kingdomSize.size; x++) {
+      for (var y = 0; y < kingdomSize.size; y++) {
+        lands[y][x] = getLand(x, y)!.copyWith();
+      }
+    }
+
+    Land? land = getLand(y, x);
+
+    switch (selectionMode) {
+      case SelectionMode.land:
+        land!.landType = selectedLandType;
+        land.reset();
+        break;
+      case SelectionMode.crown:
+        if (land!.landType == LandType.castle ||
+            land.landType == LandType.empty) {
+          isValid = false;
+        } else {
+          land.crowns++;
+          land.courtier = null;
+          if (land.crowns >
+              getGameSet(extension)[land.landType]?['crowns']['max']) {
+            land.reset();
+          }
+        }
+        break;
+      case SelectionMode.castle:
+        //remove other castle, if any
+        for (var cx = 0; cx < kingdomSize.size; cx++) {
+          for (var cy = 0; cy < kingdomSize.size; cy++) {
+            if (getLand(cx, cy)?.landType == LandType.castle) {
+              getLand(cx, cy)?.landType = LandType.empty;
+              getLand(cx, cy)?.crowns = 0;
+            }
+          }
+        }
+
+        land!.landType = selectedLandType; //should be castle
+        land.reset();
+        break;
+      case SelectionMode.giant:
+        if (land!.crowns > 0) {
+          land.giants = (land.giants + 1) % (land.crowns + 1);
+        } else {
+          isValid = false;
+        }
+        break;
+      case SelectionMode.courtier:
+        if ([
+          LandType.grassland,
+          LandType.lake,
+          LandType.wheat,
+          LandType.forest,
+          LandType.mine,
+          LandType.swamp
+        ].contains(land!.landType)) {
+          if (land.courtier == selectedCourtier) {
+            land.courtier = null;
+            break;
+          }
+
+          //remove same courtier type, if any
+          for (var cx = 0; cx < kingdomSize.size; cx++) {
+            for (var cy = 0; cy < kingdomSize.size; cy++) {
+              if (getLand(cx, cy)?.courtier == selectedCourtier) {
+                getLand(cx, cy)?.courtier = null;
+              }
+            }
+          }
+
+          land.reset();
+          land.courtier = selectedCourtier;
+        } else {
+          isValid = false;
+        }
+        break;
+      case SelectionMode.resource:
+        if ([LandType.grassland, LandType.lake, LandType.wheat, LandType.forest]
+            .contains(land!.landType)) {
+          land.hasResource = !land.hasResource;
+          land.crowns = 0;
+        } else {
+          isValid = false;
+        }
+        break;
+    }
   }
 }

@@ -12,11 +12,11 @@ import '../models/game.dart';
 import 'highlight_box.dart';
 
 class _QuestDialogOption extends StatefulWidget {
-  final Function updateScores;
+  final Function refreshWarnings;
   final QuestType questType;
   final Widget svg;
 
-  const _QuestDialogOption(this.questType, this.svg, this.updateScores);
+  const _QuestDialogOption(this.questType, this.svg, this.refreshWarnings);
 
   @override
   _QuestDialogOptionState createState() => _QuestDialogOptionState();
@@ -46,7 +46,7 @@ class _QuestDialogOptionState extends State<_QuestDialogOption> {
               child: child,
               onPressed: () {
                 context.read<GameCubit>().toggleQuest(widget.questType);
-                widget.updateScores(context.read<KingdomCubit>().state);
+                widget.refreshWarnings(context.read<KingdomCubit>().state);
                 context.read<GameCubit>().calculateScore(context.read<KingdomCubit>().state);
               },
             );
@@ -58,9 +58,9 @@ class _QuestDialogOptionState extends State<_QuestDialogOption> {
 }
 
 class QuestDialogWidget extends StatefulWidget {
-  final Function updateScores;
+  final Function refreshWarnings;
 
-  const QuestDialogWidget(this.updateScores, {super.key});
+  const QuestDialogWidget(this.refreshWarnings, {super.key});
 
   @override
   State<QuestDialogWidget> createState() => _QuestDialogWidgetState();
@@ -78,19 +78,19 @@ class _QuestDialogWidgetState extends State<QuestDialogWidget> {
         options.add(_QuestDialogOption(
             type,
             SvgPicture.asset('$assetsquestsLocation/$picture'),
-            widget.updateScores));
+            widget.refreshWarnings));
       });
     } else {
       options.add(_QuestDialogOption(
           QuestType.harmony,
           SvgPicture.asset(
               '$assetsquestsLocation/${questPicture[QuestType.harmony]!}'),
-          widget.updateScores));
+          widget.refreshWarnings));
       options.add(_QuestDialogOption(
           QuestType.middleKingdom,
           SvgPicture.asset(
               '$assetsquestsLocation/${questPicture[QuestType.middleKingdom]!}'),
-          widget.updateScores));
+          widget.refreshWarnings));
     }
 
     SimpleDialog dialog = SimpleDialog(

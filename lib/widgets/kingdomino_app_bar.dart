@@ -11,7 +11,6 @@ import '../models/extensions/age_of_giants.dart';
 import '../models/extensions/extension.dart';
 import '../models/game.dart';
 import '../models/game_set.dart';
-import '../models/kingdom.dart';
 import '../models/kingdom_size.dart';
 import '../models/user_selection.dart';
 
@@ -91,92 +90,72 @@ class _KingdominoAppBarState extends State<KingdominoAppBar> {
               : null,
           icon: const Icon(Icons.redo)),
       // Extension Selector
-      BlocBuilder<GameCubit, Game>(
-        builder: (context, game) {
-          return DropdownButton<Extension>(
-            value: game.extension,
-            icon: const Icon(Icons.extension, color: Colors.white),
-            iconSize: 25,
-            elevation: 16,
-            underline: Container(height: 1, color: Colors.white),
-            onChanged: (value) {
-              context.read<GameCubit>().setExtension(value);
+      BlocBuilder<GameCubit, Game>(builder: (context, game) {
+        return DropdownButton<Extension>(
+          value: game.extension,
+          icon: const Icon(Icons.extension, color: Colors.white),
+          iconSize: 25,
+          elevation: 16,
+          underline: Container(height: 1, color: Colors.white),
+          onChanged: (value) {
+            kingdom.getLands().expand((i) => i).toList().forEach((land) {
+              land.hasResource = false;
+              land.courtier = null;
+            });
 
-              kingdom.getLands().expand((i) => i).toList().forEach((land) {
-                land.hasResource = false;
-                land.courtier = null;
-              });
+            kingdom.getLands().expand((i) => i).toList().forEach((land) {
+              land.giants = 0;
+            });
 
-              kingdom.getLands().expand((i) => i).toList().forEach((land) {
-                land.giants = 0;
-              });
+            context.read<GameCubit>().setExtension(value);
+            context
+                .read<UserSelectionCubit>()
+                .updateSelection(SelectionMode.land, null);
 
-              switch (value!) {
-                case Extension.vanilla:
-                  context
-                      .read<UserSelectionCubit>()
-                      .state
-                      .setSelectionMode(SelectionMode.land);
-                  context.read<UserSelectionCubit>().state.setSelectedLandType(null);
-                  break;
-                case Extension.ageOfGiants:
-                  context.read<GameCubit>().state.extension = Extension.ageOfGiants;
-                  context
-                      .read<UserSelectionCubit>()
-                      .state
-                      .setSelectionMode(SelectionMode.land);
-                  context.read<UserSelectionCubit>().state.setSelectedLandType(null);
-                  break;
-                case Extension.laCour:
-                  context
-                      .read<UserSelectionCubit>()
-                      .state
-                      .setSelectionMode(SelectionMode.land);
-                  context.read<UserSelectionCubit>().state.setSelectedLandType(null);
-
-                  if (context.read<UserSelectionCubit>().state.getSelectionMode() ==
-                      SelectionMode.courtier ||
-                      context.read<UserSelectionCubit>().state.getSelectionMode() ==
-                          SelectionMode.resource) {
+            if (value == Extension.laCour &&
                     context
-                        .read<UserSelectionCubit>()
-                        .state
-                        .setSelectionMode(SelectionMode.crown);
-                  }
-
-                  break;
-              }
-
-              context.read<KingdomCubit>().clearHistory();
-              context.read<GameCubit>().state.selectedQuests.clear();
+                            .read<UserSelectionCubit>()
+                            .state
+                            .getSelectionMode() ==
+                        SelectionMode.courtier ||
+                context.read<UserSelectionCubit>().state.getSelectionMode() ==
+                    SelectionMode.resource) {
               context
-                  .read<GameCubit>()
-                  .setWarnings(context.read<KingdomCubit>().state);
-              context.read<GameCubit>().calculateScore(kingdom);
-            },
-            items: <Extension>[Extension.vanilla, Extension.ageOfGiants, Extension.laCour]
-                .map<DropdownMenuItem<Extension>>((Extension value) {
-              Widget child;
+                  .read<UserSelectionCubit>()
+                  .state
+                  .setSelectionMode(SelectionMode.crown);
+            }
 
-              if (value == Extension.ageOfGiants) {
-                child = const Text(giant);
-              } else if (value == Extension.laCour) {
-                child = Image.asset(
-                  'assets/lacour/resource.png',
-                  height: 25,
-                  width: 25,
-                );
-              } else {
-                child = const Text('');
-              }
-              return DropdownMenuItem<Extension>(
-                value: value,
-                child: child,
+            context.read<KingdomCubit>().clearHistory();
+            context.read<GameCubit>().clearQuest();
+            context.read<GameCubit>().setWarnings(kingdom);
+            context.read<GameCubit>().calculateScore(kingdom);
+          },
+          items: <Extension>[
+            Extension.vanilla,
+            Extension.ageOfGiants,
+            Extension.laCour
+          ].map<DropdownMenuItem<Extension>>((Extension value) {
+            Widget child;
+
+            if (value == Extension.ageOfGiants) {
+              child = const Text(giant);
+            } else if (value == Extension.laCour) {
+              child = Image.asset(
+                'assets/lacour/resource.png',
+                height: 25,
+                width: 25,
               );
-            }).toList(),
-          );
-        }
-      ),
+            } else {
+              child = const Text('');
+            }
+            return DropdownMenuItem<Extension>(
+              value: value,
+              child: child,
+            );
+          }).toList(),
+        );
+      }),
       QuestDialogWidget(),
       IconButton(
           icon: Icon(kingdom.kingdomSize == KingdomSize.small

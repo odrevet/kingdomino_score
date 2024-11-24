@@ -39,6 +39,8 @@ class GameCubit extends Cubit<Game> {
     emit(state.copyWith(kingColor: kingColor));
   }
 
+  void clearQuest() => emit(state.copyWith(selectedQuests: HashSet()));
+
   void addQuest(QuestType quest) {
     if (state.selectedQuests.length < 2) {
       final newQuests = HashSet<QuestType>.from(state.selectedQuests)

@@ -7,7 +7,7 @@ class UserSelectionCubit extends Cubit<UserSelection> {
   UserSelectionCubit()
       : super(UserSelection(selectionMode: SelectionMode.castle));
 
-  void updateSelection(SelectionMode mode, LandType landType) {
+  void updateSelection(SelectionMode mode, LandType? landType) {
     emit(state.copyWith(
       selectionMode: mode,
       selectedLandType: landType,

@@ -10,7 +10,7 @@ import 'kingdom_size.dart';
 
 class Game {
   Game(
-      {this.extension,
+      {this.extension = Extension.vanilla,
       required this.kingdomSize,
       required this.selectedQuests,
       required this.score,
@@ -20,7 +20,7 @@ class Game {
   KingColor? kingColor;
   KingdomSize kingdomSize = KingdomSize.small;
   HashSet<QuestType> selectedQuests = HashSet();
-  Extension? extension;
+  Extension extension;
   Score score;
   List<Warning> warnings = [];
 

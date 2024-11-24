@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kingdomino_score_count/models/kingdom_size.dart';
 
+import '../models/extensions/extension.dart';
 import '../models/game.dart';
 import '../models/game_set.dart';
 import '../models/kingdom.dart';
@@ -77,4 +78,7 @@ class GameCubit extends Cubit<Game> {
 
   void setWarnings(Kingdom kingdom) =>
       emit(state.copyWith(warnings: checkKingdom(kingdom, state.extension)));
+
+  void setExtension(Extension? extension) =>
+      emit(state.copyWith(extension: extension));
 }

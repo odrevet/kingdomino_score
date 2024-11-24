@@ -11,8 +11,9 @@ import 'buttons.dart';
 
 class TileBar extends StatefulWidget {
   final bool verticalAlign;
+  final Extension extension;
 
-  const TileBar({required this.verticalAlign, super.key});
+  const TileBar({required this.verticalAlign, required this.extension, super.key});
 
   @override
   State<TileBar> createState() => _TileBarState();

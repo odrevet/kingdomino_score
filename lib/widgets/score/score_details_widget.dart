@@ -14,7 +14,7 @@ class ScoreDetailsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var properties = context.read<KingdomCubit>().state.getProperties();
+    var properties = getKingdomCubit(context, context.read<GameCubit>().state.kingColor!).state.getProperties();
 
     Widget content;
 

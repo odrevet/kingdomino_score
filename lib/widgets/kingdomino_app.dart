@@ -34,8 +34,16 @@ class KingdominoApp extends StatelessWidget {
               BlocProvider<UserSelectionCubit>(
                 create: (BuildContext context) => UserSelectionCubit(),
               ),
-              BlocProvider<KingdomCubit>(
-                  create: (BuildContext context) => KingdomCubit()),
+              BlocProvider<KingdomCubitPink>(
+                  create: (BuildContext context) => KingdomCubitPink()),
+              BlocProvider<KingdomCubitYellow>(
+                  create: (BuildContext context) => KingdomCubitYellow()),
+              BlocProvider<KingdomCubitGreen>(
+                  create: (BuildContext context) => KingdomCubitGreen()),
+              BlocProvider<KingdomCubitBlue>(
+                  create: (BuildContext context) => KingdomCubitBlue()),
+              BlocProvider<KingdomCubitBrown>(
+                  create: (BuildContext context) => KingdomCubitBrown()),
               // ignore: prefer_const_constructors
             ], child: KingdominoWidget())),
       ),

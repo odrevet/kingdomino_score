@@ -47,10 +47,10 @@ class _QuestDialogOptionState extends State<_QuestDialogOption> {
                 context.read<GameCubit>().toggleQuest(widget.questType);
                 context
                     .read<GameCubit>()
-                    .setWarnings(context.read<KingdomCubit>().state);
+                    .setWarnings(getKingdomCubit(context, context.read<GameCubit>().state.kingColor!).state);
                 context
                     .read<GameCubit>()
-                    .calculateScore(context.read<KingdomCubit>().state);
+                    .calculateScore(getKingdomCubit(context, context.read<GameCubit>().state.kingColor!).state);
               },
             );
           },
@@ -112,7 +112,7 @@ class _QuestDialogWidgetState extends State<QuestDialogWidget> {
             onPressed: () => showDialog(
                   context: context,
                   builder: (BuildContext dialogContext) => Provider.value(
-                    value: Provider.of<KingdomCubit>(context, listen: false),
+                    value: Provider.of<KingdomCubitBlue>(context, listen: false),
                     child: Provider.value(
                         value: Provider.of<GameCubit>(context, listen: false),
                         child: dialog),

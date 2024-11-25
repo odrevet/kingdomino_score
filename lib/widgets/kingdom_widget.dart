@@ -97,7 +97,7 @@ class _KingdomWidgetState extends State<KingdomWidget> {
   }
 
   Widget _buildLands(BuildContext context, int index) {
-    var kingdomCubit = context.read<KingdomCubit>();
+    var kingdomCubit = getKingdomCubit(context, context.read<GameCubit>().state.kingColor!);
 
     var kingdom = kingdomCubit.state;
     int gridStateLength = kingdom.getLands().length;
@@ -122,7 +122,7 @@ class _KingdomWidgetState extends State<KingdomWidget> {
                 context.read<UserSelectionCubit>().state.getSelectionMode(),
                 context.read<UserSelectionCubit>().state.selectedCourtier,
                 context.read<GameCubit>().state.extension);
-            context.read<GameCubit>().setWarnings(context.read<KingdomCubit>().state);
+            context.read<GameCubit>().setWarnings(getKingdomCubit(context, context.read<GameCubit>().state.kingColor!).state);
           }
         },
         child: GridTile(

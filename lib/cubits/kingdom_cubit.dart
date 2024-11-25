@@ -5,6 +5,7 @@ import 'package:replay_bloc/replay_bloc.dart';
 import '../models/game_set.dart';
 import '../models/kingdom.dart';
 import '../models/kingdom_size.dart';
+import '../models/land.dart';
 import '../models/user_selection.dart';
 
 abstract class KingdomCubit extends ReplayCubit<Kingdom> {

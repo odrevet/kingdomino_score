@@ -1,4 +1,3 @@
-import 'package:kingdomino_score_count/models/user_selection.dart';
 import 'package:kingdomino_score_count/models/warning.dart';
 
 import 'extensions/extension.dart';
@@ -22,7 +21,8 @@ class Kingdom {
     }
   }
 
-  Kingdom copyWith({KingdomSize? kingdomSize, List<List<Land>>? lands}) {
+  Kingdom copyWith(
+      {KingdomSize? kingdomSize, List<List<Land>>? lands}) {
     if (lands == null) {
       var landsCopy = [];
       for (var i = 0; i < this.kingdomSize.size; i++) {
@@ -135,99 +135,8 @@ class Kingdom {
   bool isInBound(int x, int y) {
     return (x >= 0 && x < kingdomSize.size && y >= 0 && y < kingdomSize.size);
   }
-
-  bool setLand(int y, int x, selectionMode, selectedLandType, extension,
-      selectedCourtier) {
-    bool isValid = true;
-    for (var x = 0; x < kingdomSize.size; x++) {
-      for (var y = 0; y < kingdomSize.size; y++) {
-        lands[y][x] = getLand(x, y)!.copyWith();
-      }
-    }
-
-    Land? land = getLand(y, x);
-
-    switch (selectionMode) {
-      case SelectionMode.land:
-        land!.landType = selectedLandType;
-        land.reset();
-        break;
-      case SelectionMode.crown:
-        if (land!.landType == LandType.castle ||
-            land.landType == LandType.empty) {
-          isValid = false;
-        } else {
-          land.crowns++;
-          land.courtier = null;
-          if (land.crowns >
-              getGameSet(extension)[land.landType]?['crowns']['max']) {
-            land.reset();
-          }
-        }
-        break;
-      case SelectionMode.castle:
-        //remove other castle, if any
-        for (var cx = 0; cx < kingdomSize.size; cx++) {
-          for (var cy = 0; cy < kingdomSize.size; cy++) {
-            if (getLand(cx, cy)?.landType == LandType.castle) {
-              getLand(cx, cy)?.landType = LandType.empty;
-              getLand(cx, cy)?.crowns = 0;
-            }
-          }
-        }
-
-        land!.landType = selectedLandType; //should be castle
-        land.reset();
-        break;
-      case SelectionMode.giant:
-        if (land!.crowns > 0) {
-          land.giants = (land.giants + 1) % (land.crowns + 1);
-        } else {
-          isValid = false;
-        }
-        break;
-      case SelectionMode.courtier:
-        if ([
-          LandType.grassland,
-          LandType.lake,
-          LandType.wheat,
-          LandType.forest,
-          LandType.mine,
-          LandType.swamp
-        ].contains(land!.landType)) {
-          if (land.courtier == selectedCourtier) {
-            land.courtier = null;
-            break;
-          }
-
-          //remove same courtier type, if any
-          for (var cx = 0; cx < kingdomSize.size; cx++) {
-            for (var cy = 0; cy < kingdomSize.size; cy++) {
-              if (getLand(cx, cy)?.courtier == selectedCourtier) {
-                getLand(cx, cy)?.courtier = null;
-              }
-            }
-          }
-
-          land.reset();
-          land.courtier = selectedCourtier;
-        } else {
-          isValid = false;
-        }
-        break;
-      case SelectionMode.resource:
-        if ([LandType.grassland, LandType.lake, LandType.wheat, LandType.forest]
-            .contains(land!.landType)) {
-          land.hasResource = !land.hasResource;
-          land.crowns = 0;
-        } else {
-          isValid = false;
-        }
-        break;
-    }
-    return isValid;
-  }
 }
+
 
 List<Warning> checkKingdom(Kingdom kingdom, Extension? extension) {
   var warnings = <Warning>[];
@@ -244,20 +153,20 @@ List<Warning> checkKingdom(Kingdom kingdom, Extension? extension) {
           .length;
       if (count > gameSet[landType]!['count']) {
         Warning warning =
-            Warning(count, landType, 0, '>', gameSet[landType]!['count']);
+        Warning(count, landType, 0, '>', gameSet[landType]!['count']);
         warnings.add(warning);
       }
 
       //check if too many tile with given crowns
       for (var crownsCounter = 1;
-          crownsCounter <= gameSet[landType]!['crowns']['max'];
-          crownsCounter++) {
+      crownsCounter <= gameSet[landType]!['crowns']['max'];
+      crownsCounter++) {
         var count = kingdom
             .getLands()
             .expand((i) => i)
             .toList()
             .where((land) =>
-                land.landType == landType && land.crowns == crownsCounter)
+        land.landType == landType && land.crowns == crownsCounter)
             .length;
 
         if (count > gameSet[landType]!['crowns'][crownsCounter]) {
@@ -284,7 +193,8 @@ List<Warning> checkKingdom(Kingdom kingdom, Extension? extension) {
         .where((land) => land.landType == LandType.castle)
         .isEmpty;
     if (countEmptyTile <= 1 && noCastle) {
-      warnings.add(Warning(0, LandType.castle, 0, '<>', 1));
+      Warning warning = Warning(0, LandType.castle, 0, '<>', 1);
+      warnings.add(warning);
     }
   }
 

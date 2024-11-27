@@ -10,7 +10,6 @@ import '../models/kingdom.dart';
 import '../models/player.dart';
 import '../models/quests/quest.dart';
 import '../models/score.dart';
-import '../models/warning.dart';
 
 class GameCubit extends Cubit<Game> {
   GameCubit()
@@ -33,14 +32,13 @@ class GameCubit extends Cubit<Game> {
 
     final newScore = Score.calculateFromKingdom(
         kingdom, state.extension, state.selectedQuests);
-    
+
     final updatedPlayers = state.players.map((player) {
       return player.kingColor == currentPlayer.kingColor
-          ? Player(kingColor: player.kingColor, score: newScore, warnings: [])
+          ? player.copyWith(score: newScore)
           : player;
     }).toList();
 
-    // Emit a new game state with the updated players
     emit(state.copyWith(players: updatedPlayers));
   }
 
@@ -87,15 +85,17 @@ class GameCubit extends Cubit<Game> {
     return state.selectedQuests.contains(quest);
   }
 
-  void clearWarnings() {
-    emit(state.copyWith(/*warnings: []*/));
+  void setWarnings(Kingdom kingdom) {
+    final currentPlayer = state.getCurrentPlayer()!;
+
+    final updatedPlayers = state.players.map((player) {
+      return player.kingColor == currentPlayer.kingColor
+          ? player.copyWith(warnings: checkKingdom(kingdom, state.extension))
+          : player;
+    }).toList();
+
+    emit(state.copyWith(players: updatedPlayers));
   }
-
-  void addWarning(Warning warning) =>
-      emit(state.copyWith(/*warnings: [...state.warnings, warning]*/));
-
-  void setWarnings(Kingdom kingdom) => emit(
-      state.copyWith(/*warnings: checkKingdom(kingdom, state.extension)*/));
 
   void setExtension(Extension? extension) =>
       emit(state.copyWith(extension: extension));

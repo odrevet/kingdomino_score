@@ -33,7 +33,7 @@ class _ScoreWidgetState extends State<ScoreWidget> {
 
   @override
   Widget build(BuildContext context) {
-    int score = context.read<GameCubit>().state.score.total;
+    int score = context.read<GameCubit>().state.getCurrentPlayer()!.score.total;
     return GestureDetector(
       onTap: score > 0 ? _cycleDisplayMode : null,
       child: _displayMode == DisplayMode.score || score == 0

@@ -21,8 +21,7 @@ class Kingdom {
     }
   }
 
-  Kingdom copyWith(
-      {KingdomSize? kingdomSize, List<List<Land>>? lands}) {
+  Kingdom copyWith({KingdomSize? kingdomSize, List<List<Land>>? lands}) {
     if (lands == null) {
       var landsCopy = [];
       for (var i = 0; i < this.kingdomSize.size; i++) {
@@ -137,7 +136,6 @@ class Kingdom {
   }
 }
 
-
 List<Warning> checkKingdom(Kingdom kingdom, Extension? extension) {
   var warnings = <Warning>[];
   Map<LandType, Map<String, dynamic>> gameSet = getGameSet(extension);
@@ -153,20 +151,20 @@ List<Warning> checkKingdom(Kingdom kingdom, Extension? extension) {
           .length;
       if (count > gameSet[landType]!['count']) {
         Warning warning =
-        Warning(count, landType, 0, '>', gameSet[landType]!['count']);
+            Warning(count, landType, 0, '>', gameSet[landType]!['count']);
         warnings.add(warning);
       }
 
       //check if too many tile with given crowns
       for (var crownsCounter = 1;
-      crownsCounter <= gameSet[landType]!['crowns']['max'];
-      crownsCounter++) {
+          crownsCounter <= gameSet[landType]!['crowns']['max'];
+          crownsCounter++) {
         var count = kingdom
             .getLands()
             .expand((i) => i)
             .toList()
             .where((land) =>
-        land.landType == landType && land.crowns == crownsCounter)
+                land.landType == landType && land.crowns == crownsCounter)
             .length;
 
         if (count > gameSet[landType]!['crowns'][crownsCounter]) {

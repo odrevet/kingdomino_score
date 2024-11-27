@@ -9,8 +9,7 @@ import '../models/land.dart';
 import '../models/user_selection.dart';
 
 abstract class KingdomCubit extends ReplayCubit<Kingdom> {
-  KingdomCubit()
-      : super(Kingdom(kingdomSize: KingdomSize.small));
+  KingdomCubit() : super(Kingdom(kingdomSize: KingdomSize.small));
 
   clear() => emit(Kingdom(kingdomSize: state.kingdomSize));
 
@@ -113,9 +112,13 @@ abstract class KingdomCubit extends ReplayCubit<Kingdom> {
 }
 
 class KingdomCubitPink extends KingdomCubit {}
+
 class KingdomCubitGreen extends KingdomCubit {}
+
 class KingdomCubitYellow extends KingdomCubit {}
+
 class KingdomCubitBlue extends KingdomCubit {}
+
 class KingdomCubitBrown extends KingdomCubit {}
 
 KingdomCubit getKingdomCubit(BuildContext context, KingColor kingColor) {

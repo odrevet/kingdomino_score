@@ -7,7 +7,6 @@ import 'package:kingdomino_score_count/widgets/warning_widget.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import '../cubits/game_cubit.dart';
-import '../models/extensions/extension.dart';
 import '../models/game.dart';
 import '../models/kingdom.dart';
 import 'kingdom_widget.dart';
@@ -78,33 +77,38 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
               builder: (context, kingdom) {
                 return Scaffold(
                     appBar: KingdominoAppBar(packageInfo: _packageInfo),
-                    floatingActionButton: game.warnings.isEmpty
-                        ? null
-                        : FloatingActionButton(
-                            child: Badge(
-                                label: Text(game.warnings.length.toString()),
-                                child: const Icon(Icons.warning)),
-                            onPressed: () {
-                              showDialog<void>(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    content: WarningsWidget(),
-                                    actions: <Widget>[
-                                      TextButton(
-                                        child: const Icon(
-                                          Icons.done,
-                                          color: Colors.black87,
-                                        ),
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                      ),
-                                    ],
+                    floatingActionButton:
+                        game.getCurrentPlayer()!.warnings.isEmpty
+                            ? null
+                            : FloatingActionButton(
+                                child: Badge(
+                                    label: Text(game
+                                        .getCurrentPlayer()!
+                                        .warnings
+                                        .length
+                                        .toString()),
+                                    child: const Icon(Icons.warning)),
+                                onPressed: () {
+                                  showDialog<void>(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        content: WarningsWidget(),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            child: const Icon(
+                                              Icons.done,
+                                              color: Colors.black87,
+                                            ),
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                        ],
+                                      );
+                                    },
                                   );
-                                },
-                              );
-                            }),
+                                }),
                     body: OrientationBuilder(
                         builder: (orientationBuilderContext, orientation) {
                       if (orientation == Orientation.portrait) {
@@ -138,7 +142,7 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
                                 kingdom: kingdom,
                               ),
                               TileBar(
-                                extension: game.extension ?? Extension.vanilla,
+                                extension: game.extension,
                                 verticalAlign: true,
                               )
                             ]);

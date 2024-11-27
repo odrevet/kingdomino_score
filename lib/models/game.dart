@@ -1,8 +1,7 @@
 import 'dart:collection';
 
+import 'package:kingdomino_score_count/models/player.dart';
 import 'package:kingdomino_score_count/models/quests/quest.dart';
-import 'package:kingdomino_score_count/models/score.dart';
-import 'package:kingdomino_score_count/models/warning.dart';
 
 import 'extensions/extension.dart';
 import 'game_set.dart';
@@ -13,32 +12,38 @@ class Game {
       {this.extension = Extension.vanilla,
       required this.kingdomSize,
       required this.selectedQuests,
-      required this.score,
-      required this.warnings,
+      required this.players,
       this.kingColor});
 
-  KingColor? kingColor;
+  KingColor? kingColor = KingColor.blue;
+  List<Player> players = [];
   KingdomSize kingdomSize = KingdomSize.small;
   HashSet<QuestType> selectedQuests = HashSet();
   Extension extension;
-  Score score;
-  List<Warning> warnings = [];
 
-  HashSet<QuestType> getSelectedQuests() => selectedQuests;
+  Player? getCurrentPlayer() {
+    return kingColor != null
+        ? players.firstWhere((player) => player.kingColor == kingColor)
+        : null;
+  }
 
-  copyWith(
-          {KingColor? kingColor,
-          List<Warning>? warnings,
-          Score? score,
-          KingdomSize? kingdomSize,
-          Extension? extension,
-          HashSet<QuestType>? selectedQuests}) =>
+  // Get player by king color
+  Player getPlayerByColor(KingColor color) {
+    return players.firstWhere((player) => player.kingColor == color);
+  }
+
+  Game copyWith({
+    KingColor? kingColor,
+    KingdomSize? kingdomSize,
+    Extension? extension,
+    List<Player>? players,
+    HashSet<QuestType>? selectedQuests,
+  }) =>
       Game(
         kingColor: kingColor ?? this.kingColor,
-        score: score ?? this.score,
-        warnings: warnings ?? this.warnings,
         kingdomSize: kingdomSize ?? this.kingdomSize,
         extension: extension ?? this.extension,
         selectedQuests: selectedQuests ?? this.selectedQuests,
+        players: players ?? this.players,
       );
 }

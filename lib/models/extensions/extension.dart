@@ -4,5 +4,6 @@ enum Extension {
   laCour('La Cour');
 
   final String displayName;
+
   const Extension(this.displayName);
 }

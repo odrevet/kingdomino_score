@@ -5,7 +5,6 @@ import 'package:kingdomino_score_count/cubits/kingdom_cubit.dart';
 import 'package:kingdomino_score_count/cubits/theme_cubit.dart';
 
 import '../cubits/user_selection_cubit.dart';
-import '../models/game_set.dart';
 import 'kingdomino_widget.dart';
 
 class KingdominoApp extends StatelessWidget {
@@ -42,8 +41,7 @@ class KingdominoApp extends StatelessWidget {
               BlocProvider<KingdomCubitGreen>(
                   create: (BuildContext context) => KingdomCubitGreen()),
               BlocProvider<KingdomCubitBlue>(
-                  create: (BuildContext context) =>
-                      KingdomCubitBlue()),
+                  create: (BuildContext context) => KingdomCubitBlue()),
               BlocProvider<KingdomCubitBrown>(
                   create: (BuildContext context) => KingdomCubitBrown()),
               // ignore: prefer_const_constructors

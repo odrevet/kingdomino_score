@@ -7,6 +7,7 @@ import '../models/extensions/extension.dart';
 import '../models/game.dart';
 import '../models/game_set.dart';
 import '../models/kingdom.dart';
+import '../models/player.dart';
 import '../models/quests/quest.dart';
 import '../models/score.dart';
 import '../models/warning.dart';
@@ -17,23 +18,38 @@ class GameCubit extends Cubit<Game> {
             kingColor: KingColor.blue,
             kingdomSize: KingdomSize.small,
             selectedQuests: HashSet(),
-            warnings: [],
-            score: Score())) {
+            players: [
+              Player(score: Score(), warnings: [], kingColor: KingColor.blue),
+              Player(score: Score(), warnings: [], kingColor: KingColor.green),
+              Player(score: Score(), warnings: [], kingColor: KingColor.yellow),
+              Player(score: Score(), warnings: [], kingColor: KingColor.pink),
+              Player(score: Score(), warnings: [], kingColor: KingColor.brown),
+            ])) {
     setPlayer(KingColor.blue);
   }
 
   void calculateScore(Kingdom kingdom) {
+    final currentPlayer = state.getCurrentPlayer()!;
+
     final newScore = Score.calculateFromKingdom(
-        kingdom, state.extension, state.getSelectedQuests());
-    emit(state.copyWith(score: newScore));
+        kingdom, state.extension, state.selectedQuests);
+    
+    final updatedPlayers = state.players.map((player) {
+      return player.kingColor == currentPlayer.kingColor
+          ? Player(kingColor: player.kingColor, score: newScore, warnings: [])
+          : player;
+    }).toList();
+
+    // Emit a new game state with the updated players
+    emit(state.copyWith(players: updatedPlayers));
   }
 
   void reset() => emit(Game(
-      kingColor: KingColor.blue,
-      kingdomSize: KingdomSize.small,
-      warnings: [],
-      selectedQuests: HashSet(),
-      score: Score()));
+        kingColor: KingColor.blue,
+        kingdomSize: KingdomSize.small,
+        selectedQuests: HashSet(),
+        players: [],
+      ));
 
   void setPlayer(KingColor kingColor) {
     emit(state.copyWith(kingColor: kingColor));
@@ -72,14 +88,14 @@ class GameCubit extends Cubit<Game> {
   }
 
   void clearWarnings() {
-    emit(state.copyWith(warnings: []));
+    emit(state.copyWith(/*warnings: []*/));
   }
 
   void addWarning(Warning warning) =>
-      emit(state.copyWith(warnings: [...state.warnings, warning]));
+      emit(state.copyWith(/*warnings: [...state.warnings, warning]*/));
 
-  void setWarnings(Kingdom kingdom) =>
-      emit(state.copyWith(warnings: checkKingdom(kingdom, state.extension)));
+  void setWarnings(Kingdom kingdom) => emit(
+      state.copyWith(/*warnings: checkKingdom(kingdom, state.extension)*/));
 
   void setExtension(Extension? extension) =>
       emit(state.copyWith(extension: extension));

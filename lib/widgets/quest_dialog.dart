@@ -45,12 +45,12 @@ class _QuestDialogOptionState extends State<_QuestDialogOption> {
               child: child,
               onPressed: () {
                 context.read<GameCubit>().toggleQuest(widget.questType);
-                context
-                    .read<GameCubit>()
-                    .setWarnings(getKingdomCubit(context, context.read<GameCubit>().state.kingColor!).state);
-                context
-                    .read<GameCubit>()
-                    .calculateScore(getKingdomCubit(context, context.read<GameCubit>().state.kingColor!).state);
+                context.read<GameCubit>().setWarnings(getKingdomCubit(
+                        context, context.read<GameCubit>().state.kingColor!)
+                    .state);
+                context.read<GameCubit>().calculateScore(getKingdomCubit(
+                        context, context.read<GameCubit>().state.kingColor!)
+                    .state);
               },
             );
           },
@@ -100,19 +100,16 @@ class _QuestDialogWidgetState extends State<QuestDialogWidget> {
 
     return Badge(
         isLabelVisible:
-            context.read<GameCubit>().state.getSelectedQuests().isNotEmpty,
-        label: Text(context
-            .read<GameCubit>()
-            .state
-            .getSelectedQuests()
-            .length
-            .toString()),
+            context.read<GameCubit>().state.selectedQuests.isNotEmpty,
+        label: Text(
+            context.read<GameCubit>().state.selectedQuests.length.toString()),
         child: IconButton(
             icon: const Icon(Icons.shield),
             onPressed: () => showDialog(
                   context: context,
                   builder: (BuildContext dialogContext) => Provider.value(
-                    value: Provider.of<KingdomCubitBlue>(context, listen: false),
+                    value:
+                        Provider.of<KingdomCubitBlue>(context, listen: false),
                     child: Provider.value(
                         value: Provider.of<GameCubit>(context, listen: false),
                         child: dialog),

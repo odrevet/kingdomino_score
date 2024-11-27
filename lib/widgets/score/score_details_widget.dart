@@ -14,7 +14,10 @@ class ScoreDetailsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var properties = getKingdomCubit(context, context.read<GameCubit>().state.kingColor!).state.getProperties();
+    var properties =
+        getKingdomCubit(context, context.read<GameCubit>().state.kingColor!)
+            .state
+            .getProperties();
 
     Widget content;
 
@@ -65,7 +68,7 @@ class ScoreDetailsWidget extends StatelessWidget {
     }
 
     //quests points
-    if (context.read<GameCubit>().state.getSelectedQuests().isNotEmpty) {
+    if (context.read<GameCubit>().state.selectedQuests.isNotEmpty) {
       var tableCells = <TableCell>[];
 
       tableCells.add(const TableCell(child: Text('')));
@@ -85,7 +88,13 @@ class ScoreDetailsWidget extends StatelessWidget {
           child: Align(
               alignment: Alignment.center,
               child: Text(
-                context.read<GameCubit>().state.score.scoreQuest.toString(),
+                context
+                    .read<GameCubit>()
+                    .state
+                    .getCurrentPlayer()!
+                    .score
+                    .scoreQuest
+                    .toString(),
               ))));
 
       var tableRow = TableRow(children: tableCells);
@@ -118,6 +127,7 @@ class ScoreDetailsWidget extends StatelessWidget {
               child: Text(context
                   .read<GameCubit>()
                   .state
+                  .getCurrentPlayer()!
                   .score
                   .scoreLacour
                   .toString()))));
@@ -127,7 +137,8 @@ class ScoreDetailsWidget extends StatelessWidget {
     }
 
     //SUM
-    if (context.read<GameCubit>().state.score.total > 0 && showTotal == true) {
+    if (context.read<GameCubit>().state.getCurrentPlayer()!.score.total > 0 &&
+        showTotal == true) {
       var tableCells = <TableCell>[];
 
       tableCells.add(const TableCell(child: Text('')));
@@ -155,8 +166,13 @@ class ScoreDetailsWidget extends StatelessWidget {
       tableCellsTotal.add(TableCell(
           child: Align(
               alignment: Alignment.center,
-              child: Text(
-                  context.read<GameCubit>().state.score.total.toString()))));
+              child: Text(context
+                  .read<GameCubit>()
+                  .state
+                  .getCurrentPlayer()!
+                  .score
+                  .total
+                  .toString()))));
 
       var tableRowTotal = TableRow(children: tableCellsTotal);
       tableRows.add(tableRowTotal);

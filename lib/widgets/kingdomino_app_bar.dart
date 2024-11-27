@@ -43,10 +43,9 @@ class _KingdominoAppBarState extends State<KingdominoAppBar> {
             bool hasBrownKing = context.read<GameCubit>().state.extension ==
                 Extension.ageOfGiants;
 
-            /*if (kingColor == KingColor.brown && !hasBrownKing) {
+            if (kingColor == KingColor.brown && !hasBrownKing) {
               context.read<GameCubit>().setPlayer(KingColor.blue);
-              currentPlayer = KingColor.blue;
-            }*/
+            }
 
             var actions = <Widget>[
               DropdownButton<KingColor>(

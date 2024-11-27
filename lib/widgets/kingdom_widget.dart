@@ -17,8 +17,7 @@ import 'tile/land_tile.dart';
 class KingdomWidget extends StatefulWidget {
   final Kingdom kingdom;
 
-  const KingdomWidget(
-      {required this.kingdom, super.key});
+  const KingdomWidget({required this.kingdom, super.key});
 
   @override
   State<KingdomWidget> createState() => _KingdomWidgetState();
@@ -97,7 +96,8 @@ class _KingdomWidgetState extends State<KingdomWidget> {
   }
 
   Widget _buildLands(BuildContext context, int index) {
-    var kingdomCubit = getKingdomCubit(context, context.read<GameCubit>().state.kingColor!);
+    var kingdomCubit =
+        getKingdomCubit(context, context.read<GameCubit>().state.kingColor!);
 
     var kingdom = kingdomCubit.state;
     int gridStateLength = kingdom.getLands().length;
@@ -122,7 +122,9 @@ class _KingdomWidgetState extends State<KingdomWidget> {
                 context.read<UserSelectionCubit>().state.getSelectionMode(),
                 context.read<UserSelectionCubit>().state.selectedCourtier,
                 context.read<GameCubit>().state.extension);
-            context.read<GameCubit>().setWarnings(getKingdomCubit(context, context.read<GameCubit>().state.kingColor!).state);
+            context.read<GameCubit>().setWarnings(getKingdomCubit(
+                    context, context.read<GameCubit>().state.kingColor!)
+                .state);
           }
         },
         child: GridTile(

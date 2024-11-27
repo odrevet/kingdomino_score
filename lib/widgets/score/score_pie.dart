@@ -11,7 +11,10 @@ class ScorePie extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var properties = getKingdomCubit(context, context.read<GameCubit>().state.kingColor!).state.getProperties();
+    var properties =
+        getKingdomCubit(context, context.read<GameCubit>().state.kingColor!)
+            .state
+            .getProperties();
     var landScore = <LandType, double>{};
 
     // Summing up scores by land type
@@ -50,7 +53,13 @@ class ScorePie extends StatelessWidget {
       centerWidget: Container(
         color: Colors.white.withOpacity(0.5),
         child: Text(
-          context.read<GameCubit>().state.score.total.toString(),
+          context
+              .read<GameCubit>()
+              .state
+              .getCurrentPlayer()!
+              .score
+              .total
+              .toString(),
           style: const TextStyle(color: Colors.black),
         ),
       ),

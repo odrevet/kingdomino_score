@@ -100,23 +100,6 @@ class _KingdominoAppBarState extends State<KingdominoAppBar> {
                   elevation: 16,
                   underline: Container(height: 1, color: Colors.white),
                   onChanged: (value) {
-                    kingdom
-                        .getLands()
-                        .expand((i) => i)
-                        .toList()
-                        .forEach((land) {
-                      land.hasResource = false;
-                      land.courtier = null;
-                    });
-
-                    kingdom
-                        .getLands()
-                        .expand((i) => i)
-                        .toList()
-                        .forEach((land) {
-                      land.giants = 0;
-                    });
-
                     context.read<GameCubit>().setExtension(value);
                     context
                         .read<UserSelectionCubit>()
@@ -144,7 +127,10 @@ class _KingdominoAppBarState extends State<KingdominoAppBar> {
                         .clearHistory();
                     context.read<GameCubit>().clearQuest();
                     context.read<GameCubit>().setWarnings(kingdom);
-                    context.read<GameCubit>().calculateScore(kingdom);
+
+                    for (KingColor kingColor in KingColor.values) {
+                      getKingdomCubit(context, kingColor).clearExtension();
+                    }
                   },
                   items: <Extension>[
                     Extension.vanilla,

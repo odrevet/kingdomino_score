@@ -27,14 +27,12 @@ class GameCubit extends Cubit<Game> {
     setPlayer(KingColor.blue);
   }
 
-  void calculateScore(Kingdom kingdom) {
-    final currentPlayer = state.getCurrentPlayer()!;
-
+  void calculateScore(KingColor kingColor, Kingdom kingdom) {
     final newScore = Score.calculateFromKingdom(
         kingdom, state.extension, state.selectedQuests);
 
     final updatedPlayers = state.players.map((player) {
-      return player.kingColor == currentPlayer.kingColor
+      return player.kingColor == kingColor
           ? player.copyWith(score: newScore)
           : player;
     }).toList();

@@ -48,9 +48,9 @@ class _QuestDialogOptionState extends State<_QuestDialogOption> {
                 context.read<GameCubit>().setWarnings(getKingdomCubit(
                         context, context.read<GameCubit>().state.kingColor!)
                     .state);
-                context.read<GameCubit>().calculateScore(getKingdomCubit(
+                /*context.read<GameCubit>().calculateScore(getKingdomCubit(
                         context, context.read<GameCubit>().state.kingColor!)
-                    .state);
+                    .state);*/
               },
             );
           },

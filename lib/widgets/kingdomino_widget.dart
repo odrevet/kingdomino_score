@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kingdomino_score_count/cubits/kingdom_cubit.dart';
+import 'package:kingdomino_score_count/models/game_set.dart';
 import 'package:kingdomino_score_count/widgets/kingdomino_app_bar.dart';
 import 'package:kingdomino_score_count/widgets/score/score_widget.dart';
 import 'package:kingdomino_score_count/widgets/warning_widget.dart';
@@ -51,21 +52,21 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
         listeners: [
           BlocListener<KingdomCubitGreen, Kingdom>(
               listener: (context, kingdom) {
-            context.read<GameCubit>().calculateScore(kingdom);
+            context.read<GameCubit>().calculateScore(KingColor.green, kingdom);
           }),
           BlocListener<KingdomCubitPink, Kingdom>(listener: (context, kingdom) {
-            context.read<GameCubit>().calculateScore(kingdom);
+            context.read<GameCubit>().calculateScore(KingColor.pink, kingdom);
           }),
           BlocListener<KingdomCubitYellow, Kingdom>(
               listener: (context, kingdom) {
-            context.read<GameCubit>().calculateScore(kingdom);
+            context.read<GameCubit>().calculateScore(KingColor.yellow, kingdom);
           }),
           BlocListener<KingdomCubitBlue, Kingdom>(listener: (context, kingdom) {
-            context.read<GameCubit>().calculateScore(kingdom);
+            context.read<GameCubit>().calculateScore(KingColor.blue, kingdom);
           }),
           BlocListener<KingdomCubitBrown, Kingdom>(
               listener: (context, kingdom) {
-            context.read<GameCubit>().calculateScore(kingdom);
+            context.read<GameCubit>().calculateScore(KingColor.brown, kingdom);
           })
         ],
         child: BlocBuilder<GameCubit, Game>(builder: (context, game) {

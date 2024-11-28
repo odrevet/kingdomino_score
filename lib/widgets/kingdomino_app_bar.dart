@@ -58,18 +58,23 @@ class _KingdominoAppBarState extends State<KingdominoAppBar> {
                 items: KingColor.values
                     .where(
                         (player) => player != KingColor.brown || hasBrownKing)
-                    .map<DropdownMenuItem<KingColor>>((KingColor player) {
+                    .map<DropdownMenuItem<KingColor>>((KingColor kingColor) {
                   return DropdownMenuItem<KingColor>(
-                    value: player,
+                    value: kingColor,
                     child: ColorFiltered(
                       colorFilter: ColorFilter.mode(
-                        player.color,
+                        kingColor.color,
                         BlendMode.srcATop,
                       ),
-                      child: Image.asset(
-                        'assets/king_pawn.png',
-                        height: 25,
-                        width: 25,
+                      child: Row(
+                        children: [
+                          Image.asset(
+                            'assets/king_pawn.png',
+                            height: 25,
+                            width: 25,
+                          ),
+                          Text(context.read<GameCubit>().state.getPlayerByColor(kingColor).score.total.toString())
+                        ],
                       ),
                     ),
                   );

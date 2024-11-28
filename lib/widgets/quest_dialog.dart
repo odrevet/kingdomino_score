@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import '../cubits/game_cubit.dart';
 import '../cubits/theme_cubit.dart';
 import '../models/game.dart';
+import '../models/game_set.dart';
 import 'highlight_box.dart';
 
 class _QuestDialogOption extends StatefulWidget {
@@ -45,11 +46,12 @@ class _QuestDialogOptionState extends State<_QuestDialogOption> {
               child: child,
               onPressed: () {
                 context.read<GameCubit>().toggleQuest(widget.questType);
-                context.read<GameCubit>().calculateScore(
-                    context.read<GameCubit>().state.kingColor!,
-                    getKingdomCubit(
-                            context, context.read<GameCubit>().state.kingColor!)
-                        .state);
+                for (final kingColor in KingColor.values) {
+                  context.read<GameCubit>().calculateScore(
+                      kingColor,
+                      getKingdomCubit(context, kingColor).state
+                  );
+                }
               },
             );
           },
@@ -99,20 +101,36 @@ class _QuestDialogWidgetState extends State<QuestDialogWidget> {
 
     return Badge(
         isLabelVisible:
-            context.read<GameCubit>().state.selectedQuests.isNotEmpty,
+        context.read<GameCubit>().state.selectedQuests.isNotEmpty,
         label: Text(
             context.read<GameCubit>().state.selectedQuests.length.toString()),
         child: IconButton(
             icon: const Icon(Icons.shield),
             onPressed: () => showDialog(
-                  context: context,
-                  builder: (BuildContext dialogContext) => Provider.value(
-                    value:
-                        Provider.of<KingdomCubitBlue>(context, listen: false),
-                    child: Provider.value(
-                        value: Provider.of<GameCubit>(context, listen: false),
-                        child: dialog),
+              context: context,
+              builder: (BuildContext dialogContext) => MultiProvider(
+                providers: [
+                  Provider.value(
+                    value: Provider.of<KingdomCubitPink>(context, listen: false),
                   ),
-                )));
+                  Provider.value(
+                    value: Provider.of<KingdomCubitYellow>(context, listen: false),
+                  ),
+                  Provider.value(
+                    value: Provider.of<KingdomCubitGreen>(context, listen: false),
+                  ),
+                  Provider.value(
+                    value: Provider.of<KingdomCubitBlue>(context, listen: false),
+                  ),
+                  Provider.value(
+                    value: Provider.of<KingdomCubitBrown>(context, listen: false),
+                  ),
+                  Provider.value(
+                    value: Provider.of<GameCubit>(context, listen: false),
+                  ),
+                ],
+                child: dialog,
+              ),
+            )));
   }
 }

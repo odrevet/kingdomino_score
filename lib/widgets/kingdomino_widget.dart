@@ -8,8 +8,10 @@ import 'package:kingdomino_score_count/widgets/warning_widget.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 import '../cubits/game_cubit.dart';
+import '../cubits/rules_cubit.dart';
 import '../models/game.dart';
 import '../models/kingdom.dart';
+import '../models/rules.dart';
 import 'kingdom_widget.dart';
 import 'tile/tile_bar.dart';
 
@@ -52,104 +54,111 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
         listeners: [
           BlocListener<KingdomCubitGreen, Kingdom>(
               listener: (context, kingdom) {
-            context.read<GameCubit>().calculateScore(KingColor.green, kingdom);
+            context.read<GameCubit>().calculateScore(
+                KingColor.green, kingdom, context.read<RulesCubit>().state);
           }),
           BlocListener<KingdomCubitPink, Kingdom>(listener: (context, kingdom) {
-            context.read<GameCubit>().calculateScore(KingColor.pink, kingdom);
+            context.read<GameCubit>().calculateScore(
+                KingColor.pink, kingdom, context.read<RulesCubit>().state);
           }),
           BlocListener<KingdomCubitYellow, Kingdom>(
               listener: (context, kingdom) {
-            context.read<GameCubit>().calculateScore(KingColor.yellow, kingdom);
+            context.read<GameCubit>().calculateScore(
+                KingColor.yellow, kingdom, context.read<RulesCubit>().state);
           }),
           BlocListener<KingdomCubitBlue, Kingdom>(listener: (context, kingdom) {
-            context.read<GameCubit>().calculateScore(KingColor.blue, kingdom);
+            context.read<GameCubit>().calculateScore(
+                KingColor.blue, kingdom, context.read<RulesCubit>().state);
           }),
           BlocListener<KingdomCubitBrown, Kingdom>(
               listener: (context, kingdom) {
-            context.read<GameCubit>().calculateScore(KingColor.brown, kingdom);
+            context.read<GameCubit>().calculateScore(
+                KingColor.brown, kingdom, context.read<RulesCubit>().state);
           })
         ],
-        child: BlocBuilder<GameCubit, Game>(builder: (context, game) {
-          final kingColor = game.kingColor;
-          final kingdomCubit = getKingdomCubit(context, kingColor!);
+        child: BlocBuilder<RulesCubit, Rules>(builder: (context, rules) {
+          return BlocBuilder<GameCubit, Game>(builder: (context, game) {
+            final kingColor = game.kingColor;
+            final kingdomCubit = getKingdomCubit(context, kingColor!);
 
-          return BlocBuilder<KingdomCubit, Kingdom>(
-              bloc: kingdomCubit,
-              builder: (context, kingdom) {
-                return Scaffold(
-                    appBar: KingdominoAppBar(packageInfo: _packageInfo),
-                    floatingActionButton:
-                        game.getCurrentPlayer()!.warnings.isEmpty
-                            ? null
-                            : FloatingActionButton(
-                                child: Badge(
-                                    label: Text(game
-                                        .getCurrentPlayer()!
-                                        .warnings
-                                        .length
-                                        .toString()),
-                                    child: const Icon(Icons.warning)),
-                                onPressed: () {
-                                  showDialog<void>(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return AlertDialog(
-                                        content: WarningsWidget(),
-                                        actions: <Widget>[
-                                          TextButton(
-                                            child: const Icon(
-                                              Icons.done,
-                                              color: Colors.black87,
+            return BlocBuilder<KingdomCubit, Kingdom>(
+                bloc: kingdomCubit,
+                builder: (context, kingdom) {
+                  return Scaffold(
+                      appBar: KingdominoAppBar(packageInfo: _packageInfo),
+                      floatingActionButton:
+                          game.getCurrentPlayer()!.warnings.isEmpty
+                              ? null
+                              : FloatingActionButton(
+                                  child: Badge(
+                                      label: Text(game
+                                          .getCurrentPlayer()!
+                                          .warnings
+                                          .length
+                                          .toString()),
+                                      child: const Icon(Icons.warning)),
+                                  onPressed: () {
+                                    showDialog<void>(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          content: WarningsWidget(),
+                                          actions: <Widget>[
+                                            TextButton(
+                                              child: const Icon(
+                                                Icons.done,
+                                                color: Colors.black87,
+                                              ),
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
                                             ),
-                                            onPressed: () {
-                                              Navigator.of(context).pop();
-                                            },
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  );
-                                }),
-                    body: OrientationBuilder(
-                        builder: (orientationBuilderContext, orientation) {
-                      if (orientation == Orientation.portrait) {
-                        return Column(children: <Widget>[
-                          // ignore: prefer_const_constructors
-                          Expanded(
-                            flex: 4,
+                                          ],
+                                        );
+                                      },
+                                    );
+                                  }),
+                      body: OrientationBuilder(
+                          builder: (orientationBuilderContext, orientation) {
+                        if (orientation == Orientation.portrait) {
+                          return Column(children: <Widget>[
                             // ignore: prefer_const_constructors
-                            child: ScoreWidget(),
-                          ),
-                          Expanded(
-                            flex: 5,
-                            child: KingdomWidget(
-                              kingdom: kingdom,
-                            ),
-                          ),
-                          TileBar(
-                            extension: game.extension,
-                            verticalAlign: false,
-                          ),
-                        ]);
-                      } else {
-                        return Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: <Widget>[
+                            Expanded(
+                              flex: 4,
                               // ignore: prefer_const_constructors
-                              Expanded(
-                                child: ScoreWidget(),
-                              ),
-                              KingdomWidget(
+                              child: ScoreWidget(),
+                            ),
+                            Expanded(
+                              flex: 5,
+                              child: KingdomWidget(
                                 kingdom: kingdom,
                               ),
-                              TileBar(
-                                extension: game.extension,
-                                verticalAlign: true,
-                              )
-                            ]);
-                      }
-                    }));
-              });
+                            ),
+                            TileBar(
+                              extension: rules.extension,
+                              verticalAlign: false,
+                            ),
+                          ]);
+                        } else {
+                          return Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: <Widget>[
+                                // ignore: prefer_const_constructors
+                                Expanded(
+                                  child: ScoreWidget(),
+                                ),
+                                KingdomWidget(
+                                  kingdom: kingdom,
+                                ),
+                                TileBar(
+                                  extension: rules.extension,
+                                  verticalAlign: true,
+                                )
+                              ]);
+                        }
+                      }));
+                });
+          });
         }));
   }
 }

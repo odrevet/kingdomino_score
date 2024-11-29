@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kingdomino_score_count/cubits/game_cubit.dart';
+import 'package:kingdomino_score_count/cubits/rules_cubit.dart';
 import 'package:kingdomino_score_count/cubits/user_selection_cubit.dart';
 import 'package:kingdomino_score_count/models/extensions/extension.dart';
 
@@ -69,10 +69,10 @@ class _TileBarState extends State<TileBar> {
       CrownButton(buttonSize: _buttonSize, onSelectCrown: _onSelectCrown),
     ];
 
-    if (context.read<GameCubit>().state.extension == Extension.ageOfGiants) {
+    if (context.read<RulesCubit>().state.extension == Extension.ageOfGiants) {
       kingdomEditorWidgets.add(
           GiantButton(buttonSize: _buttonSize, onSelectGiant: _onSelectGiant));
-    } else if (context.read<GameCubit>().state.extension == Extension.laCour) {
+    } else if (context.read<RulesCubit>().state.extension == Extension.laCour) {
       kingdomEditorWidgets.add(ResourceButton(
         buttonSize: _buttonSize,
       ));

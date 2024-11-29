@@ -15,13 +15,9 @@ abstract class KingdomCubit extends ReplayCubit<Kingdom> {
 
   resize(KingdomSize kingdomSize) => emit(Kingdom(kingdomSize: kingdomSize));
 
-  clearExtension(){
+  clearExtension() {
     var kingdom = state.copyWith();
-    kingdom
-        .getLands()
-        .expand((i) => i)
-        .toList()
-        .forEach((land) {
+    kingdom.getLands().expand((i) => i).toList().forEach((land) {
       land.giants = 0;
       land.hasResource = false;
       land.courtier = null;

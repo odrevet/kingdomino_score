@@ -6,6 +6,7 @@ import 'package:kingdomino_score_count/cubits/kingdom_cubit.dart';
 import 'package:kingdomino_score_count/widgets/quest_dialog.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
+import '../cubits/rules_cubit.dart';
 import '../cubits/user_selection_cubit.dart';
 import '../models/extensions/age_of_giants.dart';
 import '../models/extensions/extension.dart';
@@ -13,6 +14,7 @@ import '../models/game.dart';
 import '../models/game_set.dart';
 import '../models/kingdom.dart';
 import '../models/kingdom_size.dart';
+import '../models/rules.dart';
 import '../models/user_selection.dart';
 
 class KingdominoAppBar extends StatefulWidget implements PreferredSizeWidget {
@@ -40,7 +42,7 @@ class _KingdominoAppBarState extends State<KingdominoAppBar> {
       return BlocBuilder<KingdomCubit, Kingdom>(
           bloc: kingdomCubit,
           builder: (context, kingdom) {
-            bool hasBrownKing = context.read<GameCubit>().state.extension ==
+            bool hasBrownKing = context.read<RulesCubit>().state.extension ==
                 Extension.ageOfGiants;
 
             if (kingColor == KingColor.brown && !hasBrownKing) {
@@ -73,7 +75,13 @@ class _KingdominoAppBarState extends State<KingdominoAppBar> {
                             height: 25,
                             width: 25,
                           ),
-                          Text(context.read<GameCubit>().state.getPlayerByColor(kingColor).score.total.toString())
+                          Text(context
+                              .read<GameCubit>()
+                              .state
+                              .getPlayerByColor(kingColor)
+                              .score
+                              .total
+                              .toString())
                         ],
                       ),
                     ),
@@ -84,7 +92,8 @@ class _KingdominoAppBarState extends State<KingdominoAppBar> {
                   onPressed: kingdomCubit.canUndo
                       ? () {
                           kingdomCubit.undo();
-                          context.read<GameCubit>().setWarnings(kingdom);
+                          context.read<GameCubit>().setWarnings(
+                              kingdom, context.read<RulesCubit>().state);
                         }
                       : null,
                   icon: const Icon(Icons.undo)),
@@ -92,20 +101,21 @@ class _KingdominoAppBarState extends State<KingdominoAppBar> {
                   onPressed: kingdomCubit.canRedo
                       ? () {
                           getKingdomCubit(context, kingColor).redo();
-                          context.read<GameCubit>().setWarnings(kingdom);
+                          context.read<GameCubit>().setWarnings(
+                              kingdom, context.read<RulesCubit>().state);
                         }
                       : null,
                   icon: const Icon(Icons.redo)),
               // Extension Selector
-              BlocBuilder<GameCubit, Game>(builder: (context, game) {
+              BlocBuilder<RulesCubit, Rules>(builder: (context, rules) {
                 return DropdownButton<Extension>(
-                  value: game.extension,
+                  value: rules.extension,
                   icon: const Icon(Icons.extension, color: Colors.white),
                   iconSize: 25,
                   elevation: 16,
                   underline: Container(height: 1, color: Colors.white),
                   onChanged: (value) {
-                    context.read<GameCubit>().setExtension(value);
+                    context.read<RulesCubit>().setExtension(value);
                     context
                         .read<UserSelectionCubit>()
                         .updateSelection(SelectionMode.land, null);
@@ -130,8 +140,10 @@ class _KingdominoAppBarState extends State<KingdominoAppBar> {
                     getKingdomCubit(
                             context, context.read<GameCubit>().state.kingColor!)
                         .clearHistory();
-                    context.read<GameCubit>().clearQuest();
-                    context.read<GameCubit>().setWarnings(kingdom);
+                    context.read<RulesCubit>().clearQuest();
+                    context
+                        .read<GameCubit>()
+                        .setWarnings(kingdom, context.read<RulesCubit>().state);
 
                     for (KingColor kingColor in KingColor.values) {
                       getKingdomCubit(context, kingColor).clearExtension();
@@ -173,9 +185,11 @@ class _KingdominoAppBarState extends State<KingdominoAppBar> {
                         .resize(kingdom.kingdomSize == KingdomSize.small
                             ? KingdomSize.large
                             : KingdomSize.small);
-                    context.read<GameCubit>().setWarnings(getKingdomCubit(
-                            context, context.read<GameCubit>().state.kingColor!)
-                        .state);
+                    context.read<GameCubit>().setWarnings(
+                        getKingdomCubit(context,
+                                context.read<GameCubit>().state.kingColor!)
+                            .state,
+                        context.read<RulesCubit>().state);
                   }),
               IconButton(
                   icon: const Icon(Icons.delete),
@@ -183,9 +197,11 @@ class _KingdominoAppBarState extends State<KingdominoAppBar> {
                     getKingdomCubit(
                             context, context.read<GameCubit>().state.kingColor!)
                         .clear();
-                    context.read<GameCubit>().setWarnings(getKingdomCubit(
-                            context, context.read<GameCubit>().state.kingColor!)
-                        .state);
+                    context.read<GameCubit>().setWarnings(
+                        getKingdomCubit(context,
+                                context.read<GameCubit>().state.kingColor!)
+                            .state,
+                        context.read<RulesCubit>().state);
                   }),
               IconButton(
                   icon: const Icon(Icons.help),

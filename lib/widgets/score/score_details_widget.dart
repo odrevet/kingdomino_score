@@ -5,6 +5,7 @@ import 'package:kingdomino_score_count/widgets/tile/land_tile.dart';
 
 import '../../cubits/game_cubit.dart';
 import '../../cubits/kingdom_cubit.dart';
+import '../../cubits/rules_cubit.dart';
 import '../kingdomino_widget.dart';
 
 class ScoreDetailsWidget extends StatelessWidget {
@@ -68,7 +69,7 @@ class ScoreDetailsWidget extends StatelessWidget {
     }
 
     //quests points
-    if (context.read<GameCubit>().state.selectedQuests.isNotEmpty) {
+    if (context.read<RulesCubit>().state.selectedQuests.isNotEmpty) {
       var tableCells = <TableCell>[];
 
       tableCells.add(const TableCell(child: Text('')));
@@ -101,7 +102,7 @@ class ScoreDetailsWidget extends StatelessWidget {
       tableRows.add(tableRow);
     }
 
-    if (context.read<GameCubit>().state.extension == Extension.laCour) {
+    if (context.read<RulesCubit>().state.extension == Extension.laCour) {
       var tableCells = <TableCell>[];
 
       tableCells.add(const TableCell(child: Text('')));

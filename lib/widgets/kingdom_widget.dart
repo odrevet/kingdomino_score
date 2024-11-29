@@ -4,6 +4,7 @@ import 'package:kingdomino_score_count/cubits/game_cubit.dart';
 import 'package:kingdomino_score_count/cubits/theme_cubit.dart';
 
 import '../cubits/kingdom_cubit.dart';
+import '../cubits/rules_cubit.dart';
 import '../cubits/user_selection_cubit.dart';
 import '../models/extensions/age_of_giants.dart';
 import '../models/extensions/lacour/lacour.dart';
@@ -121,10 +122,12 @@ class _KingdomWidgetState extends State<KingdomWidget> {
                 selectedLandType,
                 context.read<UserSelectionCubit>().state.getSelectionMode(),
                 context.read<UserSelectionCubit>().state.selectedCourtier,
-                context.read<GameCubit>().state.extension);
-            context.read<GameCubit>().setWarnings(getKingdomCubit(
-                    context, context.read<GameCubit>().state.kingColor!)
-                .state);
+                context.read<RulesCubit>().state.extension);
+            context.read<GameCubit>().setWarnings(
+                getKingdomCubit(
+                        context, context.read<GameCubit>().state.kingColor!)
+                    .state,
+                context.read<RulesCubit>().state);
           }
         },
         child: GridTile(

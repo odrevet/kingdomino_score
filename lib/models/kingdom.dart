@@ -175,23 +175,25 @@ List<Warning> checkKingdom(Kingdom kingdom, Extension? extension) {
         }
       }
     }
+  }
 
-    // Check if kingdom has castle (when less than a blank tile in board)
-    var countEmptyTile = kingdom
-        .getLands()
-        .expand((i) => i)
-        .toList()
-        .where((land) => land.landType == LandType.empty)
-        .length;
+  // Check if kingdom has castle (when less than a blank tile in board)
+  var countEmptyTile = kingdom
+      .getLands()
+      .expand((i) => i)
+      .toList()
+      .where((land) => land.landType == LandType.empty)
+      .length;
 
+  if (countEmptyTile <= 1) {
     var noCastle = kingdom
         .getLands()
         .expand((i) => i)
         .toList()
         .where((land) => land.landType == LandType.castle)
         .isEmpty;
-    if (countEmptyTile <= 1 && noCastle) {
-      Warning warning = Warning(0, LandType.castle, 0, '<>', 1);
+    if (noCastle) {
+      Warning warning = Warning(0, LandType.castle, 0, '≠', 1);
       warnings.add(warning);
     }
   }

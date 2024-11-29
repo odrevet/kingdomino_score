@@ -137,16 +137,15 @@ class _KingdominoAppBarState extends State<KingdominoAppBar> {
                           .setSelectionMode(SelectionMode.crown);
                     }
 
-                    getKingdomCubit(
-                            context, context.read<GameCubit>().state.kingColor!)
-                        .clearHistory();
                     context.read<RulesCubit>().clearQuest();
                     context
                         .read<GameCubit>()
                         .setWarnings(kingdom, context.read<RulesCubit>().state);
 
                     for (KingColor kingColor in KingColor.values) {
-                      getKingdomCubit(context, kingColor).clearExtension();
+                      KingdomCubit kingdomCubit = getKingdomCubit(context, kingColor);
+                      kingdomCubit.clearExtension();
+                      kingdomCubit.clearHistory();
                     }
                   },
                   items: <Extension>[

@@ -10,22 +10,20 @@ import '../models/score.dart';
 class GameCubit extends Cubit<Game> {
   GameCubit()
       : super(Game(kingColor: KingColor.blue, players: [
-          Player(score: Score(), warnings: [], kingColor: KingColor.blue),
-          Player(score: Score(), warnings: [], kingColor: KingColor.green),
-          Player(score: Score(), warnings: [], kingColor: KingColor.yellow),
-          Player(score: Score(), warnings: [], kingColor: KingColor.pink),
-          Player(score: Score(), warnings: [], kingColor: KingColor.brown),
+          Player(score: Score(scoreQuest: {}), warnings: [], kingColor: KingColor.blue),
+          Player(score: Score(scoreQuest: {}), warnings: [], kingColor: KingColor.green),
+          Player(score: Score(scoreQuest: {}), warnings: [], kingColor: KingColor.yellow),
+          Player(score: Score(scoreQuest: {}), warnings: [], kingColor: KingColor.pink),
+          Player(score: Score(scoreQuest: {}), warnings: [], kingColor: KingColor.brown),
         ])) {
     setPlayer(KingColor.blue);
   }
 
   void calculateScore(KingColor kingColor, Kingdom kingdom, Rules rules) {
-    final newScore = Score.calculateFromKingdom(
-        kingdom, rules.extension, rules.selectedQuests);
-
     final updatedPlayers = state.players.map((player) {
       return player.kingColor == kingColor
-          ? player.copyWith(score: newScore)
+          ? (state.getPlayerByColor(kingColor)..score.updateScore(
+          kingdom, rules.extension, rules.selectedQuests))
           : player;
     }).toList();
 

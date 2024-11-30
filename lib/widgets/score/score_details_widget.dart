@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:kingdomino_score_count/models/extensions/extension.dart';
 import 'package:kingdomino_score_count/widgets/tile/land_tile.dart';
 
 import '../../cubits/game_cubit.dart';
 import '../../cubits/kingdom_cubit.dart';
 import '../../cubits/rules_cubit.dart';
+import '../../models/quests/quest.dart';
 import '../kingdomino_widget.dart';
 
 class ScoreDetailsWidget extends StatelessWidget {
@@ -69,7 +71,7 @@ class ScoreDetailsWidget extends StatelessWidget {
     }
 
     //quests points
-    if (context.read<RulesCubit>().state.selectedQuests.isNotEmpty) {
+    for (var questType in context.read<RulesCubit>().state.selectedQuests) {
       var tableCells = <TableCell>[];
 
       tableCells.add(const TableCell(child: Text('')));
@@ -77,10 +79,10 @@ class ScoreDetailsWidget extends StatelessWidget {
       tableCells.add(const TableCell(child: Text('')));
       tableCells.add(const TableCell(child: Text('')));
 
-      tableCells.add(const TableCell(
+      tableCells.add(TableCell(
           child: Align(
               alignment: Alignment.center,
-              child: Icon(Icons.shield, color: Colors.white))));
+              child: SvgPicture.asset('$assetsquestsLocation/${questPicture[questType]}'))));
 
       tableCells.add(const TableCell(
           child: Align(alignment: Alignment.center, child: Text('='))));
@@ -94,7 +96,7 @@ class ScoreDetailsWidget extends StatelessWidget {
                     .state
                     .getCurrentPlayer()!
                     .score
-                    .scoreQuest
+                    .scoreQuest[questType]
                     .toString(),
               ))));
 

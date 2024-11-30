@@ -6,48 +6,51 @@ import 'land.dart' show LandType;
 import 'quests/quest.dart';
 
 class Score {
-  final int scoreProperty;
-  final int scoreQuest;
-  final int scoreLacour;
+  Score(
+      {this.scoreProperty = 0,
+      this.scoreQuest = const {},
+      this.scoreLacour = 0});
 
-  const Score(
-      {this.scoreProperty = 0, this.scoreQuest = 0, this.scoreLacour = 0});
-
-  Score copyWith({int? scoreProperty, int? scoreQuest, int? scoreLacour}) =>
+  Score copyWith(
+          {int? scoreProperty,
+          Map<QuestType, int>? scoreQuest,
+          int? scoreLacour}) =>
       Score(
           scoreProperty: scoreProperty ?? this.scoreProperty,
           scoreQuest: scoreQuest ?? this.scoreQuest,
           scoreLacour: scoreLacour ?? this.scoreLacour);
 
-  int get total => scoreProperty + scoreQuest + scoreLacour;
+  int scoreProperty;
+  Map<QuestType, int> scoreQuest;
+  int scoreLacour;
 
-  // Factory methods to create new Score instances
-  static Score calculateFromKingdom(Kingdom kingdom, Extension? extension,
+  int get total =>
+      scoreProperty +
+      scoreLacour +
+      (scoreQuest.isEmpty
+          ? 0
+          : scoreQuest.values.reduce((sum, score) => sum + score));
+  
+  void updateScore(Kingdom kingdom, Extension? extension,
       HashSet<QuestType> selectedQuests) {
-    final propertyScore = calculatePropertyScore(kingdom);
-    final questScore = _calculateQuestScore(selectedQuests, kingdom);
-    final lacourScore =
-        extension == Extension.laCour ? _calculateLacourScore(kingdom) : 0;
+    scoreProperty = calculatePropertyScore(kingdom);
 
-    return Score(
-        scoreProperty: propertyScore,
-        scoreQuest: questScore,
-        scoreLacour: lacourScore);
+    for (var quest in selectedQuests) {
+      scoreQuest[quest] = _calculateQuestScore(quest, kingdom);
+    }
+
+    scoreLacour =
+        extension == Extension.laCour ? _calculateLacourScore(kingdom) : 0;
   }
 
   // Private calculation methods
-  static int calculatePropertyScore(Kingdom kingdom) {
+  int calculatePropertyScore(Kingdom kingdom) {
     final properties = kingdom.getProperties();
     return kingdom.calculateScoreFromProperties(properties);
   }
 
-  static int _calculateQuestScore(
-      HashSet<QuestType> selectedQuests, Kingdom kingdom) {
-    int score = 0;
-    for (var quest in selectedQuests) {
-      score += _getQuestPoints(quest, kingdom);
-    }
-    return score;
+  int _calculateQuestScore(QuestType quest, Kingdom kingdom) {
+    return _getQuestPoints(quest, kingdom);
   }
 
   static int _calculateLacourScore(Kingdom kingdom) {
@@ -63,7 +66,7 @@ class Score {
     return score;
   }
 
-  static int _getQuestPoints(QuestType questType, Kingdom kingdom) {
+  int _getQuestPoints(QuestType questType, Kingdom kingdom) {
     switch (questType) {
       case QuestType.harmony:
         {

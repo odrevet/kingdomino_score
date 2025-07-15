@@ -1,6 +1,6 @@
 {
-    "name": "kingdomino_score",
-    "short_name": "kingdomino_score",
+    "name": "kingdomino_score_count",
+    "short_name": "kingdomino_score_count",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

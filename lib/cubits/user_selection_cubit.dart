@@ -5,13 +5,10 @@ import '../models/user_selection.dart';
 
 class UserSelectionCubit extends Cubit<UserSelection> {
   UserSelectionCubit()
-      : super(UserSelection(selectionMode: SelectionMode.castle));
+    : super(UserSelection(selectionMode: SelectionMode.castle));
 
   void updateSelection(SelectionMode mode, LandType? landType) {
-    emit(state.copyWith(
-      selectionMode: mode,
-      selectedLandType: landType,
-    ));
+    emit(state.copyWith(selectionMode: mode, selectedLandType: landType));
   }
 
   void setSelectionMode(SelectionMode mode) {

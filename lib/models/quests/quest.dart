@@ -26,7 +26,7 @@ enum QuestType {
   localBusinessGrassLand,
   localBusinessSwamp,
   localBusinessMine,
-  lostCorner
+  lostCorner,
 }
 
 abstract class Quest {

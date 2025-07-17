@@ -11,16 +11,16 @@ class ScorePie extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var properties =
-        getKingdomCubit(context, context.read<GameCubit>().state.kingColor!)
-            .state
-            .getProperties();
+    var properties = getKingdomCubit(
+      context,
+      context.read<GameCubit>().state.kingColor!,
+    ).state.getProperties();
     var landScore = <LandType, double>{};
 
     // Summing up scores by land type
     for (var property in properties) {
-      double propertyScore =
-          (property.landCount * property.crownCount).toDouble();
+      double propertyScore = (property.landCount * property.crownCount)
+          .toDouble();
       if (propertyScore > 0) {
         if (landScore.containsKey(property.landType)) {
           // If land type already exists in the map, add the score to its existing value
@@ -43,15 +43,15 @@ class ScorePie extends StatelessWidget {
       chartRadius: MediaQuery.of(context).size.width / 3.2,
       animationDuration: const Duration(milliseconds: 200),
       colorList: landScore.isEmpty
-          ? [Colors.transparent.withOpacity(0.5)]
+          ? [Colors.transparent.withValues(alpha: 0.5)]
           : landScore.keys
-              .map((landType) => getColorForLandType(landType))
-              .toList(),
+                .map((landType) => getColorForLandType(landType))
+                .toList(),
       dataMap: dataMap.isEmpty ? {'': 0} : dataMap,
-      emptyColor: Colors.transparent.withOpacity(0.5),
-      baseChartColor: Colors.transparent.withOpacity(0.5),
+      emptyColor: Colors.transparent.withValues(alpha: 0.5),
+      baseChartColor: Colors.transparent.withValues(alpha: 0.5),
       centerWidget: Container(
-        color: Colors.white.withOpacity(0.5),
+        color: Colors.white.withValues(alpha: 0.5),
         child: Text(
           context
               .read<GameCubit>()

@@ -13,8 +13,11 @@ class TileBar extends StatefulWidget {
   final bool verticalAlign;
   final Extension extension;
 
-  const TileBar(
-      {required this.verticalAlign, required this.extension, super.key});
+  const TileBar({
+    required this.verticalAlign,
+    required this.extension,
+    super.key,
+  });
 
   @override
   State<TileBar> createState() => _TileBarState();
@@ -34,48 +37,52 @@ class _TileBarState extends State<TileBar> {
   Widget build(BuildContext context) {
     var kingdomEditorWidgets = [
       LandButton(
-          landType: LandType.wheat,
-          buttonSize: _buttonSize,
-          onSelectLandType: _onSelectLandType),
-      LandButton(
-          landType: LandType.grassland,
-          buttonSize: _buttonSize,
-          onSelectLandType: _onSelectLandType),
-      LandButton(
-          landType: LandType.forest,
-          buttonSize: _buttonSize,
-          onSelectLandType: _onSelectLandType),
-      LandButton(
-          landType: LandType.lake,
-          buttonSize: _buttonSize,
-          onSelectLandType: _onSelectLandType),
-      LandButton(
-          landType: LandType.swamp,
-          buttonSize: _buttonSize,
-          onSelectLandType: _onSelectLandType),
-      LandButton(
-          landType: LandType.mine,
-          buttonSize: _buttonSize,
-          onSelectLandType: _onSelectLandType),
-      widget.verticalAlign ? const Divider() : const VerticalDivider(),
-      LandButton(
-          landType: LandType.empty,
-          buttonSize: _buttonSize,
-          onSelectLandType: _onSelectLandType),
-      widget.verticalAlign ? const Divider() : const VerticalDivider(),
-      CastleButton(
+        landType: LandType.wheat,
         buttonSize: _buttonSize,
+        onSelectLandType: _onSelectLandType,
       ),
+      LandButton(
+        landType: LandType.grassland,
+        buttonSize: _buttonSize,
+        onSelectLandType: _onSelectLandType,
+      ),
+      LandButton(
+        landType: LandType.forest,
+        buttonSize: _buttonSize,
+        onSelectLandType: _onSelectLandType,
+      ),
+      LandButton(
+        landType: LandType.lake,
+        buttonSize: _buttonSize,
+        onSelectLandType: _onSelectLandType,
+      ),
+      LandButton(
+        landType: LandType.swamp,
+        buttonSize: _buttonSize,
+        onSelectLandType: _onSelectLandType,
+      ),
+      LandButton(
+        landType: LandType.mine,
+        buttonSize: _buttonSize,
+        onSelectLandType: _onSelectLandType,
+      ),
+      widget.verticalAlign ? const Divider() : const VerticalDivider(),
+      LandButton(
+        landType: LandType.empty,
+        buttonSize: _buttonSize,
+        onSelectLandType: _onSelectLandType,
+      ),
+      widget.verticalAlign ? const Divider() : const VerticalDivider(),
+      CastleButton(buttonSize: _buttonSize),
       CrownButton(buttonSize: _buttonSize, onSelectCrown: _onSelectCrown),
     ];
 
     if (context.read<RulesCubit>().state.extension == Extension.ageOfGiants) {
       kingdomEditorWidgets.add(
-          GiantButton(buttonSize: _buttonSize, onSelectGiant: _onSelectGiant));
+        GiantButton(buttonSize: _buttonSize, onSelectGiant: _onSelectGiant),
+      );
     } else if (context.read<RulesCubit>().state.extension == Extension.laCour) {
-      kingdomEditorWidgets.add(ResourceButton(
-        buttonSize: _buttonSize,
-      ));
+      kingdomEditorWidgets.add(ResourceButton(buttonSize: _buttonSize));
 
       for (var element in [
         Farmer(),
@@ -89,13 +96,15 @@ class _TileBarState extends State<TileBar> {
         Lumberjack(),
         Queen(),
         Shepherdess(),
-        SwordWarrior()
+        SwordWarrior(),
       ]) {
-        kingdomEditorWidgets.add(CourtierButton(
-          buttonSize: _buttonSize,
-          courtier: element,
-          onSelectCourtier: _onSelectcourtier,
-        ));
+        kingdomEditorWidgets.add(
+          CourtierButton(
+            buttonSize: _buttonSize,
+            courtier: element,
+            onSelectCourtier: _onSelectcourtier,
+          ),
+        );
       }
     }
 
@@ -115,14 +124,12 @@ class _TileBarState extends State<TileBar> {
       _onSelectCastle();
     } else {
       setState(() {
-        context
-            .read<UserSelectionCubit>()
-            .state
-            .setSelectedLandType(selectedType);
-        context
-            .read<UserSelectionCubit>()
-            .state
-            .setSelectionMode(SelectionMode.land);
+        context.read<UserSelectionCubit>().state.setSelectedLandType(
+          selectedType,
+        );
+        context.read<UserSelectionCubit>().state.setSelectionMode(
+          SelectionMode.land,
+        );
       });
     }
   }
@@ -130,41 +137,36 @@ class _TileBarState extends State<TileBar> {
   void _onSelectcourtier(Courtier courtier) {
     setState(() {
       context.read<UserSelectionCubit>().state.setSelectedCourtier(courtier);
-      context
-          .read<UserSelectionCubit>()
-          .state
-          .setSelectionMode(SelectionMode.courtier);
+      context.read<UserSelectionCubit>().state.setSelectionMode(
+        SelectionMode.courtier,
+      );
     });
   }
 
   void _onSelectCrown() {
     setState(() {
-      context
-          .read<UserSelectionCubit>()
-          .state
-          .setSelectionMode(SelectionMode.crown);
+      context.read<UserSelectionCubit>().state.setSelectionMode(
+        SelectionMode.crown,
+      );
     });
   }
 
   void _onSelectCastle() {
     setState(() {
-      context
-          .read<UserSelectionCubit>()
-          .state
-          .setSelectedLandType(LandType.castle);
-      context
-          .read<UserSelectionCubit>()
-          .state
-          .setSelectionMode(SelectionMode.castle);
+      context.read<UserSelectionCubit>().state.setSelectedLandType(
+        LandType.castle,
+      );
+      context.read<UserSelectionCubit>().state.setSelectionMode(
+        SelectionMode.castle,
+      );
     });
   }
 
   void _onSelectGiant() {
     setState(() {
-      context
-          .read<UserSelectionCubit>()
-          .state
-          .setSelectionMode(SelectionMode.giant);
+      context.read<UserSelectionCubit>().state.setSelectionMode(
+        SelectionMode.giant,
+      );
     });
   }
 }

@@ -9,10 +9,11 @@ import 'land.dart';
 enum SelectionMode { land, crown, castle, giant, courtier, resource }
 
 class UserSelection {
-  UserSelection(
-      {required this.selectionMode,
-      this.selectedLandType,
-      this.selectedCourtier}) {
+  UserSelection({
+    required this.selectionMode,
+    this.selectedLandType,
+    this.selectedCourtier,
+  }) {
     setSelectedLandType(selectedLandType);
   }
 
@@ -36,15 +37,15 @@ class UserSelection {
     selectedCourtier = courtier;
   }
 
-  copyWith(
-          {SelectionMode? selectionMode,
-          Extension? extension,
-          LandType? selectedLandType,
-          Courtier? selectedCourtier,
-          HashSet<QuestType>? selectedQuests}) =>
-      UserSelection(
-        selectionMode: selectionMode ?? this.selectionMode,
-        selectedLandType: selectedLandType ?? this.selectedLandType,
-        selectedCourtier: selectedCourtier ?? this.selectedCourtier,
-      );
+  copyWith({
+    SelectionMode? selectionMode,
+    Extension? extension,
+    LandType? selectedLandType,
+    Courtier? selectedCourtier,
+    HashSet<QuestType>? selectedQuests,
+  }) => UserSelection(
+    selectionMode: selectionMode ?? this.selectionMode,
+    selectedLandType: selectedLandType ?? this.selectedLandType,
+    selectedCourtier: selectedCourtier ?? this.selectedCourtier,
+  );
 }

@@ -35,14 +35,16 @@ class KingdominoAppBar extends StatefulWidget implements PreferredSizeWidget {
 class _KingdominoAppBarState extends State<KingdominoAppBar> {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<GameCubit, Game>(builder: (context, game) {
-      final kingColor = game.kingColor;
-      final kingdomCubit = getKingdomCubit(context, kingColor!);
+    return BlocBuilder<GameCubit, Game>(
+      builder: (context, game) {
+        final kingColor = game.kingColor;
+        final kingdomCubit = getKingdomCubit(context, kingColor!);
 
-      return BlocBuilder<KingdomCubit, Kingdom>(
+        return BlocBuilder<KingdomCubit, Kingdom>(
           bloc: kingdomCubit,
           builder: (context, kingdom) {
-            bool hasBrownKing = context.read<RulesCubit>().state.extension ==
+            bool hasBrownKing =
+                context.read<RulesCubit>().state.extension ==
                 Extension.ageOfGiants;
 
             if (kingColor == KingColor.brown && !hasBrownKing) {
@@ -59,166 +61,202 @@ class _KingdominoAppBarState extends State<KingdominoAppBar> {
                     context.read<GameCubit>().setPlayer(player!),
                 items: KingColor.values
                     .where(
-                        (player) => player != KingColor.brown || hasBrownKing)
+                      (player) => player != KingColor.brown || hasBrownKing,
+                    )
                     .map<DropdownMenuItem<KingColor>>((KingColor kingColor) {
-                  return DropdownMenuItem<KingColor>(
-                    value: kingColor,
-                    child: ColorFiltered(
-                      colorFilter: ColorFilter.mode(
-                        kingColor.color,
-                        BlendMode.srcATop,
-                      ),
-                      child: Row(
-                        children: [
-                          Image.asset(
-                            'assets/king_pawn.png',
-                            height: 25,
-                            width: 25,
+                      return DropdownMenuItem<KingColor>(
+                        value: kingColor,
+                        child: ColorFiltered(
+                          colorFilter: ColorFilter.mode(
+                            kingColor.color,
+                            BlendMode.srcATop,
                           ),
-                          Text(context
-                              .read<GameCubit>()
-                              .state
-                              .getPlayerByColor(kingColor)
-                              .score
-                              .total
-                              .toString())
-                        ],
-                      ),
-                    ),
-                  );
-                }).toList(),
+                          child: Row(
+                            children: [
+                              Image.asset(
+                                'assets/king_pawn.png',
+                                height: 25,
+                                width: 25,
+                              ),
+                              Text(
+                                context
+                                    .read<GameCubit>()
+                                    .state
+                                    .getPlayerByColor(kingColor)
+                                    .score
+                                    .total
+                                    .toString(),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    })
+                    .toList(),
               ),
               IconButton(
-                  onPressed: kingdomCubit.canUndo
-                      ? () {
-                          kingdomCubit.undo();
-                          context.read<GameCubit>().setWarnings(
-                              kingdom, context.read<RulesCubit>().state);
-                        }
-                      : null,
-                  icon: const Icon(Icons.undo)),
+                onPressed: kingdomCubit.canUndo
+                    ? () {
+                        kingdomCubit.undo();
+                        context.read<GameCubit>().setWarnings(
+                          kingdom,
+                          context.read<RulesCubit>().state,
+                        );
+                      }
+                    : null,
+                icon: const Icon(Icons.undo),
+              ),
               IconButton(
-                  onPressed: kingdomCubit.canRedo
-                      ? () {
-                          getKingdomCubit(context, kingColor).redo();
-                          context.read<GameCubit>().setWarnings(
-                              kingdom, context.read<RulesCubit>().state);
-                        }
-                      : null,
-                  icon: const Icon(Icons.redo)),
+                onPressed: kingdomCubit.canRedo
+                    ? () {
+                        getKingdomCubit(context, kingColor).redo();
+                        context.read<GameCubit>().setWarnings(
+                          kingdom,
+                          context.read<RulesCubit>().state,
+                        );
+                      }
+                    : null,
+                icon: const Icon(Icons.redo),
+              ),
               // Extension Selector
-              BlocBuilder<RulesCubit, Rules>(builder: (context, rules) {
-                return DropdownButton<Extension>(
-                  value: rules.extension,
-                  icon: const Icon(Icons.extension, color: Colors.white),
-                  iconSize: 25,
-                  elevation: 16,
-                  underline: Container(height: 1, color: Colors.white),
-                  onChanged: (value) {
-                    context.read<RulesCubit>().setExtension(value);
-                    context
-                        .read<UserSelectionCubit>()
-                        .updateSelection(SelectionMode.land, null);
-
-                    if (value == Extension.laCour &&
-                            context
-                                    .read<UserSelectionCubit>()
-                                    .state
-                                    .getSelectionMode() ==
-                                SelectionMode.courtier ||
-                        context
-                                .read<UserSelectionCubit>()
-                                .state
-                                .getSelectionMode() ==
-                            SelectionMode.resource) {
-                      context
-                          .read<UserSelectionCubit>()
-                          .state
-                          .setSelectionMode(SelectionMode.crown);
-                    }
-
-                    context.read<RulesCubit>().clearQuest();
-                    context
-                        .read<GameCubit>()
-                        .setWarnings(kingdom, context.read<RulesCubit>().state);
-
-                    for (KingColor kingColor in KingColor.values) {
-                      KingdomCubit kingdomCubit = getKingdomCubit(context, kingColor);
-                      kingdomCubit.clearExtension();
-                      kingdomCubit.clearHistory();
-                    }
-                  },
-                  items: <Extension>[
-                    Extension.vanilla,
-                    Extension.ageOfGiants,
-                    Extension.laCour
-                  ].map<DropdownMenuItem<Extension>>((Extension value) {
-                    Widget child;
-
-                    if (value == Extension.ageOfGiants) {
-                      child = const Text(giant);
-                    } else if (value == Extension.laCour) {
-                      child = Image.asset(
-                        'assets/lacour/resource.png',
-                        height: 25,
-                        width: 25,
+              BlocBuilder<RulesCubit, Rules>(
+                builder: (context, rules) {
+                  return DropdownButton<Extension>(
+                    value: rules.extension,
+                    icon: const Icon(Icons.extension, color: Colors.white),
+                    iconSize: 25,
+                    elevation: 16,
+                    underline: Container(height: 1, color: Colors.white),
+                    onChanged: (value) {
+                      context.read<RulesCubit>().setExtension(value);
+                      context.read<UserSelectionCubit>().updateSelection(
+                        SelectionMode.land,
+                        null,
                       );
-                    } else {
-                      child = const Text('');
-                    }
-                    return DropdownMenuItem<Extension>(
-                      value: value,
-                      child: child,
-                    );
-                  }).toList(),
-                );
-              }),
+
+                      if (value == Extension.laCour &&
+                              context
+                                      .read<UserSelectionCubit>()
+                                      .state
+                                      .getSelectionMode() ==
+                                  SelectionMode.courtier ||
+                          context
+                                  .read<UserSelectionCubit>()
+                                  .state
+                                  .getSelectionMode() ==
+                              SelectionMode.resource) {
+                        context
+                            .read<UserSelectionCubit>()
+                            .state
+                            .setSelectionMode(SelectionMode.crown);
+                      }
+
+                      context.read<RulesCubit>().clearQuest();
+                      context.read<GameCubit>().setWarnings(
+                        kingdom,
+                        context.read<RulesCubit>().state,
+                      );
+
+                      for (KingColor kingColor in KingColor.values) {
+                        KingdomCubit kingdomCubit = getKingdomCubit(
+                          context,
+                          kingColor,
+                        );
+                        kingdomCubit.clearExtension();
+                        kingdomCubit.clearHistory();
+                      }
+                    },
+                    items:
+                        <Extension>[
+                          Extension.vanilla,
+                          Extension.ageOfGiants,
+                          Extension.laCour,
+                        ].map<DropdownMenuItem<Extension>>((Extension value) {
+                          Widget child;
+
+                          if (value == Extension.ageOfGiants) {
+                            child = const Text(giant);
+                          } else if (value == Extension.laCour) {
+                            child = Image.asset(
+                              'assets/lacour/resource.png',
+                              height: 25,
+                              width: 25,
+                            );
+                          } else {
+                            child = const Text('');
+                          }
+                          return DropdownMenuItem<Extension>(
+                            value: value,
+                            child: child,
+                          );
+                        }).toList(),
+                  );
+                },
+              ),
               QuestDialogWidget(),
               IconButton(
-                  icon: Icon(kingdom.kingdomSize == KingdomSize.small
+                icon: Icon(
+                  kingdom.kingdomSize == KingdomSize.small
                       ? Icons.filter_5
-                      : Icons.filter_7),
-                  onPressed: () {
+                      : Icons.filter_7,
+                ),
+                onPressed: () {
+                  getKingdomCubit(
+                    context,
+                    context.read<GameCubit>().state.kingColor!,
+                  ).resize(
+                    kingdom.kingdomSize == KingdomSize.small
+                        ? KingdomSize.large
+                        : KingdomSize.small,
+                  );
+                  context.read<GameCubit>().setWarnings(
                     getKingdomCubit(
-                            context, context.read<GameCubit>().state.kingColor!)
-                        .resize(kingdom.kingdomSize == KingdomSize.small
-                            ? KingdomSize.large
-                            : KingdomSize.small);
-                    context.read<GameCubit>().setWarnings(
-                        getKingdomCubit(context,
-                                context.read<GameCubit>().state.kingColor!)
-                            .state,
-                        context.read<RulesCubit>().state);
-                  }),
+                      context,
+                      context.read<GameCubit>().state.kingColor!,
+                    ).state,
+                    context.read<RulesCubit>().state,
+                  );
+                },
+              ),
               IconButton(
-                  icon: const Icon(Icons.delete),
-                  onPressed: () {
+                icon: const Icon(Icons.delete),
+                onPressed: () {
+                  getKingdomCubit(
+                    context,
+                    context.read<GameCubit>().state.kingColor!,
+                  ).clear();
+                  context.read<GameCubit>().setWarnings(
                     getKingdomCubit(
-                            context, context.read<GameCubit>().state.kingColor!)
-                        .clear();
-                    context.read<GameCubit>().setWarnings(
-                        getKingdomCubit(context,
-                                context.read<GameCubit>().state.kingColor!)
-                            .state,
-                        context.read<RulesCubit>().state);
-                  }),
+                      context,
+                      context.read<GameCubit>().state.kingColor!,
+                    ).state,
+                    context.read<RulesCubit>().state,
+                  );
+                },
+              ),
               IconButton(
-                  icon: const Icon(Icons.help),
-                  onPressed: () => showAboutDialog(
-                      context: context,
-                      applicationName: 'Kingdomino Score',
-                      applicationVersion:
-                          kIsWeb ? 'Web build ' : widget.packageInfo.version,
-                      applicationLegalese:
-                          '''Drevet Olivier built the Kingdomino Score app under the GPL license Version 3. 
+                icon: const Icon(Icons.help),
+                onPressed: () => showAboutDialog(
+                  context: context,
+                  applicationName: 'Kingdomino Score',
+                  applicationVersion: kIsWeb
+                      ? 'Web build '
+                      : widget.packageInfo.version,
+                  applicationLegalese:
+                      '''Drevet Olivier built the Kingdomino Score app under the GPL license Version 3. 
 This SERVICE is provided by Drevet Olivier at no cost and is intended for use as is.
 This page is used to inform visitors regarding the policy with the collection, use, and disclosure of Personal Information if anyone decided to use my Service.
 I will not use or share your information with anyone : Kingdomino Score works offline and does not send any information over a network. ''',
-                      applicationIcon: Image.asset(
-                          'android/app/src/main/res/mipmap-mdpi/ic_launcher.png')))
+                  applicationIcon: Image.asset(
+                    'android/app/src/main/res/mipmap-mdpi/ic_launcher.png',
+                  ),
+                ),
+              ),
             ];
             return AppBar(actions: actions);
-          });
-    });
+          },
+        );
+      },
+    );
   }
 }

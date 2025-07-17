@@ -28,9 +28,9 @@ class LandButton extends StatelessWidget {
   Widget build(BuildContext context) {
     var isSelected =
         context.read<UserSelectionCubit>().state.getSelectionMode() ==
-                SelectionMode.land &&
-            context.read<UserSelectionCubit>().state.getSelectedLandType() ==
-                landType;
+            SelectionMode.land &&
+        context.read<UserSelectionCubit>().state.getSelectedLandType() ==
+            landType;
 
     return MouseRegion(
       cursor: SystemMouseCursors.click,
@@ -55,38 +55,36 @@ class LandButton extends StatelessWidget {
 class ResourceButton extends StatelessWidget {
   final double buttonSize;
 
-  const ResourceButton({
-    super.key,
-    required this.buttonSize,
-  });
+  const ResourceButton({super.key, required this.buttonSize});
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<UserSelectionCubit, UserSelection>(
-        builder: (BuildContext context, userSelection) {
-      var isSelected =
-          userSelection.getSelectionMode() == SelectionMode.resource;
+      builder: (BuildContext context, userSelection) {
+        var isSelected =
+            userSelection.getSelectionMode() == SelectionMode.resource;
 
-      return MouseRegion(
-        cursor: SystemMouseCursors.click,
-        child: GestureDetector(
-          onTap: () => context
-              .read<UserSelectionCubit>()
-              .setSelectionMode(SelectionMode.resource),
-          child: Container(
-            margin: const EdgeInsets.all(5.0),
-            height: buttonSize,
-            width: buttonSize,
-            decoration: BoxDecoration(
-              boxShadow: isSelected
-                  ? [highlightBox(context.read<ThemeCubit>().state)]
-                  : null,
+        return MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: GestureDetector(
+            onTap: () => context.read<UserSelectionCubit>().setSelectionMode(
+              SelectionMode.resource,
             ),
-            child: Image.asset('assets/lacour/resource.png'),
+            child: Container(
+              margin: const EdgeInsets.all(5.0),
+              height: buttonSize,
+              width: buttonSize,
+              decoration: BoxDecoration(
+                boxShadow: isSelected
+                    ? [highlightBox(context.read<ThemeCubit>().state)]
+                    : null,
+              ),
+              child: Image.asset('assets/lacour/resource.png'),
+            ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 }
 
@@ -104,10 +102,8 @@ class CourtierButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var isSelected = context
-                .read<UserSelectionCubit>()
-                .state
-                .getSelectionMode() ==
+    var isSelected =
+        context.read<UserSelectionCubit>().state.getSelectionMode() ==
             SelectionMode.courtier &&
         context.read<UserSelectionCubit>().state.selectedCourtier == courtier;
 
@@ -138,10 +134,7 @@ class CourtierButton extends StatelessWidget {
 class CastleButton extends StatelessWidget {
   final double buttonSize;
 
-  const CastleButton({
-    super.key,
-    required this.buttonSize,
-  });
+  const CastleButton({super.key, required this.buttonSize});
 
   @override
   Widget build(BuildContext context) {
@@ -149,16 +142,16 @@ class CastleButton extends StatelessWidget {
       builder: (BuildContext context, userSelection) {
         var isSelected =
             userSelection.getSelectionMode() == SelectionMode.castle &&
-                userSelection.getSelectedLandType() == LandType.castle;
+            userSelection.getSelectedLandType() == LandType.castle;
 
         return MouseRegion(
           cursor: SystemMouseCursors.click,
           child: GestureDetector(
             onTap: () {
               context.read<UserSelectionCubit>().updateSelection(
-                    SelectionMode.castle,
-                    LandType.castle,
-                  );
+                SelectionMode.castle,
+                LandType.castle,
+              );
             },
             child: Container(
               margin: const EdgeInsets.all(5.0),
@@ -191,30 +184,29 @@ class CrownButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<UserSelectionCubit, UserSelection>(
-        builder: (BuildContext context, userSelection) {
-      var isSelected = userSelection.getSelectionMode() == SelectionMode.crown;
+      builder: (BuildContext context, userSelection) {
+        var isSelected =
+            userSelection.getSelectionMode() == SelectionMode.crown;
 
-      return MouseRegion(
-        cursor: SystemMouseCursors.click,
-        child: GestureDetector(
-          onTap: onSelectCrown,
-          child: Container(
-            margin: const EdgeInsets.all(5.0),
-            height: buttonSize,
-            width: buttonSize,
-            decoration: BoxDecoration(
-              boxShadow: isSelected
-                  ? [highlightBox(context.read<ThemeCubit>().state)]
-                  : null,
-            ),
-            child: const FittedBox(
-              fit: BoxFit.fitHeight,
-              child: Text(crown),
+        return MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: GestureDetector(
+            onTap: onSelectCrown,
+            child: Container(
+              margin: const EdgeInsets.all(5.0),
+              height: buttonSize,
+              width: buttonSize,
+              decoration: BoxDecoration(
+                boxShadow: isSelected
+                    ? [highlightBox(context.read<ThemeCubit>().state)]
+                    : null,
+              ),
+              child: const FittedBox(fit: BoxFit.fitHeight, child: Text(crown)),
             ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 }
 
@@ -232,7 +224,7 @@ class GiantButton extends StatelessWidget {
   Widget build(BuildContext context) {
     var isSelected =
         context.read<UserSelectionCubit>().state.getSelectionMode() ==
-            SelectionMode.giant;
+        SelectionMode.giant;
 
     return MouseRegion(
       cursor: SystemMouseCursors.click,
@@ -247,10 +239,7 @@ class GiantButton extends StatelessWidget {
                 ? [highlightBox(context.read<ThemeCubit>().state)]
                 : null,
           ),
-          child: const FittedBox(
-            fit: BoxFit.fitHeight,
-            child: Text(giant),
-          ),
+          child: const FittedBox(fit: BoxFit.fitHeight, child: Text(giant)),
         ),
       ),
     );

@@ -9,7 +9,7 @@ import '../models/rules.dart';
 
 class RulesCubit extends Cubit<Rules> {
   RulesCubit()
-      : super(Rules(kingdomSize: KingdomSize.small, selectedQuests: HashSet()));
+    : super(Rules(kingdomSize: KingdomSize.small, selectedQuests: HashSet()));
 
   void reset() =>
       emit(Rules(kingdomSize: KingdomSize.small, selectedQuests: HashSet()));

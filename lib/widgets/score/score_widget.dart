@@ -6,11 +6,7 @@ import 'package:kingdomino_score_count/cubits/theme_cubit.dart';
 import 'score_details_widget.dart';
 import 'score_pie.dart';
 
-enum DisplayMode {
-  score,
-  details,
-  pie,
-}
+enum DisplayMode { score, details, pie }
 
 class ScoreWidget extends StatefulWidget {
   const ScoreWidget({super.key});
@@ -45,10 +41,10 @@ class _ScoreWidgetState extends State<ScoreWidget> {
               ),
             )
           : _displayMode == DisplayMode.details
-              // ignore: prefer_const_constructors
-              ? ScoreDetailsWidget()
-              // ignore: prefer_const_constructors
-              : FittedBox(fit: BoxFit.fitHeight, child: ScorePie()),
+          // ignore: prefer_const_constructors
+          ? ScoreDetailsWidget()
+          // ignore: prefer_const_constructors
+          : FittedBox(fit: BoxFit.fitHeight, child: ScorePie()),
     );
   }
 }

@@ -7,6 +7,11 @@ class Warning {
   String operator;
   int? rightOperand;
 
-  Warning(this.leftOperand, this.landType, this.crown, this.operator,
-      this.rightOperand);
+  Warning(
+    this.leftOperand,
+    this.landType,
+    this.crown,
+    this.operator,
+    this.rightOperand,
+  );
 }

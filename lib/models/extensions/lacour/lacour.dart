@@ -30,32 +30,32 @@ export 'sword_warrior.dart';
 const Map<LandType, Map<String, dynamic>> laCourGameSet = {
   LandType.castle: {
     'count': 1, //per player
-    'crowns': {'max': 0}
+    'crowns': {'max': 0},
   },
   LandType.wheat: {
     'count': 21 + 5,
-    'crowns': {'max': 1, 1: 5 + 3}
+    'crowns': {'max': 1, 1: 5 + 3},
   },
   LandType.grassland: {
     'count': 10 + 2 + 2,
-    'crowns': {'max': 2, 1: 2 + 1, 2: 2 + 1}
+    'crowns': {'max': 2, 1: 2 + 1, 2: 2 + 1},
   },
   LandType.forest: {
     'count': 16 + 6,
-    'crowns': {'max': 1, 1: 6 + 3}
+    'crowns': {'max': 1, 1: 6 + 3},
   },
   LandType.lake: {
     'count': 12 + 6,
-    'crowns': {'max': 1, 1: 6 + 3}
+    'crowns': {'max': 1, 1: 6 + 3},
   },
   LandType.swamp: {
     'count': 6 + 2 + 2,
-    'crowns': {'max': 2, 1: 2 + 1, 2: 2 + 1}
+    'crowns': {'max': 2, 1: 2 + 1, 2: 2 + 1},
   },
   LandType.mine: {
     'count': 1 + 1 + 3 + 1,
-    'crowns': {'max': 3, 1: 1, 2: 3, 3: 1}
-  }
+    'crowns': {'max': 3, 1: 1, 2: 3, 3: 1},
+  },
 };
 
 Map<Type, String> courtierPicture = {

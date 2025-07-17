@@ -49,9 +49,10 @@ class _QuestDialogOptionState extends State<_QuestDialogOption> {
                 context.read<RulesCubit>().toggleQuest(widget.questType);
                 for (final kingColor in KingColor.values) {
                   context.read<GameCubit>().calculateScore(
-                      kingColor,
-                      getKingdomCubit(context, kingColor).state,
-                      context.read<RulesCubit>().state);
+                    kingColor,
+                    getKingdomCubit(context, kingColor).state,
+                    context.read<RulesCubit>().state,
+                  );
                 }
               },
             );
@@ -78,68 +79,78 @@ class _QuestDialogWidgetState extends State<QuestDialogWidget> {
 
     if (context.read<RulesCubit>().state.extension == Extension.ageOfGiants) {
       questPicture.forEach((type, picture) {
-        options.add(_QuestDialogOption(
-            type, SvgPicture.asset('$assetsquestsLocation/$picture')));
+        options.add(
+          _QuestDialogOption(
+            type,
+            SvgPicture.asset('$assetsquestsLocation/$picture'),
+          ),
+        );
       });
     } else {
-      options.add(_QuestDialogOption(
+      options.add(
+        _QuestDialogOption(
           QuestType.harmony,
           SvgPicture.asset(
-              '$assetsquestsLocation/${questPicture[QuestType.harmony]!}')));
-      options.add(_QuestDialogOption(
+            '$assetsquestsLocation/${questPicture[QuestType.harmony]!}',
+          ),
+        ),
+      );
+      options.add(
+        _QuestDialogOption(
           QuestType.middleKingdom,
           SvgPicture.asset(
-              '$assetsquestsLocation/${questPicture[QuestType.middleKingdom]!}')));
+            '$assetsquestsLocation/${questPicture[QuestType.middleKingdom]!}',
+          ),
+        ),
+      );
     }
 
     SimpleDialog dialog = SimpleDialog(
-      contentPadding: const EdgeInsets.symmetric(
-        horizontal: 60,
-        vertical: 40,
-      ),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 60, vertical: 40),
       children: options,
     );
 
     return Badge(
-        isLabelVisible:
-            context.read<RulesCubit>().state.selectedQuests.isNotEmpty,
-        label: Text(
-            context.read<RulesCubit>().state.selectedQuests.length.toString()),
-        child: IconButton(
-            icon: const Icon(Icons.shield),
-            onPressed: () => showDialog(
-                  context: context,
-                  builder: (BuildContext dialogContext) => MultiProvider(
-                    providers: [
-                      Provider.value(
-                        value: Provider.of<KingdomCubitPink>(context,
-                            listen: false),
-                      ),
-                      Provider.value(
-                        value: Provider.of<KingdomCubitYellow>(context,
-                            listen: false),
-                      ),
-                      Provider.value(
-                        value: Provider.of<KingdomCubitGreen>(context,
-                            listen: false),
-                      ),
-                      Provider.value(
-                        value: Provider.of<KingdomCubitBlue>(context,
-                            listen: false),
-                      ),
-                      Provider.value(
-                        value: Provider.of<KingdomCubitBrown>(context,
-                            listen: false),
-                      ),
-                      Provider.value(
-                        value: Provider.of<GameCubit>(context, listen: false),
-                      ),
-                      Provider.value(
-                        value: Provider.of<RulesCubit>(context, listen: false),
-                      ),
-                    ],
-                    child: dialog,
-                  ),
-                )));
+      isLabelVisible: context
+          .read<RulesCubit>()
+          .state
+          .selectedQuests
+          .isNotEmpty,
+      label: Text(
+        context.read<RulesCubit>().state.selectedQuests.length.toString(),
+      ),
+      child: IconButton(
+        icon: const Icon(Icons.shield),
+        onPressed: () => showDialog(
+          context: context,
+          builder: (BuildContext dialogContext) => MultiProvider(
+            providers: [
+              Provider.value(
+                value: Provider.of<KingdomCubitPink>(context, listen: false),
+              ),
+              Provider.value(
+                value: Provider.of<KingdomCubitYellow>(context, listen: false),
+              ),
+              Provider.value(
+                value: Provider.of<KingdomCubitGreen>(context, listen: false),
+              ),
+              Provider.value(
+                value: Provider.of<KingdomCubitBlue>(context, listen: false),
+              ),
+              Provider.value(
+                value: Provider.of<KingdomCubitBrown>(context, listen: false),
+              ),
+              Provider.value(
+                value: Provider.of<GameCubit>(context, listen: false),
+              ),
+              Provider.value(
+                value: Provider.of<RulesCubit>(context, listen: false),
+              ),
+            ],
+            child: dialog,
+          ),
+        ),
+      ),
+    );
   }
 }

@@ -18,13 +18,15 @@ class BleakKing extends Quest {
   int getPoints(Kingdom kingdom) {
     var properties = kingdom.getProperties();
     int count = properties
-        .where((property) =>
-            (property.landType == LandType.wheat ||
-                property.landType == LandType.forest ||
-                property.landType == LandType.grassland ||
-                property.landType == LandType.lake) &&
-            property.crownCount == 0 &&
-            property.landCount >= 5)
+        .where(
+          (property) =>
+              (property.landType == LandType.wheat ||
+                  property.landType == LandType.forest ||
+                  property.landType == LandType.grassland ||
+                  property.landType == LandType.lake) &&
+              property.crownCount == 0 &&
+              property.landCount >= 5,
+        )
         .length;
 
     return reward * count;

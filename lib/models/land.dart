@@ -16,25 +16,28 @@ class Land {
   Courtier? courtier;
   bool hasResource;
 
-  Land(
-      {this.landType = LandType.empty,
-      this.crowns = 0,
-      this.courtier,
-      this.hasResource = false,
-      this.giants = 0});
+  Land({
+    this.landType = LandType.empty,
+    this.crowns = 0,
+    this.courtier,
+    this.hasResource = false,
+    this.giants = 0,
+  });
 
-  Land copyWith(
-      {LandType? landType,
-      int? crowns,
-      Courtier? courtier,
-      bool? hasResource,
-      int? giants}) {
+  Land copyWith({
+    LandType? landType,
+    int? crowns,
+    Courtier? courtier,
+    bool? hasResource,
+    int? giants,
+  }) {
     return Land(
-        landType: landType ?? this.landType,
-        crowns: crowns ?? this.crowns,
-        courtier: courtier ?? this.courtier,
-        hasResource: hasResource ?? this.hasResource,
-        giants: giants ?? this.giants);
+      landType: landType ?? this.landType,
+      crowns: crowns ?? this.crowns,
+      courtier: courtier ?? this.courtier,
+      hasResource: hasResource ?? this.hasResource,
+      giants: giants ?? this.giants,
+    );
   }
 
   ///set crowns to 0 and hasGiant to false
@@ -70,7 +73,7 @@ Color getColorForLandType(LandType? type) {
   Color color;
   switch (type) {
     case LandType.empty:
-      color = Colors.transparent.withOpacity(0.8);
+      color = Colors.transparent.withValues(alpha: 0.8);
       break;
     case LandType.wheat:
       color = Colors.yellow.shade600;

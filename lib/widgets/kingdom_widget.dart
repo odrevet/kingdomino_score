@@ -39,12 +39,14 @@ class _KingdomWidgetState extends State<KingdomWidget> {
       child = CastleTile(context.read<ThemeCubit>().state);
     } else if (land.courtier != null) {
       child = LandTile(
-          landType: land.landType,
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Image(
-                image: AssetImage(courtierPicture[land.courtier.runtimeType]!)),
-          ));
+        landType: land.landType,
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Image(
+            image: AssetImage(courtierPicture[land.courtier.runtimeType]!),
+          ),
+        ),
+      );
     } else {
       if (land.crowns > 0) {
         String text = (crown * land.crowns);
@@ -52,44 +54,50 @@ class _KingdomWidgetState extends State<KingdomWidget> {
         child = LandTile(
           landType: land.landType,
           child: LayoutBuilder(
-              builder: (BuildContext context, BoxConstraints constraints) {
-            return Padding(
-              padding: const EdgeInsets.all(2.0),
-              child: Text(text,
-                  style: TextStyle(fontSize: constraints.maxWidth / 5)),
-            );
-          }),
+            builder: (BuildContext context, BoxConstraints constraints) {
+              return Padding(
+                padding: const EdgeInsets.all(2.0),
+                child: Text(
+                  text,
+                  style: TextStyle(fontSize: constraints.maxWidth / 5),
+                ),
+              );
+            },
+          ),
         );
       } else if (land.hasResource) {
         child = LandTile(
           landType: land.landType,
           child: LayoutBuilder(
-              builder: (BuildContext context, BoxConstraints constraints) {
-            return Align(
+            builder: (BuildContext context, BoxConstraints constraints) {
+              return Align(
                 child: Container(
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Colors.black,
-                ),
-                borderRadius: const BorderRadius.all(Radius.circular(50)),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    spreadRadius: 1,
-                    blurRadius: 2,
-                    offset: const Offset(0, 3), // changes position of shadow
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.black),
+                    borderRadius: const BorderRadius.all(Radius.circular(50)),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withValues(alpha: 0.5),
+                        spreadRadius: 1,
+                        blurRadius: 2,
+                        offset: const Offset(
+                          0,
+                          3,
+                        ), // changes position of shadow
+                      ),
+                    ],
                   ),
-                ],
-              ),
-              child: Text(getResourceForLandType(land.landType),
-                  style: TextStyle(fontSize: constraints.maxWidth / 2)),
-            ));
-          }),
+                  child: Text(
+                    getResourceForLandType(land.landType),
+                    style: TextStyle(fontSize: constraints.maxWidth / 2),
+                  ),
+                ),
+              );
+            },
+          ),
         );
       } else {
-        child = LandTile(
-          landType: land.landType,
-        );
+        child = LandTile(landType: land.landType);
       }
     }
 
@@ -97,8 +105,10 @@ class _KingdomWidgetState extends State<KingdomWidget> {
   }
 
   Widget _buildLands(BuildContext context, int index) {
-    var kingdomCubit =
-        getKingdomCubit(context, context.read<GameCubit>().state.kingColor!);
+    var kingdomCubit = getKingdomCubit(
+      context,
+      context.read<GameCubit>().state.kingColor!,
+    );
 
     var kingdom = kingdomCubit.state;
     int gridStateLength = kingdom.getLands().length;
@@ -110,31 +120,34 @@ class _KingdomWidgetState extends State<KingdomWidget> {
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
         onTap: () {
-          var selectionMode =
-              context.read<UserSelectionCubit>().state.getSelectionMode();
-          var selectedLandType =
-              context.read<UserSelectionCubit>().state.getSelectedLandType();
+          var selectionMode = context
+              .read<UserSelectionCubit>()
+              .state
+              .getSelectionMode();
+          var selectedLandType = context
+              .read<UserSelectionCubit>()
+              .state
+              .getSelectedLandType();
           if (selectionMode != SelectionMode.land ||
               selectedLandType != kingdom.getLand(x, y)!.landType) {
             kingdomCubit.setLand(
-                x,
-                y,
-                selectedLandType,
-                context.read<UserSelectionCubit>().state.getSelectionMode(),
-                context.read<UserSelectionCubit>().state.selectedCourtier,
-                context.read<RulesCubit>().state.extension);
+              x,
+              y,
+              selectedLandType,
+              context.read<UserSelectionCubit>().state.getSelectionMode(),
+              context.read<UserSelectionCubit>().state.selectedCourtier,
+              context.read<RulesCubit>().state.extension,
+            );
             context.read<GameCubit>().setWarnings(
-                getKingdomCubit(
-                        context, context.read<GameCubit>().state.kingColor!)
-                    .state,
-                context.read<RulesCubit>().state);
+              getKingdomCubit(
+                context,
+                context.read<GameCubit>().state.kingColor!,
+              ).state,
+              context.read<RulesCubit>().state,
+            );
           }
         },
-        child: GridTile(
-          child: Container(
-            child: _buildLand(y, x),
-          ),
-        ),
+        child: GridTile(child: Container(child: _buildLand(y, x))),
       ),
     );
   }

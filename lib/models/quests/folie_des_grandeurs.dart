@@ -14,7 +14,8 @@ class CrownAlignment extends Equatable {
 
   const CrownAlignment(this.y0, this.x0, this.y1, this.x1, this.y2, this.x2);
 
-  bool cross(CrownAlignment other) => ((x0 == other.x0 && y0 == other.y0) ||
+  bool cross(CrownAlignment other) =>
+      ((x0 == other.x0 && y0 == other.y0) ||
       (x1 == other.x0 && y1 == other.y0) ||
       (x2 == other.x0 && y2 == other.y0) ||
       (x0 == other.x1 && y0 == other.y1) ||
@@ -51,14 +52,25 @@ class FolieDesGrandeurs extends Quest {
 
   // for every land listed has at least a crown
   bool _hasCrownAlignment(
-      int y0, int x0, int y1, int x1, int y2, int x2, Kingdom kingdom) {
+    int y0,
+    int x0,
+    int y1,
+    int x1,
+    int y2,
+    int x2,
+    Kingdom kingdom,
+  ) {
     return _checkLandBoundAndCrown(y0, x0, kingdom) &&
         _checkLandBoundAndCrown(y1, x1, kingdom) &&
         _checkLandBoundAndCrown(y2, x2, kingdom);
   }
 
   void _addCrownAlignmentVertical(
-      List<CrownAlignment> crownAlignment, int y, int x, Kingdom kingdom) {
+    List<CrownAlignment> crownAlignment,
+    int y,
+    int x,
+    Kingdom kingdom,
+  ) {
     int x1 = x;
     int y1 = y + 1;
     int x2 = x;
@@ -69,7 +81,11 @@ class FolieDesGrandeurs extends Quest {
   }
 
   void _addCrownAlignmentHorizontal(
-      List<CrownAlignment> crownAlignment, int y, int x, Kingdom kingdom) {
+    List<CrownAlignment> crownAlignment,
+    int y,
+    int x,
+    Kingdom kingdom,
+  ) {
     int x1 = x + 1;
     int y1 = y;
     int x2 = x + 2;
@@ -80,7 +96,11 @@ class FolieDesGrandeurs extends Quest {
   }
 
   void _addCrownAlignmentDiagonalRight(
-      List<CrownAlignment> crownAlignment, int y, int x, Kingdom kingdom) {
+    List<CrownAlignment> crownAlignment,
+    int y,
+    int x,
+    Kingdom kingdom,
+  ) {
     int x1 = x + 1;
     int y1 = y + 1;
     int x2 = x + 2;
@@ -91,7 +111,11 @@ class FolieDesGrandeurs extends Quest {
   }
 
   void _addCrownAlignmentDiagonalLeft(
-      List<CrownAlignment> crownAlignment, int x, int y, Kingdom kingdom) {
+    List<CrownAlignment> crownAlignment,
+    int x,
+    int y,
+    Kingdom kingdom,
+  ) {
     int x1 = x - 1;
     int y1 = y + 1;
     int x2 = x - 2;
@@ -103,7 +127,9 @@ class FolieDesGrandeurs extends Quest {
 
   ///return how many square is shared by crownAlignment on the placedAlignments
   int _countSharedSquare(
-      List<List<int>> placedAlignments, CrownAlignment crownAlignment) {
+    List<List<int>> placedAlignments,
+    CrownAlignment crownAlignment,
+  ) {
     int sharedSquareCount = 0;
     if (placedAlignments[crownAlignment.x0][crownAlignment.y0] > 1) {
       sharedSquareCount++;
@@ -118,16 +144,21 @@ class FolieDesGrandeurs extends Quest {
     return sharedSquareCount;
   }
 
-  bool _alignmentAdd(CrownAlignment crownAlignment,
-      List<CrownAlignment> resultAlignments, List<List<int>> placedAlignments) {
+  bool _alignmentAdd(
+    CrownAlignment crownAlignment,
+    List<CrownAlignment> resultAlignments,
+    List<List<int>> placedAlignments,
+  ) {
     bool addAlignment = true;
     placedAlignments[crownAlignment.x0][crownAlignment.y0]++;
     placedAlignments[crownAlignment.x1][crownAlignment.y1]++;
     placedAlignments[crownAlignment.x2][crownAlignment.y2]++;
 
     //check if more than one shared square for the alignment being checked
-    int sharedSquareCount =
-        _countSharedSquare(placedAlignments, crownAlignment);
+    int sharedSquareCount = _countSharedSquare(
+      placedAlignments,
+      crownAlignment,
+    );
 
     if (sharedSquareCount == 0) {
       addAlignment = true;
@@ -135,8 +166,10 @@ class FolieDesGrandeurs extends Quest {
       int sharedSquareCount = 0;
       for (CrownAlignment resultAlignment in resultAlignments) {
         if (resultAlignment.cross(crownAlignment)) {
-          sharedSquareCount +=
-              _countSharedSquare(placedAlignments, resultAlignment);
+          sharedSquareCount += _countSharedSquare(
+            placedAlignments,
+            resultAlignment,
+          );
         }
 
         if (sharedSquareCount >= 2) {
@@ -160,12 +193,15 @@ class FolieDesGrandeurs extends Quest {
   }
 
   int countValidAlignments(
-      List<CrownAlignment> crownAlignments, Kingdom kingdom) {
+    List<CrownAlignment> crownAlignments,
+    Kingdom kingdom,
+  ) {
     //count for every land how many square crosses
     List<List<int>> placedAlignments = [];
     for (var i = 0; i < kingdom.kingdomSize.size; i++) {
-      placedAlignments
-          .add(List<int>.generate(kingdom.kingdomSize.size, (_) => 0));
+      placedAlignments.add(
+        List<int>.generate(kingdom.kingdomSize.size, (_) => 0),
+      );
     }
 
     //do not keep alignments that have more than one shared square with another
@@ -218,62 +254,78 @@ class FolieDesGrandeurs extends Quest {
     //less. Try different strategies and keep the one that scores the most
     List<int> validAlignments = [];
 
-    validAlignments.add(countValidAlignments([
-      ...alignmentHorizontal,
-      ...alignmentVertical,
-      ...alignmentDiagonalRight,
-      ...alignmentDiagonalLeft,
-    ], kingdom));
+    validAlignments.add(
+      countValidAlignments([
+        ...alignmentHorizontal,
+        ...alignmentVertical,
+        ...alignmentDiagonalRight,
+        ...alignmentDiagonalLeft,
+      ], kingdom),
+    );
 
-    validAlignments.add(countValidAlignments([
-      ...alignmentHorizontal,
-      ...alignmentVertical,
-      ...alignmentDiagonalLeft,
-      ...alignmentDiagonalRight,
-    ], kingdom));
+    validAlignments.add(
+      countValidAlignments([
+        ...alignmentHorizontal,
+        ...alignmentVertical,
+        ...alignmentDiagonalLeft,
+        ...alignmentDiagonalRight,
+      ], kingdom),
+    );
 
-    validAlignments.add(countValidAlignments([
-      ...alignmentVertical,
-      ...alignmentHorizontal,
-      ...alignmentDiagonalRight,
-      ...alignmentDiagonalLeft,
-    ], kingdom));
+    validAlignments.add(
+      countValidAlignments([
+        ...alignmentVertical,
+        ...alignmentHorizontal,
+        ...alignmentDiagonalRight,
+        ...alignmentDiagonalLeft,
+      ], kingdom),
+    );
 
-    validAlignments.add(countValidAlignments([
-      ...alignmentVertical,
-      ...alignmentHorizontal,
-      ...alignmentDiagonalLeft,
-      ...alignmentDiagonalRight,
-    ], kingdom));
+    validAlignments.add(
+      countValidAlignments([
+        ...alignmentVertical,
+        ...alignmentHorizontal,
+        ...alignmentDiagonalLeft,
+        ...alignmentDiagonalRight,
+      ], kingdom),
+    );
 
     //
-    validAlignments.add(countValidAlignments([
-      ...alignmentDiagonalRight,
-      ...alignmentDiagonalLeft,
-      ...alignmentHorizontal,
-      ...alignmentVertical,
-    ], kingdom));
+    validAlignments.add(
+      countValidAlignments([
+        ...alignmentDiagonalRight,
+        ...alignmentDiagonalLeft,
+        ...alignmentHorizontal,
+        ...alignmentVertical,
+      ], kingdom),
+    );
 
-    validAlignments.add(countValidAlignments([
-      ...alignmentDiagonalRight,
-      ...alignmentDiagonalLeft,
-      ...alignmentVertical,
-      ...alignmentHorizontal,
-    ], kingdom));
+    validAlignments.add(
+      countValidAlignments([
+        ...alignmentDiagonalRight,
+        ...alignmentDiagonalLeft,
+        ...alignmentVertical,
+        ...alignmentHorizontal,
+      ], kingdom),
+    );
 
-    validAlignments.add(countValidAlignments([
-      ...alignmentDiagonalLeft,
-      ...alignmentDiagonalRight,
-      ...alignmentHorizontal,
-      ...alignmentVertical,
-    ], kingdom));
+    validAlignments.add(
+      countValidAlignments([
+        ...alignmentDiagonalLeft,
+        ...alignmentDiagonalRight,
+        ...alignmentHorizontal,
+        ...alignmentVertical,
+      ], kingdom),
+    );
 
-    validAlignments.add(countValidAlignments([
-      ...alignmentDiagonalLeft,
-      ...alignmentDiagonalRight,
-      ...alignmentVertical,
-      ...alignmentHorizontal,
-    ], kingdom));
+    validAlignments.add(
+      countValidAlignments([
+        ...alignmentDiagonalLeft,
+        ...alignmentDiagonalRight,
+        ...alignmentVertical,
+        ...alignmentHorizontal,
+      ], kingdom),
+    );
 
     return reward * validAlignments.reduce(max);
   }

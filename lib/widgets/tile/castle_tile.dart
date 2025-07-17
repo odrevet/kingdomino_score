@@ -12,8 +12,9 @@ class CastleTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return CardboardTile(
       child: Container(
-          color: kingColor,
-          child: const FittedBox(fit: BoxFit.fitWidth, child: Text(castle))),
+        color: kingColor,
+        child: const FittedBox(fit: BoxFit.fitWidth, child: Text(castle)),
+      ),
     );
   }
 }

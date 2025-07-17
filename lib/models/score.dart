@@ -6,19 +6,21 @@ import 'land.dart' show LandType;
 import 'quests/quest.dart';
 
 class Score {
-  Score(
-      {this.scoreProperty = 0,
-      this.scoreQuest = const {},
-      this.scoreLacour = 0});
+  Score({
+    this.scoreProperty = 0,
+    this.scoreQuest = const {},
+    this.scoreLacour = 0,
+  });
 
-  Score copyWith(
-          {int? scoreProperty,
-          Map<QuestType, int>? scoreQuest,
-          int? scoreLacour}) =>
-      Score(
-          scoreProperty: scoreProperty ?? this.scoreProperty,
-          scoreQuest: scoreQuest ?? this.scoreQuest,
-          scoreLacour: scoreLacour ?? this.scoreLacour);
+  Score copyWith({
+    int? scoreProperty,
+    Map<QuestType, int>? scoreQuest,
+    int? scoreLacour,
+  }) => Score(
+    scoreProperty: scoreProperty ?? this.scoreProperty,
+    scoreQuest: scoreQuest ?? this.scoreQuest,
+    scoreLacour: scoreLacour ?? this.scoreLacour,
+  );
 
   int scoreProperty;
   Map<QuestType, int> scoreQuest;
@@ -30,17 +32,21 @@ class Score {
       (scoreQuest.isEmpty
           ? 0
           : scoreQuest.values.reduce((sum, score) => sum + score));
-  
-  void updateScore(Kingdom kingdom, Extension? extension,
-      HashSet<QuestType> selectedQuests) {
+
+  void updateScore(
+    Kingdom kingdom,
+    Extension? extension,
+    HashSet<QuestType> selectedQuests,
+  ) {
     scoreProperty = calculatePropertyScore(kingdom);
 
     for (var quest in selectedQuests) {
       scoreQuest[quest] = _calculateQuestScore(quest, kingdom);
     }
 
-    scoreLacour =
-        extension == Extension.laCour ? _calculateLacourScore(kingdom) : 0;
+    scoreLacour = extension == Extension.laCour
+        ? _calculateLacourScore(kingdom)
+        : 0;
   }
 
   // Private calculation methods

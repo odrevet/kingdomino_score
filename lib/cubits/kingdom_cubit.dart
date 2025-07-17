@@ -25,8 +25,14 @@ abstract class KingdomCubit extends ReplayCubit<Kingdom> {
     emit(kingdom);
   }
 
-  setLand(int y, int x, selectedLandType, selectionMode, selectedCourtier,
-      extension) {
+  setLand(
+    int y,
+    int x,
+    selectedLandType,
+    selectionMode,
+    selectedCourtier,
+    extension,
+  ) {
     bool isValid = true;
 
     var kingdom = Kingdom(kingdomSize: state.kingdomSize);
@@ -84,7 +90,7 @@ abstract class KingdomCubit extends ReplayCubit<Kingdom> {
           LandType.wheat,
           LandType.forest,
           LandType.mine,
-          LandType.swamp
+          LandType.swamp,
         ].contains(land!.landType)) {
           if (land.courtier == selectedCourtier) {
             land.courtier = null;
@@ -107,8 +113,12 @@ abstract class KingdomCubit extends ReplayCubit<Kingdom> {
         }
         break;
       case SelectionMode.resource:
-        if ([LandType.grassland, LandType.lake, LandType.wheat, LandType.forest]
-            .contains(land!.landType)) {
+        if ([
+          LandType.grassland,
+          LandType.lake,
+          LandType.wheat,
+          LandType.forest,
+        ].contains(land!.landType)) {
           land.hasResource = !land.hasResource;
           land.crowns = 0;
         } else {

@@ -9,21 +9,50 @@ import '../models/score.dart';
 
 class GameCubit extends Cubit<Game> {
   GameCubit()
-      : super(Game(kingColor: KingColor.blue, players: [
-          Player(score: Score(scoreQuest: {}), warnings: [], kingColor: KingColor.blue),
-          Player(score: Score(scoreQuest: {}), warnings: [], kingColor: KingColor.green),
-          Player(score: Score(scoreQuest: {}), warnings: [], kingColor: KingColor.yellow),
-          Player(score: Score(scoreQuest: {}), warnings: [], kingColor: KingColor.pink),
-          Player(score: Score(scoreQuest: {}), warnings: [], kingColor: KingColor.brown),
-        ])) {
+    : super(
+        Game(
+          kingColor: KingColor.blue,
+          players: [
+            Player(
+              score: Score(scoreQuest: {}),
+              warnings: [],
+              kingColor: KingColor.blue,
+            ),
+            Player(
+              score: Score(scoreQuest: {}),
+              warnings: [],
+              kingColor: KingColor.green,
+            ),
+            Player(
+              score: Score(scoreQuest: {}),
+              warnings: [],
+              kingColor: KingColor.yellow,
+            ),
+            Player(
+              score: Score(scoreQuest: {}),
+              warnings: [],
+              kingColor: KingColor.pink,
+            ),
+            Player(
+              score: Score(scoreQuest: {}),
+              warnings: [],
+              kingColor: KingColor.brown,
+            ),
+          ],
+        ),
+      ) {
     setPlayer(KingColor.blue);
   }
 
   void calculateScore(KingColor kingColor, Kingdom kingdom, Rules rules) {
     final updatedPlayers = state.players.map((player) {
       return player.kingColor == kingColor
-          ? (state.getPlayerByColor(kingColor)..score.updateScore(
-          kingdom, rules.extension, rules.selectedQuests))
+          ? (state.getPlayerByColor(kingColor)
+              ..score.updateScore(
+                kingdom,
+                rules.extension,
+                rules.selectedQuests,
+              ))
           : player;
     }).toList();
 

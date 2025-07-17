@@ -13,63 +13,74 @@ class WarningsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<GameCubit, Game>(builder: (context, game) {
-      var tableRows = <TableRow>[];
+    return BlocBuilder<GameCubit, Game>(
+      builder: (context, game) {
+        var tableRows = <TableRow>[];
 
-      for (Warning warning in game.getCurrentPlayer()!.warnings) {
-        var tableCells = <TableCell>[];
+        for (Warning warning in game.getCurrentPlayer()!.warnings) {
+          var tableCells = <TableCell>[];
 
-        tableCells.add(TableCell(
-            child: Align(
+          tableCells.add(
+            TableCell(
+              child: Align(
                 alignment: Alignment.centerRight,
-                child: Text(
-                  warning.leftOperand.toString(),
-                ))));
+                child: Text(warning.leftOperand.toString()),
+              ),
+            ),
+          );
 
-        tableCells.add(warning.landType == LandType.castle
-            ? const TableCell(
-                child: Align(
-                    alignment: Alignment.centerRight,
-                    child: Text(
-                      castle,
-                    )))
-            : TableCell(
-                child: Align(
-                alignment: Alignment.centerRight,
-                child: SizedBox(
-                  width: 16.0,
-                  height: 16.0,
-                  child: LandTile(
-                    landType: warning.landType,
+          tableCells.add(
+            warning.landType == LandType.castle
+                ? const TableCell(
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: Text(castle),
+                    ),
+                  )
+                : TableCell(
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: SizedBox(
+                        width: 16.0,
+                        height: 16.0,
+                        child: LandTile(landType: warning.landType),
+                      ),
+                    ),
                   ),
-                ),
-              )));
+          );
 
-        tableCells.add(TableCell(
-            child: Align(
+          tableCells.add(
+            TableCell(
+              child: Align(
                 alignment: Alignment.center,
-                child: Text(
-                  crown * warning.crown,
-                ))));
+                child: Text(crown * warning.crown),
+              ),
+            ),
+          );
 
-        tableCells.add(TableCell(
-            child: Align(
+          tableCells.add(
+            TableCell(
+              child: Align(
                 alignment: Alignment.center,
-                child: Text(
-                  warning.operator,
-                ))));
+                child: Text(warning.operator),
+              ),
+            ),
+          );
 
-        tableCells.add(TableCell(
-            child: Align(
+          tableCells.add(
+            TableCell(
+              child: Align(
                 alignment: Alignment.centerRight,
-                child: Text(
-                  warning.rightOperand.toString(),
-                ))));
+                child: Text(warning.rightOperand.toString()),
+              ),
+            ),
+          );
 
-        TableRow tableRow = TableRow(children: tableCells);
-        tableRows.add(tableRow);
-      }
-      return SingleChildScrollView(child: Table(children: tableRows));
-    });
+          TableRow tableRow = TableRow(children: tableCells);
+          tableRows.add(tableRow);
+        }
+        return SingleChildScrollView(child: Table(children: tableRows));
+      },
+    );
   }
 }

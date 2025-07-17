@@ -17,54 +17,85 @@ class ScoreDetailsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var properties =
-        getKingdomCubit(context, context.read<GameCubit>().state.kingColor!)
-            .state
-            .getProperties();
+    var properties = getKingdomCubit(
+      context,
+      context.read<GameCubit>().state.kingColor!,
+    ).state.getProperties();
 
     Widget content;
 
-    properties.sort((property, propertyToComp) =>
-        (property.crownCount * property.landCount)
-            .compareTo(propertyToComp.crownCount * propertyToComp.landCount));
+    properties.sort(
+      (property, propertyToComp) => (property.crownCount * property.landCount)
+          .compareTo(propertyToComp.crownCount * propertyToComp.landCount),
+    );
 
     var tableRows = <TableRow>[];
     for (var property in properties) {
       var tableCells = <TableCell>[];
 
-      tableCells.add(TableCell(
+      tableCells.add(
+        TableCell(
           child: Align(
-              alignment: Alignment.center,
-              child: Text('${property.landCount}'))));
-      tableCells.add(TableCell(
-          child: Align(
-        alignment: Alignment.center,
-        child: SizedBox(
-          width: 16.0,
-          height: 16.0,
-          child: LandTile(
-            landType: property.landType,
+            alignment: Alignment.center,
+            child: Text('${property.landCount}'),
           ),
         ),
-      )));
-      tableCells.add(const TableCell(
+      );
+      tableCells.add(
+        TableCell(
           child: Align(
-              alignment: Alignment.center, child: Text('×', maxLines: 1))));
-      tableCells.add(TableCell(
+            alignment: Alignment.center,
+            child: SizedBox(
+              width: 16.0,
+              height: 16.0,
+              child: LandTile(landType: property.landType),
+            ),
+          ),
+        ),
+      );
+      tableCells.add(
+        const TableCell(
           child: Align(
-              alignment: Alignment.center,
-              child: Text(property.crownCount.toString(), maxLines: 1))));
-      tableCells.add(const TableCell(
+            alignment: Alignment.center,
+            child: Text('×', maxLines: 1),
+          ),
+        ),
+      );
+      tableCells.add(
+        TableCell(
           child: Align(
-              alignment: Alignment.center, child: Text(crown, maxLines: 1))));
-      tableCells.add(const TableCell(
+            alignment: Alignment.center,
+            child: Text(property.crownCount.toString(), maxLines: 1),
+          ),
+        ),
+      );
+      tableCells.add(
+        const TableCell(
           child: Align(
-              alignment: Alignment.center, child: Text('=', maxLines: 1))));
-      tableCells.add(TableCell(
+            alignment: Alignment.center,
+            child: Text(crown, maxLines: 1),
+          ),
+        ),
+      );
+      tableCells.add(
+        const TableCell(
           child: Align(
-              alignment: Alignment.center,
-              child: Text('${property.landCount * property.crownCount}',
-                  maxLines: 1))));
+            alignment: Alignment.center,
+            child: Text('=', maxLines: 1),
+          ),
+        ),
+      );
+      tableCells.add(
+        TableCell(
+          child: Align(
+            alignment: Alignment.center,
+            child: Text(
+              '${property.landCount * property.crownCount}',
+              maxLines: 1,
+            ),
+          ),
+        ),
+      );
 
       var tableRow = TableRow(children: tableCells);
       tableRows.add(tableRow);
@@ -79,26 +110,39 @@ class ScoreDetailsWidget extends StatelessWidget {
       tableCells.add(const TableCell(child: Text('')));
       tableCells.add(const TableCell(child: Text('')));
 
-      tableCells.add(TableCell(
+      tableCells.add(
+        TableCell(
           child: Align(
-              alignment: Alignment.center,
-              child: SvgPicture.asset('$assetsquestsLocation/${questPicture[questType]}'))));
+            alignment: Alignment.center,
+            child: SvgPicture.asset(
+              '$assetsquestsLocation/${questPicture[questType]}',
+            ),
+          ),
+        ),
+      );
 
-      tableCells.add(const TableCell(
-          child: Align(alignment: Alignment.center, child: Text('='))));
+      tableCells.add(
+        const TableCell(
+          child: Align(alignment: Alignment.center, child: Text('=')),
+        ),
+      );
 
-      tableCells.add(TableCell(
+      tableCells.add(
+        TableCell(
           child: Align(
-              alignment: Alignment.center,
-              child: Text(
-                context
-                    .read<GameCubit>()
-                    .state
-                    .getCurrentPlayer()!
-                    .score
-                    .scoreQuest[questType]
-                    .toString(),
-              ))));
+            alignment: Alignment.center,
+            child: Text(
+              context
+                  .read<GameCubit>()
+                  .state
+                  .getCurrentPlayer()!
+                  .score
+                  .scoreQuest[questType]
+                  .toString(),
+            ),
+          ),
+        ),
+      );
 
       var tableRow = TableRow(children: tableCells);
       tableRows.add(tableRow);
@@ -112,28 +156,41 @@ class ScoreDetailsWidget extends StatelessWidget {
       tableCells.add(const TableCell(child: Text('')));
       tableCells.add(const TableCell(child: Text('')));
 
-      tableCells.add(TableCell(
+      tableCells.add(
+        TableCell(
           child: Align(
-              alignment: Alignment.center,
-              child: Image.asset(
-                'assets/lacour/resource.png',
-                height: 25,
-                width: 25,
-              ))));
+            alignment: Alignment.center,
+            child: Image.asset(
+              'assets/lacour/resource.png',
+              height: 25,
+              width: 25,
+            ),
+          ),
+        ),
+      );
 
-      tableCells.add(const TableCell(
-          child: Align(alignment: Alignment.center, child: Text('='))));
+      tableCells.add(
+        const TableCell(
+          child: Align(alignment: Alignment.center, child: Text('=')),
+        ),
+      );
 
-      tableCells.add(TableCell(
+      tableCells.add(
+        TableCell(
           child: Align(
-              alignment: Alignment.center,
-              child: Text(context
+            alignment: Alignment.center,
+            child: Text(
+              context
                   .read<GameCubit>()
                   .state
                   .getCurrentPlayer()!
                   .score
                   .scoreLacour
-                  .toString()))));
+                  .toString(),
+            ),
+          ),
+        ),
+      );
 
       var tableRow = TableRow(children: tableCells);
       tableRows.add(tableRow);
@@ -166,16 +223,22 @@ class ScoreDetailsWidget extends StatelessWidget {
       tableCellsTotal.add(const TableCell(child: Text('')));
       tableCellsTotal.add(const TableCell(child: Text('')));
 
-      tableCellsTotal.add(TableCell(
+      tableCellsTotal.add(
+        TableCell(
           child: Align(
-              alignment: Alignment.center,
-              child: Text(context
+            alignment: Alignment.center,
+            child: Text(
+              context
                   .read<GameCubit>()
                   .state
                   .getCurrentPlayer()!
                   .score
                   .total
-                  .toString()))));
+                  .toString(),
+            ),
+          ),
+        ),
+      );
 
       var tableRowTotal = TableRow(children: tableCellsTotal);
       tableRows.add(tableRowTotal);

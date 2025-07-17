@@ -20,7 +20,7 @@ class Game {
   }
 
   Game copyWith({KingColor? kingColor, List<Player>? players}) => Game(
-        kingColor: kingColor ?? this.kingColor,
-        players: players ?? this.players,
-      );
+    kingColor: kingColor ?? this.kingColor,
+    players: players ?? this.players,
+  );
 }

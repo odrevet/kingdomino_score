@@ -15,23 +15,23 @@ class KingdominoApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<GameCubit>(
-          create: (context) => GameCubit(),
-        ),
+        BlocProvider<GameCubit>(create: (context) => GameCubit()),
         BlocProvider<ThemeCubit>(
-            create: (context) => ThemeCubit(context.read<GameCubit>()))
+          create: (context) => ThemeCubit(context.read<GameCubit>()),
+        ),
       ],
       child: BlocBuilder<ThemeCubit, MaterialColor>(
         builder: (context, color) => MaterialApp(
-            title: 'Kingdomino Score',
-            theme: ThemeData(
-              colorScheme: ColorScheme.fromSeed(
-                brightness: MediaQuery.platformBrightnessOf(context),
-                seedColor: color,
-              ),
-              fontFamily: 'HammersmithOne',
+          title: 'Kingdomino Score',
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(
+              brightness: MediaQuery.platformBrightnessOf(context),
+              seedColor: color,
             ),
-            home: MultiBlocProvider(providers: [
+            fontFamily: 'HammersmithOne',
+          ),
+          home: MultiBlocProvider(
+            providers: [
               BlocProvider<RulesCubit>(
                 create: (BuildContext context) => RulesCubit(),
               ),
@@ -39,17 +39,25 @@ class KingdominoApp extends StatelessWidget {
                 create: (BuildContext context) => UserSelectionCubit(),
               ),
               BlocProvider<KingdomCubitPink>(
-                  create: (BuildContext context) => KingdomCubitPink()),
+                create: (BuildContext context) => KingdomCubitPink(),
+              ),
               BlocProvider<KingdomCubitYellow>(
-                  create: (BuildContext context) => KingdomCubitYellow()),
+                create: (BuildContext context) => KingdomCubitYellow(),
+              ),
               BlocProvider<KingdomCubitGreen>(
-                  create: (BuildContext context) => KingdomCubitGreen()),
+                create: (BuildContext context) => KingdomCubitGreen(),
+              ),
               BlocProvider<KingdomCubitBlue>(
-                  create: (BuildContext context) => KingdomCubitBlue()),
+                create: (BuildContext context) => KingdomCubitBlue(),
+              ),
               BlocProvider<KingdomCubitBrown>(
-                  create: (BuildContext context) => KingdomCubitBrown()),
+                create: (BuildContext context) => KingdomCubitBrown(),
+              ),
               // ignore: prefer_const_constructors
-            ], child: KingdominoWidget())),
+            ],
+            child: KingdominoWidget(),
+          ),
+        ),
       ),
     );
   }

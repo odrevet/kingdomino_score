@@ -13,15 +13,17 @@ class LandTile extends StatelessWidget {
   Widget build(BuildContext context) {
     if (landType == LandType.empty) {
       return Container(
-        color: Colors.transparent.withOpacity(0.8),
+        color: Colors.transparent.withValues(alpha: 0.8),
         child: Container(
           decoration: BoxDecoration(
-              border: Border.all(
-            width: 0.5,
-            color: MediaQuery.of(context).platformBrightness == Brightness.dark
-                ? Colors.white
-                : Colors.black,
-          )),
+            border: Border.all(
+              width: 0.5,
+              color:
+                  MediaQuery.of(context).platformBrightness == Brightness.dark
+                  ? Colors.white
+                  : Colors.black,
+            ),
+          ),
           child: child,
         ),
       );

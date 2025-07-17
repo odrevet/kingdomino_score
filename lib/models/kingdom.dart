@@ -25,13 +25,18 @@ class Kingdom {
     if (lands == null) {
       var landsCopy = [];
       for (var i = 0; i < this.kingdomSize.size; i++) {
-        landsCopy.add(List<Land>.generate(
-            this.kingdomSize.size, (j) => getLand(j, i)!.copyWith()));
+        landsCopy.add(
+          List<Land>.generate(
+            this.kingdomSize.size,
+            (j) => getLand(j, i)!.copyWith(),
+          ),
+        );
       }
     }
     return Kingdom(
-        kingdomSize: kingdomSize ?? this.kingdomSize,
-        lands: lands ?? this.lands);
+      kingdomSize: kingdomSize ?? this.kingdomSize,
+      lands: lands ?? this.lands,
+    );
   }
 
   List<List<Land>> getLands() {
@@ -104,7 +109,9 @@ class Kingdom {
     if (land == null ||
         land.landType == LandType.empty ||
         land.landType == LandType.castle ||
-        land.isMarked == true) return null;
+        land.isMarked == true) {
+      return null;
+    }
 
     if (property == null) {
       property = Property(land.landType);
@@ -150,26 +157,40 @@ List<Warning> checkKingdom(Kingdom kingdom, Extension? extension) {
           .where((land) => land.landType == landType)
           .length;
       if (count > gameSet[landType]!['count']) {
-        Warning warning =
-            Warning(count, landType, 0, '>', gameSet[landType]!['count']);
+        Warning warning = Warning(
+          count,
+          landType,
+          0,
+          '>',
+          gameSet[landType]!['count'],
+        );
         warnings.add(warning);
       }
 
       //check if too many tile with given crowns
-      for (var crownsCounter = 1;
-          crownsCounter <= gameSet[landType]!['crowns']['max'];
-          crownsCounter++) {
+      for (
+        var crownsCounter = 1;
+        crownsCounter <= gameSet[landType]!['crowns']['max'];
+        crownsCounter++
+      ) {
         var count = kingdom
             .getLands()
             .expand((i) => i)
             .toList()
-            .where((land) =>
-                land.landType == landType && land.crowns == crownsCounter)
+            .where(
+              (land) =>
+                  land.landType == landType && land.crowns == crownsCounter,
+            )
             .length;
 
         if (count > gameSet[landType]!['crowns'][crownsCounter]) {
-          Warning warning = Warning(count, landType, crownsCounter, '>',
-              gameSet[landType]!['crowns'][crownsCounter]);
+          Warning warning = Warning(
+            count,
+            landType,
+            crownsCounter,
+            '>',
+            gameSet[landType]!['crowns'][crownsCounter],
+          );
 
           warnings.add(warning);
         }

@@ -1,7 +1,7 @@
-import "package:test/test.dart";
-
 import 'package:kingdomino_score_count/models/kingdom.dart';
+import 'package:kingdomino_score_count/models/kingdom_size.dart';
 import 'package:kingdomino_score_count/models/quests/folie_des_grandeurs.dart';
+import "package:test/test.dart";
 
 /// Test crown configuration on multiple kingdoms
 /// We add crowns on lands of type 'none', which never happen in the actual
@@ -11,9 +11,9 @@ import 'package:kingdomino_score_count/models/quests/folie_des_grandeurs.dart';
 /// Each alignment scores 10 points, so we will expect 10 times the number
 /// of expected alignments
 
-_setCrowns(Kingdom kingdom, List<List<int>> crowns) {
-  for (var x = 0; x < kingdom.size; x++) {
-    for (var y = 0; y < kingdom.size; y++) {
+void _setCrowns(Kingdom kingdom, List<List<int>> crowns) {
+  for (var x = 0; x < kingdom.kingdomSize.size; x++) {
+    for (var y = 0; y < kingdom.kingdomSize.size; y++) {
       kingdom.getLand(y, x)?.crowns = crowns[y][x];
     }
   }
@@ -22,14 +22,14 @@ _setCrowns(Kingdom kingdom, List<List<int>> crowns) {
 void main() {
   ///Expect 3 alignments, either horizontal or vertical
   test("square 3x3", () {
-    var kingdom = Kingdom(size: 5, lands: []);
+    var kingdom = Kingdom(kingdomSize: KingdomSize.small, lands: []);
 
     List<List<int>> crowns = [
       [1, 1, 1, 0, 0],
       [1, 1, 1, 0, 0],
       [1, 1, 1, 0, 0],
       [0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0]
+      [0, 0, 0, 0, 0],
     ];
 
     _setCrowns(kingdom, crowns);
@@ -43,14 +43,14 @@ void main() {
   /// cannot have crown, but it should be tested anyway as it may happen in a
   /// 7x7 kingdom
   test("full", () {
-    var kingdom = Kingdom(size: 5, lands: []);
+    var kingdom = Kingdom(kingdomSize: KingdomSize.small, lands: []);
 
     List<List<int>> crowns = [
       [1, 1, 1, 1, 1],
       [1, 1, 1, 1, 1],
       [1, 1, 1, 1, 1],
       [1, 1, 1, 1, 1],
-      [1, 1, 1, 1, 1]
+      [1, 1, 1, 1, 1],
     ];
 
     _setCrowns(kingdom, crowns);
@@ -66,14 +66,14 @@ void main() {
   /// 0:1 1:2 3:3
   /// 2:1 2:2 2:3
   test("shape #1", () {
-    var kingdom = Kingdom(size: 5, lands: []);
+    var kingdom = Kingdom(kingdomSize: KingdomSize.small, lands: []);
 
     List<List<int>> crowns = [
       [1, 1, 1, 0, 0],
       [1, 1, 1, 0, 0],
       [1, 1, 1, 0, 0],
       [0, 0, 1, 0, 0],
-      [0, 0, 0, 0, 0]
+      [0, 0, 0, 0, 0],
     ];
 
     _setCrowns(kingdom, crowns);
@@ -87,14 +87,14 @@ void main() {
   ///the diagonal and the vertical alignment to be used
   /// prevent
   test("shape #2", () {
-    var kingdom = Kingdom(size: 5, lands: []);
+    var kingdom = Kingdom(kingdomSize: KingdomSize.small, lands: []);
 
     List<List<int>> crowns = [
       [0, 0, 0, 0, 1],
       [0, 0, 0, 0, 1],
       [1, 1, 1, 1, 1],
       [0, 0, 1, 0, 0],
-      [0, 1, 0, 0, 0]
+      [0, 1, 0, 0, 0],
     ];
 
     _setCrowns(kingdom, crowns);

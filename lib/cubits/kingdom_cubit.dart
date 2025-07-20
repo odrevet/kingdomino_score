@@ -11,11 +11,12 @@ import '../models/user_selection.dart';
 abstract class KingdomCubit extends ReplayCubit<Kingdom> {
   KingdomCubit() : super(Kingdom(kingdomSize: KingdomSize.small));
 
-  clear() => emit(Kingdom(kingdomSize: state.kingdomSize));
+  void clear() => emit(Kingdom(kingdomSize: state.kingdomSize));
 
-  resize(KingdomSize kingdomSize) => emit(Kingdom(kingdomSize: kingdomSize));
+  void resize(KingdomSize kingdomSize) =>
+      emit(Kingdom(kingdomSize: kingdomSize));
 
-  clearExtension() {
+  void clearExtension() {
     var kingdom = state.copyWith();
     kingdom.getLands().expand((i) => i).toList().forEach((land) {
       land.giants = 0;
@@ -25,7 +26,7 @@ abstract class KingdomCubit extends ReplayCubit<Kingdom> {
     emit(kingdom);
   }
 
-  setLand(
+  void setLand(
     int y,
     int x,
     selectedLandType,

@@ -59,7 +59,7 @@ enum KingColor {
   }
 }
 
-Map<LandType, Map<String, dynamic>> getGameSet(extension) {
+Map<LandType, Map<String, dynamic>> getGameSet(Extension? extension) {
   if (extension == Extension.ageOfGiants) {
     return gameAogSet;
   } else if (extension == Extension.laCour) {

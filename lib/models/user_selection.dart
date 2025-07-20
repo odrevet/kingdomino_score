@@ -23,21 +23,21 @@ class UserSelection {
 
   LandType? getSelectedLandType() => selectedLandType;
 
-  setSelectionMode(SelectionMode selectionMode) {
+  void setSelectionMode(SelectionMode selectionMode) {
     this.selectionMode = selectionMode;
   }
 
   SelectionMode getSelectionMode() => selectionMode;
 
-  setSelectedLandType(LandType? landType) {
+  void setSelectedLandType(LandType? landType) {
     selectedLandType = landType;
   }
 
-  setSelectedCourtier(Courtier courtier) {
+  void setSelectedCourtier(Courtier courtier) {
     selectedCourtier = courtier;
   }
 
-  copyWith({
+  UserSelection copyWith({
     SelectionMode? selectionMode,
     Extension? extension,
     LandType? selectedLandType,

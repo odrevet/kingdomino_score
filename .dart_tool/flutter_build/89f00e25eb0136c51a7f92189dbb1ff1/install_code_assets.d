@@ -1,0 +1,1 @@
+ /home/odrevet/projects/kingdomino_score_count/.dart_tool/flutter_build/89f00e25eb0136c51a7f92189dbb1ff1/native_assets.json: 

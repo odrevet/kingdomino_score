@@ -58,6 +58,33 @@ Long press on the giant button displays the giant details :
 | <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/score.jpg" width="240px" />  |
 
 
+# web release
+
+## build
+
+```
+flutter build web
+```
+
+## test
+
+```
+python -m http.server 8000 -d build/web
+```
+
+## deploy to github pages
+
+```
+cp -r build/web ~/Documents/kingdomino-score-web
+git checkout gh-pages
+cp -r ~/Documents/kingdomino-score-web/* .
+git add .
+git commit -m "update web build"
+git push
+git checkout master
+```
+
+
 # Assets credits and licenses
 
 ## Cross SVG Vector

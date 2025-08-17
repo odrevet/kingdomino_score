@@ -40,8 +40,8 @@ class Score {
       ) {
     scoreProperty = calculatePropertyScore(kingdom);
 
-    // Remove scores for quests that are no longer selected
-    scoreQuest.removeWhere((quest, score) => !selectedQuests.contains(quest));
+    // Clear all quest scores first, then only calculate for selected quests
+    scoreQuest.clear();
 
     // Update scores for currently selected quests
     for (var quest in selectedQuests) {

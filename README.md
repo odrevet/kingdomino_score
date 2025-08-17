@@ -77,8 +77,8 @@ python -m http.server 8000 -d build/web
 ```
 cp -r build/web ~/Documents/
 git checkout gh-pages
-rm -rf .
-mv -r ~/Documents/web/* .
+rm -rf *
+mv ~/Documents/web/* .
 git add .
 git commit -m "update web build"
 git push

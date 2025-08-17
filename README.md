@@ -63,7 +63,7 @@ Long press on the giant button displays the giant details :
 ## build
 
 ```
-flutter build web
+flutter build web --release
 ```
 
 ## test
@@ -77,7 +77,8 @@ python -m http.server 8000 -d build/web
 ```
 cp -r build/web ~/Documents/kingdomino-score-web
 git checkout gh-pages
-cp -r ~/Documents/kingdomino-score-web/* .
+rm -rf .
+mv -r ~/Documents/kingdomino-score-web/* .
 git add .
 git commit -m "update web build"
 git push

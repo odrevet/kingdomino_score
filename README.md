@@ -75,10 +75,10 @@ python -m http.server 8000 -d build/web
 ## deploy to github pages
 
 ```
-cp -r build/web ~/Documents/kingdomino-score-web
+cp -r build/web ~/Documents/
 git checkout gh-pages
 rm -rf .
-mv -r ~/Documents/kingdomino-score-web/* .
+mv -r ~/Documents/web/* .
 git add .
 git commit -m "update web build"
 git push

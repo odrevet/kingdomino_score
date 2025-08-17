@@ -66,6 +66,8 @@ Long press on the giant button displays the giant details :
 flutter build web --release
 ```
 
+Then remove `<base href="/">` from `build/web/index.html`
+
 ## test
 
 ```

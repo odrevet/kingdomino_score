@@ -34,12 +34,16 @@ class Score {
           : scoreQuest.values.reduce((sum, score) => sum + score));
 
   void updateScore(
-    Kingdom kingdom,
-    Extension? extension,
-    HashSet<QuestType> selectedQuests,
-  ) {
+      Kingdom kingdom,
+      Extension? extension,
+      HashSet<QuestType> selectedQuests,
+      ) {
     scoreProperty = calculatePropertyScore(kingdom);
 
+    // Remove scores for quests that are no longer selected
+    scoreQuest.removeWhere((quest, score) => !selectedQuests.contains(quest));
+
+    // Update scores for currently selected quests
     for (var quest in selectedQuests) {
       scoreQuest[quest] = _calculateQuestScore(quest, kingdom);
     }

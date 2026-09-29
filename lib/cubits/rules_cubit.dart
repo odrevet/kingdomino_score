@@ -48,4 +48,7 @@ class RulesCubit extends Cubit<Rules> {
 
   void setExtension(Extension? extension) =>
       emit(state.copyWith(extension: extension));
+
+  void setKingdomSize(KingdomSize kingdomSize) =>
+      emit(state.copyWith(kingdomSize: kingdomSize));
 }

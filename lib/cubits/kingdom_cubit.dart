@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:replay_bloc/replay_bloc.dart';
 
+import '../models/extensions/lost_treasures/lost_treasures.dart';
 import '../models/game_set.dart';
 import '../models/kingdom.dart';
 import '../models/kingdom_size.dart';
@@ -26,6 +27,13 @@ abstract class KingdomCubit extends ReplayCubit<Kingdom> {
     emit(kingdom);
   }
 
+  void placeGem(int x, int y, Gem gem, [int orientation = 0]) {
+    var kingdom = state.copyWith();
+    kingdom.gems = List.from(state.gems);
+    kingdom.placeGem(x, y, gem, orientation);
+    emit(kingdom);
+  }
+
   void setLand(
     int y,
     int x,
@@ -42,6 +50,7 @@ abstract class KingdomCubit extends ReplayCubit<Kingdom> {
         kingdom.lands[y][x] = state.getLand(x, y)!.copyWith();
       }
     }
+    kingdom.gems = List.from(state.gems);
 
     Land? land = kingdom.getLand(y, x);
 
@@ -128,7 +137,10 @@ abstract class KingdomCubit extends ReplayCubit<Kingdom> {
         break;
     }
 
-    if (isValid) emit(kingdom);
+    if (isValid) {
+      kingdom.pruneGems();
+      emit(kingdom);
+    }
   }
 }
 

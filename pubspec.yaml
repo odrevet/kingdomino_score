@@ -1,22 +1,22 @@
 name: kingdomino_score_count
 description: Kingdomino board game score calculation
 
-version: 4.0.3+29
+version: 5.0.0+30
 
 environment:
-  sdk: ^3.8.1
+  sdk: ^3.13.0
 
 dependencies:
   flutter:
     sdk: flutter
 
-  package_info_plus: ^8.0.0
-  flutter_svg: ^2.0.9
+  package_info_plus: ^10.2.1
+  flutter_svg: ^2.3.0
   flutter_bloc: ^9.1.1
   replay_bloc: ^0.3.0
-  equatable: ^2.0.0
+  equatable: ^3.0.0
   pie_chart: ^5.4.0
-  provider: ^6.1.2
+  provider: ^6.1.5+1
 
 dev_dependencies:
   test: ^1.25.0

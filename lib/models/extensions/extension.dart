@@ -1,7 +1,8 @@
 enum Extension {
   vanilla('Vanilla'),
   ageOfGiants('Age of Giants'),
-  laCour('La Cour');
+  laCour('La Cour'),
+  lostTreasures('Lost Treasures');
 
   final String displayName;
 

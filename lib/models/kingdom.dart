@@ -1,6 +1,7 @@
 import 'package:kingdomino_score_count/models/warning.dart';
 
 import 'extensions/extension.dart';
+import 'extensions/lost_treasures/lost_treasures.dart';
 import 'game_set.dart';
 import 'kingdom_size.dart';
 import 'land.dart';
@@ -9,6 +10,7 @@ import 'property.dart';
 class Kingdom {
   KingdomSize kingdomSize = KingdomSize.small;
   late List<List<Land>> lands = [];
+  List<PlacedGem> gems = [];
 
   Kingdom({required this.kingdomSize, List<List<Land>>? lands}) {
     if (lands != null) {
@@ -54,6 +56,7 @@ class Kingdom {
   void reSize(KingdomSize kingdomSize) {
     this.kingdomSize = kingdomSize;
     lands = [];
+    gems = [];
     for (var i = 0; i < kingdomSize.size; i++) {
       lands.add(List<Land>.generate(kingdomSize.size, (_) => Land()));
     }
@@ -67,6 +70,101 @@ class Kingdom {
       land.hasResource = false;
       land.courtier = null;
     });
+    gems = [];
+  }
+
+  /// Check if the 4 tiles around the interior intersection (x, y) are all
+  /// different, non-empty, non-castle landscapes.
+  bool hasFourDifferentTiles(int x, int y) {
+    if (x < 1 || y < 1 || x >= kingdomSize.size || y >= kingdomSize.size) {
+      return false;
+    }
+
+    final tiles = [
+      getLand(x - 1, y - 1),
+      getLand(x, y - 1),
+      getLand(x - 1, y),
+      getLand(x, y),
+    ];
+
+    if (tiles.any((land) =>
+        land == null ||
+        land.landType == LandType.empty ||
+        land.landType == LandType.castle)) {
+      return false;
+    }
+
+    final types = tiles.map((land) => land!.landType).toSet();
+    return types.length == 4;
+  }
+
+  void placeGem(int x, int y, Gem gem, [int orientation = 0]) {
+    gems.removeWhere((placed) => placed.x == x && placed.y == y);
+    gems.add(PlacedGem(x: x, y: y, gem: gem, orientation: orientation));
+  }
+
+  void removeGem(int x, int y) {
+    gems.removeWhere((placed) => placed.x == x && placed.y == y);
+  }
+
+  /// Remove gems whose intersection no longer has 4 different tiles.
+  void pruneGems() {
+    gems.removeWhere((placed) => !hasFourDifferentTiles(placed.x, placed.y));
+  }
+
+  /// Effective quarter of [placed] pointing at tile (x, y), or null if the
+  /// tile is not one of the 4 around the gem.
+  GemQuarter? _quarterForTile(PlacedGem placed, int x, int y) {
+    final px = placed.x;
+    final py = placed.y;
+    int position;
+    if (x == px - 1 && y == py - 1) {
+      position = 0; // topLeft
+    } else if (x == px && y == py - 1) {
+      position = 1; // topRight
+    } else if (x == px && y == py) {
+      position = 2; // bottomRight
+    } else if (x == px - 1 && y == py) {
+      position = 3; // bottomLeft
+    } else {
+      return null;
+    }
+    final quarter = placed.gem.quarterAt((position + placed.orientation) % 4);
+    return quarter;
+  }
+
+  /// Crowns added to tile (x, y) by crown quarters pointing at it.
+  int gemCrownBonus(int x, int y) {
+    int bonus = 0;
+    for (final placed in gems) {
+      final quarter = _quarterForTile(placed, x, y);
+      if (quarter != null) {
+        bonus += quarter.crowns;
+      }
+    }
+    return bonus;
+  }
+
+  /// Whether a skull quarter points at tile (x, y), cancelling its crowns.
+  bool isSkulled(int x, int y) {
+    for (final placed in gems) {
+      final quarter = _quarterForTile(placed, x, y);
+      if (quarter != null && quarter.isSkull) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /// Total crowns granted by all gem crown quarters.
+  int gemCrownBonusTotal() {
+    int total = 0;
+    for (final placed in gems) {
+      for (var p = 0; p < 4; p++) {
+        total += placed.gem.quarterAt((p - placed.orientation) % 4).crowns;
+      }
+    }
+    return total;
   }
 
   List<Property> getProperties() {
@@ -95,7 +193,9 @@ class Kingdom {
           landToAdd.landType == land.landType &&
           landToAdd.isMarked == false) {
         property.landCount++;
-        property.crownCount += landToAdd.getCrowns();
+        property.crownCount += isSkulled(x, y)
+            ? 0
+            : landToAdd.getCrowns() + gemCrownBonus(x, y);
         property.giantCount += landToAdd.giants;
         _getAdjacentLand(x, y, property);
       }
@@ -116,7 +216,9 @@ class Kingdom {
     if (property == null) {
       property = Property(land.landType);
       property.landCount++;
-      property.crownCount += land.getCrowns();
+      property.crownCount += isSkulled(x, y)
+          ? 0
+          : land.getCrowns() + gemCrownBonus(x, y);
       property.giantCount += land.giants;
     }
 

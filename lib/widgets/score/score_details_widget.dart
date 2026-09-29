@@ -25,7 +25,7 @@ class ScoreDetailsWidget extends StatelessWidget {
     Widget content;
 
     properties.sort(
-      (property, propertyToComp) => (property.crownCount * property.landCount)
+          (property, propertyToComp) => (property.crownCount * property.landCount)
           .compareTo(propertyToComp.crownCount * propertyToComp.landCount),
     );
 
@@ -101,7 +101,6 @@ class ScoreDetailsWidget extends StatelessWidget {
       tableRows.add(tableRow);
     }
 
-    //quests points
     for (var questType in context.read<RulesCubit>().state.selectedQuests) {
       var tableCells = <TableCell>[];
 
@@ -196,7 +195,6 @@ class ScoreDetailsWidget extends StatelessWidget {
       tableRows.add(tableRow);
     }
 
-    //SUM
     if (context.read<GameCubit>().state.getCurrentPlayer()!.score.total > 0 &&
         showTotal == true) {
       var tableCells = <TableCell>[];
@@ -213,7 +211,6 @@ class ScoreDetailsWidget extends StatelessWidget {
       var tableRow = TableRow(children: tableCells);
       tableRows.add(tableRow);
 
-      //SUM
       var tableCellsTotal = <TableCell>[];
 
       tableCellsTotal.add(const TableCell(child: Text('')));

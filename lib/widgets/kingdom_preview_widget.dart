@@ -5,17 +5,17 @@ import 'package:kingdomino_score_count/models/kingdom.dart';
 
 import 'kingdom_board.dart';
 
-class KingdomWidget extends StatelessWidget {
+class KingdomPreviewWidget extends StatelessWidget {
   final Kingdom kingdom;
 
-  const KingdomWidget({required this.kingdom, super.key});
+  const KingdomPreviewWidget({required this.kingdom, super.key});
 
   @override
   Widget build(BuildContext context) {
     final extension = context.read<RulesCubit>().state.extension;
     return KingdomBoard(
       kingdom: kingdom,
-      editable: true,
+      editable: false,
       extension: extension,
     );
   }

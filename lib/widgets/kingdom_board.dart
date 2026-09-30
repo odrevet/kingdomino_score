@@ -84,10 +84,7 @@ class KingdomBoard extends StatelessWidget {
                         color: Colors.grey.withValues(alpha: 0.5),
                         spreadRadius: 1,
                         blurRadius: 2,
-                        offset: const Offset(
-                          0,
-                          3,
-                        ),
+                        offset: const Offset(0, 3),
                       ),
                     ],
                   ),
@@ -160,11 +157,7 @@ class KingdomBoard extends StatelessWidget {
     );
   }
 
-  List<Widget> _buildGemOverlays(
-    BuildContext context,
-    int n,
-    double cell,
-  ) {
+  List<Widget> _buildGemOverlays(BuildContext context, int n, double cell) {
     final widgets = <Widget>[];
     for (var kx = 1; kx < n; kx++) {
       for (var ky = 1; ky < n; ky++) {
@@ -197,9 +190,9 @@ class KingdomBoard extends StatelessWidget {
       child: GestureDetector(
         onTap: editable
             ? () => showDialog<void>(
-                  context: context,
-                  builder: (context) => GemDialogWidget(x: kx, y: ky),
-                )
+                context: context,
+                builder: (context) => GemDialogWidget(x: kx, y: ky),
+              )
             : null,
         child: Container(
           decoration: BoxDecoration(
@@ -229,9 +222,9 @@ class KingdomBoard extends StatelessWidget {
       child: GestureDetector(
         onTap: editable
             ? () => showDialog<void>(
-                  context: context,
-                  builder: (context) => GemDialogWidget(x: kx, y: ky),
-                )
+                context: context,
+                builder: (context) => GemDialogWidget(x: kx, y: ky),
+              )
             : null,
         child: Opacity(
           opacity: 0.8,
@@ -258,9 +251,8 @@ class KingdomBoard extends StatelessWidget {
             return Stack(
               children: [
                 GridView.builder(
-                  physics: editable
-                      ? null
-                      : const NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
+                  padding: EdgeInsets.zero,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: gridStateLength,
                   ),

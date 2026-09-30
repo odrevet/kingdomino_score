@@ -25,7 +25,33 @@ class KingdominoWidget extends StatefulWidget {
 }
 
 class _KingdominoWidgetState extends State<KingdominoWidget> {
-  _KingdominoWidgetState();
+  Widget _fixedKingdom(BuildContext context, Kingdom kingdom) {
+    return ScrollConfiguration(
+      behavior: ScrollConfiguration.of(context).copyWith(
+        physics: const NeverScrollableScrollPhysics(),
+        overscroll: false,
+        scrollbars: false,
+      ),
+      child: KingdomWidget(kingdom: kingdom),
+    );
+  }
+
+  void _showWarnings(BuildContext context) {
+    showDialog<void>(
+      context: context,
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          content: WarningsWidget(),
+          actions: <Widget>[
+            TextButton(
+              child: const Icon(Icons.done, color: Colors.black87),
+              onPressed: () => Navigator.of(dialogContext).pop(),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,100 +59,67 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
       builder: (context, rules) {
         return BlocBuilder<GameCubit, Game>(
           builder: (context, game) {
-            final kingColor = game.kingColor;
-            final kingdomCubit = getKingdomCubit(context, kingColor!);
+            final kingdomCubit = getKingdomCubit(context, game.kingColor!);
+            final warnings = game.getCurrentPlayer()!.warnings;
 
             return BlocBuilder<KingdomCubit, Kingdom>(
               bloc: kingdomCubit,
               builder: (context, kingdom) {
                 return Scaffold(
-                    appBar: BoardAppBar(),
-                    body: Stack(
-                      children: [
-                        OrientationBuilder(
-                          builder: (orientationBuilderContext, orientation) {
-                            if (orientation == Orientation.portrait) {
-                              return Column(
-                                children: <Widget>[
-                                  // ignore: prefer_const_constructors
-                                  Expanded(
-                                    flex: 4,
-                                    // ignore: prefer_const_constructors
-                                    child: ScoreWidget(),
-                                  ),
-                                  Expanded(
-                                    flex: 5,
-                                    child: KingdomWidget(kingdom: kingdom),
-                                  ),
-                                  TileBar(
-                                    extension: rules.extension,
-                                    verticalAlign: false,
-                                  ),
-                                ],
-                              );
-                            } else {
-                              return Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: <Widget>[
-                                  // ignore: prefer_const_constructors
-                                  Expanded(child: ScoreWidget()),
-                                  KingdomWidget(kingdom: kingdom),
-                                  TileBar(
-                                    extension: rules.extension,
-                                    verticalAlign: true,
-                                  ),
-                                ],
-                              );
-                            }
-                          },
-                        ),
-                        if (game.getCurrentPlayer()!.warnings.isNotEmpty)
-                          Positioned(
-                            top: 8,
-                            right: 8,
-                            child: FloatingActionButton(
-                              mini: true,
-                              child: Badge(
-                                label: Text(
-                                  game
-                                      .getCurrentPlayer()!
-                                      .warnings
-                                      .length
-                                      .toString(),
+                  appBar: BoardAppBar(),
+                  body: Stack(
+                    children: [
+                      OrientationBuilder(
+                        builder: (context, orientation) {
+                          if (orientation == Orientation.portrait) {
+                            return Column(
+                              children: <Widget>[
+                                Expanded(flex: 4, child: ScoreWidget()),
+                                Expanded(
+                                  flex: 5,
+                                  child: _fixedKingdom(context, kingdom),
                                 ),
-                                child: const Icon(Icons.warning),
+                                TileBar(
+                                  extension: rules.extension,
+                                  verticalAlign: false,
+                                ),
+                              ],
+                            );
+                          }
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: <Widget>[
+                              Expanded(child: ScoreWidget()),
+                              _fixedKingdom(context, kingdom),
+                              TileBar(
+                                extension: rules.extension,
+                                verticalAlign: true,
                               ),
-                              onPressed: () {
-                                showDialog<void>(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      content: WarningsWidget(),
-                                      actions: <Widget>[
-                                        TextButton(
-                                          child: const Icon(
-                                            Icons.done,
-                                            color: Colors.black87,
-                                          ),
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
-                              },
+                            ],
+                          );
+                        },
+                      ),
+                      if (warnings.isNotEmpty)
+                        Positioned(
+                          top: 8,
+                          right: 8,
+                          child: FloatingActionButton(
+                            mini: true,
+                            onPressed: () => _showWarnings(context),
+                            child: Badge(
+                              label: Text(warnings.length.toString()),
+                              child: const Icon(Icons.warning),
                             ),
                           ),
-                      ],
-                    ),
+                        ),
+                    ],
+                  ),
                 );
-                },
-              );
-            },
-          );
-        },
-      );
+              },
+            );
+          },
+        );
+      },
+    );
   }
 }

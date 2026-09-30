@@ -83,7 +83,7 @@ class _GlobalMenuAppBarState extends State<GlobalMenuAppBar> {
                   Extension.vanilla,
                   Extension.ageOfGiants,
                   Extension.laCour,
-                  //Extension.lostTreasures,
+                  Extension.lostTreasures,
                 ].map<DropdownMenuItem<Extension>>((Extension value) {
                   Widget child;
 

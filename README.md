@@ -62,21 +62,22 @@ Long press on the giant button displays the giant details :
 
 ## build
 
-```
-flutter build web --release
+```sh
+flutter build web --release --base-href /kingdomino_score/
 ```
 
 Then remove `<base href="/">` from `build/web/index.html`
 
 ## test
 
-```
+```sh
 python -m http.server 8000 -d build/web
 ```
 
 ## deploy to github pages
 
-```
+```sh
+flutter build web --release --base-href /kingdomino_score/
 cp -r build/web ~/Documents/
 git checkout gh-pages
 rm -rf *

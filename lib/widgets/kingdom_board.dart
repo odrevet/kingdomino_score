@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kingdomino_score_count/cubits/domains_mode_cubit.dart';
 import 'package:kingdomino_score_count/cubits/game_cubit.dart';
 import 'package:kingdomino_score_count/cubits/kingdom_cubit.dart';
 import 'package:kingdomino_score_count/cubits/rules_cubit.dart';
 import 'package:kingdomino_score_count/cubits/theme_cubit.dart';
 import 'package:kingdomino_score_count/cubits/user_selection_cubit.dart';
+import 'package:kingdomino_score_count/models/domain.dart';
 import 'package:kingdomino_score_count/models/extensions/age_of_giants.dart';
 import 'package:kingdomino_score_count/models/extensions/extension.dart';
 import 'package:kingdomino_score_count/models/extensions/lacour/lacour.dart';
@@ -13,6 +15,7 @@ import 'package:kingdomino_score_count/models/kingdom.dart';
 import 'package:kingdomino_score_count/models/land.dart';
 import 'package:kingdomino_score_count/models/user_selection.dart';
 
+import 'domain_borders_painter.dart';
 import 'gem_dialog.dart';
 import 'gem_widget.dart';
 import 'kingdomino_widget.dart';
@@ -157,6 +160,50 @@ class KingdomBoard extends StatelessWidget {
     );
   }
 
+  List<Widget> _buildDomainOverlays(int n, double cell) {
+    final domains = kingdom.computeDomains();
+    return [
+      Positioned.fill(
+        child: IgnorePointer(
+          child: CustomPaint(
+            painter: DomainBordersPainter(domains: domains, n: n, cell: cell),
+          ),
+        ),
+      ),
+      for (final domain in domains) _buildDomainBadge(domain, cell),
+    ];
+  }
+
+  Widget _buildDomainBadge(Domain domain, double cell) {
+    return Positioned(
+      left: domain.anchorCol * cell,
+      top: domain.anchorRow * cell,
+      width: cell,
+      height: cell,
+      child: IgnorePointer(
+        child: Align(
+          alignment: Alignment.bottomRight,
+          child: Container(
+            margin: const EdgeInsets.all(2),
+            padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 1),
+            decoration: BoxDecoration(
+              color: Colors.black87,
+              borderRadius: BorderRadius.circular(4),
+            ),
+            child: Text(
+              '${domain.score}',
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: cell / 4,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   List<Widget> _buildGemOverlays(BuildContext context, int n, double cell) {
     final widgets = <Widget>[];
     for (var kx = 1; kx < n; kx++) {
@@ -190,9 +237,9 @@ class KingdomBoard extends StatelessWidget {
       child: GestureDetector(
         onTap: editable
             ? () => showDialog<void>(
-                context: context,
-                builder: (context) => GemDialogWidget(x: kx, y: ky),
-              )
+          context: context,
+          builder: (context) => GemDialogWidget(x: kx, y: ky),
+        )
             : null,
         child: Container(
           decoration: BoxDecoration(
@@ -206,12 +253,12 @@ class KingdomBoard extends StatelessWidget {
   }
 
   Widget _buildPlacedGem(
-    BuildContext context,
-    int kx,
-    int ky,
-    PlacedGem placed,
-    double cell,
-  ) {
+      BuildContext context,
+      int kx,
+      int ky,
+      PlacedGem placed,
+      double cell,
+      ) {
     final center = Offset(ky * cell, kx * cell);
     final gemSize = cell * 0.6;
     return Positioned(
@@ -222,9 +269,9 @@ class KingdomBoard extends StatelessWidget {
       child: GestureDetector(
         onTap: editable
             ? () => showDialog<void>(
-                context: context,
-                builder: (context) => GemDialogWidget(x: kx, y: ky),
-              )
+          context: context,
+          builder: (context) => GemDialogWidget(x: kx, y: ky),
+        )
             : null,
         child: Opacity(
           opacity: 0.8,
@@ -248,20 +295,27 @@ class KingdomBoard extends StatelessWidget {
         child: LayoutBuilder(
           builder: (context, constraints) {
             final cell = constraints.maxWidth / gridStateLength;
-            return Stack(
-              children: [
-                GridView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  padding: EdgeInsets.zero,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: gridStateLength,
-                  ),
-                  itemBuilder: _buildLands,
-                  itemCount: gridStateLength * gridStateLength,
-                ),
-                if (extension == Extension.lostTreasures)
-                  ..._buildGemOverlays(context, gridStateLength, cell),
-              ],
+            return BlocBuilder<DomainsModeCubit, bool>(
+              bloc: domainsModeCubit,
+              builder: (context, domainsMode) {
+                return Stack(
+                  children: [
+                    GridView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      padding: EdgeInsets.zero,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: gridStateLength,
+                      ),
+                      itemBuilder: _buildLands,
+                      itemCount: gridStateLength * gridStateLength,
+                    ),
+                    if (domainsMode)
+                      ..._buildDomainOverlays(gridStateLength, cell),
+                    if (extension == Extension.lostTreasures)
+                      ..._buildGemOverlays(context, gridStateLength, cell),
+                  ],
+                );
+              },
             );
           },
         ),

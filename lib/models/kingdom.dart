@@ -112,6 +112,16 @@ class Kingdom {
     gems.removeWhere((placed) => !hasFourDifferentTiles(placed.x, placed.y));
   }
 
+  /// Whether the kingdom has all 5 gem colors. The joker gem counts as any
+  /// one missing color.
+  bool get hasAllGemTypes {
+    final colors = gems.map((g) => g.gem.color).toSet();
+    final realColors = colors.where((c) => c != GemColor.joker).toSet();
+    final hasJoker = colors.contains(GemColor.joker);
+    final distinctReal = realColors.length;
+    return distinctReal == 5 || (distinctReal == 4 && hasJoker);
+  }
+
   /// Effective quarter of [placed] pointing at tile (x, y), or null if the
   /// tile is not one of the 4 around the gem.
   GemQuarter? _quarterForTile(PlacedGem placed, int x, int y) {

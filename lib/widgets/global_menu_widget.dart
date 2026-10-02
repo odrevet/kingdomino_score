@@ -69,6 +69,14 @@ class _GlobalMenuWidgetState extends State<GlobalMenuWidget> {
                 },
               );
 
+              final lostTreasures =
+                  rules.extension == Extension.lostTreasures;
+              final hasAllGemsByKing = {
+                for (final king in kings)
+                  king: getKingdomCubit(context, king).state.hasAllGemTypes,
+              };
+              final anyHasAllGems = hasAllGemsByKing.values.any((v) => v);
+
               return OrientationBuilder(
                 builder: (context, orientation) {
                   final crossAxisCount = orientation == Orientation.portrait
@@ -88,6 +96,9 @@ class _GlobalMenuWidgetState extends State<GlobalMenuWidget> {
                       final player = game.getPlayerByColor(kingColor);
                       final score = player.score.total;
                       final warnings = player.warnings;
+                      final isWinner = lostTreasures && anyHasAllGems
+                          ? hasAllGemsByKing[kingColor]!
+                          : (score == maxScore && score > 0);
 
                       return BlocBuilder<KingdomCubit, Kingdom>(
                         bloc: getKingdomCubit(context, kingColor),
@@ -131,6 +142,17 @@ class _GlobalMenuWidgetState extends State<GlobalMenuWidget> {
                                               width: 28,
                                             ),
                                           ),
+                                          if (isWinner)
+                                            const Padding(
+                                              padding: EdgeInsets.only(
+                                                left: 4.0,
+                                              ),
+                                              child: Icon(
+                                                Icons.emoji_events,
+                                                color: Colors.amber,
+                                                size: 20,
+                                              ),
+                                            ),
                                           const SizedBox(width: 8.0),
                                           Text(
                                             score.toString(),
@@ -159,16 +181,7 @@ class _GlobalMenuWidgetState extends State<GlobalMenuWidget> {
                                       ),
                                     ),
                                   ),
-                                if (score == maxScore && score > 0)
-                                  const Positioned(
-                                    top: 4,
-                                    left: 4,
-                                    child: Icon(
-                                      Icons.emoji_events,
-                                      color: Colors.amber,
-                                      size: 28,
-                                    ),
-                                  ),
+
                               ],
                             ),
                           );

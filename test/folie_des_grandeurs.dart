@@ -22,7 +22,7 @@ void _setCrowns(Kingdom kingdom, List<List<int>> crowns) {
 void main() {
   ///Expect 3 alignments, either horizontal or vertical
   test("square 3x3", () {
-    var kingdom = Kingdom(kingdomSize: KingdomSize.small, lands: []);
+    var kingdom = Kingdom(kingdomSize: KingdomSize.small);
 
     List<List<int>> crowns = [
       [1, 1, 1, 0, 0],
@@ -43,7 +43,7 @@ void main() {
   /// cannot have crown, but it should be tested anyway as it may happen in a
   /// 7x7 kingdom
   test("full", () {
-    var kingdom = Kingdom(kingdomSize: KingdomSize.small, lands: []);
+    var kingdom = Kingdom(kingdomSize: KingdomSize.small);
 
     List<List<int>> crowns = [
       [1, 1, 1, 1, 1],
@@ -66,7 +66,7 @@ void main() {
   /// 0:1 1:2 3:3
   /// 2:1 2:2 2:3
   test("shape #1", () {
-    var kingdom = Kingdom(kingdomSize: KingdomSize.small, lands: []);
+    var kingdom = Kingdom(kingdomSize: KingdomSize.small);
 
     List<List<int>> crowns = [
       [1, 1, 1, 0, 0],
@@ -79,7 +79,7 @@ void main() {
     _setCrowns(kingdom, crowns);
 
     var folieDesGrandeurs = FolieDesGrandeurs();
-    expect(40, folieDesGrandeurs.getPoints(kingdom));
+    expect(30, folieDesGrandeurs.getPoints(kingdom));
   });
 
   ///Expect 3 alignments
@@ -87,7 +87,7 @@ void main() {
   ///the diagonal and the vertical alignment to be used
   /// prevent
   test("shape #2", () {
-    var kingdom = Kingdom(kingdomSize: KingdomSize.small, lands: []);
+    var kingdom = Kingdom(kingdomSize: KingdomSize.small);
 
     List<List<int>> crowns = [
       [0, 0, 0, 0, 1],

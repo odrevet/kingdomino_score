@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-enum GemColor { blue, yellow, green, red, pink }
+enum GemColor { blue, yellow, green, red, pink, joker }
 
 extension GemColorX on GemColor {
   Color get color {
@@ -15,6 +15,8 @@ extension GemColorX on GemColor {
         return Colors.red;
       case GemColor.pink:
         return Colors.pink;
+      case GemColor.joker:
+        return Colors.purple;
     }
   }
 }
@@ -86,115 +88,47 @@ class PlacedGem {
 
 /// Fake set of gems (the real extension is not released yet).
 /// 5 colors, 3 copies each, with varied quarter patterns.
-const List<Gem> fakeGems = [
-  // blue
+const List<Gem> gems = [
   Gem(
-    color: GemColor.blue,
-    topLeft: GemQuarter.crown3,
-    topRight: GemQuarter.blank,
+    color: GemColor.red,
+    topLeft: GemQuarter.crown1,
+    topRight: GemQuarter.crown2,
     bottomLeft: GemQuarter.blank,
     bottomRight: GemQuarter.blank,
   ),
   Gem(
-    color: GemColor.blue,
+    color: GemColor.yellow,
     topLeft: GemQuarter.crown2,
     topRight: GemQuarter.blank,
     bottomLeft: GemQuarter.blank,
     bottomRight: GemQuarter.crown1,
   ),
   Gem(
-    color: GemColor.blue,
-    topLeft: GemQuarter.skull,
-    topRight: GemQuarter.blank,
-    bottomLeft: GemQuarter.blank,
-    bottomRight: GemQuarter.crown3,
-  ),
-  // yellow
-  Gem(
-    color: GemColor.yellow,
-    topLeft: GemQuarter.crown3,
-    topRight: GemQuarter.blank,
+    color: GemColor.green,
+    topLeft: GemQuarter.crown2,
+    topRight: GemQuarter.crown1,
     bottomLeft: GemQuarter.blank,
     bottomRight: GemQuarter.blank,
   ),
   Gem(
-    color: GemColor.yellow,
+    color: GemColor.blue,
+    topLeft: GemQuarter.crown3,
+    topRight: GemQuarter.blank,
+    bottomLeft: GemQuarter.blank,
+    bottomRight: GemQuarter.skull,
+  ),
+  Gem(
+    color: GemColor.pink,
     topLeft: GemQuarter.crown1,
     topRight: GemQuarter.crown1,
     bottomLeft: GemQuarter.crown1,
     bottomRight: GemQuarter.blank,
   ),
   Gem(
-    color: GemColor.yellow,
-    topLeft: GemQuarter.skull,
-    topRight: GemQuarter.blank,
-    bottomLeft: GemQuarter.blank,
-    bottomRight: GemQuarter.crown3,
-  ),
-  // green
-  Gem(
-    color: GemColor.green,
-    topLeft: GemQuarter.crown2,
-    topRight: GemQuarter.blank,
-    bottomLeft: GemQuarter.blank,
-    bottomRight: GemQuarter.crown1,
-  ),
-  Gem(
-    color: GemColor.green,
-    topLeft: GemQuarter.blank,
-    topRight: GemQuarter.skull,
-    bottomLeft: GemQuarter.crown2,
-    bottomRight: GemQuarter.blank,
-  ),
-  Gem(
-    color: GemColor.green,
-    topLeft: GemQuarter.crown3,
-    topRight: GemQuarter.blank,
-    bottomLeft: GemQuarter.blank,
-    bottomRight: GemQuarter.blank,
-  ),
-  // red
-  Gem(
-    color: GemColor.red,
-    topLeft: GemQuarter.skull,
-    topRight: GemQuarter.blank,
-    bottomLeft: GemQuarter.blank,
-    bottomRight: GemQuarter.crown3,
-  ),
-  Gem(
-    color: GemColor.red,
+    color: GemColor.joker,
     topLeft: GemQuarter.crown1,
-    topRight: GemQuarter.crown1,
-    bottomLeft: GemQuarter.crown1,
-    bottomRight: GemQuarter.blank,
-  ),
-  Gem(
-    color: GemColor.red,
-    topLeft: GemQuarter.crown2,
-    topRight: GemQuarter.blank,
-    bottomLeft: GemQuarter.blank,
-    bottomRight: GemQuarter.crown1,
-  ),
-  // pink
-  Gem(
-    color: GemColor.pink,
-    topLeft: GemQuarter.blank,
-    topRight: GemQuarter.skull,
-    bottomLeft: GemQuarter.crown2,
-    bottomRight: GemQuarter.blank,
-  ),
-  Gem(
-    color: GemColor.pink,
-    topLeft: GemQuarter.crown3,
     topRight: GemQuarter.blank,
     bottomLeft: GemQuarter.blank,
     bottomRight: GemQuarter.blank,
-  ),
-  Gem(
-    color: GemColor.pink,
-    topLeft: GemQuarter.skull,
-    topRight: GemQuarter.blank,
-    bottomLeft: GemQuarter.blank,
-    bottomRight: GemQuarter.crown3,
   ),
 ];

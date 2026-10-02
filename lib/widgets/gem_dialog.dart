@@ -29,19 +29,26 @@ class _GemDialogWidgetState extends State<GemDialogWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return SimpleDialog(
-      title: const Text('Choose a gem'),
-      children: [
-        for (var i = 0; i < fakeGems.length; i++)
-          _GemOption(
-            gem: fakeGems[i],
-            orientation: _orientations[i] ?? 0,
-            onRotate: () => setState(() {
-              _orientations[i] = ((_orientations[i] ?? 0) + 1) % 4;
-            }),
-            onSelect: () => _place(fakeGems[i], _orientations[i] ?? 0),
+    return Dialog(
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        child: IntrinsicWidth(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              for (var i = 0; i < gems.length; i++)
+                _GemOption(
+                  gem: gems[i],
+                  orientation: _orientations[i] ?? 0,
+                  onRotate: () => setState(() {
+                    _orientations[i] = ((_orientations[i] ?? 0) + 1) % 4;
+                  }),
+                  onSelect: () => _place(gems[i], _orientations[i] ?? 0),
+                ),
+            ],
           ),
-      ],
+        ),
+      ),
     );
   }
 }
@@ -61,20 +68,22 @@ class _GemOption extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SimpleDialogOption(
-      onPressed: onSelect,
-      child: Row(
-        children: [
-          GemWidget(gem: gem, orientation: orientation, size: 48),
-          const SizedBox(width: 12),
-          const Expanded(child: Text('Place')),
-          IconButton(
-            icon: const Icon(Icons.rotate_right),
-            tooltip: 'Rotate',
-            onPressed: onRotate,
-          ),
-        ],
+    return InkWell(
+      onTap: onSelect,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            GemWidget(gem: gem, orientation: orientation, size: 48),
+            const SizedBox(width: 8),
+            IconButton(
+              icon: const Icon(Icons.rotate_right),
+              tooltip: 'Rotate',
+              onPressed: onRotate,
+            ),
+          ],
+        ),
       ),
     );
-  }
-}
+  }}

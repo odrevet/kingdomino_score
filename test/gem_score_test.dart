@@ -94,4 +94,39 @@ void main() {
     expect(kingdom.gemCrownBonus(1, 0), 3);
     expect(kingdom.gemCrownBonus(0, 0), 0);
   });
+
+  test("hasAllGemTypes is false without all 5 colors", () {
+    var kingdom = Kingdom(kingdomSize: KingdomSize.small);
+    kingdom.placeGem(1, 1, const Gem(color: GemColor.blue, topLeft: GemQuarter.blank, topRight: GemQuarter.blank, bottomLeft: GemQuarter.blank, bottomRight: GemQuarter.blank));
+    kingdom.placeGem(2, 1, const Gem(color: GemColor.red, topLeft: GemQuarter.blank, topRight: GemQuarter.blank, bottomLeft: GemQuarter.blank, bottomRight: GemQuarter.blank));
+    kingdom.placeGem(1, 2, const Gem(color: GemColor.green, topLeft: GemQuarter.blank, topRight: GemQuarter.blank, bottomLeft: GemQuarter.blank, bottomRight: GemQuarter.blank));
+    kingdom.placeGem(2, 2, const Gem(color: GemColor.yellow, topLeft: GemQuarter.blank, topRight: GemQuarter.blank, bottomLeft: GemQuarter.blank, bottomRight: GemQuarter.blank));
+    expect(kingdom.hasAllGemTypes, isFalse);
+  });
+
+  test("hasAllGemTypes is true with all 5 colors", () {
+    var kingdom = Kingdom(kingdomSize: KingdomSize.small);
+    kingdom.placeGem(1, 1, const Gem(color: GemColor.blue, topLeft: GemQuarter.blank, topRight: GemQuarter.blank, bottomLeft: GemQuarter.blank, bottomRight: GemQuarter.blank));
+    kingdom.placeGem(2, 1, const Gem(color: GemColor.red, topLeft: GemQuarter.blank, topRight: GemQuarter.blank, bottomLeft: GemQuarter.blank, bottomRight: GemQuarter.blank));
+    kingdom.placeGem(1, 2, const Gem(color: GemColor.green, topLeft: GemQuarter.blank, topRight: GemQuarter.blank, bottomLeft: GemQuarter.blank, bottomRight: GemQuarter.blank));
+    kingdom.placeGem(2, 2, const Gem(color: GemColor.yellow, topLeft: GemQuarter.blank, topRight: GemQuarter.blank, bottomLeft: GemQuarter.blank, bottomRight: GemQuarter.blank));
+    kingdom.placeGem(3, 1, const Gem(color: GemColor.pink, topLeft: GemQuarter.blank, topRight: GemQuarter.blank, bottomLeft: GemQuarter.blank, bottomRight: GemQuarter.blank));
+    expect(kingdom.hasAllGemTypes, isTrue);
+  });
+
+  test("joker substitutes for one missing color", () {
+    var kingdom = Kingdom(kingdomSize: KingdomSize.small);
+    kingdom.placeGem(1, 1, const Gem(color: GemColor.blue, topLeft: GemQuarter.blank, topRight: GemQuarter.blank, bottomLeft: GemQuarter.blank, bottomRight: GemQuarter.blank));
+    kingdom.placeGem(2, 1, const Gem(color: GemColor.red, topLeft: GemQuarter.blank, topRight: GemQuarter.blank, bottomLeft: GemQuarter.blank, bottomRight: GemQuarter.blank));
+    kingdom.placeGem(1, 2, const Gem(color: GemColor.green, topLeft: GemQuarter.blank, topRight: GemQuarter.blank, bottomLeft: GemQuarter.blank, bottomRight: GemQuarter.blank));
+    kingdom.placeGem(2, 2, const Gem(color: GemColor.yellow, topLeft: GemQuarter.blank, topRight: GemQuarter.blank, bottomLeft: GemQuarter.blank, bottomRight: GemQuarter.blank));
+    kingdom.placeGem(3, 2, const Gem(color: GemColor.joker, topLeft: GemQuarter.blank, topRight: GemQuarter.blank, bottomLeft: GemQuarter.blank, bottomRight: GemQuarter.blank));
+    expect(kingdom.hasAllGemTypes, isTrue);
+  });
+
+  test("joker alone does not count as all 5 colors", () {
+    var kingdom = Kingdom(kingdomSize: KingdomSize.small);
+    kingdom.placeGem(3, 2, const Gem(color: GemColor.joker, topLeft: GemQuarter.blank, topRight: GemQuarter.blank, bottomLeft: GemQuarter.blank, bottomRight: GemQuarter.blank));
+    expect(kingdom.hasAllGemTypes, isFalse);
+  });
 }

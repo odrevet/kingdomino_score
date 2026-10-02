@@ -10,7 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  package_info_plus: ^10.2.1
+  package_info_plus: ^10.2.2
   flutter_svg: ^2.3.0
   flutter_bloc: ^9.1.1
   replay_bloc: ^0.3.0

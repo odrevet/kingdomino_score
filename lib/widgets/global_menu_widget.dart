@@ -61,16 +61,12 @@ class _GlobalMenuWidgetState extends State<GlobalMenuWidget> {
 
           return BlocBuilder<GameCubit, Game>(
             builder: (context, game) {
-              final maxScore = kings.fold<int>(
-                0,
-                (max, king) {
-                  final s = game.getPlayerByColor(king).score.total;
-                  return s > max ? s : max;
-                },
-              );
+              final maxScore = kings.fold<int>(0, (max, king) {
+                final s = game.getPlayerByColor(king).score.total;
+                return s > max ? s : max;
+              });
 
-              final lostTreasures =
-                  rules.extension == Extension.lostTreasures;
+              final lostTreasures = rules.extension == Extension.lostTreasures;
               final hasAllGemsByKing = {
                 for (final king in kings)
                   king: getKingdomCubit(context, king).state.hasAllGemTypes,
@@ -125,11 +121,12 @@ class _GlobalMenuWidgetState extends State<GlobalMenuWidget> {
                                       Expanded(
                                         child: KingdomPreviewWidget(
                                           kingdom: kingdom,
+                                          kingColor: kingColor,
                                         ),
                                       ),
                                       Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                        MainAxisAlignment.center,
                                         children: [
                                           ColorFiltered(
                                             colorFilter: ColorFilter.mode(
@@ -172,16 +169,13 @@ class _GlobalMenuWidgetState extends State<GlobalMenuWidget> {
                                     top: 4,
                                     right: 4,
                                     child: Badge(
-                                      label: Text(
-                                        warnings.length.toString(),
-                                      ),
+                                      label: Text(warnings.length.toString()),
                                       child: const Icon(
                                         Icons.warning,
                                         color: Colors.red,
                                       ),
                                     ),
                                   ),
-
                               ],
                             ),
                           );

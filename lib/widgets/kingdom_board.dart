@@ -11,6 +11,7 @@ import 'package:kingdomino_score_count/models/extensions/age_of_giants.dart';
 import 'package:kingdomino_score_count/models/extensions/extension.dart';
 import 'package:kingdomino_score_count/models/extensions/lacour/lacour.dart';
 import 'package:kingdomino_score_count/models/extensions/lost_treasures/lost_treasures.dart';
+import 'package:kingdomino_score_count/models/game_set.dart';
 import 'package:kingdomino_score_count/models/kingdom.dart';
 import 'package:kingdomino_score_count/models/land.dart';
 import 'package:kingdomino_score_count/models/quests/quest.dart';
@@ -29,11 +30,13 @@ class KingdomBoard extends StatelessWidget {
   final Kingdom kingdom;
   final bool editable;
   final Extension extension;
+  final KingColor? kingColor;
 
   const KingdomBoard({
     required this.kingdom,
     required this.editable,
     required this.extension,
+    this.kingColor,
     super.key,
   });
 
@@ -46,7 +49,9 @@ class KingdomBoard extends StatelessWidget {
   }
 
   Widget _buildCastle(BuildContext context) {
-    final castle = CastleTile(context.read<ThemeCubit>().state);
+    final castle = CastleTile(
+      kingColor?.color ?? context.read<ThemeCubit>().state,
+    );
     if (!domainsModeCubit.state) return castle;
     final gain = _questGain(context);
     if (gain <= 0) return castle;

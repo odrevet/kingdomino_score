@@ -44,8 +44,6 @@ class ScoreCalculator extends StatelessWidget {
         ),
         BlocListener<KingdomCubitBlue, Kingdom>(
           listener: (context, kingdom) {
-            // ignore: avoid_print
-            print('SCORECALC blue gems=${kingdom.gems.length}');
             context.read<GameCubit>().calculateScore(
               KingColor.blue,
               kingdom,

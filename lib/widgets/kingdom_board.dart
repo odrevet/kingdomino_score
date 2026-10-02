@@ -13,8 +13,11 @@ import 'package:kingdomino_score_count/models/extensions/lacour/lacour.dart';
 import 'package:kingdomino_score_count/models/extensions/lost_treasures/lost_treasures.dart';
 import 'package:kingdomino_score_count/models/kingdom.dart';
 import 'package:kingdomino_score_count/models/land.dart';
+import 'package:kingdomino_score_count/models/quests/quest.dart';
+import 'package:kingdomino_score_count/models/score.dart';
 import 'package:kingdomino_score_count/models/user_selection.dart';
 
+import 'alignment_strikes_painter.dart';
 import 'domain_borders_painter.dart';
 import 'gem_dialog.dart';
 import 'gem_widget.dart';
@@ -34,6 +37,59 @@ class KingdomBoard extends StatelessWidget {
     super.key,
   });
 
+  int _questGain(BuildContext context) {
+    final quests = context.read<RulesCubit>().state.selectedQuests;
+    if (quests.isEmpty) return 0;
+    final score = Score(scoreQuest: {});
+    score.updateScore(kingdom, null, quests);
+    return score.scoreQuest.values.fold(0, (sum, value) => sum + value);
+  }
+
+  Widget _buildCastle(BuildContext context) {
+    final castle = CastleTile(context.read<ThemeCubit>().state);
+    if (!domainsModeCubit.state) return castle;
+    final gain = _questGain(context);
+    if (gain <= 0) return castle;
+
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        castle,
+        Positioned.fill(
+          child: IgnorePointer(
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return Align(
+                  alignment: Alignment.bottomRight,
+                  child: Container(
+                    margin: const EdgeInsets.all(2),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 3,
+                      vertical: 1,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.amber,
+                      border: Border.all(color: Colors.black),
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    child: Text(
+                      '+$gain',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: constraints.maxWidth / 5,
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
   Widget _buildLand(BuildContext context, int y, int x) {
     Land? land = kingdom.getLand(x, y);
 
@@ -43,7 +99,7 @@ class KingdomBoard extends StatelessWidget {
 
     Widget? child;
     if (land.landType == LandType.castle) {
-      child = CastleTile(context.read<ThemeCubit>().state);
+      child = _buildCastle(context);
     } else if (land.courtier != null) {
       child = LandTile(
         landType: land.landType,
@@ -156,6 +212,19 @@ class KingdomBoard extends StatelessWidget {
           }
         },
         child: tile,
+      ),
+    );
+  }
+
+  Widget _buildAlignmentStrikes(double cell) {
+    return Positioned.fill(
+      child: IgnorePointer(
+        child: CustomPaint(
+          painter: AlignmentStrikesPainter(
+            alignments: FolieDesGrandeurs().getAlignments(kingdom),
+            cell: cell,
+          ),
+        ),
       ),
     );
   }
@@ -288,6 +357,11 @@ class KingdomBoard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     int gridStateLength = kingdom.getLands().length;
+    final showStrikes = context
+        .watch<RulesCubit>()
+        .state
+        .selectedQuests
+        .contains(QuestType.folieDesGrandeurs);
     return AspectRatio(
       aspectRatio: 1.0,
       child: Container(
@@ -311,6 +385,8 @@ class KingdomBoard extends StatelessWidget {
                     ),
                     if (domainsMode)
                       ..._buildDomainOverlays(gridStateLength, cell),
+                    if (domainsMode && showStrikes)
+                      _buildAlignmentStrikes(cell),
                     if (extension == Extension.lostTreasures)
                       ..._buildGemOverlays(context, gridStateLength, cell),
                   ],

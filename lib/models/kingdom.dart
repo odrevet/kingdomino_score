@@ -30,7 +30,7 @@ class Kingdom {
         landsCopy.add(
           List<Land>.generate(
             this.kingdomSize.size,
-            (j) => getLand(j, i)!.copyWith(),
+                (j) => getLand(j, i)!.copyWith(),
           ),
         );
       }
@@ -73,8 +73,6 @@ class Kingdom {
     gems = [];
   }
 
-  /// Check if the 4 tiles around the interior intersection (x, y) are all
-  /// different, non-empty, non-castle landscapes.
   bool hasFourDifferentTiles(int x, int y) {
     if (x < 1 || y < 1 || x >= kingdomSize.size || y >= kingdomSize.size) {
       return false;
@@ -87,10 +85,12 @@ class Kingdom {
       getLand(x, y),
     ];
 
-    if (tiles.any((land) =>
-        land == null ||
-        land.landType == LandType.empty ||
-        land.landType == LandType.castle)) {
+    if (tiles.any(
+          (land) =>
+      land == null ||
+          land.landType == LandType.empty ||
+          land.landType == LandType.castle,
+    )) {
       return false;
     }
 
@@ -107,13 +107,10 @@ class Kingdom {
     gems.removeWhere((placed) => placed.x == x && placed.y == y);
   }
 
-  /// Remove gems whose intersection no longer has 4 different tiles.
   void pruneGems() {
     gems.removeWhere((placed) => !hasFourDifferentTiles(placed.x, placed.y));
   }
 
-  /// Whether the kingdom has all 5 gem colors. The joker gem counts as any
-  /// one missing color.
   bool get hasAllGemTypes {
     final colors = gems.map((g) => g.gem.color).toSet();
     final realColors = colors.where((c) => c != GemColor.joker).toSet();
@@ -122,28 +119,26 @@ class Kingdom {
     return distinctReal == 5 || (distinctReal == 4 && hasJoker);
   }
 
-  /// Effective quarter of [placed] pointing at tile (x, y), or null if the
-  /// tile is not one of the 4 around the gem.
   GemQuarter? _quarterForTile(PlacedGem placed, int x, int y) {
-    final px = placed.x;
-    final py = placed.y;
+    final dx = x - placed.x;
+    final dy = y - placed.y;
+
     int position;
-    if (x == px - 1 && y == py - 1) {
-      position = 0; // topLeft
-    } else if (x == px && y == py - 1) {
-      position = 1; // topRight
-    } else if (x == px && y == py) {
-      position = 2; // bottomRight
-    } else if (x == px - 1 && y == py) {
-      position = 3; // bottomLeft
+    if (dx == -1 && dy == -1) {
+      position = 0;
+    } else if (dx == -1 && dy == 0) {
+      position = 1;
+    } else if (dx == 0 && dy == 0) {
+      position = 2;
+    } else if (dx == 0 && dy == -1) {
+      position = 3;
     } else {
       return null;
     }
-    final quarter = placed.gem.quarterAt((position + placed.orientation) % 4);
-    return quarter;
+
+    return placed.gem.quarterAt((position - placed.orientation) % 4);
   }
 
-  /// Crowns added to tile (x, y) by crown quarters pointing at it.
   int gemCrownBonus(int x, int y) {
     int bonus = 0;
     for (final placed in gems) {
@@ -155,7 +150,6 @@ class Kingdom {
     return bonus;
   }
 
-  /// Whether a skull quarter points at tile (x, y), cancelling its crowns.
   bool isSkulled(int x, int y) {
     for (final placed in gems) {
       final quarter = _quarterForTile(placed, x, y);
@@ -166,7 +160,6 @@ class Kingdom {
     return false;
   }
 
-  /// Total crowns granted by all gem crown quarters.
   int gemCrownBonusTotal() {
     int total = 0;
     for (final placed in gems) {
@@ -189,13 +182,11 @@ class Kingdom {
       }
     }
 
-    //reset marked status
     lands.expand((i) => i).toList().forEach((land) => land.isMarked = false);
 
     return properties;
   }
 
-  ///add land at x y to the property if it's landType is the same as land
   void _addLandToProperty(int x, int y, Land land, Property property) {
     if (isInBound(x, y)) {
       Land? landToAdd = getLand(x, y);
@@ -259,7 +250,6 @@ List<Warning> checkKingdom(Kingdom kingdom, Extension? extension) {
   var warnings = <Warning>[];
   Map<LandType, Map<String, dynamic>> gameSet = getGameSet(extension);
 
-  //check if more tile in the kingdom than in the gameSet
   for (var landType in LandType.values) {
     if (landType != LandType.empty) {
       var count = kingdom
@@ -279,11 +269,10 @@ List<Warning> checkKingdom(Kingdom kingdom, Extension? extension) {
         warnings.add(warning);
       }
 
-      //check if too many tile with given crowns
       for (
-        var crownsCounter = 1;
-        crownsCounter <= gameSet[landType]!['crowns']['max'];
-        crownsCounter++
+      var crownsCounter = 1;
+      crownsCounter <= gameSet[landType]!['crowns']['max'];
+      crownsCounter++
       ) {
         var count = kingdom
             .getLands()
@@ -291,8 +280,8 @@ List<Warning> checkKingdom(Kingdom kingdom, Extension? extension) {
             .toList()
             .where(
               (land) =>
-                  land.landType == landType && land.crowns == crownsCounter,
-            )
+          land.landType == landType && land.crowns == crownsCounter,
+        )
             .length;
 
         if (count > gameSet[landType]!['crowns'][crownsCounter]) {
@@ -310,7 +299,6 @@ List<Warning> checkKingdom(Kingdom kingdom, Extension? extension) {
     }
   }
 
-  // Check if kingdom has castle (when less than a blank tile in board)
   var countEmptyTile = kingdom
       .getLands()
       .expand((i) => i)

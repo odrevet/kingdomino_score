@@ -45,6 +45,7 @@ class KingdominoApp extends StatelessWidget {
       child: BlocBuilder<ThemeCubit, MaterialColor>(
         builder: (context, color) => ScoreCalculator(
           child: MaterialApp(
+            debugShowCheckedModeBanner: false,
             title: 'Kingdomino Score',
             theme: ThemeData(
               colorScheme: ColorScheme.fromSeed(

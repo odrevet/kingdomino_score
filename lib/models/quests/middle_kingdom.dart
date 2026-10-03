@@ -14,19 +14,10 @@ class MiddleKingdom extends Quest {
   MiddleKingdom._internal() : super(reward: 10);
 
   @override
-  int getPoints(Kingdom kingdom) {
-    int x, y;
-
-    if (kingdom.kingdomSize == KingdomSize.small) {
-      x = y = 2;
-    } else {
-      x = y = 3;
-    }
-
-    if (kingdom.getLand(x, y)?.landType == LandType.castle) {
-      return reward;
-    } else {
-      return 0;
-    }
+  List<(int, int)> getPlaces(Kingdom kingdom) {
+    final center = kingdom.kingdomSize == KingdomSize.small ? 2 : 3;
+    return kingdom.getLand(center, center)?.landType == LandType.castle
+        ? [(center, center)]
+        : [];
   }
 }

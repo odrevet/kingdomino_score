@@ -184,12 +184,9 @@ class KingdomBoard extends StatelessWidget {
   }
 
   List<Widget> _buildQuestGainOverlays(BuildContext context, double cell) {
-    final game = context.read<GameCubit>().state;
-    final color = kingColor ?? game.kingColor;
-    if (color == null) return const [];
-    final scores = game.getPlayerByColor(color).score.scoreQuest;
+    final quests = context.read<RulesCubit>().state.selectedQuests;
     return [
-      for (final gain in kingdom.computeQuestGains(scores))
+      for (final gain in kingdom.computeQuestGains(quests))
         Positioned(
           left: gain.col * cell,
           top: gain.row * cell,
@@ -298,9 +295,9 @@ class KingdomBoard extends StatelessWidget {
       child: GestureDetector(
         onTap: editable
             ? () => showDialog<void>(
-          context: context,
-          builder: (context) => GemDialogWidget(x: kx, y: ky),
-        )
+                context: context,
+                builder: (context) => GemDialogWidget(x: kx, y: ky),
+              )
             : null,
         child: Container(
           decoration: BoxDecoration(
@@ -314,12 +311,12 @@ class KingdomBoard extends StatelessWidget {
   }
 
   Widget _buildPlacedGem(
-      BuildContext context,
-      int kx,
-      int ky,
-      PlacedGem placed,
-      double cell,
-      ) {
+    BuildContext context,
+    int kx,
+    int ky,
+    PlacedGem placed,
+    double cell,
+  ) {
     final center = Offset(ky * cell, kx * cell);
     final gemSize = cell * 0.6;
     return Positioned(
@@ -330,9 +327,9 @@ class KingdomBoard extends StatelessWidget {
       child: GestureDetector(
         onTap: editable
             ? () => showDialog<void>(
-          context: context,
-          builder: (context) => GemDialogWidget(x: kx, y: ky),
-        )
+                context: context,
+                builder: (context) => GemDialogWidget(x: kx, y: ky),
+              )
             : null,
         child: Opacity(
           opacity: 0.8,
@@ -348,7 +345,6 @@ class KingdomBoard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<GameCubit>();
     int gridStateLength = kingdom.getLands().length;
     final showStrikes = context
         .watch<RulesCubit>()

@@ -15,14 +15,11 @@ class FourCorners extends Quest {
   LandType? landType;
 
   @override
-  int getPoints(Kingdom kingdom) {
-    int count = 0;
-    int size = kingdom.kingdomSize.size - 1;
-    if (kingdom.getLand(0, 0)?.landType == landType) count++;
-    if (kingdom.getLand(size, 0)?.landType == landType) count++;
-    if (kingdom.getLand(0, size)?.landType == landType) count++;
-    if (kingdom.getLand(size, size)?.landType == landType) count++;
-
-    return reward * count;
+  List<(int, int)> getPlaces(Kingdom kingdom) {
+    final last = kingdom.kingdomSize.size - 1;
+    return [
+      for (final corner in [(0, 0), (last, 0), (0, last), (last, last)])
+        if (kingdom.getLand(corner.$1, corner.$2)?.landType == landType) corner,
+    ];
   }
 }

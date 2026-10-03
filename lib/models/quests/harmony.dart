@@ -13,14 +13,11 @@ class Harmony extends Quest {
   Harmony._internal() : super(reward: 5);
 
   @override
-  int? getPoints(Kingdom kingdom) {
-    return kingdom
-            .getLands()
-            .expand((i) => i)
-            .toList()
-            .where((land) => land.landType == LandType.empty)
-            .isEmpty
-        ? reward
-        : 0;
+  List<(int, int)> getPlaces(Kingdom kingdom) {
+    final hasEmptyLand = kingdom
+        .getLands()
+        .expand((i) => i)
+        .any((land) => land.landType == LandType.empty);
+    return hasEmptyLand ? [] : [kingdom.findCastle() ?? (0, 0)];
   }
 }

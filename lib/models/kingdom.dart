@@ -30,7 +30,7 @@ class Kingdom {
         landsCopy.add(
           List<Land>.generate(
             this.kingdomSize.size,
-                (j) => getLand(j, i)!.copyWith(),
+            (j) => getLand(j, i)!.copyWith(),
           ),
         );
       }
@@ -86,8 +86,8 @@ class Kingdom {
     ];
 
     if (tiles.any(
-          (land) =>
-      land == null ||
+      (land) =>
+          land == null ||
           land.landType == LandType.empty ||
           land.landType == LandType.castle,
     )) {
@@ -170,6 +170,15 @@ class Kingdom {
     return total;
   }
 
+  (int, int)? findCastle() {
+    for (var r = 0; r < kingdomSize.size; r++) {
+      for (var c = 0; c < kingdomSize.size; c++) {
+        if (getLand(r, c)?.landType == LandType.castle) return (r, c);
+      }
+    }
+    return null;
+  }
+
   List<Property> getProperties() {
     var properties = <Property>[];
 
@@ -194,6 +203,7 @@ class Kingdom {
           landToAdd.landType == land.landType &&
           landToAdd.isMarked == false) {
         property.landCount++;
+        property.cells.add((x, y));
         property.crownCount += isSkulled(x, y)
             ? 0
             : landToAdd.getCrowns() + gemCrownBonus(x, y);
@@ -217,6 +227,7 @@ class Kingdom {
     if (property == null) {
       property = Property(land.landType);
       property.landCount++;
+      property.cells.add((x, y));
       property.crownCount += isSkulled(x, y)
           ? 0
           : land.getCrowns() + gemCrownBonus(x, y);
@@ -270,9 +281,9 @@ List<Warning> checkKingdom(Kingdom kingdom, Extension? extension) {
       }
 
       for (
-      var crownsCounter = 1;
-      crownsCounter <= gameSet[landType]!['crowns']['max'];
-      crownsCounter++
+        var crownsCounter = 1;
+        crownsCounter <= gameSet[landType]!['crowns']['max'];
+        crownsCounter++
       ) {
         var count = kingdom
             .getLands()
@@ -280,8 +291,8 @@ List<Warning> checkKingdom(Kingdom kingdom, Extension? extension) {
             .toList()
             .where(
               (land) =>
-          land.landType == landType && land.crowns == crownsCounter,
-        )
+                  land.landType == landType && land.crowns == crownsCounter,
+            )
             .length;
 
         if (count > gameSet[landType]!['crowns'][crownsCounter]) {

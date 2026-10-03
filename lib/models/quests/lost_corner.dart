@@ -12,13 +12,13 @@ class LostCorner extends Quest {
   LostCorner._internal() : super(reward: 20);
 
   @override
-  int getPoints(Kingdom kingdom) {
-    int size = kingdom.kingdomSize.size - 1;
-    return kingdom.getLand(0, 0)?.landType == LandType.castle ||
-            kingdom.getLand(size, 0)?.landType == LandType.castle ||
-            kingdom.getLand(0, size)?.landType == LandType.castle ||
-            kingdom.getLand(size, size)?.landType == LandType.castle
-        ? reward
-        : 0;
+  List<(int, int)> getPlaces(Kingdom kingdom) {
+    final last = kingdom.kingdomSize.size - 1;
+    for (final corner in [(0, 0), (last, 0), (0, last), (last, last)]) {
+      if (kingdom.getLand(corner.$1, corner.$2)?.landType == LandType.castle) {
+        return [corner];
+      }
+    }
+    return [];
   }
 }

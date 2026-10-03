@@ -12,14 +12,14 @@ class CrownAlignment extends Equatable {
 
   bool cross(CrownAlignment other) =>
       ((x0 == other.x0 && y0 == other.y0) ||
-          (x1 == other.x0 && y1 == other.y0) ||
-          (x2 == other.x0 && y2 == other.y0) ||
-          (x0 == other.x1 && y0 == other.y1) ||
-          (x1 == other.x1 && y1 == other.y1) ||
-          (x2 == other.x1 && y2 == other.y1) ||
-          (x0 == other.x2 && y0 == other.y2) ||
-          (x1 == other.x2 && y1 == other.y2) ||
-          (x2 == other.x2 && y2 == other.y2));
+      (x1 == other.x0 && y1 == other.y0) ||
+      (x2 == other.x0 && y2 == other.y0) ||
+      (x0 == other.x1 && y0 == other.y1) ||
+      (x1 == other.x1 && y1 == other.y1) ||
+      (x2 == other.x1 && y2 == other.y1) ||
+      (x0 == other.x2 && y0 == other.y2) ||
+      (x1 == other.x2 && y1 == other.y2) ||
+      (x2 == other.x2 && y2 == other.y2));
 
   @override
   String toString() {
@@ -57,25 +57,25 @@ class FolieDesGrandeurs extends Quest {
   }
 
   bool _hasCrownAlignment(
-      int y0,
-      int x0,
-      int y1,
-      int x1,
-      int y2,
-      int x2,
-      Kingdom kingdom,
-      ) {
+    int y0,
+    int x0,
+    int y1,
+    int x1,
+    int y2,
+    int x2,
+    Kingdom kingdom,
+  ) {
     return _checkLandBoundAndCrown(y0, x0, kingdom) &&
         _checkLandBoundAndCrown(y1, x1, kingdom) &&
         _checkLandBoundAndCrown(y2, x2, kingdom);
   }
 
   void _addCrownAlignmentVertical(
-      List<CrownAlignment> crownAlignment,
-      int y,
-      int x,
-      Kingdom kingdom,
-      ) {
+    List<CrownAlignment> crownAlignment,
+    int y,
+    int x,
+    Kingdom kingdom,
+  ) {
     int x1 = x;
     int y1 = y + 1;
     int x2 = x;
@@ -86,11 +86,11 @@ class FolieDesGrandeurs extends Quest {
   }
 
   void _addCrownAlignmentHorizontal(
-      List<CrownAlignment> crownAlignment,
-      int y,
-      int x,
-      Kingdom kingdom,
-      ) {
+    List<CrownAlignment> crownAlignment,
+    int y,
+    int x,
+    Kingdom kingdom,
+  ) {
     int x1 = x + 1;
     int y1 = y;
     int x2 = x + 2;
@@ -101,11 +101,11 @@ class FolieDesGrandeurs extends Quest {
   }
 
   void _addCrownAlignmentDiagonalRight(
-      List<CrownAlignment> crownAlignment,
-      int y,
-      int x,
-      Kingdom kingdom,
-      ) {
+    List<CrownAlignment> crownAlignment,
+    int y,
+    int x,
+    Kingdom kingdom,
+  ) {
     int x1 = x + 1;
     int y1 = y + 1;
     int x2 = x + 2;
@@ -116,11 +116,11 @@ class FolieDesGrandeurs extends Quest {
   }
 
   void _addCrownAlignmentDiagonalLeft(
-      List<CrownAlignment> crownAlignment,
-      int x,
-      int y,
-      Kingdom kingdom,
-      ) {
+    List<CrownAlignment> crownAlignment,
+    int x,
+    int y,
+    Kingdom kingdom,
+  ) {
     int x1 = x - 1;
     int y1 = y + 1;
     int x2 = x - 2;
@@ -131,9 +131,9 @@ class FolieDesGrandeurs extends Quest {
   }
 
   int _countSharedSquare(
-      List<List<int>> placedAlignments,
-      CrownAlignment crownAlignment,
-      ) {
+    List<List<int>> placedAlignments,
+    CrownAlignment crownAlignment,
+  ) {
     int sharedSquareCount = 0;
     if (placedAlignments[crownAlignment.x0][crownAlignment.y0] > 1) {
       sharedSquareCount++;
@@ -149,10 +149,10 @@ class FolieDesGrandeurs extends Quest {
   }
 
   bool _alignmentAdd(
-      CrownAlignment crownAlignment,
-      List<CrownAlignment> resultAlignments,
-      List<List<int>> placedAlignments,
-      ) {
+    CrownAlignment crownAlignment,
+    List<CrownAlignment> resultAlignments,
+    List<List<int>> placedAlignments,
+  ) {
     bool addAlignment = true;
     placedAlignments[crownAlignment.x0][crownAlignment.y0]++;
     placedAlignments[crownAlignment.x1][crownAlignment.y1]++;
@@ -196,9 +196,9 @@ class FolieDesGrandeurs extends Quest {
   }
 
   List<CrownAlignment> selectValidAlignments(
-      List<CrownAlignment> crownAlignments,
-      Kingdom kingdom,
-      ) {
+    List<CrownAlignment> crownAlignments,
+    Kingdom kingdom,
+  ) {
     List<List<int>> placedAlignments = [];
     for (var i = 0; i < kingdom.kingdomSize.size; i++) {
       placedAlignments.add(
@@ -216,9 +216,9 @@ class FolieDesGrandeurs extends Quest {
   }
 
   int countValidAlignments(
-      List<CrownAlignment> crownAlignments,
-      Kingdom kingdom,
-      ) {
+    List<CrownAlignment> crownAlignments,
+    Kingdom kingdom,
+  ) {
     return selectValidAlignments(crownAlignments, kingdom).length;
   }
 
@@ -271,7 +271,10 @@ class FolieDesGrandeurs extends Quest {
   }
 
   @override
-  int getPoints(Kingdom kingdom) {
-    return reward * getAlignments(kingdom).length;
+  List<(int, int)> getPlaces(Kingdom kingdom) {
+    return [
+      for (final alignment in getAlignments(kingdom))
+        (alignment.y1, alignment.x1),
+    ];
   }
 }

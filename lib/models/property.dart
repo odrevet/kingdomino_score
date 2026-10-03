@@ -4,9 +4,8 @@ class Property {
   LandType? landType;
   int crownCount = 0;
   int landCount = 0;
-
-  //AoG
   int giantCount = 0;
+  final List<(int, int)> cells = [];
 
   Property(this.landType);
 }

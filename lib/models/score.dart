@@ -2,7 +2,6 @@ import 'dart:collection';
 
 import 'extensions/extension.dart';
 import 'kingdom.dart';
-import 'land.dart' show LandType;
 import 'quests/quest.dart';
 
 class Score {
@@ -34,18 +33,16 @@ class Score {
           : scoreQuest.values.reduce((sum, score) => sum + score));
 
   void updateScore(
-      Kingdom kingdom,
-      Extension? extension,
-      HashSet<QuestType> selectedQuests,
-      ) {
+    Kingdom kingdom,
+    Extension? extension,
+    HashSet<QuestType> selectedQuests,
+  ) {
     scoreProperty = calculatePropertyScore(kingdom);
 
-    // Clear all quest scores first, then only calculate for selected quests
     scoreQuest.clear();
 
-    // Update scores for currently selected quests
     for (var quest in selectedQuests) {
-      scoreQuest[quest] = _calculateQuestScore(quest, kingdom);
+      scoreQuest[quest] = createQuest(quest).getPoints(kingdom);
     }
 
     scoreLacour = extension == Extension.laCour
@@ -53,14 +50,9 @@ class Score {
         : 0;
   }
 
-  // Private calculation methods
   int calculatePropertyScore(Kingdom kingdom) {
     final properties = kingdom.getProperties();
     return kingdom.calculateScoreFromProperties(properties);
-  }
-
-  int _calculateQuestScore(QuestType quest, Kingdom kingdom) {
-    return _getQuestPoints(quest, kingdom);
   }
 
   static int _calculateLacourScore(Kingdom kingdom) {
@@ -74,78 +66,5 @@ class Score {
       }
     }
     return score;
-  }
-
-  int _getQuestPoints(QuestType questType, Kingdom kingdom) {
-    switch (questType) {
-      case QuestType.harmony:
-        {
-          return Harmony().getPoints(kingdom)!;
-        }
-      case QuestType.middleKingdom:
-        {
-          return MiddleKingdom().getPoints(kingdom);
-        }
-      case QuestType.bleakKing:
-        {
-          return BleakKing().getPoints(kingdom);
-        }
-      case QuestType.folieDesGrandeurs:
-        {
-          return FolieDesGrandeurs().getPoints(kingdom);
-        }
-      case QuestType.fourCornersWheat:
-        {
-          return FourCorners(LandType.wheat).getPoints(kingdom);
-        }
-      case QuestType.fourCornersLake:
-        {
-          return FourCorners(LandType.lake).getPoints(kingdom);
-        }
-      case QuestType.fourCornersForest:
-        {
-          return FourCorners(LandType.forest).getPoints(kingdom);
-        }
-      case QuestType.fourCornersGrassLand:
-        {
-          return FourCorners(LandType.grassland).getPoints(kingdom);
-        }
-      case QuestType.fourCornersSwamp:
-        {
-          return FourCorners(LandType.swamp).getPoints(kingdom);
-        }
-      case QuestType.fourCornersMine:
-        {
-          return FourCorners(LandType.mine).getPoints(kingdom);
-        }
-      case QuestType.localBusinessWheat:
-        {
-          return LocalBusiness(LandType.wheat).getPoints(kingdom);
-        }
-      case QuestType.localBusinessLake:
-        {
-          return LocalBusiness(LandType.lake).getPoints(kingdom);
-        }
-      case QuestType.localBusinessForest:
-        {
-          return LocalBusiness(LandType.forest).getPoints(kingdom);
-        }
-      case QuestType.localBusinessGrassLand:
-        {
-          return LocalBusiness(LandType.grassland).getPoints(kingdom);
-        }
-      case QuestType.localBusinessSwamp:
-        {
-          return LocalBusiness(LandType.swamp).getPoints(kingdom);
-        }
-      case QuestType.localBusinessMine:
-        {
-          return LocalBusiness(LandType.mine).getPoints(kingdom);
-        }
-      case QuestType.lostCorner:
-        {
-          return LostCorner().getPoints(kingdom);
-        }
-    }
   }
 }

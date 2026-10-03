@@ -1,4 +1,12 @@
 import '../kingdom.dart';
+import '../land.dart' show LandType;
+import 'bleak_king.dart';
+import 'folie_des_grandeurs.dart';
+import 'four_corners.dart';
+import 'harmony.dart';
+import 'local_business.dart';
+import 'lost_corner.dart';
+import 'middle_kingdom.dart';
 
 export 'bleak_king.dart';
 export 'folie_des_grandeurs.dart';
@@ -34,7 +42,48 @@ abstract class Quest {
 
   Quest({required this.reward});
 
-  int? getPoints(Kingdom kingdom);
+  List<(int, int)> getPlaces(Kingdom kingdom);
+
+  int getPoints(Kingdom kingdom) => reward * getPlaces(kingdom).length;
+}
+
+Quest createQuest(QuestType type) {
+  switch (type) {
+    case QuestType.harmony:
+      return Harmony();
+    case QuestType.middleKingdom:
+      return MiddleKingdom();
+    case QuestType.bleakKing:
+      return BleakKing();
+    case QuestType.folieDesGrandeurs:
+      return FolieDesGrandeurs();
+    case QuestType.fourCornersWheat:
+      return FourCorners(LandType.wheat);
+    case QuestType.fourCornersLake:
+      return FourCorners(LandType.lake);
+    case QuestType.fourCornersForest:
+      return FourCorners(LandType.forest);
+    case QuestType.fourCornersGrassLand:
+      return FourCorners(LandType.grassland);
+    case QuestType.fourCornersSwamp:
+      return FourCorners(LandType.swamp);
+    case QuestType.fourCornersMine:
+      return FourCorners(LandType.mine);
+    case QuestType.localBusinessWheat:
+      return LocalBusiness(LandType.wheat);
+    case QuestType.localBusinessLake:
+      return LocalBusiness(LandType.lake);
+    case QuestType.localBusinessForest:
+      return LocalBusiness(LandType.forest);
+    case QuestType.localBusinessGrassLand:
+      return LocalBusiness(LandType.grassland);
+    case QuestType.localBusinessSwamp:
+      return LocalBusiness(LandType.swamp);
+    case QuestType.localBusinessMine:
+      return LocalBusiness(LandType.mine);
+    case QuestType.lostCorner:
+      return LostCorner();
+  }
 }
 
 String assetsquestsLocation = 'assets/quests';

@@ -14,8 +14,8 @@ import 'package:kingdomino_score_count/models/extensions/lost_treasures/lost_tre
 import 'package:kingdomino_score_count/models/game_set.dart';
 import 'package:kingdomino_score_count/models/kingdom.dart';
 import 'package:kingdomino_score_count/models/land.dart';
+import 'package:kingdomino_score_count/models/quest_gain.dart';
 import 'package:kingdomino_score_count/models/quests/quest.dart';
-import 'package:kingdomino_score_count/models/score.dart';
 import 'package:kingdomino_score_count/models/user_selection.dart';
 
 import 'alignment_strikes_painter.dart';
@@ -40,59 +40,8 @@ class KingdomBoard extends StatelessWidget {
     super.key,
   });
 
-  int _questGain(BuildContext context) {
-    final quests = context.read<RulesCubit>().state.selectedQuests;
-    if (quests.isEmpty) return 0;
-    final score = Score(scoreQuest: {});
-    score.updateScore(kingdom, null, quests);
-    return score.scoreQuest.values.fold(0, (sum, value) => sum + value);
-  }
-
   Widget _buildCastle(BuildContext context) {
-    final castle = CastleTile(
-      kingColor?.color ?? context.read<ThemeCubit>().state,
-    );
-    if (!domainsModeCubit.state) return castle;
-    final gain = _questGain(context);
-    if (gain <= 0) return castle;
-
-    return Stack(
-      fit: StackFit.expand,
-      children: [
-        castle,
-        Positioned.fill(
-          child: IgnorePointer(
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-                return Align(
-                  alignment: Alignment.bottomRight,
-                  child: Container(
-                    margin: const EdgeInsets.all(2),
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 3,
-                      vertical: 1,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.amber,
-                      border: Border.all(color: Colors.black),
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                    child: Text(
-                      '+$gain',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: constraints.maxWidth / 5,
-                      ),
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
-        ),
-      ],
-    );
+    return CastleTile(kingColor?.color ?? context.read<ThemeCubit>().state);
   }
 
   Widget _buildLand(BuildContext context, int y, int x) {
@@ -234,6 +183,44 @@ class KingdomBoard extends StatelessWidget {
     );
   }
 
+  List<Widget> _buildQuestGainOverlays(BuildContext context, double cell) {
+    final game = context.read<GameCubit>().state;
+    final color = kingColor ?? game.kingColor;
+    if (color == null) return const [];
+    final scores = game.getPlayerByColor(color).score.scoreQuest;
+    return [
+      for (final gain in kingdom.computeQuestGains(scores))
+        Positioned(
+          left: gain.col * cell,
+          top: gain.row * cell,
+          width: cell,
+          height: cell,
+          child: IgnorePointer(
+            child: Align(
+              alignment: Alignment.topRight,
+              child: Container(
+                margin: const EdgeInsets.all(2),
+                padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 1),
+                decoration: BoxDecoration(
+                  color: Colors.amber,
+                  border: Border.all(color: Colors.black),
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                child: Text(
+                  '+${gain.points}',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: cell / 5,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+    ];
+  }
+
   List<Widget> _buildDomainOverlays(int n, double cell) {
     final domains = kingdom.computeDomains();
     return [
@@ -361,6 +348,7 @@ class KingdomBoard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<GameCubit>();
     int gridStateLength = kingdom.getLands().length;
     final showStrikes = context
         .watch<RulesCubit>()
@@ -392,6 +380,8 @@ class KingdomBoard extends StatelessWidget {
                       ..._buildDomainOverlays(gridStateLength, cell),
                     if (domainsMode && showStrikes)
                       _buildAlignmentStrikes(cell),
+                    if (domainsMode)
+                      ..._buildQuestGainOverlays(context, cell),
                     if (extension == Extension.lostTreasures)
                       ..._buildGemOverlays(context, gridStateLength, cell),
                   ],

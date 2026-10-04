@@ -64,9 +64,9 @@ Long press on the giant button displays the giant details :
 
 # Screenshots
 
-| <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/board.jpg" width="240px" />   |
+| <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/board.png" width="240px" />   |
 |-------------------------------------------------------------------------------------------------|
-| <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/menu.jpg" width="240px" />    |
+| <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/menu.png" width="240px" />    |
 | <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/overlay.png" width="240px" /> |
 
 # web release

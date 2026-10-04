@@ -10,16 +10,27 @@ Available for :
 
 # Top menu buttons
 
-* Warnings (only displayed when at least on warning): check board for anomalities
-* AG : Activate / Deactivate the Age of Giants extension
+## On global menu
+
+* Extension menu : Activate an extension
+  * Age of Giants
+  * La cour
+  * Lost treasures
 * Shield : Select / Unselect quests
     * Two quests maximum can be selected at a time.
     * There are more quests when Age of Giants is activated
     * The number of quests activated is displayed in a red bubble
-
 * 5 / 7 : change the size of the board. Changing the size of the board reset all tiles
-* Trash : Reset the board
+* Trash : Reset all boards
 * About : Display author and license
+
+## On board menu
+
+* Go back to global menu
+* Undo
+* Redo
+* Overlay mode: display score per domains
+* Trash: reset current board
 
 # Score
 
@@ -53,10 +64,10 @@ Long press on the giant button displays the giant details :
 
 # Screenshots
 
-|  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/board.jpg" width="240px" /> |
-|---|
-| <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/score.jpg" width="240px" />  |
-
+| <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/board.jpg" width="240px" />   |
+|-------------------------------------------------------------------------------------------------|
+| <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/menu.jpg" width="240px" />    |
+| <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/overlay.png" width="240px" /> |
 
 # web release
 

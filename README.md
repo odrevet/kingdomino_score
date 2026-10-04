@@ -85,20 +85,6 @@ Then remove `<base href="/">` from `build/web/index.html`
 python -m http.server 8000 -d build/web
 ```
 
-## deploy to github pages
-
-```sh
-flutter build web --release --base-href /kingdomino_score/
-cp -r build/web ~/Documents/
-git checkout gh-pages
-rm -rf *
-mv ~/Documents/web/* .
-git add .
-git commit -m "update web build"
-git push
-git checkout master
-```
-
 
 # Assets credits and licenses
 

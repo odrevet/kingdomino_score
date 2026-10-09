@@ -67,9 +67,10 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
               builder: (context, kingdom) {
                 return Scaffold(
                   appBar: BoardAppBar(),
-                  body: Stack(
-                    children: [
-                      OrientationBuilder(
+                  body: SafeArea(
+                    child: Stack(
+                      children: [
+                        OrientationBuilder(
                         builder: (context, orientation) {
                           if (orientation == Orientation.portrait) {
                             return Column(
@@ -112,7 +113,8 @@ class _KingdominoWidgetState extends State<KingdominoWidget> {
                             ),
                           ),
                         ),
-                    ],
+                      ],
+                    ),
                   ),
                 );
               },

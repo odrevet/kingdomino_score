@@ -80,7 +80,8 @@ class _GlobalMenuWidgetState extends State<GlobalMenuWidget> {
                       : 3;
 
                   return GridView.builder(
-                    padding: const EdgeInsets.all(16.0),
+                    padding: MediaQuery.of(context).viewPadding +
+                        const EdgeInsets.all(16.0),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: crossAxisCount,
                       mainAxisSpacing: 16.0,

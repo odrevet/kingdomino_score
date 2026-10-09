@@ -42,7 +42,7 @@ class _GlobalMenuAppBarState extends State<GlobalMenuAppBar> {
             icon: const Icon(Icons.extension, color: Colors.white),
             iconSize: 25,
             elevation: 16,
-            underline: Container(height: 1, color: Colors.white),
+            underline: const SizedBox.shrink(),
             onChanged: (value) {
               context.read<RulesCubit>().setExtension(value);
               context.read<UserSelectionCubit>().updateSelection(
@@ -98,7 +98,11 @@ class _GlobalMenuAppBarState extends State<GlobalMenuAppBar> {
                   } else if (value == Extension.lostTreasures) {
                     child = const Text('💎');
                   } else {
-                    child = const Text('');
+                    child = const Icon(
+                      Icons.crop_square,
+                      size: 25,
+                      color: Colors.white,
+                    );
                   }
                   return DropdownMenuItem<Extension>(
                     value: value,

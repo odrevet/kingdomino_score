@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kingdomino_score_count/cubits/kingdom_cubit.dart';
@@ -10,18 +9,17 @@ import 'package:kingdomino_score_count/models/game_set.dart';
 import 'package:kingdomino_score_count/models/kingdom_size.dart';
 import 'package:kingdomino_score_count/models/rules.dart';
 import 'package:kingdomino_score_count/models/user_selection.dart';
+import 'package:kingdomino_score_count/widgets/about_dialog.dart';
 import 'package:kingdomino_score_count/widgets/quest_dialog.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 class GlobalMenuAppBar extends StatefulWidget implements PreferredSizeWidget {
   @override
   final Size preferredSize;
-  final PackageInfo packageInfo;
 
   const GlobalMenuAppBar({
     this.preferredSize = const Size.fromHeight(50.0),
-    required this.packageInfo,
-    super.key,
+    super.key, required PackageInfo packageInfo,
   });
 
   @override
@@ -51,15 +49,15 @@ class _GlobalMenuAppBarState extends State<GlobalMenuAppBar> {
               );
 
               if (value == Extension.laCour &&
-                      context
-                              .read<UserSelectionCubit>()
-                              .state
-                              .getSelectionMode() ==
-                          SelectionMode.courtier ||
                   context
-                          .read<UserSelectionCubit>()
-                          .state
-                          .getSelectionMode() ==
+                      .read<UserSelectionCubit>()
+                      .state
+                      .getSelectionMode() ==
+                      SelectionMode.courtier ||
+                  context
+                      .read<UserSelectionCubit>()
+                      .state
+                      .getSelectionMode() ==
                       SelectionMode.resource) {
                 context
                     .read<UserSelectionCubit>()
@@ -79,36 +77,36 @@ class _GlobalMenuAppBarState extends State<GlobalMenuAppBar> {
               }
             },
             items:
-                <Extension>[
-                  Extension.vanilla,
-                  Extension.ageOfGiants,
-                  Extension.laCour,
-                  Extension.lostTreasures,
-                ].map<DropdownMenuItem<Extension>>((Extension value) {
-                  Widget child;
+            <Extension>[
+              Extension.vanilla,
+              Extension.ageOfGiants,
+              Extension.laCour,
+              Extension.lostTreasures,
+            ].map<DropdownMenuItem<Extension>>((Extension value) {
+              Widget child;
 
-                  if (value == Extension.ageOfGiants) {
-                    child = const Text(giant);
-                  } else if (value == Extension.laCour) {
-                    child = Image.asset(
-                      'assets/lacour/resource.png',
-                      height: 25,
-                      width: 25,
-                    );
-                  } else if (value == Extension.lostTreasures) {
-                    child = const Text('💎');
-                  } else {
-                    child = const Icon(
-                      Icons.crop_square,
-                      size: 25,
-                      color: Colors.white,
-                    );
-                  }
-                  return DropdownMenuItem<Extension>(
-                    value: value,
-                    child: child,
-                  );
-                }).toList(),
+              if (value == Extension.ageOfGiants) {
+                child = const Text(giant);
+              } else if (value == Extension.laCour) {
+                child = Image.asset(
+                  'assets/lacour/resource.png',
+                  height: 25,
+                  width: 25,
+                );
+              } else if (value == Extension.lostTreasures) {
+                child = const Text('💎');
+              } else {
+                child = const Icon(
+                  Icons.crop_square,
+                  size: 25,
+                  color: Colors.white,
+                );
+              }
+              return DropdownMenuItem<Extension>(
+                value: value,
+                child: child,
+              );
+            }).toList(),
           ),
           QuestDialogWidget(),
           // Board size
@@ -140,21 +138,7 @@ class _GlobalMenuAppBarState extends State<GlobalMenuAppBar> {
           // About
           IconButton(
             icon: const Icon(Icons.help),
-            onPressed: () => showAboutDialog(
-              context: context,
-              applicationName: 'Kingdomino Score',
-              applicationVersion: kIsWeb
-                  ? 'Web build '
-                  : widget.packageInfo.version,
-              applicationLegalese:
-                  '''Drevet Olivier built the Kingdomino Score app under the GPL license Version 3. 
-This SERVICE is provided by Drevet Olivier at no cost and is intended for use as is.
-This page is used to inform visitors regarding the policy with the collection, use, and disclosure of Personal Information if anyone decided to use my Service.
-I will not use or share your information with anyone : Kingdomino Score works offline and does not send any information over a network. ''',
-              applicationIcon: Image.asset(
-                'android/app/src/main/res/mipmap-mdpi/ic_launcher.png',
-              ),
-            ),
+            onPressed: () => showKingdominoAboutDialog(context),
           ),
         ];
         return AppBar(

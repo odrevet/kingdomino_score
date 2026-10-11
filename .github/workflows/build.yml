@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       platform:
-        description: Plateforme à compiler
+        description: Platform to build
         type: choice
         default: all
         options:
@@ -29,7 +29,7 @@ jobs:
           channel: stable
           cache: true
 
-      - name: Dépendances Linux
+      - name: Linux dependencies
         if: matrix.target == 'linux'
         run: |
           sudo apt-get update -y

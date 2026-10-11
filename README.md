@@ -1,6 +1,6 @@
 # kingdomino Score
 
-Calculate your "Kingdomino" and "Kingdomino Age of Giants" score easily
+Calculate your score for the board game "Kingdomino" easily
 
 [![Android Google Play Store](https://img.shields.io/badge/Android-Google%20Play-414141?logo=googleplay&logoColor=white)](https://play.google.com/store/apps/details?id=fr.odrevet.kingdomino_score_count)
 [![Android F-Droid Store](https://img.shields.io/badge/Android-F--Droid-1976D2?logo=f-droid&logoColor=white)](https://f-droid.org/packages/fr.odrevet.kingdomino_score_count/)
